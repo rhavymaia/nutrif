@@ -1,0 +1,145 @@
+
+/*
+PROJETO
+NUTRIF
+*/
+
+body {
+	margin: 0;
+	padding: 0;
+	background: /*#F2F2F2*/ url(../img/back1.jpg) no-repeat left top;/*repeat-x left top;*/
+        background-size: 100% 15%;
+
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #7F7F81;
+}
+
+p, ul, ol {
+	margin-top: 0;
+	line-height: 180%;
+}
+
+/* Cabeçalho */
+
+#cabecalho {
+
+	width: 950px;
+	height: 125px;
+	margin: 0 auto;
+}
+
+#logo {
+	float: left;
+	width: 750px;
+	height: 80px;
+}
+
+#logo a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+/* Menu */
+
+#menu {
+	width: 950px;
+	height: 63px;
+	margin: 0 auto;
+	padding: 0px 0px 0px 0px;
+	background: url(../img/img03.jpg) repeat-x left top;
+}
+
+#menu ul {
+	margin: 0;
+	padding: 0px;
+	list-style: none;
+	line-height: normal;
+}
+
+#menu li {
+	float: left;
+	height: 63px;
+	background: url(../img/img05.jpg) no-repeat right top;
+}
+
+#menu a {
+	display: block;
+	float: left;
+	height: 43px;
+	margin-right: 3px;
+	padding: 20px 30px 0px 30px;
+	text-decoration: none;
+
+	text-shadow: 1px 1px 2px #4D5A1C;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	color: #FFFFFF;
+	border: none;
+}
+
+#menu li.pagina_atual {
+}
+
+#menu .pagina_atual a {
+	background: url(../img/img06.jpg) repeat-x left top;
+}
+
+#menu a:hover {
+	text-decoration: none;
+	background: url(../img/img06.jpg) repeat-x left top;
+}
+
+#tamanho {
+	width: 920px;
+	height: 472px;
+	margin: 0px auto 30px auto;
+	padding: 30px 0px 0px 30px;
+	background: #FFFFFF;
+}
+
+/* Página */
+
+#pagina {
+	width: 950px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+
+/* Barra Lateral */
+
+#bar_lat {
+        position: absolute;
+        top: 200px;
+        left: 780px;
+	
+	width: 50px;
+	padding: 0px;
+}
+
+/* Rodapé */
+
+#rodape-wrapper {
+	overflow: hidden;
+	padding: 30px 0px;
+	background: #E7E7E7;
+}
+
+#rodape {
+	clear: both;
+	height: 100px;
+	background: #222222;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#rodape p {
+	margin: 0;
+	padding: 30px 0px 0px 0px;
+	line-height: normal;
+	font-size: 10px;
+	text-transform: uppercase;
+	text-align: center;
+	color: #FFFFFF;
+}
