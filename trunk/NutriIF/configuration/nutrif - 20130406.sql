@@ -1,40 +1,51 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.2
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tempo de Geração: 29/10/2012 às 12:23:22
--- Versão do Servidor: 5.5.25a
--- Versão do PHP: 5.4.4
+-- Tempo de Geração: Abr 06, 2013 as 08:13 PM
+-- Versão do Servidor: 5.5.8
+-- Versão do PHP: 5.3.5
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Banco de Dados: `nutrir`
+-- Banco de Dados: `nutrif`
 --
 
 -- --------------------------------------------------------
-CREATE DATABASE nutrif;
+
 --
 -- Estrutura da tabela `tb_entrevistado`
 --
-CREATE TABLE IF NOT EXISTS `tb_nivel` (
-	cd_nivel int NOT NULL,
-	nm_nivel varchar(15) NOT NULL
-);
 
 CREATE TABLE IF NOT EXISTS `tb_entrevistado` (
-  `cd_entrevistado` bigint(11) NOT NULL COMMENT 'O código do entrevistado é a matrícula do Aluno',
+  `cd_entrevistado` int(11) NOT NULL AUTO_INCREMENT,
+  `nr_matricula` bigint(11) NOT NULL,
   `dt_nascimento` date NOT NULL,
   `nr_peso` double NOT NULL,
-  `cd_nivel` int NOT NULL,
+  `cd_nivel` int(11) NOT NULL,
   `nr_altura` double NOT NULL,
-  `tp_sexo` char NOT NULL COMMENT 'Feminino/ Masculino',
-  `tp_entrevitado` varchar(15) NOT NULL COMMENT 'Bolsitsa/ Não Bolsista',
+  `tp_sexo` char(1) NOT NULL,
+  `tp_entrevitado` varchar(15) NOT NULL,
   `nr_nivel_esporte` int(11) NOT NULL,
-  `nr_vct` double NOT NULL COMMENT 'Valor Calórico Total',
+  `nr_vct` double NOT NULL,
   `cd_pesquisa` int(11) NOT NULL,
   `cd_resultado` int(11) NOT NULL,
-  PRIMARY KEY (`matricula`)
-);
+  PRIMARY KEY (`cd_entrevistado`),
+  UNIQUE KEY(`nr_matricula`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+--
+-- Extraindo dados da tabela `tb_entrevistado`
+--
+
 
 -- --------------------------------------------------------
 
@@ -46,7 +57,28 @@ CREATE TABLE IF NOT EXISTS `tb_escola` (
   `cd_escola` int(11) NOT NULL AUTO_INCREMENT,
   `nm_escola` varchar(25) NOT NULL,
   PRIMARY KEY (`cd_escola`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Extraindo dados da tabela `tb_escola`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_nivel`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_nivel` (
+  `cd_nivel` int(11) NOT NULL,
+  `nm_nivel` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_nivel`
+--
+
 
 -- --------------------------------------------------------
 
@@ -60,9 +92,14 @@ CREATE TABLE IF NOT EXISTS `tb_nutricionista` (
   `nm_senha` varchar(8) NOT NULL,
   `cd_escola` int(11) NOT NULL,
   PRIMARY KEY (`cd_nutricionista`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
------------------------------------------------------------
+--
+-- Extraindo dados da tabela `tb_nutricionista`
+--
+
+
+-- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `tb_pesquisa`
@@ -74,7 +111,12 @@ CREATE TABLE IF NOT EXISTS `tb_pesquisa` (
   `dt_pesquisa` date NOT NULL,
   `cd_escola` int(11) NOT NULL,
   PRIMARY KEY (`cd_pesquisa`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Extraindo dados da tabela `tb_pesquisa`
+--
+
 
 -- --------------------------------------------------------
 
@@ -100,10 +142,10 @@ CREATE TABLE IF NOT EXISTS `tb_resposta` (
   `r14` varchar(1) NOT NULL,
   `r15` varchar(1) NOT NULL,
   `r16` varchar(1) NOT NULL,
-  `r17_a` int NOT NULL,
-  `r17_b` int NOT NULL,
-  `r17_c` int NOT NULL,
-  `r17_d` int NOT NULL,
+  `r17_a` int(11) NOT NULL,
+  `r17_b` int(11) NOT NULL,
+  `r17_c` int(11) NOT NULL,
+  `r17_d` int(11) NOT NULL,
   `r18_cafe_da_manha` varchar(1) NOT NULL,
   `r18_lanche_da_manha` varchar(1) NOT NULL,
   `r18_almoco` varchar(1) NOT NULL,
@@ -114,4 +156,8 @@ CREATE TABLE IF NOT EXISTS `tb_resposta` (
   `hora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `cd_entrevistado` bigint(12) NOT NULL,
   PRIMARY KEY (`cd_resposta`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Extraindo dados da tabela `tb_resposta`
+--
