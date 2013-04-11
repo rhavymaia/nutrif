@@ -14,32 +14,34 @@
         <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     </head>
     <body>
-        <div id="cabecalho">
-            <div id="logo">
-                <a href="#"><img src="img/logonutrif.png" wight="800" height="100"></a>
+        <div id="container">
+            <div id="cabecalho">
+                <div id="logo">
+                    <a href="#"><img src="img/logonutrif.png" wight="800" height="100"></a>
+                </div>
             </div>
-        </div>
-        <div id="menu">
-            <ul>
-                <li><span><a href="index.php">Home</a></span></li>
-                <li class="pagina_atual"><a href="#">Formulário</a></li>
-            </ul>
-        </div>
-        
-        <div id="content">
-            <ul>
-                <li>Problema ao processa a informação</li>
-            </ul>
-        </div>
+            <div id="menu">
+                <ul>
+                    <li><span><a href="index.php">Home</a></span></li>
+                    <li class="pagina_atual"><a href="#">Formulário</a></li>
+                </ul>
+            </div>
 
-        <div id="rodape">
-            <p>
-                IFPB - Instituto Federal de Educação, Ciência e Tecnologia
-                <em>Campina Grande</em>
-            </p>
-            <p>
-                Copyright (c) 2013. Todos os direitos Reservados.
-            </p>
+            <div id="content">
+                <ul>
+                    <li>Problema ao processa a informação</li>
+                </ul>
+            </div>
+
+            <div id="rodape">
+                <p>
+                    IFPB - Instituto Federal de Educação, Ciência e Tecnologia
+                    <em>Campina Grande</em>
+                </p>
+                <p>
+                    Copyright (c) 2013. Todos os direitos Reservados.
+                </p>
+            </div>
         </div>
     </body>
 </html>

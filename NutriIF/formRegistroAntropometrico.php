@@ -10,12 +10,15 @@
                 echo PF_TITULO;
             ?>
         </title>
+        
         <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
+        <script language="javascript" src="javascript/validacao.js"></script> 
+        
         <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     </head>
     
     <body>
-        <div id="content">
+        <div id="container">
             <div id="cabecalho">
                 <div id="logo">
                     <a href="#"><img src="img/logonutrif.png" wight="800" height="100"></a>
@@ -29,9 +32,16 @@
                 </ul>
             </div>
 
-            <div id="container">                
+            <div id="content">   
+                <ul id="erro">
+                    <!-- Lista de erros na validação -->
+                </ul>
+                
                 <form action="trataRegistroAntropometrico.php" 
-                      method="POST">
+                      method="POST"
+                      name="formRegistroAntropometrico"
+                      onsubmit="return validaForm()"
+                      onreset="return resetValidacao()">
 
                     <label for="aluno"> <em>*</em> Aluno:
                         <input type="text" name="aluno"/>
@@ -41,8 +51,9 @@
                         <input type="text" name="matricula"/>
                     </label>
 
-                    <label for="nascimento"> <em>*</em> Data de Nascimento:
-                        <input type="text" name="nascimento"/>
+                    <label for="dataNascimento"> <em>*</em> Data de Nascimento:
+                        <input type="text" name="nascimento" 
+                               onkeypress="return formatar(this, '##/##/####')" />
                     </label>
 
                     <label for="sexo"> <em>*</em> Sexo 
