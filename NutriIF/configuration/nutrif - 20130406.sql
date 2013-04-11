@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `tb_escola` (
   `cd_escola` int(11) NOT NULL AUTO_INCREMENT,
   `nm_escola` varchar(25) NOT NULL,
   PRIMARY KEY (`cd_escola`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --
 -- Extraindo dados da tabela `tb_escola`
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `tb_nutricionista` (
   `nm_senha` varchar(8) NOT NULL,
   `cd_escola` int(11) NOT NULL,
   PRIMARY KEY (`cd_nutricionista`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --
 -- Extraindo dados da tabela `tb_nutricionista`
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `tb_pesquisa` (
   `dt_pesquisa` date NOT NULL,
   `cd_escola` int(11) NOT NULL,
   PRIMARY KEY (`cd_pesquisa`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --
 -- Extraindo dados da tabela `tb_pesquisa`
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `tb_resposta` (
   `hora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `cd_entrevistado` bigint(12) NOT NULL,
   PRIMARY KEY (`cd_resposta`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --
 -- Extraindo dados da tabela `tb_resposta`
