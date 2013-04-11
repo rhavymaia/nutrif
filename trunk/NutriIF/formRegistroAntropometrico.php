@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     </head>
     
-    <body background="img/back1.jpg">
+    <body>
         <div id="cabecalho">
             <div id="logo">
                 <a href="#"><img src="img/logonutrif.png" wight="800" height="100"></a>
