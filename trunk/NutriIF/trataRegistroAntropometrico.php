@@ -9,7 +9,7 @@
     //Inicialização de variáveis.
     $aluno = $_POST['aluno'];
     $matricula = $_POST['matricula'];
-    $nascimento = $_POST['nascimento'];
+    $nascimento = $_POST['dataNascimento'];
     $sexo = $_POST['sexo'];
     $nivel = $_POST['nivel'];
     $peso = $_POST['peso'];

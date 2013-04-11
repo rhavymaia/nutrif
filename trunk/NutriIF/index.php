@@ -15,7 +15,7 @@ require_once ('util/constantes.php');
     </head>
 
     <body>
-        <div id="content">
+        <div id="container">
             <div id="cabecalho">
                 <div id="logo">
                     <a href="#"><img src="img/logonutrif.png" wight="800" height="100"></a>

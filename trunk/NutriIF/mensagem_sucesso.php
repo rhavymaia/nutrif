@@ -13,7 +13,7 @@
         <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
     </head>
     <body>
-        <div id="content">
+        <div id="container">
             <div id="cabecalho">
                 <div id="logo">
                     <a href="#"><img src="img/logonutrif.png" wight="800" height="100"></a>
