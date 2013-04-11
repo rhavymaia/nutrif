@@ -10,7 +10,7 @@ class connect_class {
 
         $this->db = new db_class;
 
-        if (!$this->db->connect('localhost', 'rhavy', '12345', 'nutrif', false)) {
+        if (!$this->db->connect('127.0.0.1', 'nutrif_user', 'nutr1f_us3r', 'nutrif', false)) {
             $this->db->print_last_error(false);
         }
     }

@@ -11,6 +11,7 @@
             ?>        
         </title>
         <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
+        <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     </head>
     <body>
         <div id="cabecalho">
@@ -32,8 +33,13 @@
         </div>
 
         <div id="rodape">
-            <p>IFPB - Instituto Federal de Educação, Ciência e Tecnologia<br>Campus Campina Grande</p>
-            <p>Copyright (c) 2013. Todos os direitos Reservados.</p>
-        </div
+            <p>
+                IFPB - Instituto Federal de Educação, Ciência e Tecnologia
+                <em>Campina Grande</em>
+            </p>
+            <p>
+                Copyright (c) 2013. Todos os direitos Reservados.
+            </p>
+        </div>
     </body>
 </html>
