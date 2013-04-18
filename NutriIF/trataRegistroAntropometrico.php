@@ -21,8 +21,8 @@
             && !ehVazio($nascimento) 
             && !ehVazio($sexo)
             && !ehVazio($nivel)
-            && !ehVazio($peso) 
-            && !ehVazio($altura)
+            && ehPontoFlutuante($peso)
+            && ehPontoFlutuante($altura)
             && verificaData($nascimento)
             &&(ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA))){
             
