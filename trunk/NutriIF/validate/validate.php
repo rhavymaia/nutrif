@@ -92,4 +92,15 @@
         
         return $ehNumerico;
     }
+    
+    /**
+     * Descrever a função
+     * 
+     * @param type $valor
+     * @return type
+     */
+    function ehPontoFlutuante($valor){
+        
+        return (is_numeric ($valor) && fmod((float) $valor, 1) !== 0);
+    }
 ?>
