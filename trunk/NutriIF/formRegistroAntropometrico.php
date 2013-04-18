@@ -52,7 +52,7 @@
                     </label>
 
                     <label for="dataNascimento"> <em>*</em> Data de Nascimento:
-                        <input type="text" name="nascimento" 
+                        <input type="text" name="dataNascimento" 
                                onkeypress="return formatar(this, '##/##/####')" />
                     </label>
 
