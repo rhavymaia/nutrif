@@ -15,7 +15,7 @@
     $peso = $_POST['peso'];
     $altura = $_POST['altura'];
 
-    //Verificar os campos obrigatórios, os tipos e formatos dos dados avaliados.
+    //Verificar os campos obrigatórios, os tipos e formatos dos dados avaliados
     if(!ehVazio($aluno) 
             && !ehVazio($matricula) 
             && !ehVazio($nascimento) 
