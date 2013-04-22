@@ -29,7 +29,7 @@
 
             <div id="content">
                 <ul>
-                    <li>Problema ao processa a informação</li>
+                    <li>Problema ao processar a informação</li>
                 </ul>
             </div>
 
