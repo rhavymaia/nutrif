@@ -1,5 +1,5 @@
 <?php
-
+    //session_start();
     // Importação
     require_once ('database/dao.class.php');
     require_once ('validate/validate.php');
