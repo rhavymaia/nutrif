@@ -55,6 +55,7 @@
      */
     function verificaAltura($altura){
         //TODO: Desenvolver a lógica da função.
+        
         return true;
     }
     
