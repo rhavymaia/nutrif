@@ -33,7 +33,7 @@
             'cd_nivel' => $nivel,
             'nr_altura' => $altura,
             'tp_sexo' => $sexo,
-            'tp_entrevitado' => TP_ALUNO
+            'tp_entrevistado' => TP_ALUNO
         );
         
         $dao = new dao_class();
@@ -46,6 +46,16 @@
         }      
     } else{
         
+        //jogar na sessão as variaveis do formulário
+        session_start();
+        $_SESSION["peso"]=$peso;
+        $_SESSION["altura"]=$altura;
+        $_SESSION["nascimento"]=$nascimento; 
+        $_SESSION["aluno"]=$aluno;
+        $_SESSION["matricula"]=$matricula;
+        $_SESSION["nivel"]=$nivel;
+        $_SESSION["sexo"]=$sexo;
+                
         // É necessário que ao retorna para a página de cadastro dos dados
         // antropométricos os valores sejam preenchidos novamente.
         echo "<script>alert('Preencha todos os campos com dados válidos!'); 
