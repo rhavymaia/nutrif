@@ -44,20 +44,20 @@
                       onreset="return resetValidacao()">
 
                     <label for="aluno"> <em>*</em> Aluno:
-                        <input type="text" name="aluno"/>
+                        <input type="text" name="aluno" value="<?php  echo $_SESSION['aluno']?>"/>
                     </label>
 
                     <label for="matricula"> <em>*</em> Matrícula:
-                        <input type="text" name="matricula"/>
+                        <input type="text" name="matricula" value="<?php  echo $_SESSION['matricula']?>"/>
                     </label>
 
                     <label for="dataNascimento"> <em>*</em> Data de Nascimento:
-                        <input type="text" name="dataNascimento" 
+                        <input type="text" name="dataNascimento" value="<?php  echo $_SESSION['dataNascimento']?>"
                                onkeypress="return formatar(this, '##/##/####')" />
                     </label>
 
                     <label for="sexo"> <em>*</em> Sexo 
-                        <select name="sexo">
+                        <select name="sexo" value="<?php  echo $_SESSION['sexo']?>">
                                 <option value=""></option>
                                 <option value="F"> Feminino </option>
                                 <option value="M"> Masculino </option>
@@ -65,7 +65,7 @@
                     </label>
 
                     <label for="nivel"> Nível 
-                            <select name="nivel">
+                            <select name="nivel" value="<?php  echo $_SESSION['nivel']?>">
                                     <option value=""></option>
                                     <option value="1"> Integrado </option>
                                     <option value="2"> Subseqüente </option>
@@ -75,12 +75,12 @@
 
                     <!-- Validação inicial no lado do cliente -->
                     <label for= "peso"> <em>*</em> Peso:
-                        <input type="text" name="peso"/><br>
+                        <input type="text" name="peso" value="<?php  echo $_SESSION['peso']?>"/><br>
                     </label>
 
                     <!-- Validação inicial no lado do cliente -->
                     <label for= "altura"> <em>*</em> Altura:
-                        <input type="text" name="altura"/><br>
+                        <input type="text" name="altura" value="<?php  echo $_SESSION['altura']?>"/><br>
                     </label>
 
                     <input type="submit" value="Enviar"/>
