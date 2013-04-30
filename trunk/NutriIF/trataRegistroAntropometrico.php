@@ -46,11 +46,13 @@
         if (ehNumerico($id)) {
            header("location: mensagem_sucesso.php"); 
         } else {
-           header("location: mensagem_erro.php"); 
+           header("location: mensagem_erro.php");
+           
         }      
     } else{
        
         //jogar na sessão as variaveis do formulário
+
         $_SESSION["peso"]= $peso;
         $_SESSION["altura"]= $altura;
         $_SESSION["nascimento"]= $nascimento; 
