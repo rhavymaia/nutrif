@@ -21,7 +21,6 @@ class dao_class {
     public function inserirEntrevistado($data) {
 
         $id = $this->db->insert_array('tb_entrevistado', $data);
-        echo 'Classe - ID: '.$id;
         return $id;
     }
 }
