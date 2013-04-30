@@ -61,7 +61,7 @@
                                onkeypress="return formatar(this, '##/##/####');" value= "<?php echo $_SESSION["nascimento"]; ?>"/>
                     </label>
 
-                    <label for="sexo"> <em>*</em> Sexo 
+                    <label for="sexo" value= "<?php echo $_SESSION["sexo"]; ?>"> <em>*</em> Sexo 
                         <select name="sexo">
                                 <option value=""></option>
                                 <option value="F"> Feminino </option>
@@ -71,7 +71,7 @@
                     </label>
 
                     <label for="nivel"> Nível 
-                            <select name="nivel">
+                            <select name="nivel" value= "<?php echo $_SESSION["nivel"]; ?>">
                                     <option value=""></option>
                                     <option value="1"> Integrado </option>
                                     <option value="2"> Subseqüente </option>
