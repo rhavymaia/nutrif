@@ -11,8 +11,8 @@
             
                 echo PF_TITULO;
                 
-                    session_start(); 
-         $_SESSION["peso"]= $peso;
+        session_start(); 
+        $_SESSION["peso"]= $peso;
         $_SESSION["altura"]= $altura;
         $_SESSION["nascimento"]= $nascimento; 
         $_SESSION["aluno"]= $aluno;
@@ -69,7 +69,7 @@
                     </label>
 
                     <label for="sexo"> <em>*</em> Sexo 
-                        <select name="sexo">
+                        <select name="sexo" value= "<?php echo $_SESSION["sexo"]; ?>">
                                 <option value=""></option>
                                 <option value="F"> Feminino </option>
                                 <option value="M"> Masculino </option>
@@ -77,7 +77,7 @@
                     </label>
 
                     <label for="nivel"> Nível 
-                            <select name="nivel">
+                            <select name="nivel" value= "<?php echo $_SESSION["nivel"]; ?>">
                                     <option value=""></option>
                                     <option value="1"> Integrado </option>
                                     <option value="2"> Subseqüente </option>
@@ -93,7 +93,7 @@
 
                     <!-- Validação inicial no lado do cliente -->
                     <label for= "altura"> <em>*</em> Altura:
-                        <input type="text" name="altura"/><br>
+                        <input type="text" name="altura" value= "<?php echo $_SESSION["altura"]; ?>"/><br>
                     </label>
 
                     <input type="submit" value="Enviar"/>
