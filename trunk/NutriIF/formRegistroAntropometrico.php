@@ -1,5 +1,6 @@
 <?php
     require_once ('util/constantes.php');
+    session_start();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
         "http://www.w3.org/TR/html4/strict.dtd">
@@ -7,7 +8,17 @@
     <head>
         <title>
             <?php
+            
                 echo PF_TITULO;
+                
+                    session_start(); 
+         $_SESSION["peso"]= $peso;
+        $_SESSION["altura"]= $altura;
+        $_SESSION["nascimento"]= $nascimento; 
+        $_SESSION["aluno"]= $aluno;
+        $_SESSION["matricula"]= $matricula;
+        $_SESSION["nivel"]= $nivel;
+        $_SESSION["sexo"]= $sexo;
             ?>
         </title>
         
@@ -41,20 +52,20 @@
                 <form action="trataRegistroAntropometrico.php" 
                       method="POST"
                       name="formRegistroAntropometrico"
-                      onsubmit="return validaForm()"
-                      onreset="return resetValidacao()">
-        
+                      onsubmit="return validaForm();"
+                      onreset="return resetValidacao();">
+             
                     <label for="aluno"> <em>*</em> Aluno:
-                        <input type="text" name="aluno"/>
+                        <input type="text" name="aluno" value= "<?php echo $_SESSION["aluno"]; ?>"/>
                     </label>
 
                     <label for="matricula"> <em>*</em> Matrícula:
-                        <input type="text" name="matricula" value= "<?php echo $_SESSION['matricula'] ?>"/> 
+                        <input type="text" name="matricula" value= "<?php echo $_SESSION["matricula"]; ?>"/> 
                     </label>
 
-                    <label for="dataNascimento"> <em>*</em> Data de Nascimento:
-                        <input type="text" name="dataNascimento" 
-                               onkeypress="return formatar(this, '##/##/####')" />
+                    <label for="nascimento"> <em>*</em> Data de Nascimento:
+                        <input type="text" name="nascimento" 
+                               onkeypress="return formatar(this, '##/##/####');" value= "<?php echo $_SESSION["nascimento"]; ?>"/>
                     </label>
 
                     <label for="sexo"> <em>*</em> Sexo 
@@ -76,7 +87,8 @@
 
                     <!-- Validação inicial no lado do cliente -->
                     <label for= "peso"> <em>*</em> Peso:
-                        <input type="text" name="peso"/><br>
+                        <input type="text" name="peso" value= "<?php echo $_SESSION["peso"]; ?>" />; 
+                       
                     </label>
 
                     <!-- Validação inicial no lado do cliente -->
@@ -88,7 +100,7 @@
                     <input type="reset" value="Limpar"/>
                 </form>
             </div>
-
+                            
             <div id="rodape">
                 <p>
                     IFPB - Instituto Federal de Educação, Ciência e Tecnologia
