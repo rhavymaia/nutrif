@@ -1,5 +1,6 @@
 <?php
-    //session_start();
+    session_start();
+
     // Importação
     require_once ('database/dao.class.php');
     require_once ('validate/validate.php');
@@ -9,7 +10,7 @@
     //Inicialização de variáveis.
     $aluno = $_POST['aluno'];
     $matricula = $_POST['matricula'];
-    $nascimento = $_POST['dataNascimento'];
+    $nascimento = $_POST['nascimento'];
     $sexo = $_POST['sexo'];
     $nivel = $_POST['nivel'];
     $peso = $_POST['peso'];
@@ -39,23 +40,26 @@
         $dao = new dao_class();
         $id = $dao->inserirEntrevistado($data);
         
+        
+        
+        
         if (ehNumerico($id)) {
            header("location: mensagem_sucesso.php"); 
         } else {
            header("location: mensagem_erro.php"); 
         }      
     } else{
-        
+       
         //jogar na sessão as variaveis do formulário
-        session_start();
-        $_SESSION["peso"]=$peso;
-        $_SESSION["altura"]=$altura;
-        $_SESSION["nascimento"]=$nascimento; 
-        $_SESSION["aluno"]=$aluno;
-        $_SESSION["matricula"]=$matricula;
-        $_SESSION["nivel"]=$nivel;
-        $_SESSION["sexo"]=$sexo;
-                
+        $_SESSION["peso"]= $peso;
+        $_SESSION["altura"]= $altura;
+        $_SESSION["nascimento"]= $nascimento; 
+        $_SESSION["aluno"]= $aluno;
+        $_SESSION["matricula"]= $matricula;
+        $_SESSION["nivel"]= $nivel;
+        $_SESSION["sexo"]= $sexo;
+         
+             
         // É necessário que ao retorna para a página de cadastro dos dados
         // antropométricos os valores sejam preenchidos novamente.
         echo "<script>alert('Preencha todos os campos com dados válidos!'); 
