@@ -11,14 +11,7 @@
             
                 echo PF_TITULO;
                 
-        session_start(); 
-        $_SESSION["peso"]= $peso;
-        $_SESSION["altura"]= $altura;
-        $_SESSION["nascimento"]= $nascimento; 
-        $_SESSION["aluno"]= $aluno;
-        $_SESSION["matricula"]= $matricula;
-        $_SESSION["nivel"]= $nivel;
-        $_SESSION["sexo"]= $sexo;
+
             ?>
         </title>
         
@@ -69,15 +62,16 @@
                     </label>
 
                     <label for="sexo"> <em>*</em> Sexo 
-                        <select name="sexo" value= "<?php echo $_SESSION["sexo"]; ?>">
+                        <select name="sexo">
                                 <option value=""></option>
                                 <option value="F"> Feminino </option>
                                 <option value="M"> Masculino </option>
                         </select>
+                        
                     </label>
 
                     <label for="nivel"> Nível 
-                            <select name="nivel" value= "<?php echo $_SESSION["nivel"]; ?>">
+                            <select name="nivel">
                                     <option value=""></option>
                                     <option value="1"> Integrado </option>
                                     <option value="2"> Subseqüente </option>
