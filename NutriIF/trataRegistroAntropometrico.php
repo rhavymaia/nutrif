@@ -1,4 +1,5 @@
 <?php
+
     session_start();
 
     // Importação
@@ -44,27 +45,36 @@
         
         
         if (ehNumerico($id)) {
-           header("location: mensagem_sucesso.php"); 
+           header("location: mensagem_sucesso.php");
+           unset($_SESSION['erro']);
         } else {
            header("location: mensagem_erro.php"); 
+           
+           
         }      
     } else{
        
         //jogar na sessão as variaveis do formulário
-        $_SESSION["peso"]= $peso;
-        $_SESSION["altura"]= $altura;
-        $_SESSION["nascimento"]= $nascimento; 
-        $_SESSION["aluno"]= $aluno;
-        $_SESSION["matricula"]= $matricula;
-        $_SESSION["nivel"]= $nivel;
-        $_SESSION["sexo"]= $sexo;
+        $_SESSION['peso']= $peso;
+        $_SESSION['altura']= $altura;
+        $_SESSION['nascimento']= $nascimento; 
+        $_SESSION['aluno']= $aluno;
+        $_SESSION['matricula']= $matricula;
+        $_SESSION['nivel']= $nivel;
+        $_SESSION['sexo']= $sexo;
          
              
         // É necessário que ao retorna para a página de cadastro dos dados
         // antropométricos os valores sejam preenchidos novamente.
-        echo "<script>alert('Preencha todos os campos com dados válidos!'); 
-            window.location.href='formRegistroAntropometrico.php';</script>";
-    }				
+        /*echo "<script>alert('Preencha todos os campos com dados válidos!'); 
+            window.location.href='formRegistroAntropometrico.php';</script>";*/
+        
+        header("location: formRegistroAntropometrico.php");
+        $_SESSION['erro']= "Preencha todos os campos com dados válidos!";
+           
+    }	
+   
+   
 ?>
 
 	
