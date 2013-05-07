@@ -7,11 +7,8 @@
 <html>
     <head>
         <title>
-            <?php
-            
-                echo PF_TITULO;
-
-
+            <?php            
+                echo PF_TITULO;                
             ?>
         </title>
         
@@ -40,6 +37,12 @@
             <div id="content">   
                 <ul id="erro">
                     <!-- Lista de erros na validação -->
+                     <?php echo(isset($_SESSION['erro'])? $_SESSION['erro']: VAZIO); 
+                     
+                            //Após ser exibida a mensagem de erro da validação, sessão será destruída
+                           unset($_SESSION['erro']);
+                     ?>
+                    
                 </ul>
                 
                 <form action="trataRegistroAntropometrico.php" 
@@ -49,50 +52,67 @@
                       onreset="return resetValidacao();">
              
                     <label for="aluno"> <em>*</em> Aluno:
-                        <input type="text" name="aluno" value= "<?php echo $_SESSION["aluno"]; ?>"/>
+                        <input type="text" name="aluno" value= "<?php echo(isset($_SESSION['aluno'])? $_SESSION['aluno']: VAZIO) ?>"/>
                     </label>
 
                     <label for="matricula"> <em>*</em> Matrícula:
-                        <input type="text" name="matricula" value= "<?php echo $_SESSION["matricula"]; ?>"/> 
+                        <input type="text" name="matricula" value= "<?php echo(isset($_SESSION['matricula'])? $_SESSION['matricula']: VAZIO); ?>"/> 
                     </label>
 
                     <label for="nascimento"> <em>*</em> Data de Nascimento:
                         <input type="text" name="nascimento" 
-                               onkeypress="return formatar(this, '##/##/####');" value= "<?php echo $_SESSION["nascimento"]; ?>"/>
+                               onkeypress="return formatar(this, '##/##/####');" 
+                               value= "<?php echo(isset($_SESSION['nascimento'])? $_SESSION['nascimento']: VAZIO); ?>"/>
                     </label>
 
-                    <label for="sexo" value= "<?php echo $_SESSION["sexo"]; ?>"> <em>*</em> Sexo 
+                    <label for="sexo" value= "<?php echo(''); ?>"> <em>*</em> Sexo 
+                        <?php
+                            $sexoSelected = isset($_SESSION['sexo'])? $_SESSION['sexo']: VAZIO;
+                        ?>                        
                         <select name="sexo">
-                                <option value=""></option>
-                                <option value="F"> Feminino </option>
-                                <option value="M"> Masculino </option>
-                        </select>
-                        
+                            <option value="" <?php if($sexoSelected=='') echo 'selected'; ?>></option>
+                                <option value="F" <?php if($sexoSelected=='F') echo 'selected'; ?>> Feminino </option>
+                                <option value="M" <?php if($sexoSelected=='M') echo 'selected'; ?>> Masculino </option>
+                        </select>                        
                     </label>
 
-                    <label for="nivel"> Nível 
-                            <select name="nivel" value= "<?php echo $_SESSION["nivel"]; ?>">
-                                    <option value=""></option>
-                                    <option value="1"> Integrado </option>
-                                    <option value="2"> Subseqüente </option>
-                                    <option value="3"> Superior </option>
-                            </select>
+                    <label for="nivel"> Nível
+                        <?php
+                            $nivelSelected = isset($_SESSION['nivel'])? $_SESSION['nivel']: VAZIO;
+                        ?>                        
+                        <select name="nivel">
+                            <option value="" <?php if($nivelSelected=='') echo 'selected'; ?>></option>
+                            <option value="1" <?php if($nivelSelected=='1') echo 'selected'; ?>> Integrado </option>
+                            <option value="2" <?php if($nivelSelected=='2') echo 'selected'; ?>> Subseqüente </option>
+                            <option value="3" <?php if($nivelSelected=='3') echo 'selected'; ?>> Superior </option>
+                        </select>
                     </label>
 
                     <!-- Validação inicial no lado do cliente -->
                     <label for= "peso"> <em>*</em> Peso:
-                        <input type="text" name="peso" value= "<?php echo $_SESSION["peso"]; ?>" />; 
+                        <input type="text" name="peso" value= "<?php echo(isset($_SESSION['peso'])? $_SESSION['peso']: VAZIO); ?>" /> 
                        
                     </label>
 
                     <!-- Validação inicial no lado do cliente -->
                     <label for= "altura"> <em>*</em> Altura:
-                        <input type="text" name="altura" value= "<?php echo $_SESSION["altura"]; ?>"/><br>
+                        <input type="text" name="altura" value= "<?php  echo(isset($_SESSION['altura'])? $_SESSION['altura']: VAZIO); ?>"/><br>
                     </label>
 
                     <input type="submit" value="Enviar"/>
                     <input type="reset" value="Limpar"/>
                 </form>
+                <?php
+                    // Após preenchimento do formulário limpar as variáveis da sessão.   
+                    unset($_SESSION['peso']);
+                    unset($_SESSION['altura']);
+                    unset($_SESSION['nascimento']);
+                    unset($_SESSION['aluno']);
+                    unset($_SESSION['matricula']);
+                    unset($_SESSION['nivel']);
+                    unset($_SESSION['sexo']); 
+                    
+                ?>
             </div>
                             
             <div id="rodape">
