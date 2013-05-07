@@ -7,4 +7,6 @@
     
     // Prefixo do Título da página
     define('PF_TITULO', 'NutrIF');
+    
+    define('VAZIO', '');
 ?>
