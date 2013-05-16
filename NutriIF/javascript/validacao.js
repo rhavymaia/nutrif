@@ -1,8 +1,7 @@
 /* Biblioteca de validação */
-var aluno = 1;
-var subsequente = 2;
 
-function validaForm() {
+function validaFormRegistroAntropometrico() {
+    
     var vazio = "";
     var formulario = document.formRegistroAntropometrico;
 
@@ -16,18 +15,22 @@ function validaForm() {
         return false;
     }
     
-    if (formulario.dataNascimento.value.trim() == vazio) {
+    if (formulario.nascimento.value.trim() == vazio) {
         adicionaErro("data nascimento");
         return false;
-    }
+    }  
 
-    if (formulario.sexo.value.trim() == vazio) {
-        adicionaErro(formulario.sexo.name);
+    if (formulario.peso.value.trim() == vazio) {
+        adicionaErro(formulario.peso.name);
         return false;
-    }    
-
+    }
+    
+    if (formulario.altura.value.trim() == vazio) {
+        adicionaErro(formulario.altura.name);
+        return false;
+    }
     /*
-     * peso, altura,
+     * sexo, nível
      */
 
     return true;

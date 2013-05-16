@@ -22,7 +22,7 @@
     }
 
     /**
-     * Descrever a função
+     * Descrever a função.
      * 
      * @param type $alternativa
      * @return boolean
@@ -37,7 +37,7 @@
     }
     
     /**
-     * Descrever a função
+     * Descrever a função.
      * 
      * @param type $peso
      * @return boolean
@@ -48,7 +48,7 @@
     }
     
     /**
-     * Descrever a função
+     * Descrever a função.
      * 
      * @param type $altura
      * @return boolean
@@ -60,7 +60,7 @@
     }
     
     /**
-     * Descrever a função
+     * Descrever a função.
      * 
      * @param type $valor
      * @return type
@@ -78,7 +78,7 @@
     }
     
     /**
-     * Descrever a função
+     * Descrever a função.
      * 
      * @param type $valor
      * @return type
@@ -95,7 +95,7 @@
     }
     
     /**
-     * Descrever a função
+     * Descrever a função.
      * 
      * @param type $valor
      * @return type

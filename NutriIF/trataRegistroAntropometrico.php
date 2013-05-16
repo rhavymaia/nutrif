@@ -18,15 +18,7 @@
     $altura = $_POST['altura'];
 
     //Verificar os campos obrigatórios, os tipos e formatos dos dados avaliados
-    if(!ehVazio($aluno) 
-            && !ehVazio($matricula) 
-            && !ehVazio($nascimento) 
-            && !ehVazio($sexo)
-            && !ehVazio($nivel)
-            && ehPontoFlutuante($peso)
-            && ehPontoFlutuante($altura)
-            && verificaData($nascimento)
-            &&(ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA))){
+    if(validaFormRegistroAntropometrico()){
             
         $data = array(
             'nr_matricula' => $matricula,
@@ -41,16 +33,10 @@
         $dao = new dao_class();
         $id = $dao->inserirEntrevistado($data);
         
-        
-        
-        
-        if (ehNumerico($id)) {
-           header("location: mensagem_sucesso.php");
-           unset($_SESSION['erro']);
-        } else {
-           header("location: mensagem_erro.php"); 
-           
-           
+        if (ehNumerico($id)) {           
+           header("location: mensagem_sucesso.php");           
+        } else {           
+            header("location: mensagem_erro.php");          
         }      
     } else{
        
@@ -62,19 +48,63 @@
         $_SESSION['matricula']= $matricula;
         $_SESSION['nivel']= $nivel;
         $_SESSION['sexo']= $sexo;
-         
-             
-        // É necessário que ao retorna para a página de cadastro dos dados
-        // antropométricos os valores sejam preenchidos novamente.
-        /*echo "<script>alert('Preencha todos os campos com dados válidos!'); 
-            window.location.href='formRegistroAntropometrico.php';</script>";*/
         
-        header("location: formRegistroAntropometrico.php");
-        $_SESSION['erro']= "Preencha todos os campos com dados válidos!";
-           
-    }	
-   
-   
+        header("location: formRegistroAntropometrico.php");        
+    }
+    
+    function validaFormRegistroAntropometrico() {
+        
+        $ehValido = true;
+        $msgsErro = array();
+    
+        if (ehVazio($_POST['aluno'])) {
+            
+            $msgErro = array('aluno' => "O nome do aluno é inválido.");
+            array_push($msgsErro, $msgErro);
+            
+            $ehValido = false;            
+        }
+        
+        if (!ehNumerico($_POST['matricula']) 
+                || (strlen($_POST['matricula']) != TAM_MATRICULA)
+            ) {
+            
+            $msgErro = array('matricula' => "A matrícula passada é inválida.");
+            array_push($msgsErro, $msgErro);
+            
+            $ehValido = false;            
+        } 
+        
+        if (ehVazio($_POST['sexo'])) {
+            $msgErro = array('matricula' => "O sexo selecionado é inválido.");
+            $ehValido = false;            
+        }
+        
+        if (ehVazio($_POST['nivel'])) {
+            $msgErro = array('matricula' => "O nível selecionado é inválido.");
+            $ehValido = false;            
+        }
+        
+        if (!ehPontoFlutuante($_POST['peso'])) {
+            $msgErro = array('matricula' => "O peso preenchido é inválido. O número deve está no formato \"0.0\".");
+            $ehValido = false;            
+        }
+        
+        if (!ehPontoFlutuante($_POST['altura'])) {
+            $msgErro = array('matricula' => "A altura preenchida é inválida. O número deve está no formato \"0.0\".");
+            $ehValido = false;            
+        }
+        
+        if (ehVazio($_POST['nascimento']) || !verificaData($_POST['nascimento'])) {
+            $msgErro = array('matricula' => "A data de nascimento preenchida é inválida."
+                ."A data deve está no formato \"dd/mm/aaaa\".");
+            $ehValido = false;            
+        }              
+        
+        $_SESSION['erro'] = $msgsErro;
+        
+        return $ehValido;
+    }
 ?>
 
 	
