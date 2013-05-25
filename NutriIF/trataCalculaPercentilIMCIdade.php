@@ -1,4 +1,8 @@
 <?php
+ // Cabeçalho e menu da página html.
+    require_once 'template/header.php';
+ ?>
+<?php
 /*
 consultar o paciente na base de dados na tabela entrevistado;
 
@@ -18,4 +22,9 @@ buscar o percentil na base de dados: sexo, idade, imc
  */
 
 	
+?>
+
+<?php 
+    // Rodapé da página html.
+    require_once 'template/footer.php';
 ?>
