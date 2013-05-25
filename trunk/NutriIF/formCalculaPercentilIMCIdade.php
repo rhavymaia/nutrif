@@ -1,7 +1,7 @@
 <?php
  // Cabeçalho e menu da página html.
     require_once 'template/header.php';
-    ?>
+ ?>
 
     <form action="TrataCalculaPercentilIMCidade.php" method="post">
 
@@ -9,7 +9,7 @@
         <input name="MatriculaDeBusca" type="text">
 		<input type="submit" value="Buscar">
                         
-       
+      
 
 <?php 
 
