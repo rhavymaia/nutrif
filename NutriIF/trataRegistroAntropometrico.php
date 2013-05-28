@@ -76,28 +76,33 @@
         } 
         
         if (ehVazio($_POST['sexo'])) {
-            $msgErro = array('matricula' => "O sexo selecionado é inválido.");
+            $msgErro = array('sexo' => "O sexo selecionado é inválido.");
+            array_push($msgsErro, $msgErro);
             $ehValido = false;            
         }
         
         if (ehVazio($_POST['nivel'])) {
-            $msgErro = array('matricula' => "O nível selecionado é inválido.");
+            $msgErro = array('nivel' => "O nível selecionado é inválido.");
+            array_push($msgsErro, $msgErro);
             $ehValido = false;            
         }
         
         if (!ehPontoFlutuante($_POST['peso'])) {
-            $msgErro = array('matricula' => "O peso preenchido é inválido. O número deve está no formato \"0.0\".");
+            $msgErro = array('peso' => "O peso preenchido é inválido. O número deve está no formato \"0.0\".");
+            array_push($msgsErro, $msgErro);
             $ehValido = false;            
         }
         
         if (!ehPontoFlutuante($_POST['altura'])) {
-            $msgErro = array('matricula' => "A altura preenchida é inválida. O número deve está no formato \"0.0\".");
+            $msgErro = array('altura' => "A altura preenchida é inválida. O número deve está no formato \"0.0\".");
+            array_push($msgsErro, $msgErro);
             $ehValido = false;            
         }
         
         if (ehVazio($_POST['nascimento']) || !verificaData($_POST['nascimento'])) {
-            $msgErro = array('matricula' => "A data de nascimento preenchida é inválida."
+            $msgErro = array('nascimento' => "A data de nascimento preenchida é inválida."
                 ."A data deve está no formato \"dd/mm/aaaa\".");
+            array_push($msgsErro, $msgErro);
             $ehValido = false;            
         }              
         

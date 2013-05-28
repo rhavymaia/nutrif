@@ -17,4 +17,10 @@ function showListErro($msgsErro) {
     }
 }
 
+function ErroMatricula($mensagem) {
+
+    if (isset($mensagem)){
+                echo("<li>" . $mensagem . "</li>");            }
+}
+
 ?>
