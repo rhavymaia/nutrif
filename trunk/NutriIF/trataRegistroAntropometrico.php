@@ -16,6 +16,7 @@
     $nivel = $_POST['nivel'];
     $peso = $_POST['peso'];
     $altura = $_POST['altura'];
+    $esporte = $_POST['esporte'];
 
     //Verificar os campos obrigatórios, os tipos e formatos dos dados avaliados
     if(validaFormRegistroAntropometrico()){
@@ -48,6 +49,7 @@
         $_SESSION['matricula']= $matricula;
         $_SESSION['nivel']= $nivel;
         $_SESSION['sexo']= $sexo;
+        $_SESSION['esporte']= $esporte;
         
         header("location: formRegistroAntropometrico.php");        
     }
@@ -106,10 +108,13 @@
             $ehValido = false;            
         }              
         
+        if (ehVazio($_POST['esporte'])) {
+            $msgErro = array('esporte' => "Informe a quantidade de atividade física realizada por semana.");
+            $ehValido = false;            
+        }
+        
         $_SESSION['erro'] = $msgsErro;
         
         return $ehValido;
     }
 ?>
-
-	
