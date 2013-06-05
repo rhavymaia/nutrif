@@ -30,7 +30,7 @@
             <div id="menu">
                 <ul>
                     <li><span><a href="index.php">Home</a></span></li>
-                    <li class="pagina_atual"><a href="formRegistroAntropometrico.php">Formulário</a></li>
-                    <li><a href="formCalculaPercentilIMCIdade.php">Consultar percentil</a></li> 
+                    <li class="pagina_atual"><a href="formRegistroAntropometrico.php">Cadastro Antropométrico</a></li>
+                    <li class="pagina_atual"><a href="formCalculaPercentilIMCIdade.php">Cálculo do Percentil</a></li> 
                 </ul>
             </div>
