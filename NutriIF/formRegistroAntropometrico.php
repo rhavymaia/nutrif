@@ -61,13 +61,17 @@
 
             <!-- Validação inicial no lado do cliente -->
             <label for= "peso"> <em>*</em> Peso:
-                <input type="text" name="peso" value= "<?php echo(isset($_SESSION['peso'])? $_SESSION['peso']: VAZIO); ?>" /> 
-
+                <input type="text" name="peso" value= "<?php echo(isset($_SESSION['peso'])? $_SESSION['peso']: VAZIO); ?>" />
             </label>
 
             <!-- Validação inicial no lado do cliente -->
             <label for= "altura"> <em>*</em> Altura:
-                <input type="text" name="altura" value= "<?php  echo(isset($_SESSION['altura'])? $_SESSION['altura']: VAZIO); ?>"/><br>
+                <input type="text" name="altura" value= "<?php  echo(isset($_SESSION['altura'])? $_SESSION['altura']: VAZIO); ?>"/>
+            </label>
+            
+            <!-- Validação inicial no lado do cliente -->
+            <label for= "esporte"> <em>*</em> Quantas vezes pratica atividade física por semana:
+                <input type="text" name="esporte" value= "<?php  echo(isset($_SESSION['esporte'])? $_SESSION['esporte']: VAZIO); ?>"/>
             </label>
 
             <input type="submit" value="Enviar"/>
@@ -82,6 +86,7 @@
             unset($_SESSION['matricula']);
             unset($_SESSION['nivel']);
             unset($_SESSION['sexo']);
+            unset($_SESSION['esporte']);
 
             //Erro da validação, sessão será destruída
             unset($_SESSION['erro']);                   
