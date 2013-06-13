@@ -60,7 +60,7 @@
     }
     
     /**
-     * Descrever a função.
+     * Essa função testa se a variável é vazia ou não.
      * 
      * @param type $valor
      * @return type
@@ -78,7 +78,7 @@
     }
     
     /**
-     * Descrever a função.
+     * Essa função testa se o valor da variável é numérico ou não.
      * 
      * @param type $valor
      * @return type
@@ -95,7 +95,7 @@
     }
     
     /**
-     * Descrever a função.
+     * Essa função testa se o valor da variável tem ponto flutuante ou não.
      * 
      * @param type $valor
      * @return type
