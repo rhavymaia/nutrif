@@ -10,7 +10,7 @@
     require_once ('util/constantes.php');
     
     //Inicialização de variáveis.
-    $matr = $_POST['MatriculaDeBusca'];
+    $matr = $_GET['MatriculaDeBusca'];
     
     if (!ehNumerico($matr) 
                 || (strlen($matr) != TAM_MATRICULA)
@@ -21,7 +21,7 @@
         $_SESSION['erro'] = $msg;
         header("location: formCalculaPercentilIMCIdade.php");
         
-        }
+        }         
 ?>
 
 <?php 
