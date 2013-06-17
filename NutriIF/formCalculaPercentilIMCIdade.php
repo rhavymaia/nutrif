@@ -16,7 +16,7 @@
              isset($_SESSION['erro'])? ErroMatricula($_SESSION['erro']): VAZIO;
              ?>                    
         </ul>
-    <form action="TrataCalculaPercentilIMCidade.php" method="GET">
+    <form action="TrataCalculaPercentilIMCidade.php" method="POST">
         
         <label for="MatriculaDeBusca"> <em>*</em> Digite a matrícula a ser procurada:
                 <input type="text" name="MatriculaDeBusca" value= "<?php echo(isset($_SESSION['MatriculaDeBusca'])? $_SESSION['MatriculaDeBusca']: VAZIO); ?>"/> 
