@@ -24,18 +24,6 @@ class dao_class {
         $id = $this->db->insert_array('tb_entrevistado', $data);
         return $id;
     }
-   
-    
-    /*public function selectDadosPercentil() {
-
-        $query = "SELECT nr_peso, nr_altura,dt_nascimento,tp_sexo"
-                . "FROM tb_entrevistado"
-                . "WHERE matr == nr_matricula";
-
-        $result = $this->db->select($query);
-
-        return $this->db->get_rows($result);
-    }*/
 
 }
 
