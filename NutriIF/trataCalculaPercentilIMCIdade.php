@@ -28,7 +28,9 @@
     //Conexão e consulta ao MySQL
     mysql_connect('localhost','nutrif_user','nutr1f_us3r') or die(mysql_error());
     mysql_select_db('nutrif') or die(mysql_error());
-    $qry = mysql_query("SELECT nr_peso,nr_altura,dt_nascimento,tp_sexo FROM tb_entrevistado WHERE nr_matricula = $matr");
+    $qry = mysql_query("SELECT nr_peso,nr_altura,dt_nascimento,tp_sexo 
+                        FROM tb_entrevistado 
+                        WHERE nr_matricula = $matr");
 
     //Pegando os nomes dos campos
     $num_fields = mysql_num_fields($qry);//Obtém o número de campos do resultado
@@ -58,6 +60,13 @@
 
     //Imprimindo a tabela
         echo $table;  
+        
+$peso = mysql_result($qry,0,"nr_peso");
+$altura = mysql_result($qry,0,"nr_altura");
+
+$imc = $peso/(pow($altura,2));
+
+echo ("IMC: ".$imc); 
 ?>
 
     <?php 
