@@ -20,21 +20,29 @@
         return $dataFormatada;
     }
     
-        function CalculaIdade($date){ 
+    //função que formata a data
+    function formata_data($data)
+    {
+     //recebe o parâmetro e armazena em um array separado por -
+     $data = explode('-', $data);
+     //armazena na variavel data os valores do vetor data e concatena /
+     $data = $data[2].'/'.$data[1].'/'.$data[0];
 
-           // Separa em dia, mês e ano
-           list($dia, $mes, $ano) = explode('/', $date);
+     //retorna a string da ordem correta, formatada
+     return $data;
+    }
+       
+    function getIdade($aniversario) {
+        $curr = 'now';
+        $year_curr = date("Y", strtotime($curr));
 
-           // Descobre que dia é hoje e retorna a unix timestamp
-           $hoje = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
-           // Descobre a unix timestamp da data de nascimento do fulano
-           $nascimento = mktime( 0, 0, 0, $mes, $dia, $ano);
+        $days = !($year_curr % 4) || !($year_curr % 400) & ($year_curr % 100) ? 366: 355;
 
-           // Depois apenas fazemos o cálculo já citado 
-           $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
-           
-           return $idade;
+        list($d, $m, $y) = explode('/', $aniversario);
+        $idade = floor(((strtotime($curr) - mktime(0, 0, 0, $m, $d, $y)) / 86400) / $days);
+    return $idade*12;
 
-        }
+}
+    
 
 ?>
