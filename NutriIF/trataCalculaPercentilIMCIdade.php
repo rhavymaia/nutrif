@@ -59,6 +59,8 @@
     $peso = mysql_result($qry,0,"nr_peso");
     $altura = mysql_result($qry,0,"nr_altura");
     $data_nasc = mysql_result($qry,0,"dt_nascimento");
+    $sexo = mysql_result($qry,0,"tp_sexo");
+    
     $dataphp = formata_data($data_nasc);
     
     $imc = $peso/(pow($altura,2));
@@ -66,6 +68,9 @@
     echo ("<li>IMC: ".$imc."</li>");     
     echo ("<li>Data em formato PHP: ".$dataphp."</li>");
     echo ("<li>Idade em meses: ".getIdade($dataphp)."</li>");
+    
+    //Buscar percentil referente ao IMC idade e sexo
+
    }else{
         $msg = ("Nenhum dado encontrado!");        
         $_SESSION['erro'] = $msg;

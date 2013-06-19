@@ -26,7 +26,7 @@
      //recebe o parâmetro e armazena em um array separado por -
      $data = explode('-', $data);
      //armazena na variavel data os valores do vetor data e concatena /
-     $data = $data[2].'/'.$data[1].'/'.$data[0];
+     $data = $data[1].'/'.$data[2].'/'.$data[0];
 
      //retorna a string da ordem correta, formatada
      return $data;
