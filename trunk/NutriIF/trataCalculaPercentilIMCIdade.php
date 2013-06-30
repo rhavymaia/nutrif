@@ -82,3 +82,4 @@
     // Rodapé da página html.
     require_once 'template/footer.php';
 ?>
+
