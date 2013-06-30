@@ -8,7 +8,14 @@
     require_once 'template/header.php';
 ?>
 
-    <div id="content">   
+    <div id="content">
+        
+        <div id="letras">
+            <p>
+                <h1>Registro Antropométrico</h1>
+            </p>
+        </div>
+        
         <ul id="erro">
             <!-- Lista de erros na validação -->
              <?php 
@@ -91,6 +98,10 @@
             //Erro da validação, sessão será destruída
             unset($_SESSION['erro']);                   
         ?>
+    </div>
+
+    <div class="clear">
+        <!-- Vazio -->
     </div>
 
 <?php 

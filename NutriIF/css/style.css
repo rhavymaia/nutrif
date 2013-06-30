@@ -1,145 +1,347 @@
-
-/*
-PROJETO
-NUTRIF
-*/
-
-body {
-	margin: 0;
-	padding: 0;
-	background: /*#F2F2F2*/ url(../img/back1.jpg) no-repeat left top;/*repeat-x left top;*/
-        background-size: 100% 15%;
-
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #7F7F81;
+@font-face {
+    font-family: "fonte1";
+    src: url("../fonts/fonte1.woff");
+}
+@font-face {
+    font-family: "fonte2";
+    src: url("../fonts/fonte2.woff");
+}
+@font-face {
+    font-family: "fonte3";
+    src: url("../fonts/fonte3.woff");
+}
+@font-face {
+    font-family: "fonte4";
+    src: url("../fonts/fonte4.woff");
+}
+*{
+    margin: 0 auto;
+    padding: 0;
+}
+.clear{
+    clear: both;
+}
+.container{
+    width: 920px;
+    min-width: 920px;
+    position: relative;
+}
+b{
+    color: rgb(55, 55, 55);
+    font-family: fonte4, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+#top{
+    border-top: 4px solid rgb(36, 187, 240);
+}
+#top .container{
+    padding: 10px 10px;
+}
+#top #logo{
+    float: left;
+    display: block;
+    width: 200px;
+    height: 50px;
+    /*background-color: red;
+    text-align: center;      */
+}
+#top #logo img{
+    float: left;
+    display: block;
+    width: 125px;
+    height: 60px;
+    /*background-color: red;
+    text-align: center;      */
+}
+#top #menu{
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 12px);
+}
+#top #menu li{
+    list-style: none;
+    display: inline;
+    float: left;
+}
+#top #menu li a{
+    border-radius: 4px;
+    display: block;
+    padding: 5px 5px 5px 5px;
+    margin: 0 5px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #000;
+    font-size: 10px;
+    font-family: "arial black", sans-serif;
+}
+#top #menu li a:hover{
+    box-shadow: inset 0 0 5px 1px #888;
+    background: rgb(39, 187, 235);
+    color: #fff;
+}
+#banner{
+    position: relative;
+    min-height: 400px;
+    height: 30%;
+    overflow: hidden;
+    min-width: 920px;
+}
+#banner img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -10;
+}
+#banner .container{
+    min-height: 400px;
+    height: 30%;
+    overflow: hidden;
+}
+#banner #bcenter{
+    position: absolute;
+    width: 900px;
+    height: 300px;
+    top: calc(50% - 150px);
+    left: calc(50% - 450px);
+}
+#banner #bleft{
+    float: left;
+    width: 50%;
+    text-align: center;
+    margin-top: 30px;
+    text-shadow: 1px 1px 1px #000;
+}
+#banner #bleft #always, #globally, #and, #bleft h4{
+    text-transform: uppercase;
+    color: #fff;
+}
+#banner #always{
+    font-family: fonte3, sans-serif;
+}
+#banner #globally{
+    font-family: fonte4, sans-serif;
+    font-size: 55px;
+    margin-top: -15px;
+}
+#banner #and{
+    font-family: fonte3, sans-serif;
+    margin-top: -15px;
+    padding: 10px 0;
+}
+#banner #bleft h4{
+    font-family: fonte3, sans-serif;
+    font-size: 12px;
+    padding-bottom: 30px;
+}
+#banner #links{
+    margin: 0 auto;
+    width: 300px;
+}
+#banner #bleft #read, #bleft #or, #bleft #mail{
+    display: block;
+    float: left;
+    margin-left: 10px;
+    text-transform: uppercase;
+}
+#banner #read, #banner #mail{
+    box-shadow: inset 0 0 5px 1px #888;
+    padding: 10px  15px 10px 35px;
+    font-family: arial;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 5px;
+}
+#banner #read{
+    background-image: linear-gradient(to bottom, rgb(2, 162, 214), rgb(1, 134, 177));
+    color: #fff;
+}
+#banner #mail{
+    background-image: linear-gradient(to bottom, rgb(245, 245, 245), rgb(234, 234, 234));
+    color: #000;
+    text-shadow: 1px 1px 1px #fff;
+}
+#banner #or{
+    padding-top: 7px;
+    font-family: fonte3, sans-serif;
+}
+#banner #bright{
+    float: right;
+    height: 300px;
+    width: 50%;
+    display: block;
+}
+#content{
+    background-color: rgb(244, 244, 244);
+}
+#content h2{
+    color: rgb(49, 49, 49);
+}
+#trust{
+    text-align: center;
+    padding-top: 30px;
+    width: 600px;
+}
+#trust h3{
+    padding: 20px 0;
+    color: rgb(35, 53, 53);
+    font-family: fonte4, sans-serif;
+}
+#trust p{
+    color: rgb(102, 102, 102);
+font-family: fonte2, sans-serif;
+}
+#features{
+    position: relative;
+    padding: 50px 0;
+}
+#features .feature{
+    float: left;
+    padding: 0 10px;
+    width: calc(25% - 20px);
+    text-align: center;
+}
+#features .feature h3{
+    padding: 10px 0;
+    color: rgb(49, 49, 49);
+    font-family: fonte4, sans-serif;
+    font-family: fonte2, sans-serif;
+}
+#features .feature p{
+    color: rgb(108, 108, 108);
+}
+#video{
+    padding-bottom: 30px;
+}
+#video h2, #clients h2{
+    padding: 10px;
+    font-family: fonte3, sans-serif;
+}
+#video #vleft{
+    width: 40%;
+    float: left;
+}
+#video #vright{
+    float: right;
+    padding: 0 10px 0 30px;
+    width: calc(60% - 40px);
+}
+#video .vfeature{
+    padding-bottom: 20px;
+}
+#video .vfeature h4{
+    padding-bottom: 10px;
+    color: rgb(55, 55, 55);
+    font-family: fonte4, sans-serif;
+    font-size: 15px;
+}
+#video .vfeature p{
+    color: rgb(107, 107, 107);
+    font-family: fonte2, sans-serif;
+    font-size: 14px;
+}
+#clients{
+    padding-bottom: 50px;
+}
+#footer{
+    background: rgb(17, 17, 17);
+    color: #fff;
+}
+#footer #fmenu{
+    text-align: center;
+    list-style: none;
+    padding: 40px 0 20px;
+}
+#footer #fmenu li{
+    display: inline;
+    margin: 0 10px;
+}
+#footer #fmenu li a{
+    color: #fff;
+    font-family: fonte4, sans-serif;
+    font-size: 14px;
+}
+#footer #fmenu li a:hover{
+    color: rgb(61, 161, 211);
+}
+#socials{
+    padding: 20px 0;
+}
+#socials .social{
+    float: left;
+    width: 25%;
+    text-align: center;
+    position: relative;
+    font-family: fonte4, sans-serif;
+    font-size: 14px;
+}
+#socials .social a{
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+#credits{
+    border-top: 1px solid rgb(30, 30, 30);
+    text-align: center;
+    padding: 30px 0 10px;
+    margin-top: 20px;
+    font-family: fonte3, sans-serif;
+}
+#credits a{
+    color: #fff;
+}
+#credits a:hover{
+    text-decoration: underline;
+}
+#content form label{
+	display:block;
+	margin: 6px;
 }
 
-p, ul, ol {
-	margin-top: 0;
-	line-height: 180%;
+.inside{
+	margin: 10px;
+	padding: 10px;
 }
 
-/* Cabeçalho */
-
-#cabecalho {
-
-	width: 950px;
-	height: 125px;
-	margin: 0 auto;
+.inside p{
+	font-size: 1.2em;
+	margin: 10px;
 }
 
-#logo {
-	float: left;
-	width: 750px;
-	height: 80px;
+input[type="submit"], input[type="reset"]{
+	background-color: rgb(36, 187, 240);
+	color: white;
+	border:0;
+	padding:10px;
+	margin: 5px;
+	float:left;
+	opacity:0.80;
+	-moz-opacity: 0.80;
+	filter: alpha(opacity=80);
 }
 
-#logo a {
-	text-decoration: none;
-	color: #FFFFFF;
+input[type="radio"]{
+	margin: 0 5px 0 0;
 }
 
-/* Menu */
-
-#menu {
-	width: 950px;
-	height: 63px;
-	margin: 0 auto;
-	padding: 0px 0px 0px 0px;
-	background: url(../img/img03.jpg) repeat-x left top;
+input[type="radio"]:hover{
+	margin: 0 10px 0 0;
 }
 
-#menu ul {
-	margin: 0;
-	padding: 0px;
-	list-style: none;
-	line-height: normal;
+#letras h1{
+color: rgb(36, 187, 240);
+font-family: Arial, Verdana, fonte3;
+text-align: center;
+padding: 10px 10px 10px 10px;
 }
 
-#menu li {
-	float: left;
-	height: 63px;
-	background: url(../img/img05.jpg) no-repeat right top;
-}
-
-#menu a {
-	display: block;
-	float: left;
-	height: 43px;
-	margin-right: 3px;
-	padding: 20px 30px 0px 30px;
-	text-decoration: none;
-
-	text-shadow: 1px 1px 2px #4D5A1C;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
-	font-weight: normal;
-	color: #FFFFFF;
-	border: none;
-}
-
-#menu li.pagina_atual {
-}
-
-#menu .pagina_atual a {
-	background: url(../img/img06.jpg) repeat-x left top;
-}
-
-#menu a:hover {
-	text-decoration: none;
-	background: url(../img/img06.jpg) repeat-x left top;
-}
-
-#tamanho {
-	width: 920px;
-	height: 472px;
-	margin: 0px auto 30px auto;
-	padding: 30px 0px 0px 30px;
-	background: #FFFFFF;
-}
-
-/* Página */
-
-#pagina {
-	width: 950px;
-	margin: 0 auto;
-	padding: 0;
-}
-
-
-/* Barra Lateral */
-
-#bar_lat {
-        position: absolute;
-        top: 200px;
-        left: 780px;
-	
-	width: 50px;
-	padding: 0px;
-}
-
-/* Rodapé */
-
-#rodape-wrapper {
-	overflow: hidden;
-	padding: 30px 0px;
-	background: #E7E7E7;
-}
-
-#rodape {
-	clear: both;
-	height: 100px;
-	background: #222222;
-	font-family: Arial, Helvetica, sans-serif;
-}
-
-#rodape p {
-	margin: 0;
-	padding: 30px 0px 0px 0px;
-	line-height: normal;
-	font-size: 10px;
-	text-transform: uppercase;
-	text-align: center;
-	color: #FFFFFF;
+#centralizar{
+ float: center;
+ width: 920px;
+ position: relative;
 }
