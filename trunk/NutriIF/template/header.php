@@ -6,31 +6,38 @@
         "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
         <title>
             <?php            
                 echo PF_TITULO;                
             ?>
-        </title>
-        
-        <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
-        <script language="javascript" src="javascript/validacao.js"></script> 
-        
+        </title>        
+        <script language="javascript" src="javascript/validacao.js"></script>         
         <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     </head>
-    
     <body>
-        
-        <div id="container">
-            <div id="cabecalho">
-                <div id="logo">
-                    <a href="#"><img src="img/logonutrif.png" wight="800" height="100"></a>
-                </div>
-            </div>
-
-            <div id="menu">
-                <ul>
-                    <li><span><a href="index.php">Home</a></span></li>
-                    <li class="pagina_atual"><a href="formRegistroAntropometrico.php">Cadastro Antropométrico</a></li>
-                    <li class="pagina_atual"><a href="formCalculaPercentilIMCIdade.php">Cálculo do Percentil</a></li> 
-                </ul>
-            </div>
+		<div id="top">
+			<div class="container">
+				<div id="logo"><img src="images/logo.png"></div>
+				<ul id="menu">
+					<li>
+                                            <a href="index.php">
+                                                <img src="images/home.png">  Home
+                                            </a>
+                                        </li>
+					<li>
+                                            <a href="formRegistroAntropometrico.php">
+                                                <img src="images/cadas.png">  Cadastro Antropométrico
+                                            </a>
+                                        </li>
+					<li>
+                                            <a href="formCalculaPercentilIMCIdade.php">
+                                                <img src="images/calc.png">  Cálculo do Percentil
+                                            </a>
+                                        </li>
+				</ul>
+                                <div class="clear">
+                                    <!-- Vazio -->
+                                </div>
+			</div>
+		</div>
