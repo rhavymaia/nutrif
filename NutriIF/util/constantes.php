@@ -8,5 +8,8 @@
     // Prefixo do Título da página
     define('PF_TITULO', 'NutrIF');
     
+    // Título do cálculo para o percentil
+    define('TL_CALCULA_PERCENTIL', 'Cálculo de percentil');    
+    
     define('VAZIO', '');
 ?>
