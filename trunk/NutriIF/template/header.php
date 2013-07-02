@@ -16,28 +16,29 @@
         <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     </head>
     <body>
-		<div id="top">
-			<div class="container">
-				<div id="logo"><img src="images/logo.png"></div>
-				<ul id="menu">
-					<li>
-                                            <a href="index.php">
-                                                <img src="images/home.png">  Home
-                                            </a>
-                                        </li>
-					<li>
-                                            <a href="formRegistroAntropometrico.php">
-                                                <img src="images/cadas.png">  Cadastro Antropométrico
-                                            </a>
-                                        </li>
-					<li>
-                                            <a href="formCalculaPercentilIMCIdade.php">
-                                                <img src="images/calc.png">  Cálculo do Percentil
-                                            </a>
-                                        </li>
-				</ul>
-                                <div class="clear">
-                                    <!-- Vazio -->
-                                </div>
-			</div>
-		</div>
+        <div id="top">
+            <div class="container">
+                    <div id="logo"><img src="images/logo.png"></div>
+                    <ul id="menu">
+                            <li>
+                                <a href="index.php">
+                                    <img src="images/home.png">  Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="formRegistroAntropometrico.php">
+                                    <img src="images/cadas.png">  Cadastro Antropométrico
+                                </a>
+                            </li>
+                            <li>
+                                <a href="formCalculaPercentilIMCIdade.php">
+                                    <img src="images/calc.png">  Cálculo do Percentil
+                                </a>
+                            </li>
+                    </ul>
+                    <div class="clear">
+                        <!-- Vazio -->
+                    </div>
+            </div>
+        </div>
+        <div id="content">

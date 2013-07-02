@@ -7,9 +7,7 @@
     // Cabeçalho e menu da página html.
     require_once 'template/header.php';
 ?>
-
-    <div id="content">
-        
+    <div class="container">
         <div id="letras">
             <p>
                 <h1>Registro Antropométrico</h1>
@@ -99,7 +97,6 @@
             unset($_SESSION['erro']);                   
         ?>
     </div>
-
     <div class="clear">
         <!-- Vazio -->
     </div>
