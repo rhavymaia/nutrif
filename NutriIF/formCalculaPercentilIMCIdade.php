@@ -30,6 +30,7 @@
                 unset($_SESSION['erro']);  
             ?>
         </div>
+<div id="clear"></div>
 <?php 
     // Rodapé da página html.
     require_once 'template/footer.php';
