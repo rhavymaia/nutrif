@@ -67,7 +67,8 @@ class db_class {
       // Setup your own default values for connecting to the database here. You
       // can also set these values in the connect() function and using
       // the select_database() function.
-      
+      // ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+       
       $this->host = 'localhost';
       $this->user = '';
       $this->pw = '';
@@ -282,7 +283,7 @@ class db_class {
       // function.  You must use insert_sql for that purpose.
       // Returns the id of the insert or true if there is not auto_increment
       // column in the table.  Returns false if there is an error.
-      
+       
       if (empty($data)) {
          $this->last_error = "You must pass an array to the insert_array() function.";
          return false;

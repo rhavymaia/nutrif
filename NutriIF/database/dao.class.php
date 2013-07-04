@@ -60,6 +60,12 @@ class dao_class {
         $id = $this->db->insert_array('tb_entrevistado', $data);
         return $id;
     }
+    
+    public function inserirIMCPercentil($data) {
+
+        $id = $this->db->insert_array('tb_imc_percentil', $data);
+        return $id;
+    }
 
 }
 
