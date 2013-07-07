@@ -27,7 +27,7 @@ class dao_class {
         // Verificar se a checagem não gera problemas de tipo.
         if ($rowEntrevistado) {
             
-            // Verificar o retorno de somente um registro. Ele deve ser único.
+            // O retorno deve ser um único registro (tupla).
             $peso = $rowEntrevistado['nr_peso'];
             // ... capturar os outros valores.
 
