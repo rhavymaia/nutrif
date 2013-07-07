@@ -40,6 +40,7 @@ class dao_class {
      */
     public function selectEntrevistado($matricula) {
         
+        // Montar consulta.
         $select = "SELECT nr_matricula, dt_nascimento, nr_peso, nr_altura, tp_sexo ".
                 "FROM tb_entrevistado ".
                 "WHERE nr_matricula = ".$matricula;
@@ -47,7 +48,7 @@ class dao_class {
         // Selecionar entrevistado através da matrícula.
         $result = $this->db->select($select);
         
-        // Recuperar única linha do resulta. Matrícula é chave única.
+        // Recuperar única linha do resultado. Matrícula é chave única.
         $row = $this->db->get_row($result);
         
         return $row;
