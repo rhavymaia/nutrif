@@ -44,9 +44,10 @@ class dao_class {
                 "FROM tb_entrevistado ".
                 "WHERE nr_matricula = ".$matricula;
         
-        $r = $this->db->select($select);
+        $result = $this->db->select($select);
+        $row = $this->db->get_row($result);
         
-        return $this->db->get_row($r);
+        return $row;
     }
 
     /**
