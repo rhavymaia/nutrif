@@ -24,16 +24,23 @@ class dao_class {
         // Calcular IMC do entrevistado.
         $rowEntrevistado = selectEntrevistado($matricula);
         
-        // Verificar o retorno de somente um registro. Ele deve ser único.
-        $peso = $rowEntrevistado['nr_peso'];
-        // ... capturar os outros valores.
-        
-        // Verificar o Percentil.
+        // Verificar se a checagem não gera problemas de tipo.
+        if ($rowEntrevistado) {
+            
+            // Verificar o retorno de somente um registro. Ele deve ser único.
+            $peso = $rowEntrevistado['nr_peso'];
+            // ... capturar os outros valores.
+
+            // Verificar o Percentil.
+        } else {
+            // Retornar informação que a matrícula não foi encontrada.
+            return false;
+        }        
     }
     
     /**
      * Recuperação informações da avaliação antropométrica para cálcular o 
-     * percentil do IMC
+     * percentil do IMC.
      * 
      * @param type $matricula
      * @return type
@@ -71,7 +78,6 @@ class dao_class {
         $id = $this->db->insert_array('tb_imc_percentil', $data);
         return $id;
     }
-
 }
 
 ?>
