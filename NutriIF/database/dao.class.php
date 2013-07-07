@@ -31,7 +31,9 @@ class dao_class {
             $peso = $rowEntrevistado['nr_peso'];
             // ... capturar os outros valores.
 
-            // Verificar o Percentil.
+            // Calcular IMC com os dados do entrevistado.
+            // Consultar o Percentil na tabela tb_imc_percentil.
+            
         } else {
             // Retornar informação que a matrícula não foi encontrada.
             return false;
