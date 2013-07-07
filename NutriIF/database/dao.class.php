@@ -22,10 +22,10 @@ class dao_class {
     public function selectPercentil($matricula){
         
         // Calcular IMC do entrevistado.
-        $entrevistado = selectEntrevistado($matricula);
+        $rowEntrevistado = selectEntrevistado($matricula);
         
         // Verificar o retorno de somente um registro. Ele deve ser único.
-        $peso = $entrevistado['nr_peso'];
+        $peso = $rowEntrevistado['nr_peso'];
         // ... capturar os outros valores.
         
         // Verificar o Percentil.
@@ -44,7 +44,10 @@ class dao_class {
                 "FROM tb_entrevistado ".
                 "WHERE nr_matricula = ".$matricula;
         
+        // Selecionar entrevistado através da matrícula.
         $result = $this->db->select($select);
+        
+        // Recuperar única linha do resulta. Matrícula é chave única.
         $row = $this->db->get_row($result);
         
         return $row;
