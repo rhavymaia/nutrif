@@ -325,6 +325,11 @@ input[type="submit"], input[type="reset"]{
 	filter: alpha(opacity=80);
 }
 
+input:hover{
+  background-color: rgb(176, 224, 230);
+  color: black;
+}
+
 input[type="radio"]{
 	margin: 0 5px 0 0;
 }
@@ -344,4 +349,12 @@ padding: 10px 10px 10px 10px;
  float: center;
  width: 920px;
  position: relative;
+}
+
+#centralizar li{
+ float: center;
+ width: 920px;
+ position: relative;
+ font-family: Arial,Verdana;
+ text-align: center;
 }
