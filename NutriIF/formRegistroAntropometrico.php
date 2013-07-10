@@ -27,17 +27,18 @@
               onsubmit="return validaFormRegistroAntropometrico();"
               onreset="return resetValidacao();">
 
-            <label for="aluno"> <em>*</em> Aluno:
-                <input type="text" name="aluno" value= "<?php echo(isset($_SESSION['aluno'])? $_SESSION['aluno']: VAZIO) ?>"/>
+            <label for="aluno"  > <em>*</em> Aluno:
+                <input type="text" name="aluno" onFocus="this.className='select'" onBlur="this.className='normal'" value= "<?php echo(isset($_SESSION['aluno'])? $_SESSION['aluno']: VAZIO) ?>"/>
             </label>
 
             <label for="matricula"> <em>*</em> Matrícula:
-                <input type="text" name="matricula" value= "<?php echo(isset($_SESSION['matricula'])? $_SESSION['matricula']: VAZIO); ?>"/> 
+                <input type="text" name="matricula" onFocus="this.className='select'" onBlur="this.className='normal'" value= "<?php echo(isset($_SESSION['matricula'])? $_SESSION['matricula']: VAZIO); ?>"/> 
             </label>
 
             <label for="nascimento"> <em>*</em> Data de Nascimento:
                 <input type="text" name="nascimento" 
-                       onkeypress="return formatar(this, '##/##/####');" 
+                       onkeypress="return formatar(this, '##/##/####');"
+                       onFocus="this.className='select'" onBlur="this.className='normal'"
                        value= "<?php echo(isset($_SESSION['nascimento'])? $_SESSION['nascimento']: VAZIO); ?>"/>
             </label>
 
@@ -66,17 +67,17 @@
 
             <!-- Validação inicial no lado do cliente -->
             <label for= "peso"> <em>*</em> Peso:
-                <input type="text" name="peso" value= "<?php echo(isset($_SESSION['peso'])? $_SESSION['peso']: VAZIO); ?>" />
+                <input type="text" name="peso" onFocus="this.className='select'" onBlur="this.className='normal'" value= "<?php echo(isset($_SESSION['peso'])? $_SESSION['peso']: VAZIO); ?>" />
             </label>
 
             <!-- Validação inicial no lado do cliente -->
             <label for= "altura"> <em>*</em> Altura:
-                <input type="text" name="altura" value= "<?php  echo(isset($_SESSION['altura'])? $_SESSION['altura']: VAZIO); ?>"/>
+                <input type="text" name="altura" onFocus="this.className='select'" onBlur="this.className='normal'" value= "<?php  echo(isset($_SESSION['altura'])? $_SESSION['altura']: VAZIO); ?>"/>
             </label>
             
             <!-- Validação inicial no lado do cliente -->
             <label for= "esporte"> <em>*</em> Quantas vezes pratica atividade física por semana:
-                <input type="text" name="esporte" value= "<?php  echo(isset($_SESSION['esporte'])? $_SESSION['esporte']: VAZIO); ?>"/>
+                <input type="text" name="esporte" onFocus="this.className='select'" onBlur="this.className='normal'" value= "<?php  echo(isset($_SESSION['esporte'])? $_SESSION['esporte']: VAZIO); ?>"/>
             </label>
 
             <input type="submit" value="Enviar"/>

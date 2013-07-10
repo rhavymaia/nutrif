@@ -1,3 +1,7 @@
+/* Reset CSS */
+@import url("reset.css");
+
+/* Folha de Estilo NutrIF */
 @font-face {
     font-family: "fonte1";
     src: url("../fonts/fonte1.woff");
@@ -191,7 +195,7 @@ a{
 }
 #trust p{
     color: rgb(102, 102, 102);
-font-family: fonte2, sans-serif;
+    font-family: fonte2, sans-serif;
 }
 #features{
     position: relative;
@@ -299,62 +303,81 @@ font-family: fonte2, sans-serif;
     text-decoration: underline;
 }
 #content form label{
-	display:block;
-	margin: 6px;
+    display:block;
+    margin: 6px;
 }
 
 .inside{
-	margin: 10px;
-	padding: 10px;
+    margin: 10px;
+    padding: 10px;
 }
 
 .inside p{
-	font-size: 1.2em;
-	margin: 10px;
+    font-size: 1.2em;
+    margin: 10px;
 }
 
 input[type="submit"], input[type="reset"]{
-	background-color: rgb(36, 187, 240);
-	color: white;
-	border:0;
-	padding:10px;
-	margin: 5px;
-	float:left;
-	opacity:0.80;
-	-moz-opacity: 0.80;
-	filter: alpha(opacity=80);
+    background-color: rgb(36, 187, 240);
+    color: white;
+    border:0;
+    padding:10px;
+    margin: 5px;
+    float:left;
+    opacity:0.80;
+    -moz-opacity: 0.80;
+    filter: alpha(opacity=80);
 }
 
-input:hover{
-  background-color: rgb(176, 224, 230);
-  color: black;
+input[type="submit"]:hover, input[type="reset"]:hover{
+    background-color: rgb(128,128,128);
+    opacity:0.80;
+    -moz-opacity: 0.80;
+    filter: alpha(opacity=80);
+}
+
+input[type="text"]{
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
 }
 
 input[type="radio"]{
-	margin: 0 5px 0 0;
+    margin: 0 5px 0 0;
 }
 
 input[type="radio"]:hover{
-	margin: 0 10px 0 0;
+    margin: 0 10px 0 0;
 }
 
 #letras h1{
-color: rgb(36, 187, 240);
-font-family: Arial, Verdana, fonte3;
-text-align: center;
-padding: 10px 10px 10px 10px;
+    color: rgb(36, 187, 240);
+    font-family: Arial, Verdana, fonte3;
+    text-align: center;
+    padding: 10px 10px 10px 10px;
 }
 
 #centralizar{
- float: center;
- width: 920px;
- position: relative;
+    float: center;
+    width: 920px;
+    position: relative;
 }
 
 #centralizar li{
- float: center;
- width: 920px;
- position: relative;
- font-family: Arial,Verdana;
- text-align: center;
+    float: center;
+    width: 920px;
+    position: relative;
+    font-family: Arial,Verdana;
+    text-align: center;
+}
+
+.select{
+    background-color:rgb(208,208,208);
+    outline: #c0c0c0;
+    box-shadow: none;
+    -webkit-appearance: none;
+}
+
+.normal{
+    background-color: #fff;
 }
