@@ -19,7 +19,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Banco de Dados: `nutrif`
 --
 CREATE DATABASE `nutrif` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-
+USE `nutrif`;
 -- --------------------------------------------------------
 
 --
