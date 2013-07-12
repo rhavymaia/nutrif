@@ -28,12 +28,11 @@ require_once 'template/header.php';
     </ul>
     <form action="TrataCalculaPercentilIMCidade.php" method="POST">
 
-        <label for="MatriculaDeBusca"> <em>*</em> Digite a matrícula a ser procurada:
+        <label for="MatriculaDeBusca"><em>*</em>Digite a matrícula a ser procurada:
             <input type="text" name="MatriculaDeBusca" value= "
                 <?php echo(isset(
                         $_SESSION['MatriculaDeBusca']) ? 
-                        $_SESSION['MatriculaDeBusca'] : 
-                    VAZIO); ?>"
+                        $_SESSION['MatriculaDeBusca']:VAZIO);?>"
             /> 
         </label>
         <input type="submit" value="Buscar"/>
