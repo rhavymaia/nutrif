@@ -32,17 +32,17 @@
      return $data;
     }
        
-    function getIdade($aniversario) {
+    function getIdade($data) {
         $curr = 'now';
         $year_curr = date("Y", strtotime($curr));
 
         $days = !($year_curr % 4) || !($year_curr % 400) & ($year_curr % 100) ? 366: 355;
-
-        list($d, $m, $y) = explode('/', $aniversario);
+        $data= formata_data($data);
+        list($d, $m, $y) = explode('/', $data);
         $idade = floor(((strtotime($curr) - mktime(0, 0, 0, $m, $d, $y)) / 86400) / $days);
     return $idade*12;
 
 }
-    
+
 
 ?>

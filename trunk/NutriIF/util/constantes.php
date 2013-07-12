@@ -12,4 +12,6 @@
     define('TL_CALCULA_PERCENTIL', 'Cálculo de percentil');    
     
     define('VAZIO', '');
+    
+    define ('fator',8);
 ?>
