@@ -22,26 +22,30 @@ require_once 'template/header.php';
     <ul id="erro">
         <!-- Lista de erros na validação -->
         <?php
-        //isset($_SESSION['erro'])? showListErro($_SESSION['erro']): VAZIO;
-        isset($_SESSION['erro']) ? ErroMatricula($_SESSION['erro']) : VAZIO;
+            isset($_SESSION['erro']) ? ErroMatricula($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
-    <form action="TrataCalculaPercentilIMCidade.php" method="POST">
+    <form action="trataCalculaPercentilIMCIdade.php" method="POST">
 
-        <label for="MatriculaDeBusca"><em>*</em>Digite a matrícula a ser procurada:
-            <input type="text" name="MatriculaDeBusca" value= "
-                <?php echo(isset(
-                        $_SESSION['MatriculaDeBusca']) ? 
-                        $_SESSION['MatriculaDeBusca']:VAZIO);?>"
+        <label for="matricula"><em>*</em>Digite a matrícula a ser procurada:
+            <input type="text" name="matricula" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset(
+                        $_SESSION['matricula']) ? 
+                        $_SESSION['matricula']:VAZIO);?>"
             /> 
         </label>
         <input type="submit" value="Buscar"/>
         <input type="reset" value="Limpar"/>
     </form>
+    
+    <h1>
+        <?php echo(isset($_SESSION['percentil']) ? $_SESSION['percentil']:VAZIO); ?>
+    </h1>
+    
     <?php
-    // Após preenchimento do formulário limpar as variáveis da sessão.   
-    unset($_SESSION['MatriculaDeBusca']);
-    unset($_SESSION['erro']);
+        // Após preenchimento do formulário limpar as variáveis da sessão.   
+        unset($_SESSION['matricula']);
+        unset($_SESSION['erro']);
+        
     ?>
 </div>
 <div class="clear">

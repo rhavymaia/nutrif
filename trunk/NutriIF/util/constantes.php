@@ -13,5 +13,5 @@
     
     define('VAZIO', '');
     
-    define ('fator',8);
+    define ('FATOR',8);
 ?>

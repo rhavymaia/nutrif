@@ -33,16 +33,12 @@
     }
        
     function getIdade($data) {
-        $curr = 'now';
-        $year_curr = date("Y", strtotime($curr));
+        
+        $birthday = new DateTime($data);
+        $date = new DateTime();        
+        $diff = $birthday->diff($date);
+        $months = $diff->format('%m') + 12 * $diff->format('%y');
 
-        $days = !($year_curr % 4) || !($year_curr % 400) & ($year_curr % 100) ? 366: 355;
-        $data= formata_data($data);
-        list($d, $m, $y) = explode('/', $data);
-        $idade = floor(((strtotime($curr) - mktime(0, 0, 0, $m, $d, $y)) / 86400) / $days);
-    return $idade*12;
-
-}
-
-
+        return $months;
+    }
 ?>
