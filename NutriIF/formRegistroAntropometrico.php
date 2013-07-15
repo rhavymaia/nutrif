@@ -68,11 +68,13 @@ require_once 'template/header.php';
         <!-- Validação inicial no lado do cliente -->
         <label for= "peso"> <em>*</em> Peso:
             <input type="text" name="peso" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['peso']) ? $_SESSION['peso'] : VAZIO); ?>" />
+            <em>kg</em>
         </label>
 
         <!-- Validação inicial no lado do cliente -->
         <label for= "altura"> <em>*</em> Altura:
             <input type="text" name="altura" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['altura']) ? $_SESSION['altura'] : VAZIO); ?>"/>
+            <em>cm</em>
         </label>
 
         <!-- Validação inicial no lado do cliente -->
