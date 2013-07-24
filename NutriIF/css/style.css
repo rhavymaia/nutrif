@@ -349,16 +349,16 @@ input[type="text"]{
 }
 
 textarea{
-border: 1px solid #000000;
-background:#cccccc;
-width:150px;
-height:100px;
-border-radius:4px;
--moz-border-radius:4px;
--webkit-border-radius:4px;
-box-shadow: 1px 1px 2px #333333;	
--moz-box-shadow: 1px 1px 2px #333333;
--webkit-box-shadow: 1px 1px 2px #333333;
+    border: 1px solid #000000;
+    background:#cccccc;
+    width:150px;
+    height:100px;
+    border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    box-shadow: 1px 1px 2px #333333;	
+    -moz-box-shadow: 1px 1px 2px #333333;
+    -webkit-box-shadow: 1px 1px 2px #333333;
 }
 
 
@@ -381,6 +381,7 @@ input[type="radio"]:hover{
     float: center;
     width: 920px;
     position: relative;
+    text-align: center;
 }
 
 #centralizar li{
@@ -391,6 +392,10 @@ input[type="radio"]:hover{
     text-align: center;
 }
 
+#centralizar img{
+    padding: 3px 3px 3px 3px;
+}
+
 .select{
     background-color:rgb(224,224,224);
     outline: #c0c0c0;
@@ -399,11 +404,13 @@ input[type="radio"]:hover{
     -moz-border-radius:inherit;
     -webkit-border-radius:inherit;
     box-shadow: #fff;
-   -webkit-box-shadow: #fff;
-   -moz-box-shadow: #fff;
-   border: 1px solid #D0D0D0;
+    -webkit-box-shadow: #fff;
+    -moz-box-shadow: #fff;
+    border: 1px solid #D0D0D0;
 }
 
 .normal{
     background-color: #fff;
 }
+
+.

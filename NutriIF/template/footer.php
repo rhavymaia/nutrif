@@ -6,7 +6,13 @@
 					<li><a href="formRegistroAntropometrico.php">Cadastro Antropométrico</a></li>
 					<li><a href="formCalculaPercentilIMCIdade.php">Cálculo de Percentil</a></li>
 				</ul>
-				<div id="credits">NUTRIF &copy; 2013</div>
+                                
+				<div id="credits">
+                                    <div id="centralizar"><img src="images/logoif.png">
+                                    <img src="images/gpl3.png"></div>
+                                    <div class="clear"></div>
+                                    <div class="clear"></div>
+                                    NUTRIF  2013</div>
 			</div>
                         <div class="clear">
                             <!-- Vazio -->
