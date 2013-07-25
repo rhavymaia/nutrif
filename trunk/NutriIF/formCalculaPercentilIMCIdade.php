@@ -11,7 +11,7 @@ require_once 'template/header.php';
 
 <div class="container">
     <div id="letras">
-        <p>-
+        <p>
             <h1>
                 <?php            
                     echo TL_CALCULA_PERCENTIL;                
