@@ -35,6 +35,11 @@ require_once ('util/constantes.php');
                             <img src="images/calc.png">  Cálculo do Percentil
                         </a>
                     </li>
+                    <li>
+                        <a href="login.php">
+                            <img src="images/home.png">  Login
+                        </a>
+                    </li>
                 </ul>
                 <div class="clear">
                     <!-- Vazio -->
