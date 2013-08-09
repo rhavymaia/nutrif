@@ -45,6 +45,7 @@ require_once 'template/header.php';
         // Após preenchimento do formulário limpar as variáveis da sessão.   
         unset($_SESSION['matricula']);
         unset($_SESSION['erro']);
+        unset($_SESSION['percentil']);
         
     ?>
 </div>

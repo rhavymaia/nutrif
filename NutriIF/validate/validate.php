@@ -104,4 +104,26 @@
         
         return (is_numeric ($valor) && fmod((float) $valor, 1) !== 0);
     }
+    
+    function ehNulo($data) {
+        /** only if you need this
+          if (is_string($data)) {
+          $data = strtolower($data);
+          }
+         */
+        switch ($data) {
+            // Add whatever your definition of null is
+            // This is just an example
+            //-----------------------------
+            case 'unknown': // continue
+            case 'undefined': // continue
+            //-----------------------------
+            case 'null': // continue
+            case 'NULL': // continue
+            case NULL:
+                return true;
+        }
+        // return false by default
+        return false;
+    }
 ?>

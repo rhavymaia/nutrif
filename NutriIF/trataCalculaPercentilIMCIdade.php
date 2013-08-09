@@ -26,16 +26,41 @@
             $idadeMeses = getIdade($dtNascimento);
 
             // Calcular IMC com os dados do entrevistado.
-            $alturaMetros = $alturaCm/100;
-            $imc = number_format($peso/pow($alturaMetros, 2), 1);
-            $percentil = $dao->selectPercentil($imc, $sexo, $idadeMeses);
+            $alturaMetros = $alturaCm / 100;
+            
+            // Cálculo do IMC
+            $imc = number_format($peso / pow($alturaMetros, 2), 1);
+            
+            $percentilInferior;
+            $percentilSuperior;
+            $percentilMediano = $dao->selectPercentil($imc, $sexo, $idadeMeses);
 
-            $vl_perc = $percentil['vl_percentil'];
-            $cd_perc = $percentil['cd_percentil'];
+            if (ehNulo($percentilMediano) || $percentilMediano == 0) {
+                
+                echo "Percentil fora da linha";
+                $margemIMCInferior = $imc - 2;
+                $margemIMCSuperior = $imc + 2;
+                
+                $imcDecrescente = $imc;
+                $imcCrescente = $imc;
+                        
+                while ((ehNulo($percentilInferior) || $percentilInferior == 0) && ($imcDecrescente >= $margemIMCInferior)) {                    
+                    $imcDecrescente = $imcDecrescente - 0.1;                    
+                    $percentilInferior = $dao->selectPercentil($imcDecrescente, $sexo, $idadeMeses);
+                }
+                
+                while ((ehNulo($percentilSuperior) || $percentilSuperior == 0) && ($imcCrescente <= $margemIMCSuperior)) {
+                   $imcCrescente  = $imcCrescente  + 0.1;
+                    $percentilSuperior = $dao->selectPercentil($imcCrescente , $sexo, $idadeMeses);
+                }
+            }
+            
+            // enviar para a próxima tela os valores
+            $vl_perc = $percentilMediano['vl_percentil'];
 
             $_SESSION['percentil'] = $vl_perc;
-            header("location: formCalculaPercentilIMCIdade.php");  
-
+            header("location: formCalculaPercentilIMCIdade.php");
+            
         } else {
 
             $msg = ("Matrícula não encontrada");
@@ -43,10 +68,10 @@
             $_SESSION['erro'] = $msg;
             header("location: formCalculaPercentilIMCIdade.php");
         }
-    } else {
+        } else {
 
-        $msg = ("Informe uma matrícula válida. Somente número são permitidos");
-        $_SESSION['erro'] = $msg;
-        header("location: formCalculaPercentilIMCIdade.php");  
-    }
+            $msg = ("Informe uma matrícula válida. Somente número são permitidos");
+            $_SESSION['erro'] = $msg;
+            header("location: formCalculaPercentilIMCIdade.php");  
+        }
 ?>
