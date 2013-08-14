@@ -38,7 +38,9 @@ require_once 'template/header.php';
     </form>
     
     <h1>
-        <?php echo(isset($_SESSION['percentil']) ? $_SESSION['percentil']:VAZIO); ?>
+        <?php echo(isset($_SESSION['percentilMediano']) ? $_SESSION['percentilMediano']:VAZIO); ?>
+        <?php echo(isset($_SESSION['percentilSuperior']) ? $_SESSION['percentilSuperior']:VAZIO); ?>
+        <?php echo(isset($_SESSION['percentilInferior']) ? $_SESSION['percentilInferior']:VAZIO); ?>        
     </h1>
     
     <?php

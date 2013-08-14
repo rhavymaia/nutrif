@@ -31,8 +31,8 @@
             // Cálculo do IMC
             $imc = number_format($peso / pow($alturaMetros, 2), 1);
             
-            $percentilInferior;
-            $percentilSuperior;
+            $percentilInferior = 0;
+            $percentilSuperior = 0;
             $percentilMediano = $dao->selectPercentil($imc, $sexo, $idadeMeses);
 
             if (ehNulo($percentilMediano) || $percentilMediano == 0) {
@@ -56,18 +56,18 @@
             }
             
             // enviar para a próxima tela os valores
-            $vl_perc = $percentilMediano['vl_percentil'];
-
-            $_SESSION['percentil'] = $vl_perc;
+            $_SESSION['percentilMediano'] = $percentilMediano['vl_percentil'];
+            $_SESSION['percentilSuperior'] = $percentilSuperior['vl_percentil'];
+            $_SESSION['percentilInferior'] = $percentilInferior['vl_percentil'];
             header("location: formCalculaPercentilIMCIdade.php");
             
-        } else {
+            } else {
 
-            $msg = ("Matrícula não encontrada");
-            $_SESSION['matricula'] = $matricula;
-            $_SESSION['erro'] = $msg;
-            header("location: formCalculaPercentilIMCIdade.php");
-        }
+                $msg = ("Matrícula não encontrada");
+                $_SESSION['matricula'] = $matricula;
+                $_SESSION['erro'] = $msg;
+                header("location: formCalculaPercentilIMCIdade.php");
+            }
         } else {
 
             $msg = ("Informe uma matrícula válida. Somente número são permitidos");
