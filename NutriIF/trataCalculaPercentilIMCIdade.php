@@ -35,7 +35,7 @@
             $percentilSuperior = 0;
             $percentilMediano = $dao->selectPercentil($imc, $sexo, $idadeMeses);
 
-            if (ehNulo($percentilMediano) || $percentilMediano == 0) {
+            if (mysql_affected_rows($percentilMediano)<0){
                 
                 echo "Percentil fora da linha";
                 $margemIMCInferior = $imc - 2;
@@ -43,13 +43,15 @@
                 
                 $imcDecrescente = $imc;
                 $imcCrescente = $imc;
+                 
                         
-                while ((ehNulo($percentilInferior) || $percentilInferior == 0) && ($imcDecrescente >= $margemIMCInferior)) {                    
+                while ((mysql_affected_rows($percentilMediano)<0 || $percentilInferior == 0) && ($imcDecrescente >= $margemIMCInferior)) {                     
                     $imcDecrescente = $imcDecrescente - 0.1;                    
                     $percentilInferior = $dao->selectPercentil($imcDecrescente, $sexo, $idadeMeses);
                 }
                 
-                while ((ehNulo($percentilSuperior) || $percentilSuperior == 0) && ($imcCrescente <= $margemIMCSuperior)) {
+                while ((mysql_affected_rows($percentilMediano)< 0 || $percentilSuperior == 0) && ($imcCrescente <= $margemIMCSuperior)) {
+                    echo "entrou";
                    $imcCrescente  = $imcCrescente  + 0.1;
                     $percentilSuperior = $dao->selectPercentil($imcCrescente , $sexo, $idadeMeses);
                 }
