@@ -11,7 +11,8 @@ USE `nutrif`;
 
 CREATE TABLE IF NOT EXISTS `tb_entrevistado` (
     `cd_entrevistado` int(11) NOT NULL AUTO_INCREMENT,
-    `nr_matricula` bigint(11) NOT NULL,
+    `nr_matricula` bigint(11) NOT NULL,    
+    `nm_entrevistado` varchar(200) NOT NULL,
     `dt_nascimento` date NOT NULL,
     `cd_nivelescolar` int(11) NOT NULL,
     `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -32,7 +33,6 @@ CREATE TABLE IF NOT EXISTS `tb_anamnese` (
     `cd_pesquisa` int(11) NOT NULL,
     `dt_anaminese` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `nr_peso` double NOT NULL,
-    `cd_nivel` int(11) NOT NULL,
     `nr_altura` double NOT NULL,
     `tp_sexo` char(1) NOT NULL,
     `tp_entrevistado` int(15) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `tb_escola` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tb_nivel`
+-- Estrutura da tabela `tb_nivelescolar`
 -- Nível de escolaridade
 --
 
