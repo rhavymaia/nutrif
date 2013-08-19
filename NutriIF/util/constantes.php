@@ -14,4 +14,8 @@
     define('VAZIO', '');
     
     define ('FATOR',8);
+    
+    define ('MARGEM_LIMITE_PERCENTIL', 2);
+    
+    define ('IDADE_PERCENTIL_19', 228);
 ?>
