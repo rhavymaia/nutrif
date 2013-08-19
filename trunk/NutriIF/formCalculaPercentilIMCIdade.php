@@ -22,7 +22,7 @@ require_once 'template/header.php';
     <ul id="erro">
         <!-- Lista de erros na validação -->
         <?php
-            isset($_SESSION['erro']) ? ErroMatricula($_SESSION['erro']) : VAZIO;
+            isset($_SESSION['erro']) && sizeof($_SESSION['erro'])>0 ? ErroMatricula($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
     <form action="trataCalculaPercentilIMCIdade.php" method="POST">
