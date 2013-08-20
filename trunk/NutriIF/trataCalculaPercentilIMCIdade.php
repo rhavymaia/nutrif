@@ -47,18 +47,21 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
                 $imcDecrescente = $imc;
                 $imcCrescente = $imc;
 
+                // Verificação do percentil inferior.
                 while ($percentilInferior == 0 && $imcDecrescente >= $margemIMCInferior) {
                     $imcDecrescente = $imcDecrescente - 0.1;
                     $percentilInferior = $dao->selectPercentil($imcDecrescente, $sexo, $idadeMeses);
                 }
 
+                // Verificação do percentil superior.
                 while ($percentilSuperior == 0 && $imcCrescente <= $margemIMCSuperior) {
                     $imcCrescente = $imcCrescente + 0.1;
                     $percentilSuperior = $dao->selectPercentil($imcCrescente, $sexo, $idadeMeses);
                 }
             }
 
-            // enviar para a próxima tela os valores
+            // Enviar para a próxima tela os valores
+            $_SESSION['sexo'] = $sexo;
             $_SESSION['percentilMediano'] = $percentilMediano['vl_percentil'];
             $_SESSION['percentilSuperior'] = $percentilSuperior['vl_percentil'];
             $_SESSION['percentilInferior'] = $percentilInferior['vl_percentil'];
