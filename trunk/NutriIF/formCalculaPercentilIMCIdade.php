@@ -51,7 +51,11 @@ require_once 'template/header.php';
             } else {
                 echo("Nenhum valor encontrado");
             }
+        } else if (isset($_SESSION['imc']) && $_SESSION['imc']) {
+            echo ("Aluno acima de 19 anos");
+            echo ("Valor de imc: ". $_SESSION['imc']);
         }
+        
         ?>       
     </div>
     

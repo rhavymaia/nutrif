@@ -68,6 +68,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
             header("location: formCalculaPercentilIMCIdade.php");
         } else {
             // Tratar pessoas maiores de 19 anos
+            $_SESSION['imc'] = $imc;
         }
     } else {
         $msg = ("Matrícula não encontrada");
