@@ -34,8 +34,8 @@
         $dao = new dao_class();
         $id = $dao->inserirEntrevistado($data);
         
-        if (ehNumerico($id)) {           
-           header("location: mensagem_sucesso.php");           
+        if (ehNumerico($id)) { 
+           header("location: formRegistroAntropometrico.php");     
         } else {           
             header("location: mensagem_erro.php");          
         }      
