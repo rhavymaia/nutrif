@@ -15,7 +15,7 @@
     
     define ('FATOR',8);
     
-    define ('MARGEM_LIMITE_PERCENTIL', 2);
+    define ('MARGEM_LIMITE_PERCENTIL', 3);
     
     define ('IDADE_PERCENTIL_19', 228);
 ?>
