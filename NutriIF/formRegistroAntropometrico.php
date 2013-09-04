@@ -24,6 +24,7 @@ require_once 'template/header.php';
     <form action="trataRegistroAntropometrico.php" 
           method="POST"
           name="formRegistroAntropometrico"
+          onload="window.alert('Prestou');"
           onsubmit="return validaFormRegistroAntropometrico();"
           onreset="return resetValidacao();">
 
@@ -79,7 +80,12 @@ require_once 'template/header.php';
 
         <!-- Validação inicial no lado do cliente -->
         <label for= "esporte"> <em>*</em> Quantas vezes pratica atividade física por semana:
-            <input type="text" name="esporte" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['esporte']) ? $_SESSION['esporte'] : VAZIO); ?>"/>
+          <select name="esporte">
+                <option value="" ></option>
+                <option value="1" > 0 - 2 </option>
+                <option value="2" > 3 - 5  </option>
+                <option value="3" > 5 ou mais </option>
+            </select>
         </label>
 
         <input type="submit" value="Enviar"/>
