@@ -13,6 +13,7 @@ require_once ('util/constantes.php');
             ?>
         </title>        
         <script language="javascript" src="javascript/validacao.js"></script> 
+        <script language="javascript" src="javascript/alerta.js"></script>
         <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     </head>
     <body>
