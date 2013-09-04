@@ -336,7 +336,7 @@ input[type="submit"]:hover, input[type="reset"]:hover{
     filter: alpha(opacity=80);
 }
 
-input[type="text"]{
+input[type="text"], [type="password"]{
     outline: none;
     -webkit-appearance: none;
     -moz-border-radius: inherit;
@@ -392,7 +392,9 @@ input[type="radio"]:hover{
     position: relative;
     text-align: center;
 }
-
+#centralizar input[type=submit]{
+    float: center;
+}
 #centralizar li{
     float: center;
     width: 920px;
