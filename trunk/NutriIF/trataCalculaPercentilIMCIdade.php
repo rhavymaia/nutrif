@@ -30,7 +30,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 
         // Cálculo do IMC
         $imc = number_format($peso / pow($alturaMetros, 2), 1);
-
+        $percentilMediano = 0;
         // Para idade abaixo de 228 meses (19 Anos)
         if ($idadeMeses <= IDADE_PERCENTIL_19) {       
             $percentilInferior = 0;
