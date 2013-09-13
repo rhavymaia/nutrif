@@ -11,6 +11,8 @@
     // Título do cálculo para o percentil
     define('TL_CALCULA_PERCENTIL', 'Cálculo de percentil');    
     
+    define('TL_LISTAGEM', 'Listagem');  
+    
     define('VAZIO', '');
     
     define ('FATOR',8);

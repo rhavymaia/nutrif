@@ -41,6 +41,11 @@ require_once ('util/constantes.php');
                             <img src="images/home.png">  Login
                         </a>
                     </li>
+                    <li>
+                           <a href="formListagem.php">
+                            <img src="images/home.png">  Listagem
+                        </a>
+                    </li>
                 </ul>
                 <div class="clear">
                     <!-- Vazio -->

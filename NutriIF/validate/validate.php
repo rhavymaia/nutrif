@@ -43,7 +43,7 @@
      * @return boolean
      */
     function verificaPeso($peso){
-       if (is_int($peso) && ($peso> 0 && $peso<=250))
+       if ($peso> 0)
         return true;
        else
            return false;
@@ -56,11 +56,18 @@
      * @return boolean
      */
     function verificaAltura($altura){
-        //TODO: Desenvolver a lógica da função.
-       if (is_int($altura) && ($altura> 0 && $altura<=250))
+       
+        $verificaAltura = false;
+       
+        if(!ehVazio($altura)) {            
+            $verificaAltura = is_int($altura);
+        }
+        
+       /*if (is_int($altura) && ($altura> 0 && $altura<=250))
         return true;
        else
-           return false;
+           return false;*/
+        return $verificaAltura;
     }
     
     /**
