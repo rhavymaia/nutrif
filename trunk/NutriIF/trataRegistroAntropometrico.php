@@ -95,7 +95,7 @@
             $ehValido = false;            
         }
         
-        if (!ehPontoFlutuante(verificaAltura($_POST['altura']))) {
+        if (!verificaAltura($_POST['altura'])) {
             $msgErro = array('altura' => "A altura preenchida é inválida. O número deve estar em cm.");
             array_push($msgsErro, $msgErro);
             $ehValido = false;            

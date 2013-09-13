@@ -45,17 +45,18 @@ require_once 'template/header.php';
                 || isset($_SESSION['percentilInferior'])) {
             if ($_SESSION['percentilMediano']) {
                 echo("Percentil: " . $_SESSION['percentilMediano']);
-            } else if ($_SESSION['percentilSuperior'] && $_SESSION['percentilInferior']) {
-                echo("<p> Percentil Inferior: " . $_SESSION['percentilSuperior']. "</p>");
-                echo("<p> Percentil Superior: " . $_SESSION['percentilInferior']. "</p>");
+            } else if ($_SESSION['percentilSuperior'] || $_SESSION['percentilInferior']) {
+                if ($_SESSION['percentilSuperior'])
+                    echo("<p> Percentil Inferior: " . $_SESSION['percentilSuperior']. "</p>");
+                if ($_SESSION['percentilInferior'])
+                    echo("<p> Percentil Superior: " . $_SESSION['percentilInferior']. "</p>"); 
             } else {
                 echo("Nenhum valor encontrado");
             }
         } else if (isset($_SESSION['imc']) && $_SESSION['imc']) {
             echo ("<p>Aluno acima de 19 anos. </p>");                     
             echo ("<p>Valor de imc: ".$_SESSION['imc']."</p>");
-        }
-        
+        } 
         ?>       
     </div>
     
