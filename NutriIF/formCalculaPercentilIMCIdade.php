@@ -47,9 +47,9 @@ require_once 'template/header.php';
                 echo("Percentil: " . $_SESSION['percentilMediano']);
             } else if ($_SESSION['percentilSuperior'] || $_SESSION['percentilInferior']) {
                 if ($_SESSION['percentilSuperior'])
-                    echo("<p> Percentil Inferior: " . $_SESSION['percentilSuperior']. "</p>");
+                    echo("<p> Percentil Superior: " . $_SESSION['percentilSuperior']. "</p>");
                 if ($_SESSION['percentilInferior'])
-                    echo("<p> Percentil Superior: " . $_SESSION['percentilInferior']. "</p>"); 
+                    echo("<p> Percentil Inferior: " . $_SESSION['percentilInferior']. "</p>"); 
             } else {
                 echo("Nenhum valor encontrado");
             }
