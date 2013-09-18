@@ -37,8 +37,10 @@ require_once 'template/header.php';
         <input type="submit" value="Buscar"/>
         <input type="reset" value="Limpar"/>
     </form>
-    
+    <div class="clear"></div>
     <div class="container">
+        <div id="centralizares">
+            <div class="caixa_azul">
         <?php        
         if (isset($_SESSION['percentilMediano']) 
                 || isset($_SESSION['percentilSuperior']) 
@@ -59,7 +61,8 @@ require_once 'template/header.php';
         } 
         ?>       
     </div>
-    
+    </div>
+    </div>
     <?php
         // Após preenchimento do formulário limpar as variáveis da sessão.   
         unset($_SESSION['matricula']);
