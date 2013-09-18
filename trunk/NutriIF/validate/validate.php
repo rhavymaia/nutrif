@@ -56,18 +56,13 @@
      * @return boolean
      */
     function verificaAltura($altura){
-       
-        $verificaAltura = false;
-       
-        if(!ehVazio($altura)) {            
-            $verificaAltura = is_int($altura);
-        }
-        
-       /*if (is_int($altura) && ($altura> 0 && $altura<=250))
-        return true;
-       else
-           return false;*/
-        return $verificaAltura;
+                        
+         /* if (is_int($altura) && ($altura> 0 && $altura<=250))
+                $verificaAltura = true;   */
+
+        $verificaAltura = is_int(intval($altura));   
+
+      return $verificaAltura;
     }
     
     /**
