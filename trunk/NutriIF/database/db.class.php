@@ -432,9 +432,11 @@ class db_class {
       // this function a timestamp value such as time() or a string value
       // such as '04/14/2003 5:13 AM'. 
       
-      if (gettype($value) == 'string') $value = strtotime($value);
+      if (gettype($value) == 'string') {
+          $newDate = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1",$value);
+          $value = strtotime($newDate);
+      }
       return date('Y-m-d H:i:s', $value);
-
    }
    function print_last_error($show_query=true) {
       
