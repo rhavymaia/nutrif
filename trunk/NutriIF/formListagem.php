@@ -2,6 +2,7 @@
 require_once ('util/constantes.php');
 require_once ('validate/erro.php');
 require_once ('validate/validate.php');
+require_once ('util/date.php');
 session_start();
 ?>
 
@@ -39,6 +40,33 @@ require_once 'template/header.php';
         <input type="reset" value="Limpar"/>
     </form>
     
+    <div class="clear"></div>
+    <div class="container">
+        <div id="centralizares">
+            <div class="caixa_azul">
+        <?php        
+            if (isset($_SESSION['peso'])){
+                echo "<p>Peso: ".$_SESSION['peso']."</p>";
+                if ($_SESSION['sexo']== 'F')
+                    echo "<p>Sexo: Feminino</p>";
+                else                     
+                if ($_SESSION['sexo']== 'M')
+                    echo "<p>Sexo: Masculino</p>";
+                echo "<p>Nascimento: ".formata_data($_SESSION['dataNasc'])."</p>";
+                echo "<p>Idade em meses: ".$_SESSION['idadeMeses']."</p>";
+                
+            }
+           /* if (isset($_SESSION['informacoes'])){
+                echo $_SESSION['informacoes'];
+            }*/
+            
+            
+                
+        ?>       
+    </div>
+    </div>
+    </div>
+    
     <div class="container">
         <?php        
             
@@ -49,6 +77,8 @@ require_once 'template/header.php';
         // Após preenchimento do formulário limpar as variáveis da sessão.   
         unset($_SESSION['matricula']);
         unset($_SESSION['erro']);
+        unset($_SESSION['peso']);
+        unset($_SESSION['informacoes']);
     ?>
 </div>
 <div class="clear">
@@ -58,3 +88,4 @@ require_once 'template/header.php';
 // Rodapé da página html.
 require_once 'template/footer.php';
 ?>
+
