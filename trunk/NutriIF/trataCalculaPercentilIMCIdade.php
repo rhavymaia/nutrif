@@ -27,6 +27,7 @@ function capturarDados($matricula){
         
     return $vetor;
 }
+
 if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 
     $dao = new dao_class();
@@ -35,23 +36,20 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 
     // Verificar se a checagem não gera problemas de tipo.
     if ($rowEntrevistado) {
-        $peso = $rowEntrevistado['nr_peso'];
-        $alturaCm = $rowEntrevistado['nr_altura'];
-        $sexo = $rowEntrevistado['tp_sexo'];
-        $dtNascimento = $rowEntrevistado['dt_nascimento'];
-        $idadeMeses = getIdade($dtNascimento);
+        
+        $dados = capturarDados($matricula);
 
         // Calcular IMC com os dados do entrevistado.
-        $alturaMetros = $alturaCm / 100;
+        $alturaMetros = $dados['alturaCm'] / 100;
 
         // Cálculo do IMC
-        $imc = number_format($peso / pow($alturaMetros, 2), 1);
+        $imc = number_format($dados['peso'] / pow($alturaMetros, 2), 1);
         $percentilMediano = 0;
         // Para idade abaixo de 228 meses (19 Anos)
-        if ($idadeMeses <= IDADE_PERCENTIL_19) {       
+        if ($dados['idadeMeses'] <= IDADE_PERCENTIL_19) {       
             $percentilInferior = 0;
             $percentilSuperior = 0;
-            $percentilMediano = $dao->selectPercentil($imc, $sexo, $idadeMeses);
+            $percentilMediano = $dao->selectPercentil($imc, $dados['sexo'], $dados['idadeMeses']);
 
             // Buscar percentis nas proximidades
             if (!$percentilMediano) {
@@ -66,18 +64,18 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
                 // Verificação do percentil inferior.
                 while ($percentilInferior == 0 && $imcDecrescente >= $margemIMCInferior) {
                     $imcDecrescente = $imcDecrescente - 0.1;
-                    $percentilInferior = $dao->selectPercentil($imcDecrescente, $sexo, $idadeMeses);
+                    $percentilInferior = $dao->selectPercentil($imcDecrescente, $dados['sexo'], $dados['idadeMeses']);
                 }
 
                 // Verificação do percentil superior.
                 while ($percentilSuperior == 0 && $imcCrescente <= $margemIMCSuperior) {
                     $imcCrescente = $imcCrescente + 0.1;
-                    $percentilSuperior = $dao->selectPercentil($imcCrescente, $sexo, $idadeMeses);
+                    $percentilSuperior = $dao->selectPercentil($imcCrescente, $dados['sexo'], $dados['idadeMeses']);
                 }
             }
 
             // Enviar para a próxima tela os valores
-            $_SESSION['sexo'] = $sexo;
+            $_SESSION['sexo'] = $dados['sexo'];
             $_SESSION['percentilMediano'] = $percentilMediano['vl_percentil'];
             $_SESSION['percentilSuperior'] = $percentilSuperior['vl_percentil'];
             $_SESSION['percentilInferior'] = $percentilInferior['vl_percentil'];

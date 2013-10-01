@@ -78,7 +78,10 @@ require_once 'template/header.php';
         unset($_SESSION['matricula']);
         unset($_SESSION['erro']);
         unset($_SESSION['peso']);
-        unset($_SESSION['informacoes']);
+        unset($_SESSION['dataNasc']);
+        unset($_SESSION['dataNasc']);
+        
+        
     ?>
 </div>
 <div class="clear">
