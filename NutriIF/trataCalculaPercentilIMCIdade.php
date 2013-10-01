@@ -11,6 +11,22 @@ require_once ('util/constantes.php');
 //Inicialização de variáveis.
 $matricula = $_POST['matricula'];
 
+function capturarDados($matricula){
+    
+    $dao = new dao_class();
+
+    $rowEntrevistado = $dao->selectEntrevistado($matricula);
+    
+        $vetor = array(
+            'peso' => $rowEntrevistado['nr_peso'],
+            'alturaCm' => $rowEntrevistado['nr_altura'],
+            'sexo' => $rowEntrevistado['tp_sexo'],
+            'dtNascimento' => $rowEntrevistado['dt_nascimento'],
+            'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
+        );
+        
+    return $vetor;
+}
 if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 
     $dao = new dao_class();
