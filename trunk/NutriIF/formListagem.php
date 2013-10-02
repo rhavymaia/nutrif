@@ -81,6 +81,7 @@ require_once 'template/header.php';
         unset($_SESSION['percentilMediano']);
         unset($_SESSION['percentilSuperior']);
         unset($_SESSION['percentilInferior']);  
+        unset($_SESSION['imc']); 
                 
     ?>
 </div>
