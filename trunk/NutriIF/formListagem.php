@@ -78,6 +78,9 @@ require_once 'template/header.php';
         unset($_SESSION['sexo']);
         unset($_SESSION['dataNasc']);
         unset($_SESSION['idadeMeses']);
+        unset($_SESSION['percentilMediano']);
+        unset($_SESSION['percentilSuperior']);
+        unset($_SESSION['percentilInferior']);  
                 
     ?>
 </div>
