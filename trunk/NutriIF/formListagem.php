@@ -45,23 +45,19 @@ require_once 'template/header.php';
         <div id="centralizares">
             <div class="caixa_azul">
         <?php        
-            if (isset($_SESSION['peso'])){
+            if (isset($_SESSION['peso']))
                 echo "<p>Peso: ".$_SESSION['peso']."</p>";
-                if ($_SESSION['sexo']== 'F')
+            if (isset($_SESSION['altura']))
+                echo "<p>Altura(cm): ".$_SESSION['altura']."</p>";
+                if ((isset($_SESSION['sexo']) && ($_SESSION['sexo']== 'F')))
                     echo "<p>Sexo: Feminino</p>";
                 else                     
-                if ($_SESSION['sexo']== 'M')
+                if ((isset($_SESSION['sexo']) && ($_SESSION['sexo']== 'M')))
                     echo "<p>Sexo: Masculino</p>";
+             if (isset($_SESSION['dataNasc']))
                 echo "<p>Nascimento: ".formata_data($_SESSION['dataNasc'])."</p>";
-                echo "<p>Idade em meses: ".$_SESSION['idadeMeses']."</p>";
-                
-            }
-           /* if (isset($_SESSION['informacoes'])){
-                echo $_SESSION['informacoes'];
-            }*/
-            
-            
-                
+             if (isset($_SESSION['idadeMeses']))
+                echo "<p>Idade em meses: ".$_SESSION['idadeMeses']."</p>";       
         ?>       
     </div>
     </div>
@@ -78,10 +74,11 @@ require_once 'template/header.php';
         unset($_SESSION['matricula']);
         unset($_SESSION['erro']);
         unset($_SESSION['peso']);
+        unset($_SESSION['altura']);
+        unset($_SESSION['sexo']);
         unset($_SESSION['dataNasc']);
-        unset($_SESSION['dataNasc']);
-        
-        
+        unset($_SESSION['idadeMeses']);
+                
     ?>
 </div>
 <div class="clear">

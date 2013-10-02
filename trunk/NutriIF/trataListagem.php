@@ -10,9 +10,18 @@ require_once ('util/constantes.php');
 require_once ('trataCalculaPercentilIMCIdade.php');
 
     
+
     $matricula = $_POST['matricula'];
 
     $dados = capturarDados($matricula);
+    
+    $dao = new dao_class();
+
+    $rowEntrevistado = $dao->selectEntrevistado($matricula);
+    
+    if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
+    // Verificar se a checagem não gera problemas de tipo.
+    if ($rowEntrevistado) {
     
      $_SESSION['peso'] = $dados['peso'];
      $_SESSION['altura'] = $dados['alturaCm'];
@@ -22,5 +31,17 @@ require_once ('trataCalculaPercentilIMCIdade.php');
      
      header("location: formListagem.php");
      
+    }  else{
+        $msg = ("Matrícula não encontrada");
+        $_SESSION['matricula'] = $matricula;
+        $_SESSION['erro'] = $msg;
+        header("location: formListagem.php");
+        }
+    }else {
+    $msg = ("Informe uma matrícula válida. Somente número são permitidos");
+    $_SESSION['erro'] = $msg;
+    header("location: formListagem.php");
+}
+          
 ?>
 	
