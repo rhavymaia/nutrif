@@ -1,5 +1,7 @@
 <?php
 require_once ('util/constantes.php');
+/*include("seguranca.php"); // Inclui o arquivo com o sistema de segurança
+protegePagina(); // Chama a função que protege a página*/
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"

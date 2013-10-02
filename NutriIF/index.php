@@ -2,6 +2,7 @@
     // Cabeçalho e menu da página html.
     require_once 'template/header.php';
 ?>
+
 <div id="centralizar">
     <div id="content">
         <div class="inside">

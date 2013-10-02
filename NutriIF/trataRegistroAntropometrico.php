@@ -35,6 +35,7 @@
         $id = $dao->inserirEntrevistado($data);
         
         if (ehNumerico($id)) { 
+           alert('Cadastro realizado com sucesso!');
            header("location: formRegistroAntropometrico.php");     
         } else {           
             header("location: mensagem_erro.php");          
