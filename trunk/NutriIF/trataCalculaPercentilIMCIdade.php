@@ -16,16 +16,33 @@ function capturarDados($matricula){
     $dao = new dao_class();
 
     $rowEntrevistado = $dao->selectEntrevistado($matricula);
-    
+     
         $vetor = array(
             'peso' => $rowEntrevistado['nr_peso'],
             'alturaCm' => $rowEntrevistado['nr_altura'],
             'sexo' => $rowEntrevistado['tp_sexo'],
             'dtNascimento' => $rowEntrevistado['dt_nascimento'],
-            'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
+            'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento'])
         );
+
+        // Calcular IMC com os dados do entrevistado.
+        $alturaMetros = $vetor['alturaCm'] / 100;
+
+        // Cálculo do IMC
+        $imc = number_format($vetor['peso'] / pow($alturaMetros, 2), 1);
         
-    return $vetor;
+        
+        $vetor2 = array(
+            'peso' => $rowEntrevistado['nr_peso'],
+            'alturaCm' => $rowEntrevistado['nr_altura'],
+            'sexo' => $rowEntrevistado['tp_sexo'],
+            'dtNascimento' => $rowEntrevistado['dt_nascimento'],
+            'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
+            'imc'=> $imc
+        );
+
+            
+    return $vetor2;
 }
 
 if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
@@ -38,28 +55,22 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
     if ($rowEntrevistado) {
         
         $dados = capturarDados($matricula);
-
-        // Calcular IMC com os dados do entrevistado.
-        $alturaMetros = $dados['alturaCm'] / 100;
-
-        // Cálculo do IMC
-        $imc = number_format($dados['peso'] / pow($alturaMetros, 2), 1);
         $percentilMediano = 0;
         // Para idade abaixo de 228 meses (19 Anos)
         if ($dados['idadeMeses'] <= IDADE_PERCENTIL_19) {       
             $percentilInferior = 0;
             $percentilSuperior = 0;
-            $percentilMediano = $dao->selectPercentil($imc, $dados['sexo'], $dados['idadeMeses']);
+            $percentilMediano = $dao->selectPercentil($dados['imc'], $dados['sexo'], $dados['idadeMeses']);
 
             // Buscar percentis nas proximidades
             if (!$percentilMediano) {
                 
                 // Margens dos percentis baseado no cálculo inicial.
-                $margemIMCInferior = $imc - MARGEM_LIMITE_PERCENTIL;
-                $margemIMCSuperior = $imc + MARGEM_LIMITE_PERCENTIL;
+                $margemIMCInferior = $dados['imc'] - MARGEM_LIMITE_PERCENTIL;
+                $margemIMCSuperior = $dados['imc'] + MARGEM_LIMITE_PERCENTIL;
 
-                $imcDecrescente = $imc;
-                $imcCrescente = $imc;
+                $imcDecrescente = $dados['imc'];
+                $imcCrescente = $dados['imc'];
 
                 // Verificação do percentil inferior.
                 while ($percentilInferior == 0 && $imcDecrescente >= $margemIMCInferior) {
@@ -82,9 +93,10 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
             header("location: formCalculaPercentilIMCIdade.php");
         } else {
         // Tratar pessoas maiores de 19 anos
-        $_SESSION['imc'] = $imc;
+        $_SESSION['imc'] = $dados['imc'];
         header("location: formCalculaPercentilIMCIdade.php");
         }
+       
     } else {
         $msg = ("Matrícula não encontrada");
         $_SESSION['matricula'] = $matricula;
