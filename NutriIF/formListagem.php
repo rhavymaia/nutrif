@@ -57,7 +57,24 @@ require_once 'template/header.php';
              if (isset($_SESSION['dataNasc']))
                 echo "<p>Nascimento: ".formata_data($_SESSION['dataNasc'])."</p>";
              if (isset($_SESSION['idadeMeses']))
-                echo "<p>Idade em meses: ".$_SESSION['idadeMeses']."</p>";       
+                echo "<p>Idade em meses: ".$_SESSION['idadeMeses']."</p>"; 
+             
+             if (isset($_SESSION['percentilMediano']) 
+                || isset($_SESSION['percentilSuperior']) 
+                || isset($_SESSION['percentilInferior'])) {  
+                        if ($_SESSION['percentilSuperior']){
+                           echo "<p>Percentil Superior: ".$_SESSION['percentilSuperior']."</p>";
+                        }
+                        if ($_SESSION['percentilInferior']){
+                            echo "<p>Percentil Inferior: ".$_SESSION['percentilInferior']."</p>";
+                        }
+                        if($_SESSION['percentilMediano']){
+                               echo "<p>Percentil Mediano: ".$_SESSION['percentilMediano']."</p>";
+                            }
+                }else
+             if (isset($_SESSION['imc']) && ($_SESSION['imc']) )
+                   echo "<p>IMC: ".$_SESSION['imc']."</p>";
+        
         ?>       
     </div>
     </div>
