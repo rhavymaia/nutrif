@@ -6,6 +6,7 @@
 					<li><a href="formRegistroAntropometrico.php">Cadastro Antropométrico</a></li>
 					<li><a href="formCalculaPercentilIMCIdade.php">Cálculo de Percentil</a></li>
                                         <li><a href="formListagem.php">Listagem</a></li>
+                                        <li><a href="login.php">Login</a></li>
 				</ul>
                                 
 				<div id="credits">
