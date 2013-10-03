@@ -17,15 +17,25 @@
         $rowLogin = $dao->selectLogin($login, $senha);
         
         if ($rowLogin){
-            
+             echo '<script language="javascript" type="text/javascript">';
+             echo 'window.alert("Bem-vindo!");';  
+             echo 'window.location.href="index.php";';
+             echo '</script>';
+             $vetor = array(
+            'nome' => $rowLogin['nm_nutricionista'],
+             );
+             $_SESSION['id'] = $vetor['nome'];
+             $_SESSION['logado'] = TRUE;
         }else{
 
-            $msgErro = array('aluno' => "O nome do aluno é inválido.");
-            array_push($msgsErro, $msgErro);
-           // $msg = array("Login e/ou senha inválida");
+             echo '<script language="javascript" type="text/javascript">';
+             echo 'window.alert("Login e/ou senha inválida");';  
+             echo 'window.location.href="login.php";';
+             echo '</script>'; 
+           /* $msg = array("Login e/ou senha inválida");
             $_SESSION['login'] = $login;
-            $_SESSION['erro'] = $msg;
-            header("location: login.php");
+            $_SESSION['erro'] = $msg;*/
+            
         }
     } else {
         

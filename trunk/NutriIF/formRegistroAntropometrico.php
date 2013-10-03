@@ -2,10 +2,24 @@
 require_once ('util/constantes.php');
 require_once ('validate/erro.php');
 session_start();
+if (!isset($_SESSION['id'])) {
+    echo '<script language="javascript" type="text/javascript">';
+    echo 'window.alert("Área restrita, realize o Login!");';
+    echo 'window.location.href="login.php";';
+    echo '</script>';
+}
 ?>
 <?php
 // Cabeçalho e menu da página html.
 require_once 'template/header.php';
+if (isset($_SESSION['id'])) {
+    echo "<div class='caixa_login'>";
+    echo "<div id='centralizar'>";
+    echo "Olá, " . $_SESSION['id'];
+    echo "<a href='logout.php'> &nbsp Logout</a>";
+    echo "</div>";
+    echo "</div>";
+}
 ?>
 <div class="container">
     <div id="letras">
@@ -24,7 +38,6 @@ require_once 'template/header.php';
     <form action="trataRegistroAntropometrico.php" 
           method="POST"
           name="formRegistroAntropometrico"
-          onload="window.alert('Prestou');"
           onsubmit="return validaFormRegistroAntropometrico();"
           onreset="return resetValidacao();">
 
@@ -80,7 +93,7 @@ require_once 'template/header.php';
 
         <!-- Validação inicial no lado do cliente -->
         <label for= "esporte"> <em>*</em> Quantas vezes pratica atividade física por semana:
-          <select name="esporte">
+            <select name="esporte">
                 <option value="" ></option>
                 <option value="1" > 0 - 2 </option>
                 <option value="2" > 3 - 5  </option>
