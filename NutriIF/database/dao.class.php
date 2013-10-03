@@ -81,6 +81,21 @@ class dao_class {
         $id = $this->db->insert_array('tb_imc_percentil', $data);
         return $id;
     }
-}
+    
+    public function selectLogin($login, $senha) {
+        $sql = "SELECT nutri.nm_nutricionista, nutri.nm_login, nutri.nm_senha"
+                . " FROM tb_nutricionista AS nutri"
+                . " WHERE"
+                . " nutri.nm_login = '" . $login . "'"
+                . " AND nutri.nm_senha = '" . $senha . "'";
 
+        // Selecionar Usuário através de Login.
+        $result = $this->db->select($sql);
+        // Recuperar única linha do resultado.
+        $row = $this->db->get_row($result);
+
+        return $row;
+    }
+}
+    
 ?>
