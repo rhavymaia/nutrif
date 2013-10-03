@@ -452,5 +452,6 @@ input[type="radio"]:hover{
     font-family: Arial Black,Verdana;
     font-size: small;
     color: black;
+    text-align: center;
 }
 

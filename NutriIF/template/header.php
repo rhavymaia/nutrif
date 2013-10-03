@@ -39,13 +39,13 @@ protegePagina(); // Chama a função que protege a página*/
                         </a>
                     </li>
                     <li>
-                        <a href="login.php">
-                            <img src="images/home.png">  Login
+                        <a href="formListagem.php">
+                            <img src="images/list.png">  Listagem
                         </a>
                     </li>
                     <li>
-                           <a href="formListagem.php">
-                            <img src="images/home.png">  Listagem
+                           <a href="login.php">
+                            <img src="images/unlocked.png">  Login
                         </a>
                     </li>
                 </ul>

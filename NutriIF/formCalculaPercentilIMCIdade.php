@@ -17,7 +17,7 @@ require_once 'template/header.php';
 if (isset($_SESSION['id'])) {
     echo "<div class='caixa_login'>";
     echo "<div id='centralizar'>";
-    echo "Olá, " . $_SESSION['id'];
+    echo "<img src='images/user.png'>Olá, " . $_SESSION['id'];
     echo "<a href='logout.php'> &nbsp Logout</a>";
     echo "</div>";
     echo "</div>";
