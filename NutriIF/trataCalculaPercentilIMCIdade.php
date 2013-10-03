@@ -11,37 +11,37 @@ require_once ('util/constantes.php');
 //Inicialização de variáveis.
 $matricula = $_POST['matricula'];
 
-function capturarDados($matricula){
-    
+function capturarDados($matricula) {
+
     $dao = new dao_class();
 
     $rowEntrevistado = $dao->selectEntrevistado($matricula);
-     
-        $vetor = array(
-            'peso' => $rowEntrevistado['nr_peso'],
-            'alturaCm' => $rowEntrevistado['nr_altura'],
-            'sexo' => $rowEntrevistado['tp_sexo'],
-            'dtNascimento' => $rowEntrevistado['dt_nascimento'],
-            'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento'])
-        );
 
-        // Calcular IMC com os dados do entrevistado.
-        $alturaMetros = $vetor['alturaCm'] / 100;
+    $vetor = array(
+        'peso' => $rowEntrevistado['nr_peso'],
+        'alturaCm' => $rowEntrevistado['nr_altura'],
+        'sexo' => $rowEntrevistado['tp_sexo'],
+        'dtNascimento' => $rowEntrevistado['dt_nascimento'],
+        'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento'])
+    );
 
-        // Cálculo do IMC
-        $imc = number_format($vetor['peso'] / pow($alturaMetros, 2), 1);
-        
-        
-        $vetor2 = array(
-            'peso' => $rowEntrevistado['nr_peso'],
-            'alturaCm' => $rowEntrevistado['nr_altura'],
-            'sexo' => $rowEntrevistado['tp_sexo'],
-            'dtNascimento' => $rowEntrevistado['dt_nascimento'],
-            'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
-            'imc'=> $imc
-        );
+    // Calcular IMC com os dados do entrevistado.
+    $alturaMetros = $vetor['alturaCm'] / 100;
 
-            
+    // Cálculo do IMC
+    $imc = number_format($vetor['peso'] / pow($alturaMetros, 2), 1);
+
+
+    $vetor2 = array(
+        'peso' => $rowEntrevistado['nr_peso'],
+        'alturaCm' => $rowEntrevistado['nr_altura'],
+        'sexo' => $rowEntrevistado['tp_sexo'],
+        'dtNascimento' => $rowEntrevistado['dt_nascimento'],
+        'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
+        'imc' => $imc
+    );
+
+
     return $vetor2;
 }
 
@@ -53,18 +53,18 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 
     // Verificar se a checagem não gera problemas de tipo.
     if ($rowEntrevistado) {
-        
+
         $dados = capturarDados($matricula);
         $percentilMediano = 0;
         // Para idade abaixo de 228 meses (19 Anos)
-        if ($dados['idadeMeses'] <= IDADE_PERCENTIL_19) {       
+        if ($dados['idadeMeses'] <= IDADE_PERCENTIL_19) {
             $percentilInferior = 0;
             $percentilSuperior = 0;
             $percentilMediano = $dao->selectPercentil($dados['imc'], $dados['sexo'], $dados['idadeMeses']);
 
             // Buscar percentis nas proximidades
             if (!$percentilMediano) {
-                
+
                 // Margens dos percentis baseado no cálculo inicial.
                 $margemIMCInferior = $dados['imc'] - MARGEM_LIMITE_PERCENTIL;
                 $margemIMCSuperior = $dados['imc'] + MARGEM_LIMITE_PERCENTIL;
@@ -92,11 +92,10 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
             $_SESSION['percentilInferior'] = $percentilInferior['vl_percentil'];
             header("location: formCalculaPercentilIMCIdade.php");
         } else {
-        // Tratar pessoas maiores de 19 anos
-        $_SESSION['imc'] = $dados['imc'];
-        header("location: formCalculaPercentilIMCIdade.php");
+            // Tratar pessoas maiores de 19 anos
+            $_SESSION['imc'] = $dados['imc'];
+            header("location: formCalculaPercentilIMCIdade.php");
         }
-       
     } else {
         $msg = ("Matrícula não encontrada");
         $_SESSION['matricula'] = $matricula;
