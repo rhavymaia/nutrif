@@ -43,21 +43,21 @@ CREATE TABLE IF NOT EXISTS `tb_anamnese` (
 
 
 --
--- Estrutura da tabela `tb_escola`
+-- Estrutura da tabela `tb_instituicao`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_escola` (
-    `cd_escola` int(11) NOT NULL AUTO_INCREMENT,
-    `nm_escola` varchar(25) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_instituicao` (
+    `cd_instituicao` int(11) NOT NULL AUTO_INCREMENT,
+    `nm_instituicao` varchar(25) NOT NULL,
     `nm_campi` varchar(25) NOT NULL,
     `nm_logradouro` varchar(255) NOT NULL,
     `cd_cidade` int(11) NOT NULL,
     `cd_estado` int(11) NOT NULL,
-    PRIMARY KEY (`cd_escola`)
+    PRIMARY KEY (`cd_instituicao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
--- Extraindo dados da tabela `tb_escola`
+-- Extraindo dados da tabela `tb_instituicao`
 --
 
 -- --------------------------------------------------------
@@ -83,17 +83,44 @@ CREATE TABLE IF NOT EXISTS `tb_nivelescolar` (
 --
 
 CREATE TABLE IF NOT EXISTS `tb_nutricionista` (
-    `cd_nutricionista` int(11) NOT NULL AUTO_INCREMENT,
+    `cd_nutricionista` int(11) NOT NULL,
     `nm_nutricionista` varchar(50) NOT NULL,
-    `nm_senha` varchar(8) NOT NULL,
-    `cd_escola` int(11) NOT NULL,
+    `cd_instituicao` int(11) NOT NULL,
     `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`cd_nutricionista`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 --
 -- Extraindo dados da tabela `tb_nutricionista`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_usuario`
+--
+CREATE TABLE IF NOT EXISTS `tb_usuario` (
+    `cd_usuario` int(11) NOT NULL AUTO_INCREMENT,
+    `nm_login` varchar(50) NOT NULL,
+    `nm_senha` varchar(8) NOT NULL,
+    `dt_nascimento` date NOT NULL,
+    `cd_tipousuario` char NOT NULL,
+    `fl_ativo` boolean NOT NULL DEFAULT '1',
+    `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cd_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_tipousuario`
+--
+CREATE TABLE IF NOT EXISTS `tb_tipousuario` (
+    `cd_tipousuario` int(11) NOT NULL AUTO_INCREMENT,
+    `nm_tipousuario` varchar(50) NOT NULL,
+    `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cd_tipousuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -106,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `tb_pesquisa` (
     `nm_pesquisa` varchar(25) NOT NULL,
     `dt_inicio` date NOT NULL,
     `dt_fim` date NOT NULL,
-    `cd_escola` int(11) NOT NULL,
+    `cd_instituicao` int(11) NOT NULL,
     `cd_nutricionista` int(11),
     `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`cd_pesquisa`)
