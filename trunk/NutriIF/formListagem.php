@@ -6,7 +6,6 @@ require_once ('util/date.php');
 session_start();
 if (!isset($_SESSION['id'])) {
     echo '<script language="javascript" type="text/javascript">';
-    echo 'window.alert("Área restrita, realize o Login!");';
     echo 'window.location.href="login.php";';
     echo '</script>';
 }
