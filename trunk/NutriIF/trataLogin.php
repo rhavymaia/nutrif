@@ -17,13 +17,13 @@
         $rowLogin = $dao->selectLogin($login, $senha);
         
         if ($rowLogin){
-             echo '<script language="javascript" type="text/javascript">';
-             echo 'window.alert("Bem-vindo!");';  
-             echo 'window.location.href="index.php";';
-             echo '</script>';
-             $vetor = array(
+            $vetor = array(
             'nome' => $rowLogin['nm_nutricionista'],
              );
+            $nome = $vetor['nome'];
+             echo '<script language="javascript" type="text/javascript">';  
+             echo 'window.location.href="index.php";';
+             echo '</script>';
              $_SESSION['id'] = $vetor['nome'];
              $_SESSION['logado'] = TRUE;
         }else{

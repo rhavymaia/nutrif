@@ -3,18 +3,17 @@
 require_once ('template/header.php');
 require_once ('util/constantes.php');
 require_once ('validate/erro.php');
-session_start();
 ?>
 <div class="container">
     <div id="letras">
         <p>
-            <h1>Login</h1>
+        <h1>Login</h1>
         </p>
     </div>
     <ul id="erro">
         <!-- Lista de erros na validação -->
         <?php
-            echo isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
+        echo isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
 

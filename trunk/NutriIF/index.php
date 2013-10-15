@@ -1,30 +1,6 @@
 <?php
 // Cabeçalho e menu da página html.
 require_once 'template/header.php';
-session_start();
-//$_SESSION['id'];
-/* if (!isset($_SESSION['id'])){
-  echo '<script language="javascript" type="text/javascript">';
-  echo 'window.alert("Realize o Login!");';
-  echo 'window.location.href="login.php";';
-  echo '</script>';
-  }
-  $_SESSION["logado"] = false;
-  if ($_SESSION["logado"] != null){
-  if ($_SESSION["logado"] == false){
-  echo '<script language="javascript" type="text/javascript">';
-  echo 'window.alert("Realize o Login!");';
-  echo 'window.location.href="login.php";';
-  echo '</script>';
-  }
-  }else{
-  echo '<script language="javascript" type="text/javascript">';
-  echo 'window.alert("Realize o Login!");';
-  echo 'window.location.href="login.php";';
-  echo '</script>';
-  } */
-// Cabeçalho e menu da página html.
-require_once 'template/header.php';
 
 if (isset($_SESSION['id'])) {
     echo "<div class='caixa_login'>";
