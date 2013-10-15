@@ -1,7 +1,7 @@
 <?php
 require_once ('util/constantes.php');
-/*include("seguranca.php"); // Inclui o arquivo com o sistema de segurança
-protegePagina(); // Chama a função que protege a página*/
+/* include("seguranca.php"); // Inclui o arquivo com o sistema de segurança
+  protegePagina(); // Chama a função que protege a página */
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
@@ -28,7 +28,11 @@ protegePagina(); // Chama a função que protege a página*/
                             <img src="images/home.png">  Home
                         </a>
                     </li>
-                    <li>
+
+                    <?php
+                    session_start();
+                    if (isset($_SESSION['id'])) {
+                        echo '<li>
                         <a href="formRegistroAntropometrico.php">
                             <img src="images/cadas.png">  Cadastro Antropométrico
                         </a>
@@ -42,12 +46,23 @@ protegePagina(); // Chama a função que protege a página*/
                         <a href="formListagem.php">
                             <img src="images/list.png">  Listagem
                         </a>
-                    </li>
-                    <li>
+                    </li>';
+                    }
+
+                    if (!isset($_SESSION['id'])) {
+                        echo'<li>
                            <a href="login.php">
                             <img src="images/unlocked.png">  Login
                         </a>
-                    </li>
+                    </li>';
+                    } else {
+                        echo'<li>
+                           <a href="logout.php">
+                            <img src="images/locked.png">  Logout
+                        </a>
+                    </li> ';
+                    }
+                    ?>
                 </ul>
                 <div class="clear">
                     <!-- Vazio -->

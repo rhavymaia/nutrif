@@ -72,8 +72,8 @@ a{
 #top #menu li a{
     border-radius: 0px 0px 3px 3px;
     display: block;
-    padding: 15px 5px 5px 5px;
-    margin: 0 5px;
+    padding: 16px 5px 5px 5px;
+    margin: -13px 5px 5px 5px;
     text-transform: uppercase;
     text-align: center;
     color: #000;

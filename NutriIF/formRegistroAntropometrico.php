@@ -1,16 +1,17 @@
 <?php
 require_once ('util/constantes.php');
 require_once ('validate/erro.php');
-session_start();
+// Cabeçalho e menu da página html.
+require_once 'template/header.php';
+
 if (!isset($_SESSION['id'])) {
     echo '<script language="javascript" type="text/javascript">';
+    echo 'window.alert("Área restrita, realize o Login!");';
     echo 'window.location.href="login.php";';
     echo '</script>';
 }
 ?>
 <?php
-// Cabeçalho e menu da página html.
-require_once 'template/header.php';
 if (isset($_SESSION['id'])) {
     echo "<div class='caixa_login'>";
     echo "<div id='centralizar'>";
@@ -29,9 +30,9 @@ if (isset($_SESSION['id'])) {
 
     <ul id="erro">
         <!-- Lista de erros na validação -->
-        <?php
-        isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
-        ?>                    
+<?php
+isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
+?>                    
     </ul>
 
     <form action="trataRegistroAntropometrico.php" 
@@ -56,9 +57,9 @@ if (isset($_SESSION['id'])) {
         </label>
 
         <label for="sexo" value= "<?php echo(''); ?>"> <em>*</em> Sexo 
-            <?php
-            $sexoSelected = isset($_SESSION['sexo']) ? $_SESSION['sexo'] : VAZIO;
-            ?>                        
+<?php
+$sexoSelected = isset($_SESSION['sexo']) ? $_SESSION['sexo'] : VAZIO;
+?>                        
             <select name="sexo">
                 <option value="" <?php if ($sexoSelected == VAZIO) echo 'selected'; ?>></option>
                 <option value="F" <?php if ($sexoSelected == 'F') echo 'selected'; ?>> Feminino </option>
@@ -67,9 +68,9 @@ if (isset($_SESSION['id'])) {
         </label>
 
         <label for="nivel"> Nível
-            <?php
-            $nivelSelected = isset($_SESSION['nivel']) ? $_SESSION['nivel'] : VAZIO;
-            ?>                        
+<?php
+$nivelSelected = isset($_SESSION['nivel']) ? $_SESSION['nivel'] : VAZIO;
+?>                        
             <select name="nivel">
                 <option value="" <?php if ($nivelSelected == VAZIO) echo 'selected'; ?>></option>
                 <option value="1" <?php if ($nivelSelected == '1') echo 'selected'; ?>> Integrado </option>
@@ -103,20 +104,20 @@ if (isset($_SESSION['id'])) {
         <input type="submit" value="Enviar"/>
         <input type="reset" value="Limpar"/>
     </form>
-    <?php
-    // Após preenchimento do formulário limpar as variáveis da sessão.   
-    unset($_SESSION['peso']);
-    unset($_SESSION['altura']);
-    unset($_SESSION['nascimento']);
-    unset($_SESSION['aluno']);
-    unset($_SESSION['matricula']);
-    unset($_SESSION['nivel']);
-    unset($_SESSION['sexo']);
-    unset($_SESSION['esporte']);
+<?php
+// Após preenchimento do formulário limpar as variáveis da sessão.   
+unset($_SESSION['peso']);
+unset($_SESSION['altura']);
+unset($_SESSION['nascimento']);
+unset($_SESSION['aluno']);
+unset($_SESSION['matricula']);
+unset($_SESSION['nivel']);
+unset($_SESSION['sexo']);
+unset($_SESSION['esporte']);
 
-    //Erro da validação, sessão será destruída
-    unset($_SESSION['erro']);
-    ?>
+//Erro da validação, sessão será destruída
+unset($_SESSION['erro']);
+?>
 </div>
 <div class="clear">
     <!-- Vazio -->
