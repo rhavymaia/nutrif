@@ -20,4 +20,16 @@
     define ('MARGEM_LIMITE_PERCENTIL', 3);
     
     define ('IDADE_PERCENTIL_19', 228);
+    
+    define ('PERFIL_SOBREPESO',"Sobrepeso");
+    
+    define ('PERFIL_EUTROFICO',"Eutrofia");
+    
+    define ('PERFIL_OBESO',"Obeso");
+    
+    define ('PERFIL_OBESO_MORBIDO',"Obeso mórbido");
+    
+    define ('PERFIL_MAGREZA',"Magreza");
+    
+    
 ?>

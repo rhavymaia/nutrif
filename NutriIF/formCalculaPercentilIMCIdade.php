@@ -72,6 +72,8 @@ if (isset($_SESSION['id'])) {
                 } else if (isset($_SESSION['imc']) && $_SESSION['imc']) {
                     echo ("<p>Aluno acima de 19 anos. </p>");
                     echo ("<p>Valor de imc: " . $_SESSION['imc'] . "</p>");
+                    echo ("<p> Situação: ".$_SESSION['perfilIMC']. "</p>");
+                    
                 }
                 ?>       
             </div>

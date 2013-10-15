@@ -92,10 +92,27 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
             $_SESSION['percentilInferior'] = $percentilInferior['vl_percentil'];
             header("location: formCalculaPercentilIMCIdade.php");
         } else {
-            // Tratar pessoas maiores de 19 anos
+            // Tratar pessoas maiores de 19 anos        
             $_SESSION['imc'] = $dados['imc'];
+            if ($_SESSION['imc'] < 18.5)
+            $_SESSION['perfilIMC'] = PERFIL_MAGREZA;
+            else
+            if (($_SESSION['imc'] >= 18.5) && ($_SESSION['imc'] <= 24.9))
+            $_SESSION['perfilIMC'] = PERFIL_EUTROFICO;
+            else
+            if (($_SESSION['imc'] >= 25.0) && ($_SESSION['imc'] <= 29.9))
+            $_SESSION['perfilIMC'] = PERFIL_SOBREPESO;
+            else
+            if (($_SESSION['imc'] >= 30.0) && ($_SESSION['imc'] <= 34.9))
+            $_SESSION['perfilIMC'] = PERFIL_OBESO;
+            else
+            if ($_SESSION['imc'] >= 35.0)
+            $_SESSION['perfilIMC'] = PERFIL_OBESO_MORBIDO;
+            }
             header("location: formCalculaPercentilIMCIdade.php");
-        }
+            
+            
+  
     } else {
         $msg = ("Matrícula não encontrada");
         $_SESSION['matricula'] = $matricula;
