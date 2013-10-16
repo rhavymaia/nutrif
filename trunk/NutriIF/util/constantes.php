@@ -10,6 +10,9 @@
     
     // Título do cálculo para o percentil
     define('TL_CALCULA_PERCENTIL', 'Cálculo de percentil');    
+ 
+       // Título do cálculo para VCT e VET
+    define('TL_CALCULA_VCT_VET', 'Cálculo de VCT e VET');    
     
     define('TL_LISTAGEM', 'Listagem');  
     
