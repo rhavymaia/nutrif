@@ -59,12 +59,15 @@ if (isset($_SESSION['id'])) {
     <div class="clear"></div>
     <div class="container">
         <div id="centralizares">
-            
-            
-                <?php
-                if (isset($_SESSION['peso'])){
-                    echo '<div class="caixa_azul">';
-                echo "<p>Peso: " . $_SESSION['peso'] . "</p>";}
+
+
+            <?php
+            if (isset($_SESSION['existe'])) {
+                echo '<div class="caixa_azul">';
+                if (isset($_SESSION['peso'])) {
+
+                    echo "<p>Peso: " . $_SESSION['peso'] . "</p>";
+                }
                 if (isset($_SESSION['altura']))
                     echo "<p>Altura(cm): " . $_SESSION['altura'] . "</p>";
                 if ((isset($_SESSION['sexo']) && ($_SESSION['sexo'] == 'F')))
@@ -90,30 +93,31 @@ if (isset($_SESSION['id'])) {
                 } else
                 if (isset($_SESSION['imc']) && ($_SESSION['imc']))
                     echo "<p>IMC: " . $_SESSION['imc'] . "</p>";
-                ?>       
-            </div>
+            }
+            ?>       
         </div>
     </div>
+</div>
 
-    <div class="container">
-        <?php
-        ?>       
-    </div>
+<div class="container">
+    <?php ?>       
+</div>
 
-    <?php
-// Após preenchimento do formulário limpar as variáveis da sessão.   
-    unset($_SESSION['matricula']);
-    unset($_SESSION['erro']);
-    unset($_SESSION['peso']);
-    unset($_SESSION['altura']);
-    unset($_SESSION['sexo']);
-    unset($_SESSION['dataNasc']);
-    unset($_SESSION['idadeMeses']);
-    unset($_SESSION['percentilMediano']);
-    unset($_SESSION['percentilSuperior']);
-    unset($_SESSION['percentilInferior']);
-    unset($_SESSION['imc']);
-    ?>
+<?php
+// Após preenchimento do formulário limpar as variáveis da sessão. 
+unset($_SESSION['existe']);
+unset($_SESSION['matricula']);
+unset($_SESSION['erro']);
+unset($_SESSION['peso']);
+unset($_SESSION['altura']);
+unset($_SESSION['sexo']);
+unset($_SESSION['dataNasc']);
+unset($_SESSION['idadeMeses']);
+unset($_SESSION['percentilMediano']);
+unset($_SESSION['percentilSuperior']);
+unset($_SESSION['percentilInferior']);
+unset($_SESSION['imc']);
+?>
 </div>
 <div class="clear">
     <!-- Vazio -->

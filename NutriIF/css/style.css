@@ -438,7 +438,7 @@ input[type="radio"]:hover{
     border-left:3px solid rgb(126, 186, 0);
     border-right:3px solid rgb(126, 186, 0);
     padding:5px 5px 5px 5px;
-    background: #cccccc;
+    background: rgb(230,232,250);
     color: #000;
 }
 

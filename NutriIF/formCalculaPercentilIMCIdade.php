@@ -44,10 +44,10 @@ if (isset($_SESSION['id'])) {
 
         <label for="matricula"><em>*</em>Digite a matrícula a ser procurada:
             <input type="text" name="matricula" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php
-        echo(isset(
-                $_SESSION['matricula']) ?
-                $_SESSION['matricula'] : VAZIO);
-        ?>"
+            echo(isset(
+                    $_SESSION['matricula']) ?
+                    $_SESSION['matricula'] : VAZIO);
+            ?>"
                    /> 
         </label>
         <input type="submit" value="Buscar"/>
@@ -56,8 +56,9 @@ if (isset($_SESSION['id'])) {
     <div class="clear"></div>
     <div class="container">
         <div id="centralizares">
-            <div class="caixa_azul">
-                <?php
+            <?php
+            if (isset($_SESSION['existe'])) {
+                echo '<div class="caixa_azul">';
                 if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) || isset($_SESSION['percentilInferior'])) {
                     if ($_SESSION['percentilMediano']) {
                         echo("Percentil: " . $_SESSION['percentilMediano']);
@@ -72,23 +73,24 @@ if (isset($_SESSION['id'])) {
                 } else if (isset($_SESSION['imc']) && $_SESSION['imc']) {
                     echo ("<p>Aluno acima de 19 anos. </p>");
                     echo ("<p>Valor de imc: " . $_SESSION['imc'] . "</p>");
-                    echo ("<p> Situação: ".$_SESSION['perfilIMC']. "</p>");
-                    
+                    echo ("<p> Situação: " . $_SESSION['perfilIMC'] . "</p>");
                 }
-                ?>       
-            </div>
+            }
+            ?>       
         </div>
     </div>
-    <?php
-    // Após preenchimento do formulário limpar as variáveis da sessão.   
-    unset($_SESSION['matricula']);
-    unset($_SESSION['erro']);
-    unset($_SESSION['percentilMediano']);
-    unset($_SESSION['percentilSuperior']);
-    unset($_SESSION['percentilInferior']);
-    unset($_SESSION['imc']);
-    unset($_SESSION['sexo']);
-    ?>
+</div>
+<?php
+// Após preenchimento do formulário limpar as variáveis da sessão. 
+unset($_SESSION['existe']);
+unset($_SESSION['matricula']);
+unset($_SESSION['erro']);
+unset($_SESSION['percentilMediano']);
+unset($_SESSION['percentilSuperior']);
+unset($_SESSION['percentilInferior']);
+unset($_SESSION['imc']);
+unset($_SESSION['sexo']);
+?>
 </div>
 <div class="clear">
     <!-- Vazio -->

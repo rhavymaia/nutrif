@@ -90,6 +90,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
             $_SESSION['percentilMediano'] = $percentilMediano['vl_percentil'];
             $_SESSION['percentilSuperior'] = $percentilSuperior['vl_percentil'];
             $_SESSION['percentilInferior'] = $percentilInferior['vl_percentil'];
+            $_SESSION['existe'] = TRUE;
             header("location: formCalculaPercentilIMCIdade.php");
         } else {
             // Tratar pessoas maiores de 19 anos        
