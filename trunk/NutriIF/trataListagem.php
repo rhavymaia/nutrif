@@ -28,6 +28,7 @@ require_once ('trataCalculaPercentilIMCIdade.php');
      $_SESSION['sexo'] = $dados['sexo'];
      $_SESSION['dataNasc'] = $dados['dtNascimento'];
      $_SESSION['idadeMeses'] = $dados['idadeMeses'];
+     $_SESSION['existe'] = TRUE;
      
      header("location: formListagem.php");
      
