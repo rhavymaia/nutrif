@@ -28,7 +28,8 @@
             'cd_nivel' => $nivel,
             'nr_altura' => $altura,
             'tp_sexo' => $sexo,
-            'tp_entrevistado' => TP_ALUNO
+            'tp_entrevistado' => TP_ALUNO,
+            'nr_nivel_esporte' => $esporte
         );
         
         $dao = new dao_class();
