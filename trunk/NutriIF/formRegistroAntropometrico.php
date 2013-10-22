@@ -93,11 +93,14 @@ $nivelSelected = isset($_SESSION['nivel']) ? $_SESSION['nivel'] : VAZIO;
 
         <!-- Validação inicial no lado do cliente -->
         <label for= "esporte"> <em>*</em> Quantas vezes pratica atividade física por semana:
+ <?php
+$esporteSelected = isset($_SESSION['esporte']) ? $_SESSION['nr_nivel_esporte'] : VAZIO;
+?>
             <select name="esporte">
-                <option value="" ></option>
-                <option value="1" > 0 - 2 </option>
-                <option value="2" > 3 - 5  </option>
-                <option value="3" > 5 ou mais </option>
+                <option value="" <?php if ($esporteSelected == VAZIO) echo 'selected'; ?>></option>
+                <option value="1" <?php if ($esporteSelected == '1') echo 'selected'; ?>> 0 - 2 </option>
+                <option value="2" <?php if ($esporteSelected == '2') echo 'selected'; ?>> 3 - 5  </option>
+                <option value="3" <?php if ($esporteSelected == '3') echo 'selected'; ?>> 5 ou mais </option>
             </select>
         </label>
 
@@ -114,6 +117,8 @@ unset($_SESSION['matricula']);
 unset($_SESSION['nivel']);
 unset($_SESSION['sexo']);
 unset($_SESSION['esporte']);
+unset($_SESSION['vet']);
+unset($_SESSION['vct']);
 
 //Erro da validação, sessão será destruída
 unset($_SESSION['erro']);

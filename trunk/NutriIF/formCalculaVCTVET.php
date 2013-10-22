@@ -56,3 +56,16 @@ if (isset($_SESSION['id'])) {
     <div class="clear"></div>
     <div class="container">
         <div id="centralizares">
+            
+<?php 
+        if (isset($_SESSION['vet'])) {         
+             echo "<p>Valor Energético Total (VET): " . $_SESSION['vet'] . "</p>"; 
+         }
+        if (isset($_SESSION['vct'])) {         
+             echo "<p>Valor Calórico Total (VCT): " . $_SESSION['vct'] . "</p>"; 
+         }
+         
+         unset($_SESSION['vet']);
+         unset($_SESSION['vct']);
+    ?>
+         
