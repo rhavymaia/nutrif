@@ -58,7 +58,6 @@ if (isset($_SESSION['id'])) {
 
     <div class="clear"></div>
     <div class="container">
-        <div id="centralizares">
 
 
             <?php
@@ -97,7 +96,6 @@ if (isset($_SESSION['id'])) {
             ?>       
         </div>
     </div>
-</div>
 
 <div class="container">
     <?php ?>       
