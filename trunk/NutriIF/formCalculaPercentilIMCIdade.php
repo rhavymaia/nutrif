@@ -55,7 +55,7 @@ if (isset($_SESSION['id'])) {
     </form>
     <div class="clear"></div>
     <div class="container">
-        <div id="centralizares">
+
             <?php
             if (isset($_SESSION['existe'])) {
                 echo '<div class="caixa_azul">';
@@ -79,7 +79,7 @@ if (isset($_SESSION['id'])) {
             ?>       
         </div>
     </div>
-</div>
+
 <?php
 // Após preenchimento do formulário limpar as variáveis da sessão. 
 unset($_SESSION['existe']);
