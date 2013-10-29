@@ -22,89 +22,89 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
             'peso' => $rowEntrevistado['nr_peso'],
             'alturaCm' => $rowEntrevistado['nr_altura'],
             'sexo' => $rowEntrevistado['tp_sexo'],
-            'idadeAnos' => idadeAnos($rowEntrevistado['dt_nascimento']),
-            'esporte' => $rowEntrevistado['nr_nivel_esporte']
-                
+            'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento'])                
         );
         return $vetor;
     }
-    
-     function idadeAnos($data) {
         
-        $birthday = new DateTime($data);
-        $date = new DateTime();        
-        $years = $birthday->diff($date);
-
-        return $years;
-    }    
-    
-    function coeficienteAtividade($codigo, $sexo){
-        if ($sexo == 'M'){
-            switch ($codigo){            
-                        case 1: $valor = 1.55;
-                            break;       
-                        case 2: $valor = 1.78;
-                            break;       
-                        case 3: $valor = 2.10;
-                            break;
-                    }
-        }else{
-            switch ($codigo){            
-                        case 1: $valor = 1.56;
-                            break;       
-                        case 2: $valor = 1.64;
-                            break;       
-                        case 3: $valor = 1.82;
-                            break;
-                    }
-        }
-        return $valor;
-    }
-
  $dados = capturarDadosVCT($matricula);
 
     
     if ($dados) {
         if ($dados['sexo'] == 'M'){
-           $VCT = ((66 + (13.7 * $dados['peso'])) + (5.0 * $dados['altura']) - (6.8 * $dados['idadeAnos']));
+            switch ($dados['idadeMeses']){
+                
+                case 120 . 131 ://10 a 11
+                    $vct = ($dados['peso'] * 37.7);
+                    break;
+                
+                case 132 . 143 ://11 a 12
+                    $vct = ($dados['peso'] * 35.1);
+                    break;
+                
+                case 144 . 155 ://12 a 13
+                    $vct = ($dados['peso'] * 33.4);
+                    break;
+                
+                case 156 . 167 ://13 a 14
+                    $vct = ($dados['peso'] * 31.4);
+                    break;
+                
+                case 168 . 179 ://14 a 15
+                    $vct = ($dados['peso'] * 29.9);
+                    break;
+                    
+                case 180 . 191 ://15 a 16
+                    $vct = ($dados['peso'] * 28.7);
+                    break;
+                
+                case 192 . 203 ://16 a 17
+                    $vct = ($dados['peso'] * 27.9);
+                    break;
+                
+                case 204 . 227 ://17 a 18
+                    $vct = ($dados['peso'] * 27.5);
+                    break;
+            }
         }else{
-           $VCT = ((665 + (9.6 * $dados['peso'])) + (1.8 * $dados['altura']) - (4.7 * $dados['idadeAnos'])); 
+            
+            switch ($dados['idadeMeses']){
+                
+                case 120 . 131 ://10 a 11
+                    $vct = ($dados['peso'] * 34.3);
+                    break;
+                
+                case 132 . 143 ://11 a 12
+                    $vct = ($dados['peso'] * 31.5);
+                    break;
+                
+                case 144 . 155 ://12 a 13
+                    $vct = ($dados['peso'] * 29.1);
+                    break;
+                
+                case 156 . 167 ://13 a 14
+                    $vct = ($dados['peso'] * 27.5);
+                    break;
+                
+                case 168 . 179 ://14 a 15
+                    $vct = ($dados['peso'] * 26.7);
+                    break;
+                    
+                case 180 . 191 ://15 a 16
+                    $vct = ($dados['peso'] * 26.3);
+                    break;
+                
+                case 192 . 203 ://16 a 17
+                    $vct = ($dados['peso'] * 26.0);
+                    break;
+                
+                case 204 . 227 ://17 a 18
+                    $vct = ($dados['peso'] * 25.9);
+                    break;
+            }
         }
         
-        if ($dados['sexo'] == 'M'){
-            if(($dados['idadeAnos'] >= 10) || ($dados['idadeAnos'] < 18)){
-                //TBM : Taxa de Metabolismo Basal
-                $TBM = ((16.6 * $dados['peso'] )+ (77 * $dados['altura'] + 572));
-            }
-            elseif(($dados['idadeAnos'] >= 18) || ($dados['idadeAnos'] < 30)){
-                $TBM = (15.4 * $dados['peso'] + 27 * $dados['altura']  + 717);
-            }
-            elseif(($dados['idadeAnos'] >= 30) || ($dados['idadeAnos'] < 60)){
-                $TBM = (11.3 * $dados['peso'] + 16 * $dados['altura']  + 901);
-            }
-            elseif($dados['idadeAnos'] >= 60){
-                $TBM = (8.8 * $dados['peso'] + 1128 * $dados['altura']  - 1071);
-            }
-        }else{ 
-            if(($dados['idadeAnos'] >= 10) || ($dados['idadeAnos'] < 18)){
-                $TBM = ((7.4 * $dados['peso'] )+ (482 * $dados['altura'] + 217));
-            }
-            elseif(($dados['idadeAnos'] >= 18) || ($dados['idadeAnos'] < 30)){
-                $TBM = (13.3 * $dados['peso'] + 334 * $dados['altura']  + 35);
-            }
-             elseif(($dados['idadeAnos'] >= 30) || ($dados['idadeAnos'] < 60)){
-                $TBM = (8.7 * $dados['peso'] - 255 * $dados['altura']  + 865);
-            }
-            elseif($dados['idadeAnos'] >= 60){
-                $TBM = (9.2 * $dados['peso'] + 637 * $dados['altura']  - 302);
-            }
-        }
-        
-        $coefAtividade = coeficienteAtividade($dados['esporte'], $dados['sexo']);
-        $VET = $TBM * $coefAtividade;
-        
-        $_SESSION['vct'] = $VCT;
-        $_SESSION['vet'] = $VET;
+        $_SESSION['vct'] = $vct;
         header("location: formCalculaVCTVET.php");
         
      } else{
