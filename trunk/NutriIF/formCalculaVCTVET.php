@@ -56,6 +56,8 @@ if (isset($_SESSION['id'])) {
     <div class="clear"></div>
     <div class="container">
         <div id="centralizares">
+            </div>
+<div class="clear"></div>
             
 <?php 
         if (isset($_SESSION['vet'])) {         
@@ -68,4 +70,8 @@ if (isset($_SESSION['id'])) {
          unset($_SESSION['vet']);
          unset($_SESSION['vct']);
     ?>
-         
+      
+<?php
+// Rodapé da página html.
+require_once 'template/footer.php';
+?>
