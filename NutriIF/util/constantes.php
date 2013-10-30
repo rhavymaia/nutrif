@@ -14,7 +14,9 @@
        // Título do cálculo para VCT e VET
     define('TL_CALCULA_VCT_VET', 'Cálculo de VCT e VET');    
     
-    define('TL_LISTAGEM', 'Listagem');  
+    define('TL_LISTAGEM', 'Listagem'); 
+    
+    define('TL_RELATORIO', 'Relatório'); 
     
     define('VAZIO', '');
     

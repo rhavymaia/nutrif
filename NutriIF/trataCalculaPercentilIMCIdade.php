@@ -11,6 +11,12 @@ require_once ('util/constantes.php');
 //Inicialização de variáveis.
 $matricula = $_POST['matricula'];
 
+/*$_SESSION['qtdMagros'] = 0;
+$_SESSION['qtdEutroficos'] = 0;
+$_SESSION['qtdSobrepeso'] = 0;
+$_SESSION['qtdObesos'] = 0;
+$_SESSION['qtdObesosMorbidos'] = 0;*/
+
 function capturarDados($matricula) {
 
     $dao = new dao_class();
@@ -45,6 +51,7 @@ function capturarDados($matricula) {
     return $vetor2;
 }
 
+
 if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 
     $dao = new dao_class();
@@ -56,6 +63,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 
         $dados = capturarDados($matricula);
         $percentilMediano = 0;
+
         // Para idade abaixo de 228 meses (19 Anos)
         if ($dados['idadeMeses'] <= IDADE_PERCENTIL_19) {
             $percentilInferior = 0;
@@ -93,27 +101,43 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
             $_SESSION['existe'] = TRUE;
             header("location: formCalculaPercentilIMCIdade.php");
         } else {
-            // Tratar pessoas maiores de 19 anos        
+            // Tratar pessoas maiores de 19 anos 
+            
             $_SESSION['imc'] = $dados['imc'];
-            if ($_SESSION['imc'] < 18.5)
-            $_SESSION['perfilIMC'] = PERFIL_MAGREZA;
-            else
-            if (($_SESSION['imc'] >= 18.5) && ($_SESSION['imc'] <= 24.9))
-            $_SESSION['perfilIMC'] = PERFIL_EUTROFICO;
-            else
-            if (($_SESSION['imc'] >= 25.0) && ($_SESSION['imc'] <= 29.9))
-            $_SESSION['perfilIMC'] = PERFIL_SOBREPESO;
-            else
-            if (($_SESSION['imc'] >= 30.0) && ($_SESSION['imc'] <= 34.9))
-            $_SESSION['perfilIMC'] = PERFIL_OBESO;
-            else
-            if ($_SESSION['imc'] >= 35.0)
-            $_SESSION['perfilIMC'] = PERFIL_OBESO_MORBIDO;
+            if ($_SESSION['imc'] < 18.5) {
+                $_SESSION['perfilIMC'] = PERFIL_MAGREZA;
+            } else
+            if (($_SESSION['imc'] >= 18.5) && ($_SESSION['imc'] <= 24.9)) {
+                $_SESSION['perfilIMC'] = PERFIL_EUTROFICO;
+            } else
+            if (($_SESSION['imc'] >= 25.0) && ($_SESSION['imc'] <= 29.9)) {
+                $_SESSION['perfilIMC'] = PERFIL_SOBREPESO;
+            } else
+            if (($_SESSION['imc'] >= 30.0) && ($_SESSION['imc'] <= 34.9)) {
+                $_SESSION['perfilIMC'] = PERFIL_OBESO;
+            } else
+            if ($_SESSION['imc'] >= 35.0) {
+                $_SESSION['perfilIMC'] = PERFIL_OBESO_MORBIDO;
             }
-            header("location: formCalculaPercentilIMCIdade.php");
             
-            
-  
+       
+            if ($_SESSION['perfilIMC'] == PERFIL_MAGREZA) {
+                $_SESSION['qtdMagros']= $_SESSION['qtdMagros']+1;
+            }
+            if ($_SESSION['perfilIMC'] == PERFIL_EUTROFICO) {
+                $_SESSION['qtdEutroficos']= $_SESSION['qtdEutroficos']+1;
+            }
+            if ($_SESSION['perfilIMC'] == PERFIL_SOBREPESO) {
+                $_SESSION['qtdSobrepeso']= $_SESSION['qtdSobrepeso']+1;
+            }
+            if ($_SESSION['perfilIMC'] == PERFIL_OBESO) {
+                $_SESSION['qtdObesos']= $_SESSION['qtdObesos']+1;
+            }
+            if ($_SESSION['perfilIMC'] == PERFIL_OBESO_MORBIDO) {
+                $_SESSION['qtdObesosMorbidos']= $_SESSION['qtdObesosMorbidos']+1;
+            }
+        header("location: formCalculaPercentilIMCIdade.php");
+        }          
     } else {
         $msg = ("Matrícula não encontrada");
         $_SESSION['matricula'] = $matricula;
