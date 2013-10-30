@@ -51,6 +51,11 @@ require_once ('util/constantes.php');
                         <a href="formCalculaVCTVET.php">
                             <img src="images/list.png">  VCT / VET
                         </a>
+                    </li>
+                    <li>
+                        <a href="relatorio.php">
+                            <img src="images/list.png">  Relatório
+                        </a>
                     </li>';
                     }
 

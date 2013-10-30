@@ -36,7 +36,15 @@ class dao_class {
         return $row;
     }
     
-    /**
+    public function selectTodosEntrevistados(){
+        
+        $sql = "SELECT * FROM tb_entrevistado";
+        
+        $resultado = $this->db->select($sql);
+        return $resultado;
+    }
+
+        /**
      * Recuperação informações da avaliação antropométrica para cálcular o 
      * percentil do IMC.
      * 
