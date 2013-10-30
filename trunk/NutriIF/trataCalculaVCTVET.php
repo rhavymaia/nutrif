@@ -32,76 +32,80 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
     
     if ($dados) {
         if ($dados['sexo'] == 'M'){
-            switch ($dados['idadeMeses']){
+            //switch ($dados['idadeMeses']){
                 
-                case 120 . 131 ://10 a 11
+                //case 120 . 131 ://10 a 11
+                if (($dados['idadeMeses'] >= 120) && ($dados['idadeMeses'] < 131)){
                     $vct = ($dados['peso'] * 37.7);
-                    break;
-                
-                case 132 . 143 ://11 a 12
+                  }
+              //  case 132 . 143 ://11 a 12
+                  
+                if (($dados['idadeMeses'] >= 132) && ($dados['idadeMeses'] < 143)){
                     $vct = ($dados['peso'] * 35.1);
-                    break;
-                
-                case 144 . 155 ://12 a 13
+                }
+                //case 144 . 155 ://12 a 13
+                if (($dados['idadeMeses'] >= 144) && ($dados['idadeMeses'] < 155)){
                     $vct = ($dados['peso'] * 33.4);
-                    break;
+                }
                 
-                case 156 . 167 ://13 a 14
+                //case 156 . 167 ://13 a 14
+                if (($dados['idadeMeses'] >= 144) && ($dados['idadeMeses'] < 155)){
                     $vct = ($dados['peso'] * 31.4);
-                    break;
+                } 
                 
-                case 168 . 179 ://14 a 15
-                    $vct = ($dados['peso'] * 29.9);
-                    break;
+                //case 168 . 179 ://14 a 15
+                if (($dados['idadeMeses'] >= 144) && ($dados['idadeMeses'] < 155)){
+                        $vct = ($dados['peso'] * 29.9);
+                }
                     
-                case 180 . 191 ://15 a 16
+                //case 180 . 191 ://15 a 16
                     $vct = ($dados['peso'] * 28.7);
                     break;
                 
-                case 192 . 203 ://16 a 17
+                //case 192 . 203 ://16 a 17
                     $vct = ($dados['peso'] * 27.9);
                     break;
                 
-                case 204 . 227 ://17 a 18
+                //case 204 . 227 ://17 a 18
                     $vct = ($dados['peso'] * 27.5);
                     break;
             }
         }else{
             
-            switch ($dados['idadeMeses']){
+            /*switch ($dados['idadeMeses']){
                 
-                case 120 . 131 ://10 a 11
+                //case 120 . 131 ://10 a 11
                     $vct = ($dados['peso'] * 34.3);
                     break;
                 
-                case 132 . 143 ://11 a 12
+                //case 132 . 143 ://11 a 12
                     $vct = ($dados['peso'] * 31.5);
                     break;
                 
-                case 144 . 155 ://12 a 13
+                //case 144 . 155 ://12 a 13
                     $vct = ($dados['peso'] * 29.1);
                     break;
                 
-                case 156 . 167 ://13 a 14
+                //case 156 . 167 ://13 a 14
                     $vct = ($dados['peso'] * 27.5);
                     break;
                 
-                case 168 . 179 ://14 a 15
+                //case 168 . 179 ://14 a 15
                     $vct = ($dados['peso'] * 26.7);
                     break;
                     
-                case 180 . 191 ://15 a 16
+                //case 180 . 191 ://15 a 16
                     $vct = ($dados['peso'] * 26.3);
                     break;
                 
-                case 192 . 203 ://16 a 17
+                //case 192 . 203 ://16 a 17
                     $vct = ($dados['peso'] * 26.0);
                     break;
                 
-                case 204 . 227 ://17 a 18
+                //case 204 . 227 ://17 a 18
                     $vct = ($dados['peso'] * 25.9);
                     break;
-            }
+            }*/
         }
         
         $_SESSION['vct'] = $vct;
