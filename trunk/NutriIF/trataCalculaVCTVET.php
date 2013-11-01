@@ -32,8 +32,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
     
     if ($dados) {
         if ($dados['sexo'] == 'M'){
-            //switch ($dados['idadeMeses']){
-                
+            
                 //case 120 . 131 ://10 a 11
                 if (($dados['idadeMeses'] >= 120) && ($dados['idadeMeses'] < 131)){
                     $vct = ($dados['peso'] * 37.7);
@@ -49,63 +48,71 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
                 }
                 
                 //case 156 . 167 ://13 a 14
-                if (($dados['idadeMeses'] >= 144) && ($dados['idadeMeses'] < 155)){
+                if (($dados['idadeMeses'] >= 156) && ($dados['idadeMeses'] < 167)){
                     $vct = ($dados['peso'] * 31.4);
                 } 
                 
                 //case 168 . 179 ://14 a 15
-                if (($dados['idadeMeses'] >= 144) && ($dados['idadeMeses'] < 155)){
+                if (($dados['idadeMeses'] >= 168) && ($dados['idadeMeses'] < 179)){
                         $vct = ($dados['peso'] * 29.9);
                 }
                     
                 //case 180 . 191 ://15 a 16
-                    $vct = ($dados['peso'] * 28.7);
-                    break;
+                 if (($dados['idadeMeses'] >= 180) && ($dados['idadeMeses'] < 191)){
+                        $vct = ($dados['peso'] * 28.7);
+                 }
                 
                 //case 192 . 203 ://16 a 17
-                    $vct = ($dados['peso'] * 27.9);
-                    break;
+                 if (($dados['idadeMeses'] >= 192) && ($dados['idadeMeses'] < 203)){
+                      $vct = ($dados['peso'] * 27.9);
+                 }
                 
                 //case 204 . 227 ://17 a 18
-                    $vct = ($dados['peso'] * 27.5);
-                    break;
-            }
+                 if (($dados['idadeMeses'] >= 204168) && ($dados['idadeMeses'] < 227)){
+                        $vct = ($dados['peso'] * 27.5);
+                 }
         }else{
-            
-            /*switch ($dados['idadeMeses']){
-                
+                            
                 //case 120 . 131 ://10 a 11
-                    $vct = ($dados['peso'] * 34.3);
-                    break;
+                if (($dados['idadeMeses'] >= 120) && ($dados['idadeMeses'] < 131)){
+                       $vct = ($dados['peso'] * 34.3);
+                }
                 
                 //case 132 . 143 ://11 a 12
+                if (($dados['idadeMeses'] >= 132) && ($dados['idadeMeses'] < 143)){
                     $vct = ($dados['peso'] * 31.5);
-                    break;
+                }
                 
                 //case 144 . 155 ://12 a 13
+                 if (($dados['idadeMeses'] >= 144) && ($dados['idadeMeses'] < 155)){
                     $vct = ($dados['peso'] * 29.1);
-                    break;
+                 }
                 
                 //case 156 . 167 ://13 a 14
+                 if (($dados['idadeMeses'] >= 156) && ($dados['idadeMeses'] < 167)){
                     $vct = ($dados['peso'] * 27.5);
-                    break;
+                 }
                 
                 //case 168 . 179 ://14 a 15
+                 if (($dados['idadeMeses'] >= 168) && ($dados['idadeMeses'] < 179)){
                     $vct = ($dados['peso'] * 26.7);
-                    break;
+                 }
                     
                 //case 180 . 191 ://15 a 16
+                 if (($dados['idadeMeses'] >= 180) && ($dados['idadeMeses'] < 191)){
                     $vct = ($dados['peso'] * 26.3);
-                    break;
+                 }
                 
                 //case 192 . 203 ://16 a 17
+                 if (($dados['idadeMeses'] >= 192) && ($dados['idadeMeses'] < 203)){
                     $vct = ($dados['peso'] * 26.0);
-                    break;
+                 }
                 
                 //case 204 . 227 ://17 a 18
+                  if ($dados['idadeMeses'] >= 204){
                     $vct = ($dados['peso'] * 25.9);
-                    break;
-            }*/
+                  }
+            
         }
         
         $_SESSION['vct'] = $vct;
@@ -118,7 +125,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
         header("location: formCalculaVCTVET.php");
         }
     }  else {
-    $msg = ("Informe uma matrícula válida. Somente número são permitidos");
+    $msg = ("Informe uma matrícula válida. Somente números são permitidos");
     $_SESSION['erro'] = $msg;
     header("location: formCalculaVCTVET.php");
-}     
+}
