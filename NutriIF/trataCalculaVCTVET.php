@@ -68,7 +68,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
                  }
                 
                 //case 204 . 227 ://17 a 18
-                 if (($dados['idadeMeses'] >= 204168) && ($dados['idadeMeses'] < 227)){
+                 if (($dados['idadeMeses'] >= 204) && ($dados['idadeMeses'] < 227)){
                         $vct = ($dados['peso'] * 27.5);
                  }
         }else{
