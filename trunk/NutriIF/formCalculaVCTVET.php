@@ -65,6 +65,7 @@ if (isset($_SESSION['id'])) {
          }
          
          unset($_SESSION['vct']);
+         unset($_SESSION['erro']);
     ?>
       
 <?php
