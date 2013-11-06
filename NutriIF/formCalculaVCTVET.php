@@ -58,6 +58,7 @@ if (isset($_SESSION['id'])) {
         <div id="centralizares">
             </div>
 <div class="clear"></div>
+</div>
             
 <?php 
         if (isset($_SESSION['vct'])) {         
