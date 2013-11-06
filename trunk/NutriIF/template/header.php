@@ -49,7 +49,7 @@ require_once ('util/constantes.php');
                     </li>
                     <li>
                         <a href="formCalculaVCTVET.php">
-                            <img src="images/list.png">  VCT / VET
+                            <img src="images/list.png">  VCT
                         </a>
                     </li>
                     <li>
