@@ -35,15 +35,12 @@ if (isset($_SESSION['id'])) {
         </p>
     </div>
     <ul id="erro">
-        <!-- Lista de erros na validação -->
-        <?php
-        isset($_SESSION['erro']) && sizeof($_SESSION['erro']) > 0 ? ErroMatricula($_SESSION['erro']) : VAZIO;
-        ?>                    
+        <!-- Lista de erros na validação -->                    
     </ul>
 
     <div id="quest">
         <form method="post" action="trataQuestao1.php">
-            1 - Qual é, em média, a quantidade de frutas (unidade/
+            <?php $numquest = 1; echo($numquest)?> - Qual é, em média, a quantidade de frutas (unidade/
             fatia/pedaço/copo de suco natural) que você come por 
             dia?
             <?php
@@ -68,11 +65,8 @@ if (isset($_SESSION['id'])) {
     </label>
     <div class="clear"></div>
     <div id="quest">
-        2 - Qual é, em média, a quantidade de legumes e verduras 
-        que você come por dia? (Não inclua nesse grupo os tubérculos e raízes)
-        <?php
-        $nivelSelected = isset($_SESSION['nivel']) ? $_SESSION['nivel'] : VAZIO;
-        ?>       
+        <?php $numquest++; echo($numquest)?> - Qual é, em média, a quantidade de legumes e verduras 
+        que você come por dia? (Não inclua nesse grupo os tubérculos e raízes)     
     </div>
     <label>
         <input type="radio" name="quest2" value="0"> Não como legumes, nem verduras todos os dias 
@@ -95,7 +89,7 @@ if (isset($_SESSION['id'])) {
     </label>
     <div class="clear"></div>
     <div id="quest">
-        3 - Qual é, em média, a quantidade que você come dos 
+        <?php $numquest++; echo($numquest)?> - Qual é, em média, a quantidade que você come dos 
         seguintes alimentos: feijão de qualquer tipo ou cor, 
         lentilha, ervilha, grão-de-bico, soja, fava, sementes ou 
         castanhas?
@@ -120,11 +114,8 @@ if (isset($_SESSION['id'])) {
     </label>
     <div class="clear"></div>
     <div id="quest">
-        4 - Qual a quantidade, em média, que você consome por 
-        dia dos alimentos listados abaixo
-        <?php
-        $nivelSelected = isset($_SESSION['nivel']) ? $_SESSION['nivel'] : VAZIO;
-        ?>       
+        <?php $numquest++; echo($numquest)?> - Qual a quantidade, em média, que você consome por 
+        dia dos alimentos listados abaixo       
     </div>
     <label>
         Arroz, milho e outros cereais (inclusive os matinais); 

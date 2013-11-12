@@ -34,7 +34,7 @@ require_once ('trataCalculaPercentilIMCIdade.php');
     if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
     // Verificar se a checagem não gera problemas de tipo.
     if ($rowEntrevistado) {
-    
+     $_SESSION['matricula'] = $matricula;
      header("location: questionario.php");
      
     }  else{

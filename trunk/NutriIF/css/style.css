@@ -458,3 +458,11 @@ input[type="radio"]:hover{
     text-align: center;
 }
 
+#quest {
+    
+    width: 1000px;
+    font-family: Arial Black,Verdana;
+    color: #000;
+
+}
+
