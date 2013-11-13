@@ -34,7 +34,8 @@
 }
 
 .container form label{
-    
+    display: block;
+    margin: 100px;
 }
 
 b{

@@ -24,100 +24,78 @@ require_once 'template/headerForm.php';
     </ul>
     
     <form method="post" action="trataPerfilAlimentarParte1.php">
-        1 - Qual é, em média, a quantidade de frutas (unidade/
+        <h2>Qual é, em média, a quantidade de frutas (unidade/
         fatia/pedaço/copo de suco natural) que você come por 
-        dia?
-        <label>
-            <input type="radio" name="quest1" value="0"> Não como frutas, nem tomo suco de frutas natural 
+        dia?</h2>
+        <label for="quest1_1">
+            <input type="radio" name="quest1" value="0" id="quest1_1"> Não como frutas, nem tomo suco de frutas natural 
             todos os dias
         </label> 
-        <div class="clear"></div>
-        <label>                                   
-            <input type="radio" name="quest1" value="3"> 3 ou mais unidades/fatias/pedaços/copos de suco natural
+        <label for="quest1_2">                                   
+            <input type="radio" name="quest1" value="3" id="quest1_2"> 3 ou mais unidades/fatias/pedaços/copos de suco natural
+        </label>        
+        <label for="quest1_3">   
+            <input type="radio" name="quest1" value="2" id="quest1_3"> 2 unidades/fatias/pedaços/copos de suco natural 
+        </label>        
+        <label for="quest1_4">     
+            <input type="radio" name="quest1" value="1" id="quest1_4"> 1 unidade/fatia/pedaço/copo de suco natural 
         </label>
-        <div class="clear"></div>
-        <label>   
-            <input type="radio" name="quest1" value="2"> 2 unidades/fatias/pedaços/copos de suco natural 
-        </label>
-        <div class="clear"></div>
-        <label>     
-            <input type="radio" name="quest1" value="1"> 1 unidade/fatia/pedaço/copo de suco natural 
-        </label>
-
-        2 - Qual é, em média, a quantidade de legumes e verduras 
-        que você come por dia? (Não inclua nesse grupo os tubérculos e raízes)
-        <?php
-        $nivelSelected = isset($_SESSION['nivel']) ? $_SESSION['nivel'] : VAZIO;
-        ?>
-        <label>
-            <input type="radio" name="quest2" value="0"> Não como legumes, nem verduras todos os dias 
-        </label> 
-        <div class="clear"></div>
-        <label>                                   
-            <input type="radio" name="quest2" value="1"> 3 ou menos colheres de sopa
-        </label>
-        <div class="clear"></div>
-        <label>   
-            <input type="radio" name="quest2" value="2"> 4 a 5 colheres de sopa
-        </label>
-        <div class="clear"></div>
-        <label>     
-            <input type="radio" name="quest2" value="3"> 6 a 7 colheres de sopa
-        </label>
-        <div class="clear"></div>
-        <label>     
-            <input type="radio" name="quest2" value="4"> 8 ou mais colheres de sopa
+        
+        <h2>Qual é, em média, a quantidade de legumes e verduras 
+        que você come por dia? (Não inclua nesse grupo os tubérculos e raízes)</h2>
+        <label for="quest2_1">
+            <input type="radio" name="quest2" value="0" id="quest2_1"> Não como legumes, nem verduras todos os dias 
+        </label>         
+        <label for="quest2_2">                                   
+            <input type="radio" name="quest2" value="1" id="quest2_2"> 3 ou menos colheres de sopa
+        </label>        
+        <label for="quest2_3">   
+            <input type="radio" name="quest2" value="2" id="quest2_3"> 4 a 5 colheres de sopa
+        </label>        
+        <label for="quest2_4">     
+            <input type="radio" name="quest2" value="3" id="quest2_4"> 6 a 7 colheres de sopa
+        </label>        
+        <label for="quest2_5">     
+            <input type="radio" name="quest2" value="4" id="quest2_5"> 8 ou mais colheres de sopa
         </label>
 
-        3 - Qual é, em média, a quantidade que você come dos 
+        <h2>Qual é, em média, a quantidade que você come dos 
         seguintes alimentos: feijão de qualquer tipo ou cor, 
         lentilha, ervilha, grão-de-bico, soja, fava, sementes ou 
-        castanhas?
-        <?php
-        $nivelSelected = isset($_SESSION['nivel']) ? $_SESSION['nivel'] : VAZIO;
-        ?>
-        <label>
-            <input type="radio" name="quest3" value="0"> Não consumo 
-        </label> 
-        <div class="clear"></div>
-        <label>                                   
-            <input type="radio" name="quest3" value="3"> 2 ou mais colheres de sopa por dia
-        </label>
-        <div class="clear"></div>
-        <label>   
-            <input type="radio" name="quest3" value="1"> Consumo menos de 5 vezes por semana
-        </label>
-        <div class="clear"></div>
-        <label>     
-            <input type="radio" name="quest3" value="2"> 1 colher de sopa ou menos por dia  
+        castanhas?</h2>
+        <label for="quest3_1">
+            <input type="radio" name="quest3" value="0" id="quest3_1"> Não consumo 
+        </label>        
+        <label for="quest3_2">                                   
+            <input type="radio" name="quest3" value="3" id="quest3_2"> 2 ou mais colheres de sopa por dia
+        </label>        
+        <label for="quest3_3">   
+            <input type="radio" name="quest3" value="1" id="quest3_3"> Consumo menos de 5 vezes por semana
+        </label>        
+        <label for="quest3_4">     
+            <input type="radio" name="quest3" value="2" id="quest3_4"> 1 colher de sopa ou menos por dia  
         </label>
 
-        4 - Qual a quantidade, em média, que você consome por 
-        dia dos alimentos listados abaixo
-        <?php
-        $nivelSelected = isset($_SESSION['nivel']) ? $_SESSION['nivel'] : VAZIO;
-        ?>       
-        <label>
+        <h2>Qual a quantidade, em média, que você consome por 
+        dia dos alimentos listados abaixo?</h2>     
+        <label for="quest4_1">
             Arroz, milho e outros cereais (inclusive os matinais); 
             mandioca/macaxeira/aipim, cará ou inhame; macarrão e 
             outras massas; batata-inglesa, batata-doce, batata-baroa 
             ou mandioquinha:                
-            <input type="text" name="a" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> colheres de sopa 
-        </label> 
-        <div class="clear"></div>
-        <label>
+            <input type="text" name="a" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" id="quest4_1"> colheres de sopa 
+        </label>         
+        <label for="quest4_2">
             Pães:                
-            <input type="text" name="b" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> unidades/fatias
-        </label> 
-
-        <label>
-            Bolos sem cobertura e/ou recheio:
-            <input type="text" name="c" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> fatias
+            <input type="text" name="b" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" id="quest4_2"> unidades/fatias
         </label>
-
-        <label>  
+        <label for="quest4_3">
+            Bolos sem cobertura e/ou recheio:
+            <input type="text" name="c" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" id="quest4_3"> fatias
+        </label>
+        <label for="quest4_4">  
             Biscoito ou bolacha sem recheio:
-            <input type="text" name="d" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> unidades
+            <input type="text" name="d" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" id="quest4_4"> unidades
         </label>
 
         <input type="submit" value="Confirmar"/>
