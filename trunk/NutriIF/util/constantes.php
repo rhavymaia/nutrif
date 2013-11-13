@@ -38,4 +38,7 @@
     
     define ('PERFIL_MAGREZA',"Magreza");
     
+    define ('TL_CALCULO_VCT',"Cálculo do VCT");
+    
+    
 ?>
