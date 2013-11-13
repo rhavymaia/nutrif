@@ -14,7 +14,7 @@
        // Título do cálculo para VCT e VET
     define('TL_CALCULA_VCT_VET', 'Cálculo de VCT e VET');    
     
-    define('TL_QUESTIONARIO', 'Questionário');
+    define('TL_PERFIL_ALIMENTAR', 'Perfil Alimentar');
     
     define('TL_LISTAGEM', 'Listagem');  
     

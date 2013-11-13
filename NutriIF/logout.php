@@ -5,6 +5,7 @@ session_start();
     require_once ('validate/validate.php');
     require_once ('util/constantes.php');
     
-    $_SESSION['id'] = null;
+    session_destroy();
+    
     header("location: index.php");
 ?>

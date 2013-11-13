@@ -1,7 +1,5 @@
 <?php
 require_once ('util/constantes.php');
-/* include("seguranca.php"); // Inclui o arquivo com o sistema de segurança
-  protegePagina(); // Chama a função que protege a página */
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
@@ -16,6 +14,7 @@ require_once ('util/constantes.php');
         </title>        
         <script language="javascript" src="javascript/validacao.js"></script> 
         <script language="javascript" src="javascript/alerta.js"></script>
+
         <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     </head>
     <body>
@@ -31,46 +30,47 @@ require_once ('util/constantes.php');
 
                     <?php
                     session_start();
-                    if (isset($_SESSION['id'])) {
+                    //$_SESSION['logado'] == TRUE
+                    if (isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE) {
                         echo '<li>
-                        <a href="formRegistroAntropometrico.php">
-                            <img src="images/cadas.png">  Cadastro Antropométrico
-                        </a>
-                    </li>
-                    <li>
-                        <a href="formCalculaPercentilIMCIdade.php">
-                            <img src="images/calc.png">  Cálculo do Percentil
-                        </a>
-                    </li>
-                    <li>
-                        <a href="formListagem.php">
-                            <img src="images/list.png">  Listagem
-                        </a>
-                    </li>
-                    <li>
-                        <a href="formCalculaVCTVET.php">
-                            <img src="images/list.png">  VCT
-                        </a>
-                    </li>
-                    <li>
-                        <a href="relatorio.php">
-                            <img src="images/list.png">  Relatório
-                        </a>
-                    </li>';
+                                    <a href="formRegistroAntropometrico.php">
+                                        <img src="images/cadas.png">  Cadastro Antropométrico
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="formCalculaPercentilIMCIdade.php">
+                                        <img src="images/calc.png">  Cálculo do Percentil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="formListagem.php">
+                                        <img src="images/list.png">  Listagem
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="formCalculaVCTVET.php">
+                                        <img src="images/list.png">  VCT
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="relatorio.php">
+                                        <img src="images/list.png">  Relatório
+                                    </a>
+                                </li>';
                     }
 
-                    if (!isset($_SESSION['id'])) {
+                    if (!isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE) {
                         echo'<li>
-                           <a href="login.php">
-                            <img src="images/unlocked.png">  Login
-                        </a>
-                    </li>';
+                                <a href="login.php">
+                                    <img src="images/unlocked.png">  Login
+                                </a>
+                            </li>';
                     } else {
                         echo'<li>
-                           <a href="logout.php">
-                            <img src="images/locked.png">  Logout
-                        </a>
-                    </li> ';
+                                <a href="logout.php">
+                                    <img src="images/locked.png">  Logout
+                                </a>
+                             </li> ';
                     }
                     ?>
                 </ul>

@@ -31,11 +31,7 @@
              echo '<script language="javascript" type="text/javascript">';
              echo 'window.alert("Login e/ou senha inválida");';  
              echo 'window.location.href="login.php";';
-             echo '</script>'; 
-           /* $msg = array("Login e/ou senha inválida");
-            $_SESSION['login'] = $login;
-            $_SESSION['erro'] = $msg;*/
-            
+             echo '</script>';            
         }
     } else {
         

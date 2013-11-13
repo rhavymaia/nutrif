@@ -1,17 +1,7 @@
 <?php
-// Cabeçalho e menu da página html.
-require_once 'template/header.php';
-
-if (isset($_SESSION['id'])) {
-    echo "<div class='caixa_login'>";
-    echo "<div id='centralizar'>";
-    echo "<img src='images/user.png'>Olá, " . $_SESSION['id'];
-    echo "<a href='logout.php'> &nbsp Logout</a>";
-    echo "</div>";
-    echo "</div>";
-}
+    // Cabeçalho e menu da página html.
+    require_once 'template/header.php';
 ?>
-
 <div id="centralizar">
     <div id="content">
         <div class="inside">

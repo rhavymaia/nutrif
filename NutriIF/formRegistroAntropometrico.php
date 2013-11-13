@@ -1,26 +1,10 @@
 <?php
-require_once ('util/constantes.php');
-require_once ('validate/erro.php');
-// Cabeçalho e menu da página html.
-require_once 'template/header.php';
+    require_once ('util/constantes.php');
+    require_once ('validate/erro.php');
+    // Cabeçalho e menu da página html.
+    require_once 'template/headerForm.php';
+?>
 
-if (!isset($_SESSION['id'])) {
-    echo '<script language="javascript" type="text/javascript">';
-    echo 'window.alert("Área restrita, realize o Login!");';
-    echo 'window.location.href="login.php";';
-    echo '</script>';
-}
-?>
-<?php
-if (isset($_SESSION['id'])) {
-    echo "<div class='caixa_login'>";
-    echo "<div id='centralizar'>";
-    echo "<img src='images/user.png'>Olá, " . $_SESSION['id'];
-    echo "<a href='logout.php'> &nbsp Logout</a>";
-    echo "</div>";
-    echo "</div>";
-}
-?>
 <div class="container">
     <div id="letras">
         <p>
