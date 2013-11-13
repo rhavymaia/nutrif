@@ -14,9 +14,9 @@
 
     <ul id="erro">
         <!-- Lista de erros na validação -->
-<?php
-isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
-?>                    
+        <?php
+            isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
+        ?>                    
     </ul>
 
     <form action="trataRegistroAntropometrico.php" 

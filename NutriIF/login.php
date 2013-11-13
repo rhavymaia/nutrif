@@ -22,10 +22,10 @@ require_once ('validate/erro.php');
     <div id='centralizar'>
         <form action="trataLogin.php" method="POST" name="cadastro">
 
-            <label for="login"  > <em>*</em> Login: 
+            <label for="login"> <em>*</em> Login: 
                 <input type="text" name="login" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"/>
             </label>
-            <label for="senha"  > <em>*</em> Senha: 
+            <label for="senha"> <em>*</em> Senha: 
                 <input type="password" name="senha" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"/>
             </label>    
 

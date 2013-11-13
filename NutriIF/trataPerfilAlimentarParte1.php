@@ -39,5 +39,5 @@ if ($som>7.5){
 }
 
 
-header("location: questionario2.php");
+header("location: formPerfilAlimentarParte2.php");
 ?>

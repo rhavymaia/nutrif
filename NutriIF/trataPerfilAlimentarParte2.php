@@ -12,11 +12,13 @@ $_SESSION['quest5'] = $_POST['quest5'];
 $_SESSION['quest6'] = $_POST['quest6'];
 $_SESSION['quest7'] = $_POST['quest7'];
 $_SESSION['quest8'] = $_POST['quest8'];
-$quest8 = $_POST['quest8'];
 
-if ($quest8 == 0){
-    $_SESSION['pula'] = TRUE;
+
+if (isset($_SESSION['quest8']) && $_SESSION['quest8'] == 0){
+    $_SESSION['quest9'] = 0;
+}else{
+    $_SESSION['quest9'] = $_POST['quest9'];
 }
 
-header("location: questionario3.php");
+header("location: formPerfilAlimentarParte3.php");
 ?>
