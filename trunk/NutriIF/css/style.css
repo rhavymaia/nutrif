@@ -26,10 +26,17 @@
     clear: both;
 }
 .container{
+    padding: 5px 0 60px;
+    margin: auto;
     width: 920px;
     min-width: 920px;
     position: relative;
 }
+
+.container form label{
+    
+}
+
 b{
     color: rgb(55, 55, 55);
     font-family: fonte4, sans-serif;
