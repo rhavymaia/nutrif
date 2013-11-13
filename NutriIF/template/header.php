@@ -59,7 +59,7 @@ require_once ('util/constantes.php');
                                 </li>';
                     }
 
-                    if (!isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE) {
+                    if (isset($_SESSION['logado']) && $_SESSION['logado'] == FALSE) {
                         echo'<li>
                                 <a href="login.php">
                                     <img src="images/unlocked.png">  Login
