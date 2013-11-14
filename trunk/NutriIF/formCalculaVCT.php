@@ -37,13 +37,16 @@ require_once 'template/headerForm.php';
         if (isset($_SESSION['vct'])) {
             echo "<p>Valor Calórico Total (VCT): " . $_SESSION['vct'] . "</p>";
         }
-
-        unset($_SESSION['vct']);
-        unset($_SESSION['erro']);
     ?>
 </div>
 
 <?php
-// Rodapé da página html.
-require_once 'template/footer.php';
+    // Após preenchimento do formulário limpar as variáveis da sessão.
+    unset($_SESSION['vct']);
+    unset($_SESSION['erro']);
+?>
+
+<?php
+    // Rodapé da página html.
+    require_once 'template/footer.php';
 ?>
