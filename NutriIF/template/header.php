@@ -29,49 +29,47 @@ require_once ('util/constantes.php');
                     </li>
 
                     <?php
-                    session_start();
-                    //$_SESSION['logado'] == TRUE
-                    if (isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE) {
-                        echo '<li>
-                                    <a href="formRegistroAntropometrico.php">
-                                        <img src="images/cadas.png">  Cadastro Antropométrico
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="formCalculaPercentilIMCIdade.php">
-                                        <img src="images/calc.png">  Cálculo do Percentil
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="formListagem.php">
-                                        <img src="images/list.png">  Listagem
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="formCalculaVCT.php">
-                                        <img src="images/list.png">  VCT
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="relatorio.php">
-                                        <img src="images/list.png">  Relatório
+                    
+                        session_start();
+
+                        if (isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE) {
+                            echo '<li>
+                                        <a href="formRegistroAntropometrico.php">
+                                            <img src="images/cadas.png">  Cadastro Antropométrico
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="formCalculaPercentilIMCIdade.php">
+                                            <img src="images/calc.png">  Cálculo do Percentil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="formListagem.php">
+                                            <img src="images/list.png">  Listagem
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="formCalculaVCT.php">
+                                            <img src="images/list.png">  VCT
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="relatorio.php">
+                                            <img src="images/list.png">  Relatório
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="logout.php">
+                                            <img src="images/locked.png">  Logout
+                                        </a>
+                                    </li>';
+                        } else {
+                            echo'<li>
+                                    <a href="login.php">
+                                        <img src="images/unlocked.png">  Login
                                     </a>
                                 </li>';
-                    }
-
-                    if (isset($_SESSION['logado']) && $_SESSION['logado'] == FALSE) {
-                        echo'<li>
-                                <a href="login.php">
-                                    <img src="images/unlocked.png">  Login
-                                </a>
-                            </li>';
-                    } else {
-                        echo'<li>
-                                <a href="logout.php">
-                                    <img src="images/locked.png">  Logout
-                                </a>
-                             </li> ';
-                    }
+                        }
                     ?>
                 </ul>
                 <div class="clear">
