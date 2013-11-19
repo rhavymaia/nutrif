@@ -40,5 +40,7 @@
     
     define ('TL_CALCULO_VCT',"Cálculo do VCT");
     
+    define('TL_QUESTIONARIO',"Resultado do Questionário de Avaliação Alimentar");
+    
     
 ?>
