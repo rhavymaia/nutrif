@@ -41,5 +41,6 @@ require_once 'template/headerForm.php';
 <?php
     // Rodapé da página html.
     unset ($_SESSION['erro']);
+    unset($_SESSION['matricula']);   
     require_once 'template/footer.php';
 ?>

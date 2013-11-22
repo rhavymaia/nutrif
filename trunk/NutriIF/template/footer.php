@@ -7,7 +7,9 @@
                                         if (isset($_SESSION['id'])) {
 					echo '<li><a href="formRegistroAntropometrico.php">Cadastro Antropométrico</a></li>
 					<li><a href="formCalculaPercentilIMCIdade.php">Cálculo de Percentil</a></li>
-                                        <li><a href="formListagem.php">Listagem</a></li><li><a href="relatorio.php">Relatório</a></li>';
+                                        <li><a href="formListagem.php">Listagem</a></li>
+                                        <li><a href="relatorio.php">Relatório</a></li>
+                                        <li><a href="formPerfilAlimentarEntrevistado.php">Questionário</a></li>';
                                         }        
                                         
                                         if (!isset($_SESSION['id'])) {

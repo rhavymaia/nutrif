@@ -35,18 +35,18 @@ require_once ('trataCalculaPercentilIMCIdade.php');
     // Verificar se a checagem não gera problemas de tipo.
     if ($rowEntrevistado) {
     
-     header("location: questionario.php");
+     header("location: formPerfilAlimentarParte1.php");
      
     }  else{
         $msg = ("Matrícula não encontrada");
         $_SESSION['matricula'] = $matricula;
         $_SESSION['erro'] = $msg;
-        header("location: formListagem.php");
+        header("location: formPerfilAlimentarEntrevistado.php");
         }
     }else {
     $msg = ("Informe uma matrícula válida. Somente número são permitidos");
     $_SESSION['erro'] = $msg;
-    header("location: formListagem.php");
+    header("location: formPerfilAlimentarEntrevistado.php");
 }
           
 ?>

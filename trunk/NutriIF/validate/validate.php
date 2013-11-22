@@ -27,14 +27,14 @@
      * @param type $alternativa
      * @return boolean
      */
-    function verificaAlternatica($alternativa) {
-
-        if (isset($alternativa) && is_int((int) $alternativa)) {
-            return true;
-        }
-
-        return false;
-    }
+    function verificaAlternativa($alternativa){  
+  
+        if(isset($alternativa) && is_int((int)$alternativa)){ 
+            return true; 
+        } 
+          
+        return false; 
+    } 
     
     /**
      * Descrever a função.
