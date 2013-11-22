@@ -40,7 +40,7 @@ require_once 'template/headerForm.php';
 <div class="caixa_azul">
     <?php
     if (isset($_SESSION['existe'])) {
-        echo '<div class="caixa_azul">';
+        /*echo '<div class="caixa_azul">';*/
         if (isset($_SESSION['peso'])) {
 
             echo "<p>Peso: " . $_SESSION['peso'] . "</p>";

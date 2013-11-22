@@ -442,7 +442,8 @@ input[type="radio"]:hover{
 }
 
 .caixa_azul {
-   /* width: 580px;*/
+    /*width: 580px;*/
+    text-align: center;
     margin:5px 10px 5px 20px;
     border-left:3px solid rgb(126, 186, 0);
     border-right:3px solid rgb(126, 186, 0);

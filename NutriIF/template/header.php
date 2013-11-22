@@ -62,6 +62,11 @@ require_once ('util/constantes.php');
                                         <a href="logout.php">
                                             <img src="images/locked.png">  Logout
                                         </a>
+                                    </li>
+                                    <li>
+                                        <a href="formPerfilAlimentarEntrevistado.php">
+                                            <img src="images/locked.png">  Questionário
+                                        </a>
                                     </li>';
                         } else {
                             echo'<li>
