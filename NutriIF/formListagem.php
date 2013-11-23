@@ -39,7 +39,7 @@ require_once 'template/headerForm.php';
 
 <div class="caixa_azul">
     <?php
-    if (isset($_SESSION['existe'])) {
+    if (isset($_SESSION['imc'])) {
         /*echo '<div class="caixa_azul">';*/
         if (isset($_SESSION['peso'])) {
 
@@ -75,8 +75,7 @@ require_once 'template/headerForm.php';
 </div>
 
 <?php
-    // Após preenchimento do formulário limpar as variáveis da sessão. 
-    unset($_SESSION['existe']);
+    // Após preenchimento do formulário limpar as variáveis da sessão.
     unset($_SESSION['matricula']);
     unset($_SESSION['erro']);
     unset($_SESSION['peso']);
