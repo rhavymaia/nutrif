@@ -30,11 +30,14 @@ require_once 'template/headerForm.php';
     </form>
     
 </div>
+
 <div class="caixa_azul">
     <?php
-        if (isset($_SESSION['existe'])) {
+        if (isset($_SESSION['imc'])) {
 
-            if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) || isset($_SESSION['percentilInferior'])) {
+            if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) 
+                    || isset($_SESSION['percentilInferior'])) {
+                
                 if ($_SESSION['percentilMediano']) {
                     echo("Percentil: " . $_SESSION['percentilMediano']);
                 } else if ($_SESSION['percentilSuperior'] || $_SESSION['percentilInferior']) {
@@ -44,7 +47,8 @@ require_once 'template/headerForm.php';
                         echo("<p> Percentil Inferior: " . $_SESSION['percentilInferior'] . "</p>");
                 } else {
                     echo("Nenhum valor encontrado");
-                }         
+                }
+                
             } else if (isset($_SESSION['imc']) && $_SESSION['imc']) {
                 echo ("<p>Aluno acima de 19 anos. </p>");
                 echo ("<p>Valor de imc: " . $_SESSION['imc'] . "</p>");
@@ -55,8 +59,7 @@ require_once 'template/headerForm.php';
 </div>
 
 <?php
-    // Após preenchimento do formulário limpar as variáveis da sessão. 
-    unset($_SESSION['existe']);
+    // Após preenchimento do formulário limpar as variáveis da sessão.
     unset($_SESSION['matricula']);
     unset($_SESSION['erro']);
     unset($_SESSION['percentilMediano']);
