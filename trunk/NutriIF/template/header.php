@@ -45,32 +45,32 @@ require_once ('util/constantes.php');
                                     </li>
                                     <li>
                                         <a href="formListagem.php">
-                                            <img src="images/list.png">  Listagem
+                                            <img src="images/list.png">  Procurar Entrevistado
                                         </a>
                                     </li>
                                     <li>
                                         <a href="formCalculaVCT.php">
-                                            <img src="images/list.png">  VCT
+                                            <img src="images/list.png">  Cálculo do VCT
                                         </a>
                                     </li>
                                     <li>
                                         <a href="relatorio.php">
-                                            <img src="images/list.png">  Relatório
+                                            <img src="images/list.png">  Relatório de Entrevistados
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="formPerfilAlimentarEntrevistado.php">
+                                            <img src="images/locked.png">  Perfil Alimentar
                                         </a>
                                     </li>
                                     <li>
                                         <a href="logout.php">
                                             <img src="images/locked.png">  Logout
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a href="formPerfilAlimentarEntrevistado.php">
-                                            <img src="images/locked.png">  Questionário
-                                        </a>
                                     </li>';
                         } else {
                             echo'<li>
-                                    <a href="login.php">
+                                    <a href="formLogin.php">
                                         <img src="images/unlocked.png">  Login
                                     </a>
                                 </li>';

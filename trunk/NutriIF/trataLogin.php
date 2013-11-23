@@ -30,12 +30,12 @@
 
              echo '<script language="javascript" type="text/javascript">';
              echo 'window.alert("Login e/ou senha inválida");';  
-             echo 'window.location.href="login.php";';
+             echo 'window.location.href="formLogin.php";';
              echo '</script>';            
         }
     } else {
         
-        header("location: login.php");  
+        header("location: formLogin.php");  
     }
     
     function validaFormLogin(){

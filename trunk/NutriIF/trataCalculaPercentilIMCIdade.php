@@ -11,51 +11,11 @@ require_once ('util/constantes.php');
 //Inicialização de variáveis.
 $matricula = $_POST['matricula'];
 
-/*$_SESSION['qtdMagros'] = 0;
-$_SESSION['qtdEutroficos'] = 0;
-$_SESSION['qtdSobrepeso'] = 0;
-$_SESSION['qtdObesos'] = 0;
-$_SESSION['qtdObesosMorbidos'] = 0;*/
-
-function capturarDados($matricula) {
-
-    $dao = new dao_class();
-
-    $rowEntrevistado = $dao->selectEntrevistado($matricula);
-
-    $vetor = array(
-        'peso' => $rowEntrevistado['nr_peso'],
-        'alturaCm' => $rowEntrevistado['nr_altura'],
-        'sexo' => $rowEntrevistado['tp_sexo'],
-        'dtNascimento' => $rowEntrevistado['dt_nascimento'],
-        'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento'])
-    );
-
-    // Calcular IMC com os dados do entrevistado.
-    $alturaMetros = $vetor['alturaCm'] / 100;
-
-    // Cálculo do IMC
-    $imc = number_format($vetor['peso'] / pow($alturaMetros, 2), 1);
-
-
-    $vetor2 = array(
-        'peso' => $rowEntrevistado['nr_peso'],
-        'alturaCm' => $rowEntrevistado['nr_altura'],
-        'sexo' => $rowEntrevistado['tp_sexo'],
-        'dtNascimento' => $rowEntrevistado['dt_nascimento'],
-        'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
-        'imc' => $imc
-    );
-
-
-    return $vetor2;
-}
-
-
 if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 
     $dao = new dao_class();
 
+    // Consultar o entrevostado.
     $rowEntrevistado = $dao->selectEntrevistado($matricula);
 
     // Verificar se a checagem não gera problemas de tipo.
@@ -94,32 +54,29 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
             }
 
             // Enviar para a próxima tela os valores
+            $_SESSION['imc'] = $dados['imc'];
             $_SESSION['sexo'] = $dados['sexo'];
             $_SESSION['percentilMediano'] = $percentilMediano['vl_percentil'];
             $_SESSION['percentilSuperior'] = $percentilSuperior['vl_percentil'];
             $_SESSION['percentilInferior'] = $percentilInferior['vl_percentil'];
-            $_SESSION['existe'] = TRUE;
+            
+            // Redirecionar para a página de resultado.
             header("location: formCalculaPercentilIMCIdade.php");
         } else {
-            // Tratar pessoas maiores de 19 anos 
             
+            // Tratar pessoas maiores de 19 anos            
             $_SESSION['imc'] = $dados['imc'];
             if ($_SESSION['imc'] < 18.5) {
                 $_SESSION['perfilIMC'] = PERFIL_MAGREZA;
-            } else
-            if (($_SESSION['imc'] >= 18.5) && ($_SESSION['imc'] <= 24.9)) {
+            } else if (($_SESSION['imc'] >= 18.5) && ($_SESSION['imc'] <= 24.9)) {
                 $_SESSION['perfilIMC'] = PERFIL_EUTROFICO;
-            } else
-            if (($_SESSION['imc'] >= 25.0) && ($_SESSION['imc'] <= 29.9)) {
+            } else if (($_SESSION['imc'] >= 25.0) && ($_SESSION['imc'] <= 29.9)) {
                 $_SESSION['perfilIMC'] = PERFIL_SOBREPESO;
-            } else
-            if (($_SESSION['imc'] >= 30.0) && ($_SESSION['imc'] <= 34.9)) {
+            } else if (($_SESSION['imc'] >= 30.0) && ($_SESSION['imc'] <= 34.9)) {
                 $_SESSION['perfilIMC'] = PERFIL_OBESO;
-            } else
-            if ($_SESSION['imc'] >= 35.0) {
+            } else if ($_SESSION['imc'] >= 35.0) {
                 $_SESSION['perfilIMC'] = PERFIL_OBESO_MORBIDO;
-            }
-            
+            }            
        
             if ($_SESSION['perfilIMC'] == PERFIL_MAGREZA) {
                 $_SESSION['qtdMagros']= $_SESSION['qtdMagros']+1;
@@ -136,7 +93,8 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
             if ($_SESSION['perfilIMC'] == PERFIL_OBESO_MORBIDO) {
                 $_SESSION['qtdObesosMorbidos']= $_SESSION['qtdObesosMorbidos']+1;
             }
-        header("location: formCalculaPercentilIMCIdade.php");
+            
+            header("location: formCalculaPercentilIMCIdade.php");
         }          
     } else {
         $msg = ("Matrícula não encontrada");
@@ -148,5 +106,39 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
     $msg = ("Informe uma matrícula válida. Somente número são permitidos");
     $_SESSION['erro'] = $msg;
     header("location: formCalculaPercentilIMCIdade.php");
+}
+
+function capturarDados($matricula) {
+
+    $dao = new dao_class();
+
+    $rowEntrevistado = $dao->selectEntrevistado($matricula);
+
+    $vetor = array(
+        'peso' => $rowEntrevistado['nr_peso'],
+        'alturaCm' => $rowEntrevistado['nr_altura'],
+        'sexo' => $rowEntrevistado['tp_sexo'],
+        'dtNascimento' => $rowEntrevistado['dt_nascimento'],
+        'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento'])
+    );
+
+    // Calcular IMC com os dados do entrevistado.
+    $alturaMetros = $vetor['alturaCm'] / 100;
+
+    // Cálculo do IMC
+    $imc = number_format($vetor['peso'] / pow($alturaMetros, 2), 1);
+
+
+    $vetor2 = array(
+        'peso' => $rowEntrevistado['nr_peso'],
+        'alturaCm' => $rowEntrevistado['nr_altura'],
+        'sexo' => $rowEntrevistado['tp_sexo'],
+        'dtNascimento' => $rowEntrevistado['dt_nascimento'],
+        'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
+        'imc' => $imc
+    );
+
+
+    return $vetor2;
 }
 ?>
