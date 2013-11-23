@@ -17,8 +17,6 @@ require_once ('validate/erro.php');
         ?>                    
     </ul>
 
-    <div class="clear"></div>
-
     <div id='centralizar'>
         <form action="trataLogin.php" method="POST" name="cadastro">
 
@@ -33,7 +31,6 @@ require_once ('validate/erro.php');
         </form>
     </div>
 </div>
-<div class="clear"></div>
 <?php
 //Erro da validação, sessão será destruída
 unset($_SESSION['erro']);
