@@ -23,7 +23,7 @@ require_once 'template/headerForm.php';
         ?>                    
     </ul>
     
-    <form method="post" action="trataPerfilAlimentarParte1.php">
+    <form method="POST" action="trataPerfilAlimentarParte1.php">
         <h2>Qual é, em média, a quantidade de frutas (unidade/
         fatia/pedaço/copo de suco natural) que você come por 
         dia?</h2>
@@ -101,9 +101,11 @@ require_once 'template/headerForm.php';
         <input type="submit" value="Confirmar"/>
         <input type="reset" value="Limpar"/>
     </form>
+    
 </div>
 
 <?php
 // Rodapé da página html.
+ unset($_SESSION['erro']);
 require_once 'template/footer.php';
 ?>

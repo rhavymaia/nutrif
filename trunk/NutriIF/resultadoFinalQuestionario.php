@@ -28,10 +28,15 @@ require_once 'template/headerForm.php';
             echo ("<p> Parabéns! Você está no caminho para o modo "
                     . "de vida saudável.</p>");
         }
-    ?>
+        unset($_SESSION['erro']);
+        
+    ?>     
+     
   </div>
+    
 </div>
 
+    
 <?php
     // Rodapé da página html.
     require_once 'template/footer.php';
