@@ -91,5 +91,6 @@ require_once 'template/headerForm.php';
 
 <?php
 // Rodapé da página html.
+ unset($_SESSION['erro']);
 require_once 'template/footer.php';
 ?>

@@ -29,7 +29,7 @@
      */
     function verificaAlternativa($alternativa){  
   
-        if(isset($alternativa) && is_int((int)$alternativa)){ 
+        if(isset($alternativa)){ 
             return true; 
         } 
           

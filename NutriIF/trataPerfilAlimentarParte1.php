@@ -6,16 +6,27 @@ require_once ('validate/validate.php');
 require_once ('util/date.php');
 require_once ('util/constantes.php');
 
-  
-        session_start(); 
+?>
+
+<?php
+
+session_start(); 
         $_SESSION['quest1'] = $_POST['quest1'];
         $_SESSION['quest2'] = $_POST['quest2'];
         $_SESSION['quest3'] = $_POST['quest3'];
-
         $a = $_POST['a'];
         $b = $_POST['b'];
         $c = $_POST['c'];
         $d = $_POST['d'];
+
+
+if (verificaAlternativa($_SESSION['quest1'])
+    && verificaAlternativa($_SESSION['quest2'])
+    && verificaAlternativa($_SESSION['quest3'])
+    && !ehVazio($a)
+    && !ehVazio($b)
+    && !ehVazio($c)
+    && !ehVazio($d)){
 
         $ra = $a/3;
         $rb = $b/2;
@@ -38,6 +49,10 @@ require_once ('util/constantes.php');
             $_SESSION['quest4'] = 4;
         }
    header("location: formPerfilAlimentarParte2.php");   
+   }else{
+       header("location: formPerfilAlimentarParte1.php");  
+       
+   }
  
 
 ?>

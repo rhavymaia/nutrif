@@ -13,5 +13,13 @@ $_SESSION['quest11'] = $_POST['quest11'];
 $_SESSION['quest12'] = $_POST['quest12'];
 $_SESSION['quest13'] = $_POST['quest13'];
 
-header("location: formPerfilAlimentarParte4.php");
+    if (verificaAlternativa($_SESSION['quest10'])
+        && verificaAlternativa($_SESSION['quest11'])
+        && verificaAlternativa($_SESSION['quest12'])
+        && verificaAlternativa($_SESSION['quest13'])){
+
+    header("location: formPerfilAlimentarParte4.php");
+    }else{
+        header("location: formPerfilAlimentarParte3.php");
+    }
 ?>
