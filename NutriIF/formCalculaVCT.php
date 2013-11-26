@@ -31,11 +31,12 @@ require_once 'template/headerForm.php';
         <input type="reset" value="Limpar"/>
     </form>
 </div>
-
-<div class="caixa_azul">     
+    
     <?php
         if (isset($_SESSION['vct'])) {
+            echo '<div class="caixa_azul">';
             echo "<p>Valor Calórico Total (VCT): " . $_SESSION['vct'] . "</p>";
+            echo '</div>';
         }
     ?>
 </div>

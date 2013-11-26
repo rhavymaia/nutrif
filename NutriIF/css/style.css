@@ -47,17 +47,17 @@ a{
 }
 #top{
     border-top: 4px solid rgb(126, 186, 0);
+    height: 80px;
 }
 #top .container{
     padding: 0px 20px;
 }
 #top #logo{
     float: left;
+    padding-top: 10px;
     display: block;
     width: 200px;
-    height: 50px;
-    /*background-color: red;
-    text-align: center;      */
+    height: 50px; 
 }
 #top #logo img{
     float: left;
@@ -67,7 +67,7 @@ a{
 }
 #top #menu{
     position: absolute;
-    right: 10px;
+    margin-left: 200px;
     top: calc(50% - 12px);
 }
 #top #menu li{
@@ -75,11 +75,14 @@ a{
     display: inline;
     float: left;
 }
+
+
 #top #menu li a{
-    border-radius: 0px 0px 3px 3px;
+    float: right;
+    border-radius: 3px 3px 3px 3px;
     display: block;
     padding: 16px 5px 5px 5px;
-    margin: -13px 5px 5px 5px;
+    margin: -13px 15px 10px 5px;
     text-transform: uppercase;
     text-align: center;
     color: #000;
@@ -256,11 +259,13 @@ a{
 }
 #footer{
     background: rgb(17, 17, 17);
+    width: auto;
     color: #fff;
 }
 #footer #fmenu{
     text-align: center;
     list-style: none;
+    width: auto;
     padding: 40px 0 20px;
 }
 #footer #fmenu li{
@@ -391,12 +396,9 @@ input[type="radio"]:hover{
 }
 
 #centralizares{
-    float: center;
-    width: 300px;
-    position: relative;
     text-align: center;
-    font-family: Arial Black,Verdana;
-    color: grey;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #centralizar{
@@ -407,6 +409,10 @@ input[type="radio"]:hover{
 }
 
 #centralizar input[type=submit]{
+    float: center;
+}
+
+#centralizar input[type=reset]{
     float: center;
 }
 

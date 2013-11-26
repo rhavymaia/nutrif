@@ -39,10 +39,9 @@ require_once 'template/headerForm.php';
     </form>
 </div>
 
-<div class="caixa_azul">
     <?php
     if (isset($_SESSION['imc'])) {
-        /*echo '<div class="caixa_azul">';*/
+        echo '<div class="caixa_azul">';
         if (isset($_SESSION['peso'])) {
             echo "<p>Peso: " . $_SESSION['peso'] . "</p>";
         }
@@ -69,6 +68,7 @@ require_once 'template/headerForm.php';
             }
         } else if (isset($_SESSION['imc']) && ($_SESSION['imc']))
             echo "<p>IMC: " . $_SESSION['imc'] . "</p>";
+      echo '</div>';
     }
     ?>       
 </div>
