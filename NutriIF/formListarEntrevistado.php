@@ -11,17 +11,19 @@ require_once 'template/headerForm.php';
     <div id="letras">
         <h1>
             <?php
-            echo TL_LISTAGEM;
+                echo TL_LISTAGEM;
             ?>
         </h1>
     </div>
+    
     <ul id="erro">
         <!-- Lista de erros na validação -->
         <?php
         isset($_SESSION['erro']) && sizeof($_SESSION['erro']) > 0 ? ErroMatricula($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
-    <form action="trataListagem.php" method="POST">
+    
+    <form action="trataListarEntrevistado.php" method="POST">
 
         <label for="matricula"><em>*</em>Digite a matrícula a ser procurada:
             <input type="text" name="matricula" onFocus="this.className = 'select'" 
@@ -42,7 +44,6 @@ require_once 'template/headerForm.php';
     if (isset($_SESSION['imc'])) {
         /*echo '<div class="caixa_azul">';*/
         if (isset($_SESSION['peso'])) {
-
             echo "<p>Peso: " . $_SESSION['peso'] . "</p>";
         }
         if (isset($_SESSION['altura']))

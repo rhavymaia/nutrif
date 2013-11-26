@@ -34,7 +34,6 @@ require_once 'template/headerForm.php';
 <div class="caixa_azul">
     <?php
         if (isset($_SESSION['imc'])) {
-
             if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) 
                     || isset($_SESSION['percentilInferior'])) {
                 
@@ -47,9 +46,8 @@ require_once 'template/headerForm.php';
                         echo("<p> Percentil Inferior: " . $_SESSION['percentilInferior'] . "</p>");
                 } else {
                     echo("Nenhum valor encontrado");
-                }
-                
-            } else if (isset($_SESSION['imc']) && $_SESSION['imc']) {
+                }                
+            } else {
                 echo ("<p>Aluno acima de 19 anos. </p>");
                 echo ("<p>Valor de imc: " . $_SESSION['imc'] . "</p>");
                 echo ("<p> Situação: " . $_SESSION['perfilIMC'] . "</p>");
