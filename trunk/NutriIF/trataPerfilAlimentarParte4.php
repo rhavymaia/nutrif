@@ -13,19 +13,19 @@ $_SESSION['quest16'] = $_POST['quest16'];
 $_SESSION['quest17'] = $_POST['quest17'];
 $_SESSION['quest18'] = $_POST['quest18'];
 
-if (verificaAlternativa($_SESSION['quest15'])
-    && verificaAlternativa($_SESSION['quest16'])
-    && verificaAlternativa($_SESSION['quest17'])
-    && verificaAlternativa($_SESSION['quest18'])){
+if (ehPreenchido($_SESSION['quest15'])
+    && ehPreenchido($_SESSION['quest16'])
+    && ehPreenchido($_SESSION['quest17'])
+    && ehPreenchido($_SESSION['quest18'])){
 
-        $a = $_POST['quest14a'];
-        $b = $_POST['quest14b'];
-        $c = $_POST['quest14c'];
-        $d = $_POST['quest14d'];
+        $questao4_a = $_POST['quest14a'];
+        $questao4_b = $_POST['quest14b'];
+        $questao4_c = $_POST['quest14c'];
+        $questao4_d = $_POST['quest14d'];
         $e = $_POST['quest14e'];
         $f = $_POST['quest14f'];
         
-        $soma = $a + $b + $c + $d + $e + $f;
+        $soma = $questao4_a + $questao4_b + $questao4_c + $questao4_d + $e + $f;
 
         if ($soma < 3){
             $_SESSION['quest14'] = 0;

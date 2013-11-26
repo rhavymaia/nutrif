@@ -22,14 +22,17 @@
     }
 
     /**
-     * Descrever a função.
+     * Essa função Verifica se o valor está preenchido. O valor 0 ou '0' é 
+     * considerado como preenchido.
      * 
      * @param type $alternativa
      * @return boolean
      */
-    function verificaAlternativa($alternativa){  
+    function ehPreenchido($alternativa){  
   
-        if(isset($alternativa)){ 
+        $semEspacoBranco = trim($valor);
+        
+        if(isset($semEspacoBranco)){ 
             return true; 
         } 
           

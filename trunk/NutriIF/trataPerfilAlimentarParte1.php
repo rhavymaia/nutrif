@@ -1,58 +1,66 @@
 <?php
-
 // Cabeçalho e menu da página html.
 require_once ('database/dao.class.php');
 require_once ('validate/validate.php');
 require_once ('util/date.php');
 require_once ('util/constantes.php');
 
-?>
+session_start();
 
-<?php
+$quest1 = $_POST['quest1'];
+$quest2 = $_POST['quest2'];
+$quest3 = $_POST['quest3'];
+$questao4_a = $_POST['quest4_a'];
+$questao4_b = $_POST['quest4_b'];
+$questao4_c = $_POST['quest4_c'];
+$questao4_d = $_POST['quest4_d'];
 
-session_start(); 
-        $_SESSION['quest1'] = $_POST['quest1'];
-        $_SESSION['quest2'] = $_POST['quest2'];
-        $_SESSION['quest3'] = $_POST['quest3'];
-        $a = $_POST['a'];
-        $b = $_POST['b'];
-        $c = $_POST['c'];
-        $d = $_POST['d'];
+if (ehPreenchido($quest1) 
+        && ehPreenchido($quest2) 
+        && ehPreenchido($quest3) 
+        && ehNumerico($questao4_a)
+        && ehNumerico($questao4_b) 
+        && ehNumerico($questao4_c) 
+        && ehNumerico($questao4_d)) {
 
+    $_SESSION['quest1'] = $quest1;
+    $_SESSION['quest2'] = $quest2;
+    $_SESSION['quest3'] = $quest3;
+    
+    // Totalização da questão 4.
+    $pesoQuestao4_a = $questao4_a/3; //TODO: qual o significado desses pesos?
+    $pesoQuestao4_b = $questao4_b/2;
+    $pesoQuestao4_c = $questao4_c/1;
+    $pesoQuestao4_d = $questao4_d/6;
 
-if (verificaAlternativa($_SESSION['quest1'])
-    && verificaAlternativa($_SESSION['quest2'])
-    && verificaAlternativa($_SESSION['quest3'])
-    && !ehVazio($a)
-    && !ehVazio($b)
-    && !ehVazio($c)
-    && !ehVazio($d)){
-
-        $ra = $a/3;
-        $rb = $b/2;
-        $rc = $c/1;
-        $rd = $d/6;
-
-        $som = $ra + $rb + $rc + $rd;
-
+    $totalPesoQuestao4 = $pesoQuestao4_a + $pesoQuestao4_b 
+            + $pesoQuestao4_c + $pesoQuestao4_d;   
+    
+    if ($totalPesoQuestao4 > 7.5) {
+        $_SESSION['quest4'] = 4;
+    } else if ($totalPesoQuestao4 >= 4.5) {
+        $_SESSION['quest4'] = 3;
+    } else if ($totalPesoQuestao4 >= 3) {
+        $_SESSION['quest4'] = 2;
+    } else if ($totalPesoQuestao4 < 3) {
+        $_SESSION['quest4'] = 1;
+    } else {
         $_SESSION['quest4'] = 0;
-        if ($som<3){
-            $_SESSION['quest4'] = 1;
-        }
-        if (($som>=3) && ($som<=4.4)){
-            $_SESSION['quest4'] = 2;
-        }
-        if (($som>=4.5) && ($som<=7.5)){
-            $_SESSION['quest4'] = 3;
-        }
-        if ($som>7.5){
-            $_SESSION['quest4'] = 4;
-        }
-   header("location: formPerfilAlimentarParte2.php");   
-   }else{
-       header("location: formPerfilAlimentarParte1.php");  
-       
-   }
- 
-
+    }
+    
+    header("location: formPerfilAlimentarParte2.php");    
+} else {
+    
+    // Inserir valores na sessão em caso de erro.
+    $_SESSION['quest1'] = $quest1;
+    $_SESSION['quest2'] = $quest2;
+    $_SESSION['quest3'] = $quest3;
+    $_SESSION['quest4_a'] = $questao4_a;
+    $_SESSION['quest4_b'] = $questao4_b;
+    $_SESSION['quest4_c'] = $questao4_c;
+    $_SESSION['quest4_d'] = $questao4_d;
+    
+    // Redirecionar para a mesma página
+    header("location: formPerfilAlimentarParte1.php");
+}
 ?>
