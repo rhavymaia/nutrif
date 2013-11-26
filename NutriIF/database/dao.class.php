@@ -23,7 +23,7 @@ class dao_class {
      public function selectEntrevistado($matricula) {
         
         // Montar consulta.
-        $select = "SELECT nr_matricula, dt_nascimento, nr_peso, nr_altura, tp_sexo ".
+        $select = "SELECT cd_entrevistado, nr_matricula, dt_nascimento, nr_peso, nr_altura, tp_sexo ".
                 "FROM tb_entrevistado ".
                 "WHERE nr_matricula = ".$matricula;
         

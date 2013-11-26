@@ -16,7 +16,7 @@ require_once ('trataCalculaPercentilIMCIdade.php');
     $qtd = 0;
     while($row = mysql_fetch_array($rowTodosEntrevistados)){
         
-        $dados = capturarDados($row['nr_matricula']);
+        $dados = consultarEntrevistado($row['nr_matricula']);
         
         if ($dados['idadeMeses'] > IDADE_PERCENTIL_19){
             $qtd++;

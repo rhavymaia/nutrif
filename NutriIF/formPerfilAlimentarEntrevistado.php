@@ -7,18 +7,16 @@ require_once 'template/headerForm.php';
 ?> 
 <div class="container">
     <div id="letras">
-        <p>
-            <h1>
-                <?php
-                echo TL_PERFIL_ALIMENTAR;
-                ?>
-            </h1>
-        </p>
+        <h1>
+            <?php
+            echo TL_PERFIL_ALIMENTAR;
+            ?>
+        </h1>
     </div>
     <ul id="erro">
         <!-- Lista de erros na validação -->
         <?php
-               isset($_SESSION['erro']) && sizeof($_SESSION['erro']) > 0 ? ErroMatricula($_SESSION['erro']) : VAZIO;
+               isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
 

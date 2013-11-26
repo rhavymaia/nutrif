@@ -30,12 +30,10 @@
      */
     function ehPreenchido($alternativa){  
   
-        $semEspacoBranco = trim($valor);
+        if(isset($alternativa) && trim($alternativa)!= VAZIO){
+           return true; 
+        }
         
-        if(isset($semEspacoBranco)){ 
-            return true; 
-        } 
-          
         return false; 
     } 
     

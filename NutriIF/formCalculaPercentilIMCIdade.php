@@ -17,7 +17,7 @@ require_once 'template/headerForm.php';
     <ul id="erro">
         <!-- Lista de erros na validação -->
         <?php
-            isset($_SESSION['erro']) && sizeof($_SESSION['erro']) > 0 ? ErroMatricula($_SESSION['erro']) : VAZIO;
+            isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
     <form action="trataCalculaPercentilIMCIdade.php" method="POST">
@@ -57,14 +57,14 @@ require_once 'template/headerForm.php';
 </div>
 
 <?php
-    // Após preenchimento do formulário limpar as variáveis da sessão.
-    unset($_SESSION['matricula']);
+    // Após preenchimento do formulário limpar as variáveis da sessão.    
     unset($_SESSION['erro']);
+    unset($_SESSION['matricula']);
+    unset($_SESSION['imc']);
+    unset($_SESSION['sexo']);
     unset($_SESSION['percentilMediano']);
     unset($_SESSION['percentilSuperior']);
     unset($_SESSION['percentilInferior']);
-    unset($_SESSION['imc']);
-    unset($_SESSION['sexo']);
 ?>
 <?php
     // Rodapé da página html.

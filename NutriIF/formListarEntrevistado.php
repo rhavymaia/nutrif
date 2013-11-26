@@ -50,8 +50,7 @@ require_once 'template/headerForm.php';
             echo "<p>Altura(cm): " . $_SESSION['altura'] . "</p>";
         if ((isset($_SESSION['sexo']) && ($_SESSION['sexo'] == 'F')))
             echo "<p>Sexo: Feminino</p>";
-        else
-        if ((isset($_SESSION['sexo']) && ($_SESSION['sexo'] == 'M')))
+        else if ((isset($_SESSION['sexo']) && ($_SESSION['sexo'] == 'M')))
             echo "<p>Sexo: Masculino</p>";
         if (isset($_SESSION['dataNasc']))
             echo "<p>Nascimento: " . formata_data($_SESSION['dataNasc']) . "</p>";
@@ -68,8 +67,7 @@ require_once 'template/headerForm.php';
             if ($_SESSION['percentilMediano']) {
                 echo "<p>Percentil Mediano: " . $_SESSION['percentilMediano'] . "</p>";
             }
-        } else
-        if (isset($_SESSION['imc']) && ($_SESSION['imc']))
+        } else if (isset($_SESSION['imc']) && ($_SESSION['imc']))
             echo "<p>IMC: " . $_SESSION['imc'] . "</p>";
     }
     ?>       
