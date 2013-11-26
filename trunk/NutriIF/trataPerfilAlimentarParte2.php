@@ -14,10 +14,7 @@ $quest7 = $_POST['quest7'];
 $quest8 = $_POST['quest8'];
 $quest9 = $_POST['quest9'];
 
-if (ehPreenchido($quest5) 
-        && ehPreenchido($quest6) 
-        && ehPreenchido($quest7) 
-        && ehPreenchido($quest8)) {
+if (validaFormPerfilAlimentarParte2()) {
 
     $_SESSION['quest5'] = $quest5;
     $_SESSION['quest6'] = $quest6;
@@ -41,5 +38,51 @@ if (ehPreenchido($quest5)
     
     // Redirecionar para a mesma página
     header("location: formPerfilAlimentarParte2.php");
+}
+
+
+function validaFormPerfilAlimentarParte2() {
+    
+    $ehValido = true;
+    $msgsErro = array();
+
+    if (!ehPreenchido($_POST['quest5'])) {
+         $msgErro = array('quest5' => "Selecione uma opção para a Questão 5");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest6'])) {
+         $msgErro = array('quest6' => "Selecione uma opção para a Questão 6");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest7'])) {
+         $msgErro = array('quest7' => "Selecione uma opção para a Questão 7");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }    
+   
+    if (!ehPreenchido($_POST['quest8'])) {
+         $msgErro = array('quest8' => "Selecione uma opção para a Questão 8");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest9'])) {
+         $msgErro = array('quest9' => "Selecione uma opção para a Questão 9");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    $_SESSION['erro'] = $msgsErro;
+        
+    return $ehValido;
 }
 ?>

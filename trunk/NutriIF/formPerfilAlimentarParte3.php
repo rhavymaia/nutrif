@@ -13,12 +13,15 @@ require_once 'template/headerForm.php';
             <?php
             echo TL_PERFIL_ALIMENTAR;
             ?>
+            - Parte 3
         </h1>
         </p>
     </div>
     <ul id="erro">
         <!-- Lista de erros na validação -->
-                  
+        <?php
+            isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
+        ?>        
     </ul>
     
     <form method="post" action="trataPerfilAlimentarParte3.php">

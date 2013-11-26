@@ -18,7 +18,9 @@ require_once 'template/headerForm.php';
     </div>
     <ul id="erro">
         <!-- Lista de erros na validação -->
-                  
+        <?php
+            isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
+        ?>           
     </ul>
     
     <form method="post" action="trataPerfilAlimentarParte4.php">

@@ -29,7 +29,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
         $_SESSION['idadeMeses'] = $dados['idadeMeses'];
         $_SESSION['existe'] = TRUE;
 
-        header("location: formListagem.php");
+        header("location: formListarEntrevistado.php");
     } else {
         $msg = ("Matrícula não encontrada");
         $_SESSION['matricula'] = $matricula;
