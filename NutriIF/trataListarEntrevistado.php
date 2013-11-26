@@ -19,7 +19,6 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 
     $rowEntrevistado = $dao->selectEntrevistado($matricula);
 
-
     // Verificar se a checagem não gera problemas de tipo.
     if ($rowEntrevistado) {
 
