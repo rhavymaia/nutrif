@@ -13,19 +13,16 @@ $_SESSION['quest16'] = $_POST['quest16'];
 $_SESSION['quest17'] = $_POST['quest17'];
 $_SESSION['quest18'] = $_POST['quest18'];
 
-if (ehPreenchido($_SESSION['quest15'])
-    && ehPreenchido($_SESSION['quest16'])
-    && ehPreenchido($_SESSION['quest17'])
-    && ehPreenchido($_SESSION['quest18'])){
+if (validaFormPerfilAlimentarParte4()){
 
-        $questao4_a = $_POST['quest14a'];
-        $questao4_b = $_POST['quest14b'];
-        $questao4_c = $_POST['quest14c'];
-        $questao4_d = $_POST['quest14d'];
+        $questao14_a = $_POST['quest14a'];
+        $questao14_b = $_POST['quest14b'];
+        $questao14_c = $_POST['quest14c'];
+        $questao14_d = $_POST['quest14d'];
         $e = $_POST['quest14e'];
         $f = $_POST['quest14f'];
         
-        $soma = $questao4_a + $questao4_b + $questao4_c + $questao4_d + $e + $f;
+        $soma = $questao14_a + $questao14_b + $questao14_c + $questao14_d + $e + $f;
 
         if ($soma < 3){
             $_SESSION['quest14'] = 0;
@@ -52,4 +49,54 @@ if (ehPreenchido($_SESSION['quest15'])
 }else{
         header("location: formPerfilAlimentarParte4.php");
     }
+    
+function validaFormPerfilAlimentarParte4() {
+    
+    $ehValido = true;
+    $msgsErro = array();
+        
+   /* if (!ehPreenchido($_POST['quest14a']) 
+            && !ehPreenchido($_POST['quest14b'])
+            && !ehPreenchido($_POST['quest14c'])
+            && !ehPreenchido($_POST['quest14d'])
+            ) {
+         $msgErro = array('quest14' => "Selecione uma opção ou mais para a Questão 14");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }*/
+    
+    if (!ehPreenchido($_POST['quest15'])) {
+         $msgErro = array('quest15' => "Selecione uma opção para a Questão 15");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest16'])) {
+         $msgErro = array('quest16' => "Selecione uma opção para a Questão 16");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }    
+   
+    if (!ehPreenchido($_POST['quest17'])) {
+         $msgErro = array('quest17' => "Selecione uma opção para a Questão 17");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest18'])) {
+         $msgErro = array('quest18' => "Selecione uma opção para a Questão 18");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }    
+    
+
+    $_SESSION['erro'] = $msgsErro;
+        
+    return $ehValido;
+}
 ?>
