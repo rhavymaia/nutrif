@@ -14,6 +14,7 @@ require_once ('validate/erro.php');
         echo isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
+    <div id="centralizar">
     <form action="trataLogin.php" method="POST" name="cadastro">
 
         <label for="login"> <em>*</em> Login: 
@@ -25,7 +26,9 @@ require_once ('validate/erro.php');
 
         <input type="submit" value="Entrar" />
         <input type="reset" value="Limpar" />
+        
     </form>
+    </div>
 </div>
 
 <?php

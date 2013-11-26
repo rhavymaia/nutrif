@@ -10,7 +10,7 @@ require_once 'template/headerForm.php';
     <div id="letras">
         <h1>
             <?php
-                echo TL_CALCULA_PERCENTIL;
+            echo TL_CALCULA_PERCENTIL;
             ?>
         </h1>
     </div>
@@ -23,17 +23,19 @@ require_once 'template/headerForm.php';
     <form action="trataCalculaPercentilIMCIdade.php" method="POST">
         <label for="matricula"><em>*</em>Digite a matrícula a ser procurada:
             <input type="text" name="matricula" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" 
-                   value= "<?php echo(isset( $_SESSION['matricula']) ? $_SESSION['matricula'] : VAZIO);?>"/> 
+                   value= "<?php echo(isset($_SESSION['matricula']) ? $_SESSION['matricula'] : VAZIO); ?>"/> 
         </label>
         <input type="submit" value="Buscar"/>
         <input type="reset" value="Limpar"/>
     </form>
-    
+
 </div>
 
-<div class="caixa_azul">
-    <?php
-        if (isset($_SESSION['imc'])) {
+
+<?php
+if (isset($_SESSION['imc'])) {
+    echo('<div class="caixa_azul">');
+    if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) || isset($_SESSION['percentilInferior'])) {
             if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) 
                     || isset($_SESSION['percentilInferior'])) {
                 
@@ -53,8 +55,15 @@ require_once 'template/headerForm.php';
                 echo ("<p> Situação: " . $_SESSION['perfilIMC'] . "</p>");
             }
         }
-    ?>       
-</div>
+    } else if (isset($_SESSION['imc']) && $_SESSION['imc']) {
+        echo ("<p>Aluno acima de 19 anos. </p>");
+        echo ("<p>Valor de imc: " . $_SESSION['imc'] . "</p>");
+        echo ("<p> Situação: " . $_SESSION['perfilIMC'] . "</p>");
+    }
+    echo '</div>';
+
+
+?>       
 
 <?php
     // Após preenchimento do formulário limpar as variáveis da sessão.    
@@ -67,6 +76,6 @@ require_once 'template/headerForm.php';
     unset($_SESSION['percentilInferior']);
 ?>
 <?php
-    // Rodapé da página html.
-    require_once 'template/footer.php';
+// Rodapé da página html.
+require_once 'template/footer.php';
 ?>

@@ -40,17 +40,17 @@ require_once ('util/constantes.php');
                                     </li>
                                     <li>
                                         <a href="formCalculaPercentilIMCIdade.php">
-                                            <img src="images/calc.png">  Cálculo do Percentil
+                                            <img src="images/rulers.png">  Cálculo do Percentil
                                         </a>
                                     </li>
                                     <li>
                                         <a href="formListarEntrevistado.php">
-                                            <img src="images/list.png">  Listar Entrevistado
+                                            <img src="images/search.png">  Listar Entrevistado
                                         </a>
                                     </li>
                                     <li>
                                         <a href="formCalculaVCT.php">
-                                            <img src="images/list.png">  Cálculo do VCT
+                                            <img src="images/calc.png">  Cálculo do VCT
                                         </a>
                                     </li>
                                     <li>
@@ -60,7 +60,7 @@ require_once ('util/constantes.php');
                                     </li>
                                     <li>
                                         <a href="formPerfilAlimentarEntrevistado.php">
-                                            <img src="images/locked.png">  Perfil Alimentar
+                                            <img src="images/book-lines.png">  Perfil Alimentar
                                         </a>
                                     </li>
                                     <li>

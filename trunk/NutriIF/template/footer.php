@@ -7,15 +7,16 @@
                                         if (isset($_SESSION['id'])) {
 					echo '<li><a href="formRegistroAntropometrico.php">Cadastro Antropométrico</a></li>
 					<li><a href="formCalculaPercentilIMCIdade.php">Cálculo de Percentil</a></li>
-                                        <li><a href="formListagem.php">Listagem</a></li>
-                                        <li><a href="relatorio.php">Relatório</a></li>
-                                        <li><a href="formPerfilAlimentarEntrevistado.php">Questionário</a></li>';
+                                        <li><a href="formListarEntrevistado.php">Procurar Entrevistado</a></li>
+                                        <li><a href="formCalculaVCT.php">Cálculo do VCT</a></li>
+                                        <p><li><a href="relatorio.php">Relatório de Entrevistados</a></li>
+                                        <li><a href="formPerfilAlimentarEntrevistado.php">Perfil Alimentar</a></li>';
                                         }        
                                         
                                         if (!isset($_SESSION['id'])) {
-                                        echo '<li><a href="login.php">Login</a></li>';
+                                        echo '<li><a href="formLogin.php">Login</a></li></p>';
                                         }else{
-                                        echo '<li><a href="logout.php">Logout</a></li>';   
+                                        echo '<li><a href="logout.php">Logout</a></li></p>';   
                                         }
                                         ?>        
 				</ul>
