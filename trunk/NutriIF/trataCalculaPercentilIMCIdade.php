@@ -81,6 +81,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
                 $_SESSION['perfilIMC'] = PERFIL_OBESO_MORBIDO;
             }            
        
+            //TODO: Verificar necessidade desse código
             if ($_SESSION['perfilIMC'] == PERFIL_MAGREZA) {
                 $_SESSION['qtdMagros']= $_SESSION['qtdMagros']+1;
             }
