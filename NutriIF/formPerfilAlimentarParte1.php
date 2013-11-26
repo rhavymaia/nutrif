@@ -13,20 +13,25 @@ require_once 'template/headerForm.php';
             <?php
             echo TL_PERFIL_ALIMENTAR;
             ?>
+            - Parte 1
         </h1>
         </p>
     </div>
     <ul id="erro">
         <!-- Lista de erros na validação -->
         <?php
-        isset($_SESSION['erro']) && sizeof($_SESSION['erro']) > 0 ? ErroMatricula($_SESSION['erro']) : VAZIO;
+            isset($_SESSION['erro']) && sizeof($_SESSION['erro']) > 0 ? 
+                showListErro($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
     
     <form method="POST" action="trataPerfilAlimentarParte1.php">
-        <h2>Qual é, em média, a quantidade de frutas (unidade/
-        fatia/pedaço/copo de suco natural) que você come por 
-        dia?</h2>
+        <h2>
+            <em>*</em>
+            Qual é, em média, a quantidade de frutas (unidade/
+            fatia/pedaço/copo de suco natural) que você come por 
+            dia?
+        </h2>
         <label for="quest1_1">
             <input type="radio" name="quest1" value="0" id="quest1_1"> Não como frutas, nem tomo suco de frutas natural 
             todos os dias
@@ -41,8 +46,11 @@ require_once 'template/headerForm.php';
             <input type="radio" name="quest1" value="1" id="quest1_4"> 1 unidade/fatia/pedaço/copo de suco natural 
         </label>
         
-        <h2>Qual é, em média, a quantidade de legumes e verduras 
-        que você come por dia? (Não inclua nesse grupo os tubérculos e raízes)</h2>
+        <h2>
+            <em>*</em>
+            Qual é, em média, a quantidade de legumes e verduras 
+            que você come por dia? (Não inclua nesse grupo os tubérculos e raízes)
+        </h2>
         <label for="quest2_1">
             <input type="radio" name="quest2" value="0" id="quest2_1"> Não como legumes, nem verduras todos os dias 
         </label>         
@@ -59,10 +67,13 @@ require_once 'template/headerForm.php';
             <input type="radio" name="quest2" value="4" id="quest2_5"> 8 ou mais colheres de sopa
         </label>
 
-        <h2>Qual é, em média, a quantidade que você come dos 
-        seguintes alimentos: feijão de qualquer tipo ou cor, 
-        lentilha, ervilha, grão-de-bico, soja, fava, sementes ou 
-        castanhas?</h2>
+        <h2>
+            <em>*</em>
+            Qual é, em média, a quantidade que você come dos 
+            seguintes alimentos: feijão de qualquer tipo ou cor, 
+            lentilha, ervilha, grão-de-bico, soja, fava, sementes ou 
+            castanhas?
+        </h2>
         <label for="quest3_1">
             <input type="radio" name="quest3" value="0" id="quest3_1"> Não consumo 
         </label>        
@@ -76,26 +87,32 @@ require_once 'template/headerForm.php';
             <input type="radio" name="quest3" value="2" id="quest3_4"> 1 colher de sopa ou menos por dia  
         </label>
 
-        <h2>Qual a quantidade, em média, que você consome por 
-        dia dos alimentos listados abaixo?</h2>     
-        <label for="quest4_1">
+        <h2>
+            Qual a quantidade, em média, que você consome por 
+            dia dos alimentos listados abaixo?
+        </h2>     
+        <label for="quest4_a">
+            <em>*</em>
             Arroz, milho e outros cereais (inclusive os matinais); 
             mandioca/macaxeira/aipim, cará ou inhame; macarrão e 
             outras massas; batata-inglesa, batata-doce, batata-baroa 
             ou mandioquinha:                
-            <input type="text" name="a" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" id="quest4_1"> colheres de sopa 
+            <input type="text" name="quest4_a" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> colheres de sopa 
         </label>         
-        <label for="quest4_2">
+        <label for="quest4_b">
+            <em>*</em>
             Pães:                
-            <input type="text" name="b" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" id="quest4_2"> unidades/fatias
+            <input type="text" name="quest4_b" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> unidades/fatias
         </label>
-        <label for="quest4_3">
+        <label for="quest4_c">
+            <em>*</em>
             Bolos sem cobertura e/ou recheio:
-            <input type="text" name="c" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" id="quest4_3"> fatias
+            <input type="text" name="quest4_c" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> fatias
         </label>
-        <label for="quest4_4">  
+        <label for="quest4_d">
+            <em>*</em>
             Biscoito ou bolacha sem recheio:
-            <input type="text" name="d" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" id="quest4_4"> unidades
+            <input type="text" name="quest4_d" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> unidades
         </label>
 
         <input type="submit" value="Confirmar"/>
@@ -106,6 +123,6 @@ require_once 'template/headerForm.php';
 
 <?php
 // Rodapé da página html.
- unset($_SESSION['erro']);
+unset($_SESSION['erro']);
 require_once 'template/footer.php';
 ?>

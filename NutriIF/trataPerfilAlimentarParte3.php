@@ -13,10 +13,10 @@ $_SESSION['quest11'] = $_POST['quest11'];
 $_SESSION['quest12'] = $_POST['quest12'];
 $_SESSION['quest13'] = $_POST['quest13'];
 
-    if (verificaAlternativa($_SESSION['quest10'])
-        && verificaAlternativa($_SESSION['quest11'])
-        && verificaAlternativa($_SESSION['quest12'])
-        && verificaAlternativa($_SESSION['quest13'])){
+    if (ehPreenchido($_SESSION['quest10'])
+        && ehPreenchido($_SESSION['quest11'])
+        && ehPreenchido($_SESSION['quest12'])
+        && ehPreenchido($_SESSION['quest13'])){
 
     header("location: formPerfilAlimentarParte4.php");
     }else{
