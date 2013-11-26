@@ -15,13 +15,7 @@ $questao4_b = $_POST['quest4_b'];
 $questao4_c = $_POST['quest4_c'];
 $questao4_d = $_POST['quest4_d'];
 
-if (ehPreenchido($quest1) 
-        && ehPreenchido($quest2) 
-        && ehPreenchido($quest3) 
-        && ehNumerico($questao4_a)
-        && ehNumerico($questao4_b) 
-        && ehNumerico($questao4_c) 
-        && ehNumerico($questao4_d)) {
+if (validaFormPerfilAlimentarParte1()) {
 
     $_SESSION['quest1'] = $quest1;
     $_SESSION['quest2'] = $quest2;
@@ -62,5 +56,64 @@ if (ehPreenchido($quest1)
     
     // Redirecionar para a mesma página
     header("location: formPerfilAlimentarParte1.php");
+}
+
+function validaFormPerfilAlimentarParte1() {
+    
+    $ehValido = true;
+    $msgsErro = array();
+
+    if (!ehPreenchido($_POST['quest1'])) {
+         $msgErro = array('quest1' => "Selecione uma opção para a Questão 1");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest2'])) {
+         $msgErro = array('quest2' => "Selecione uma opção para a Questão 2");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest3'])) {
+         $msgErro = array('quest3' => "Selecione uma opção para a Questão 3");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }    
+   
+    if (!ehPreenchido($_POST['quest4_a']) && ehNumerico($_POST['quest4_a'])) {
+         $msgErro = array('quest4_a' => "Preencha a quantidade de arroz, milho e outros cereais consumidos");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest4_b']) && !ehNumerico($_POST['quest4_b'])) {
+         $msgErro = array('quest4_b' => "Preencha a quantidade de Pães consumidos");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest4_c']) && !ehNumerico($_POST['quest4_c'])) {
+         $msgErro = array('quest4_c' => "Preencha a quantidade de bolos sem cobertura e/ou recheio consumidos");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }
+    
+    if (!ehPreenchido($_POST['quest4_d']) && !ehNumerico($_POST['quest4_d'])) {
+         $msgErro = array('quest4_d' => "Preencha a quantidade de biscoito ou bolacha sem recheio consumidos");
+         array_push($msgsErro, $msgErro);
+         
+         $ehValido = false;
+    }   
+    
+    $_SESSION['erro'] = $msgsErro;
+        
+    return $ehValido;
 }
 ?>

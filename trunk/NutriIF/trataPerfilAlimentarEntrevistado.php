@@ -7,46 +7,57 @@ require_once ('database/dao.class.php');
 require_once ('validate/validate.php');
 require_once ('util/date.php');
 require_once ('util/constantes.php');
-require_once ('trataCalculaPercentilIMCIdade.php');
 
-    function capturarCodigo($matricula) {
+$matricula = $_POST['matricula'];
 
-        $dao = new dao_class();
-
-        $rowEntrevistado = $dao->selectEntrevistado($matricula);
-
-        $codigo = $rowEntrevistado['cd_entrevistado'];
+if (validaFormCalculaPercentilIMC($matricula)) {
     
-        return $codigo;
-    }
+    $codigoEntrevistado = consultarCodigoEntrevistado($matricula);
 
-    $matricula = $_POST['matricula'];
-    
-    $dao = new dao_class();
-
-    $rowEntrevistado = $dao->selectEntrevistado($matricula);
-
-    $dados = capturarCodigo($matricula);
-    
-    $_SESSION['cod'] = $dados;
+    $_SESSION['codigoEntrevistado'] = $codigoEntrevistado;
     $_SESSION['ind'] = 1;
     
-    if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
     // Verificar se a checagem não gera problemas de tipo.
-    if ($rowEntrevistado) {
-    
-     header("location: formPerfilAlimentarParte1.php");
-     
-    }  else{
+    if ($codigoEntrevistado) {
+        header("location: formPerfilAlimentarParte1.php");
+    } else {
         $msg = ("Matrícula não encontrada");
         $_SESSION['matricula'] = $matricula;
         $_SESSION['erro'] = $msg;
         header("location: formPerfilAlimentarEntrevistado.php");
-        }
-    }else {
-    $msg = ("Informe uma matrícula válida. Somente número são permitidos");
-    $_SESSION['erro'] = $msg;
+    }
+} else {
     header("location: formPerfilAlimentarEntrevistado.php");
 }
-          
+
+function consultarCodigoEntrevistado($matricula) {
+
+    $dao = new dao_class();
+
+    $rowEntrevistado = $dao->selectEntrevistado($matricula);
+
+    $codigo = $rowEntrevistado['cd_entrevistado'];
+
+    return $codigo;
+}
+
+function validaFormCalculaPercentilIMC() {
+        
+        $ehValido = true;
+        $msgsErro = array();
+        
+        $matricula = $_POST['matricula'];
+        
+        if (!ehNumerico($matricula) && !(strlen($matricula) == TAM_MATRICULA)) {
+            
+            $msgErro = array('matricula' => "Informe uma matrícula válida. Somente número são permitidos");
+            array_push($msgsErro, $msgErro);
+            
+            $ehValido = false;            
+        }
+        
+        $_SESSION['erro'] = $msgsErro;
+        
+        return $ehValido;
+}
 ?>

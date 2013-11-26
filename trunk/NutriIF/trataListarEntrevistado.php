@@ -11,7 +11,7 @@ require_once ('trataCalculaPercentilIMCIdade.php');
 
 $matricula = $_POST['matricula'];
 
-$dados = capturarDados($matricula);
+$dados = consultarEntrevistado($matricula);
 
 if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
 

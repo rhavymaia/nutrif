@@ -11,7 +11,7 @@ require_once ('util/constantes.php');
 //Inicialização de variáveis.
 $matricula = $_POST['matricula'];
 
-if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
+if (validaFormCalculaPercentilIMC()) {
 
     $dao = new dao_class();
 
@@ -21,7 +21,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
     // Verificar se a checagem não gera problemas de tipo.
     if ($rowEntrevistado) {
 
-        $dados = capturarDados($matricula);
+        $dados = consultarEntrevistado($matricula);
         $_SESSION['imc'] = $dados['imc'];
         $_SESSION['sexo'] = $dados['sexo'];       
 
@@ -79,23 +79,6 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
                 $_SESSION['perfilIMC'] = PERFIL_OBESO;
             } else if ($_SESSION['imc'] >= 35.0) {
                 $_SESSION['perfilIMC'] = PERFIL_OBESO_MORBIDO;
-            }            
-       
-            //TODO: Verificar necessidade desse código
-            if ($_SESSION['perfilIMC'] == PERFIL_MAGREZA) {
-                $_SESSION['qtdMagros']= $_SESSION['qtdMagros']+1;
-            }
-            if ($_SESSION['perfilIMC'] == PERFIL_EUTROFICO) {
-                $_SESSION['qtdEutroficos']= $_SESSION['qtdEutroficos']+1;
-            }
-            if ($_SESSION['perfilIMC'] == PERFIL_SOBREPESO) {
-                $_SESSION['qtdSobrepeso']= $_SESSION['qtdSobrepeso']+1;
-            }
-            if ($_SESSION['perfilIMC'] == PERFIL_OBESO) {
-                $_SESSION['qtdObesos']= $_SESSION['qtdObesos']+1;
-            }
-            if ($_SESSION['perfilIMC'] == PERFIL_OBESO_MORBIDO) {
-                $_SESSION['qtdObesosMorbidos']= $_SESSION['qtdObesosMorbidos']+1;
             }
             
             header("location: formCalculaPercentilIMCIdade.php");
@@ -107,12 +90,10 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)) {
         header("location: formCalculaPercentilIMCIdade.php");
     }
 } else {
-    $msg = ("Informe uma matrícula válida. Somente número são permitidos");
-    $_SESSION['erro'] = $msg;
     header("location: formCalculaPercentilIMCIdade.php");
 }
 
-function capturarDados($matricula) {
+function consultarEntrevistado($matricula) {
 
     $dao = new dao_class();
 
@@ -140,5 +121,25 @@ function capturarDados($matricula) {
     );
 
     return $entrevistado;
+}
+
+function validaFormCalculaPercentilIMC() {
+        
+        $ehValido = true;
+        $msgsErro = array();
+        
+        $matricula = $_POST['matricula'];
+        
+        if (!ehNumerico($matricula) && !(strlen($matricula) == TAM_MATRICULA)) {
+            
+            $msgErro = array('matricula' => "Informe uma matrícula válida. Somente número são permitidos");
+            array_push($msgsErro, $msgErro);
+            
+            $ehValido = false;            
+        }
+        
+        $_SESSION['erro'] = $msgsErro;
+        
+        return $ehValido;
 }
 ?>
