@@ -44,8 +44,8 @@ require_once ('util/constantes.php');
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="formListagem.php">
-                                            <img src="images/list.png">  Procurar Entrevistado
+                                        <a href="formListarEntrevistado.php">
+                                            <img src="images/list.png">  Listar Entrevistado
                                         </a>
                                     </li>
                                     <li>
