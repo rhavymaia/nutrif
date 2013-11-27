@@ -37,8 +37,7 @@ require_once 'template/headerForm.php';
     <form method="post" action="trataPerfilAlimentarParte2.php">
 
         <h2>
-            <em>*</em>
-            Qual é, em média, a quantidade de carnes (gado, porco, aves, 
+            5 - Qual é, em média, a quantidade de carnes (gado, porco, aves, 
             peixes e outras) ou ovos que você come por dia dia?
         </h2>
         <label for="quest5_1">
@@ -56,8 +55,7 @@ require_once 'template/headerForm.php';
 
 
         <h2>
-            <em>*</em>
-            Você costuma tirar a gordura aparente das carnes, a 
+            6 - Você costuma tirar a gordura aparente das carnes, a 
             pele do frango ou outro tipo de ave?
         </h2>
         <label for="quest6_1">
@@ -71,8 +69,7 @@ require_once 'template/headerForm.php';
         </label>
 
         <h2>
-            <em>*</em>
-            Você costuma comer peixes com qual frequência?
+            7 - Você costuma comer peixes com qual frequência?
         </h2>
         <label for="quest7_1">
             <input type="radio" name="quest7" value="0" id="quest7_1"> Não consumo
@@ -88,8 +85,7 @@ require_once 'template/headerForm.php';
         </label>
 
         <h2>
-            <em>*</em>
-            Qual é, em média, a quantidade de leite e seus derivados 
+            8 - Qual é, em média, a quantidade de leite e seus derivados 
             (iogurtes, bebidas lácteas, coalhada, requeijão, queijos 
             e outros) que você come por dia?
         </h2>
@@ -115,8 +111,7 @@ require_once 'template/headerForm.php';
 
         <div id="questao9">
             <h2>
-                <em>*</em>
-                Que tipo de leite e seus derivados você habitualmente 
+                9 - Que tipo de leite e seus derivados você habitualmente 
                 consome?
             </h2>
             <label for="quest9_1">

@@ -24,7 +24,7 @@ require_once 'template/headerForm.php';
     </ul>
     
     <form method="post" action="trataPerfilAlimentarParte4.php">
-        <h2>Pense na sua rotina semanal: quais as refeições você 
+        <h2>14 - Pense na sua rotina semanal: quais as refeições você 
             costuma fazer habitualmente no dia?</h2>
         <label for="quest14_1">
             <input type="checkbox" name="quest14a" value="1" id="quest14_1"> Café da manhã 
@@ -45,7 +45,7 @@ require_once 'template/headerForm.php';
             <input type="checkbox" name="quest14f" value="1" id="quest14_6"> Lanche antes de dormir
         </label> 
         
-        <h2>Quantos copos de água você bebe por dia? Inclua no 
+        <h2>15 - Quantos copos de água você bebe por dia? Inclua no 
             seu cálculo sucos de frutas naturais ou chás (exceto 
             café, chá preto e chá mate).</h2>
         <label for="quest15_1">
@@ -61,7 +61,7 @@ require_once 'template/headerForm.php';
             <input type="radio" name="quest15" value="2" id="quest15_4"> 6 a 8 copos
         </label>        
 
-        <h2>Você costuma consumir bebidas alcoólicas (uísque, 
+        <h2>16 - Você costuma consumir bebidas alcoólicas (uísque, 
             cachaça, vinho, cerveja, conhaque etc.) com qual 
             frequência?</h2>
         <label for="quest16_1">
@@ -77,7 +77,7 @@ require_once 'template/headerForm.php';
             <input type="radio" name="quest16" value="3" id="quest16_4"> Não consumo
         </label> 
 
-        <h2>Você faz atividade física REGULAR, isto é, pelo menos 
+        <h2>17 - Você faz atividade física REGULAR, isto é, pelo menos 
             30 minutos por dia, todos os dias da semana, durante 
             o seu tempo livre?</h2>
         <h3>Considere aqui as atividades da sua rotina diária como o 
@@ -95,7 +95,7 @@ require_once 'template/headerForm.php';
             <input type="radio" name="quest17" value="2" id="quest17_3"> 2 a 4 vezes por semana 
         </label>
         
-        <h2>Você costuma ler a informação nutricional que está 
+        <h2>18 - Você costuma ler a informação nutricional que está 
             presente no rótulo de alimentos industrializados antes 
             de comprá-los?</h2>
         <label for="quest18_1">
