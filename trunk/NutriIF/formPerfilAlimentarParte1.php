@@ -26,8 +26,7 @@ require_once 'template/headerForm.php';
     
     <form method="POST" action="trataPerfilAlimentarParte1.php">
         <h2>
-            <em>*</em>
-            Qual é, em média, a quantidade de frutas (unidade/
+            1 - Qual é, em média, a quantidade de frutas (unidade/
             fatia/pedaço/copo de suco natural) que você come por 
             dia?
         </h2>
@@ -46,8 +45,7 @@ require_once 'template/headerForm.php';
         </label>
         
         <h2>
-            <em>*</em>
-            Qual é, em média, a quantidade de legumes e verduras 
+            2 - Qual é, em média, a quantidade de legumes e verduras 
             que você come por dia? (Não inclua nesse grupo os tubérculos e raízes)
         </h2>
         <label for="quest2_1">
@@ -67,8 +65,7 @@ require_once 'template/headerForm.php';
         </label>
 
         <h2>
-            <em>*</em>
-            Qual é, em média, a quantidade que você come dos 
+            3 - Qual é, em média, a quantidade que você come dos 
             seguintes alimentos: feijão de qualquer tipo ou cor, 
             lentilha, ervilha, grão-de-bico, soja, fava, sementes ou 
             castanhas?
@@ -87,11 +84,10 @@ require_once 'template/headerForm.php';
         </label>
 
         <h2>
-            Qual a quantidade, em média, que você consome por 
+            4 - Qual a quantidade, em média, que você consome por 
             dia dos alimentos listados abaixo?
         </h2>     
         <label for="quest4_a">
-            <em>*</em>
             Arroz, milho e outros cereais (inclusive os matinais); 
             mandioca/macaxeira/aipim, cará ou inhame; macarrão e 
             outras massas; batata-inglesa, batata-doce, batata-baroa 
@@ -99,17 +95,14 @@ require_once 'template/headerForm.php';
             <input type="text" name="quest4_a" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> colheres de sopa 
         </label>         
         <label for="quest4_b">
-            <em>*</em>
             Pães:                
             <input type="text" name="quest4_b" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> unidades/fatias
         </label>
         <label for="quest4_c">
-            <em>*</em>
             Bolos sem cobertura e/ou recheio:
             <input type="text" name="quest4_c" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> fatias
         </label>
         <label for="quest4_d">
-            <em>*</em>
             Biscoito ou bolacha sem recheio:
             <input type="text" name="quest4_d" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"> unidades
         </label>

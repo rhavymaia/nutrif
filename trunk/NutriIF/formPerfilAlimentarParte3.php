@@ -25,7 +25,7 @@ require_once 'template/headerForm.php';
     </ul>
     
     <form method="post" action="trataPerfilAlimentarParte3.php">
-        <h2>Pense nos seguintes alimentos: frituras, salgadinhos 
+        <h2>10 - Pense nos seguintes alimentos: frituras, salgadinhos 
             fritos ou em pacotes, carnes salgadas, hambúrgueres, 
             presuntos e embutidos (salsicha, mortadela, salame, 
             lingüiça e outros). Você costuma comer qualquer um 
@@ -46,7 +46,7 @@ require_once 'template/headerForm.php';
             <input type="radio" name="quest10" value="3" id="quest10_5"> Menos que 2 vezes por semana
         </label>
         
-        <h2> Pense nos seguintes alimentos: doces de qualquer 
+        <h2> 11 - Pense nos seguintes alimentos: doces de qualquer 
              tipo, bolos recheados com cobertura, biscoitos doces, 
              refrigerantes e sucos industrializados. Você costuma 
              comer qualquer um deles com que frequência?</h2>
@@ -66,7 +66,7 @@ require_once 'template/headerForm.php';
             <input type="radio" name="quest11" value="0" id="quest11_5"> Todos os dias 
         </label>
 
-        <h2> Qual tipo de gordura é mais usado na sua casa para 
+        <h2> 12 - Qual tipo de gordura é mais usado na sua casa para 
              cozinhar os alimentos?</h2>
         <label for="quest12_1">
             <input type="radio" name="quest12" value="0" id="quest12_1"> Banha animal ou manteiga
@@ -78,7 +78,7 @@ require_once 'template/headerForm.php';
             <input type="radio" name="quest12" value="0" id="quest12_3"> Margarina ou gordura vegetal
         </label>        
 
-        <h2> Você costuma colocar mais sal nos alimentos quando já 
+        <h2> 13 - Você costuma colocar mais sal nos alimentos quando já 
              servidos em seu prato?</h2>     
          <label for="quest13_1">
             <input type="radio" name="quest13" value="0" id="quest13_1"> Sim
