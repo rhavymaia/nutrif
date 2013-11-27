@@ -130,7 +130,7 @@ function validaFormCalculaPercentilIMC() {
         
         $matricula = $_POST['matricula'];
         
-        if (!ehNumerico($matricula) && !(strlen($matricula) == TAM_MATRICULA)) {
+        if (!ehNumerico($matricula) || !(strlen($matricula) == TAM_MATRICULA)) {
             
             $msgErro = array('matricula' => "Informe uma matrícula válida. Somente número são permitidos");
             array_push($msgsErro, $msgErro);

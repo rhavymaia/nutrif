@@ -10,7 +10,7 @@ require_once ('util/constantes.php');
 
 $matricula = $_POST['matricula'];
 
-if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
+if (validaFormCalculaVCT()){
      
     function capturarDadosVCT($matricula) {
 
@@ -30,7 +30,7 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
  $dados = capturarDadosVCT($matricula);
 
     
-    if ($dados) {
+    if ($dados && $dados['idadeMeses'] != 0) {
         if ($dados['sexo'] == 'M'){
             
                 //case 120 . 131 ://10 a 11
@@ -113,19 +113,41 @@ if (ehNumerico($matricula) && (strlen($matricula) == TAM_MATRICULA)){
                     $vct = ($dados['peso'] * 25.9);
                   }
             
+            }
+        
+            $_SESSION['vct'] = $vct;
+            header("location: formCalculaVCT.php");
+        }else{
+            $msg = ("Matrícula não encontrada");
+            //$_SESSION['matricula'] = $matricula; 
+            //**É preciso colocar a matrícula na sessão? pois não está apagando nas outras páginas
+            $_SESSION['erro'] = $msg;
+            header("location: formCalculaVCT.php");
+        }
+    } else {
+        header("location: formCalculaVCT.php");
+        }
+   /* }  else {
+    header("location: formCalculaVCT.php");
+}*/
+
+function validaFormCalculaVCT() {
+        
+        $ehValido = true;
+        $msgsErro = array();
+        
+        $matricula = $_POST['matricula'];
+        
+        if (!ehNumerico($matricula) || !(strlen($matricula) == TAM_MATRICULA)) {
+            
+            $msgErro = array('matricula' => "Informe uma matrícula válida. Somente número são permitidos");
+            array_push($msgsErro, $msgErro);
+            
+            $ehValido = false;            
         }
         
-        $_SESSION['vct'] = $vct;
-        header("location: formCalculaVCT.php");
+        $_SESSION['erro'] = $msgsErro;
         
-     } else{
-        $msg = ("Matrícula não encontrada");
-        $_SESSION['matricula'] = $matricula;
-        $_SESSION['erro'] = $msg;
-        header("location: formCalculaVCT.php");
-        }
-    }  else {
-    $msg = ("Informe uma matrícula válida. Somente números são permitidos");
-    $_SESSION['erro'] = $msg;
-    header("location: formCalculaVCTVET.php");
+        return $ehValido;
 }
+?>

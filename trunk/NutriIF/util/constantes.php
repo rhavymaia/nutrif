@@ -38,7 +38,7 @@
     
     define ('PERFIL_MAGREZA',"Magreza");
     
-    define ('TL_CALCULO_VCT',"Cálculo do VCT");
+    define ('TL_CALCULO_VCT',"Cálculo do Valor Calórico Total (VCT)");
     
     define('TL_QUESTIONARIO',"Resultado do Questionário de Avaliação Alimentar");
     
