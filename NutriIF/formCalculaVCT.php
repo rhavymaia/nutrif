@@ -35,7 +35,7 @@ require_once 'template/headerForm.php';
     <?php
         if (isset($_SESSION['vct'])) {
             echo '<div class="caixa_azul">';
-            echo "<p>Valor Calórico Total (VCT): " . $_SESSION['vct'] . "</p>";
+            echo "<p>Valor Calórico Total (VCT): " . $_SESSION['vct'] . " cal/dia</p>";
             echo '</div>';
         }
     ?>
