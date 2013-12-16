@@ -18,6 +18,7 @@
     font-family: "fonte4";
     src: url("../fonts/fonte4.woff");
 }
+
 *{
     margin: 0 auto;
     padding: 0;
@@ -107,6 +108,11 @@ a{
     width: 100%;
     z-index: -10;
 }
+
+.slider {
+	padding:0;
+}
+
 #banner .container{
     min-height: 400px;
     height: 30%;
