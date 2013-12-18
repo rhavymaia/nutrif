@@ -38,7 +38,7 @@ require_once 'template/headerForm.php';
         <input type="reset" value="Limpar"/>
     </form>
 </div>
-
+<div id="centralizar">
     <?php
     if (isset($_SESSION['imc'])) {
         echo '<div class="caixa_azul">';
