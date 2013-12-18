@@ -41,7 +41,7 @@ require_once 'template/headerForm.php';
             </div>
 <div class="clear"></div>
 </div>
-            
+    <div id="centralizar">        
 <?php 
         if (isset($_SESSION['vct'])) {         
              echo "<p>Valor Calórico Total (VCT): " . $_SESSION['vct'] . "</p>"; 

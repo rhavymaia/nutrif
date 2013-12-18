@@ -37,7 +37,7 @@ require_once 'template/headerForm.php';
     </form>
 </div>
 
-
+<div id="centralizar">
 <?php
 if (isset($_SESSION['imc'])) {
     echo '<div class="caixa_azul">';

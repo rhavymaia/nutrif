@@ -31,7 +31,7 @@ require_once 'template/headerForm.php';
 
 </div>
 
-
+<div id="centralizar">
 <?php
 if (isset($_SESSION['imc'])) {
     echo('<div class="caixa_azul">');
@@ -65,7 +65,7 @@ if (isset($_SESSION['imc'])) {
 
 
 ?>       
-
+</div>
 <?php
     // Após preenchimento do formulário limpar as variáveis da sessão.    
     unset($_SESSION['erro']);
