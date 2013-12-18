@@ -74,7 +74,7 @@ function validaFormPerfilAlimentarParte2() {
          $ehValido = false;
     }
     
-    if (!ehPreenchido($_POST['quest9'])) {
+    if (!ehPreenchido($_POST['quest9']) && $_SESSION['quest8'] != 0) {
          $msgErro = array('quest9' => "Selecione uma opção para a Questão 9");
          array_push($msgsErro, $msgErro);
          
