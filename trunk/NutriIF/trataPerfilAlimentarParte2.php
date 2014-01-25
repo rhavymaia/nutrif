@@ -26,7 +26,20 @@ if (validaFormPerfilAlimentarParte2()) {
     } else {
         $_SESSION['quest9'] = 0;
     }
+    
+    //Passando os dados para a variável de sessão
+    session_start();
+    $respostas = $_SESSION['respostas'];
 
+    $respostas[8] = $quest5;
+    $respostas[9] = $quest6;
+    $respostas[10] = $quest7;
+    $respostas[11] = $quest8;
+    $respostas[12] = $quest9;
+  
+    session_start();
+    $_SESSION['respostas'] = $respostas;
+ 			
     header("location: formPerfilAlimentarParte3.php");
 } else {
     
@@ -79,8 +92,7 @@ function validaFormPerfilAlimentarParte2() {
          array_push($msgsErro, $msgErro);
          
          $ehValido = false;
-    }
-    
+    }    
     $_SESSION['erro'] = $msgsErro;
         
     return $ehValido;

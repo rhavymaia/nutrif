@@ -8,6 +8,8 @@ require_once ('util/constantes.php');
 require_once ('trataCalculaPercentilIMCIdade.php');
 
 
+session_start();
+
 $_SESSION['quest10'] = $_POST['quest10'];
 $_SESSION['quest11'] = $_POST['quest11'];
 $_SESSION['quest12'] = $_POST['quest12'];
@@ -16,6 +18,20 @@ $_SESSION['quest13'] = $_POST['quest13'];
     if (validaFormPerfilAlimentarParte3()){
 
     header("location: formPerfilAlimentarParte4.php");
+    
+    //Passando os dados para a variável de sessão
+    
+    session_start();
+    $respostas = $_SESSION['respostas'];
+
+    $respostas[13] = $_SESSION['quest10'];
+    $respostas[14] = $_SESSION['quest11'];
+    $respostas[15] = $_SESSION['quest12'];
+    $respostas[16] = $_SESSION['quest13'];
+
+    session_start();
+    $_SESSION['respostas'] = $respostas;
+     header("location: formPerfilAlimentarParte4.php");
     }else{
         header("location: formPerfilAlimentarParte3.php");
     }

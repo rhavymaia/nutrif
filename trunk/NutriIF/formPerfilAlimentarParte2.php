@@ -30,7 +30,7 @@ require_once 'template/headerForm.php';
     </div>
     <ul id="erro">
         <!-- Lista de erros na validação -->
-        <?php
+        <?php    
             isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
         ?> 
     </ul>

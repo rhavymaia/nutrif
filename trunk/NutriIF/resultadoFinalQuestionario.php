@@ -15,6 +15,7 @@ require_once 'template/headerForm.php';
     </div>
   <div class="caixa_azul"> 
     <?php
+     
       echo ("<p> Você atingiu ".$_SESSION['resultado']." pontos</p>");
       
       if ($_SESSION['resultado']<= 28){
@@ -28,6 +29,7 @@ require_once 'template/headerForm.php';
             echo ("<p> Parabéns! Você está no caminho para o modo "
                     . "de vida saudável.</p>");
         }
+        
         unset($_SESSION['erro']);
         
     ?>     
