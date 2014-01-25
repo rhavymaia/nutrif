@@ -5,7 +5,7 @@ require_once ('validate/validate.php');
 require_once ('util/date.php');
 require_once ('util/constantes.php');
 
-session_start();
+
 
 $quest1 = $_POST['quest1'];
 $quest2 = $_POST['quest2'];
@@ -21,8 +21,13 @@ if (validaFormPerfilAlimentarParte1()) {
     $_SESSION['quest2'] = $quest2;
     $_SESSION['quest3'] = $quest3;
     
-    // Totalização da questão 4.
-    $pesoQuestao4_a = $questao4_a/3; //TODO: qual o significado desses pesos?
+    /*
+     *  Totalização da questão 4. Cada alternativa contém um grupo de alimentos
+     * cada um tem um peso diferente, é passada a quantidade especiífica para
+     * cada grupo, mas é feito um cálculo com cada um, aplicando os seus pesos
+     */
+    
+    $pesoQuestao4_a = $questao4_a/3; 
     $pesoQuestao4_b = $questao4_b/2;
     $pesoQuestao4_c = $questao4_c/1;
     $pesoQuestao4_d = $questao4_d/6;
@@ -42,6 +47,23 @@ if (validaFormPerfilAlimentarParte1()) {
         $_SESSION['quest4'] = 0;
     }
     
+    //Passando os dados para a variável de sessão
+    
+    session_start();
+    $respostas = array();
+    
+    $respostas[1] = $quest1;
+    $respostas[2] = $quest2;
+    $respostas[3] = $quest3;
+    $respostas[4] = $questao4_a;
+    $respostas[5] = $questao4_b;
+    $respostas[6] = $questao4_c;
+    $respostas[7] = $questao4_d;
+
+    //Armazenar os valores na sessão.
+    session_start();
+    $_SESSION['respostas'] = $respostas;
+   
     header("location: formPerfilAlimentarParte2.php");    
 } else {
     

@@ -38,10 +38,13 @@ class dao_class {
     
     public function selectTodosEntrevistados(){
         
-        $sql = "SELECT * FROM tb_entrevistado";
+        $select = "SELECT cd_entrevistado, nr_matricula, dt_nascimento, nr_peso, nr_altura, tp_sexo ".
+                "FROM tb_entrevistado";
         
-        $resultado = $this->db->select($sql);
-        return $resultado;
+        // Selecionar entrevistado através da matrícula.
+        $result = $this->db->select($select);
+               
+        return $result;
     }
 
         /**
@@ -87,6 +90,12 @@ class dao_class {
     public function inserirIMCPercentil($data) {
 
         $id = $this->db->insert_array('tb_imc_percentil', $data);
+        return $id;
+    }
+    
+    public function inserirRespostasPerfilAlimentar($data) {
+
+        $id = $this->db->insert_array('tb_resposta', $data);
         return $id;
     }
     
