@@ -45,14 +45,31 @@ if (isset($_SESSION['id'])) {
         
      <form action="trataRelatorio.php" method="POST">
         <?php
-            if (isset($_SESSION['qtd'])) {
+            
+            $dao = new dao_class();
+
+            $rowTodosEntrevistados = $dao->selectEntrevistados();
+            
+            echo $rowTodosEntrevistados['nr_matricula'];
+    
+            /*
+             *  Está aparecendo esse erro Rhavy: Fatal error: Call to undefined method dao_class::selectEntrevistados() in C:\wamp\www\NutrIF\relatorio.php on line 51
+             * 
+             */
+            foreach ($rowTodosEntrevistados as $entrevistado) {
+                 
+                echo "Matricula: ".$entrevistado['nr_matricula'];
+            }
+            
+            
+        /*if (isset($_SESSION['qtd'])) {
                 echo ("<p> Maiores de 19 anos: ".$_SESSION['qtd']."</p>"); 
                 echo ("<p> Relação de Magreza: ".$_SESSION['qtdMagros']."</p>");
                 echo ("<p> Relação de Eutrofia: ".$_SESSION['qtdEutroficos']."</p>");
                 echo ("<p> Relação de Sobrepeso: ".$_SESSION['qtdSobrepeso']."</p>");
                 echo ("<p> Relação de Obesidade: ".$_SESSION['qtdObesos']."</p>");
                 echo ("<p> Relação de Obesidade Mórbida: ".$_SESSION['qtdObesosMorbidos']."</p>");
-            }
+            }*/
         ?>
 
     </form>
