@@ -36,13 +36,15 @@ class dao_class {
         return $row;
     }
     
-    public function selectTodosEntrevistados(){
+    public function selectEntrevistados(){
         
         $select = "SELECT cd_entrevistado, nr_matricula, dt_nascimento, nr_peso, nr_altura, tp_sexo ".
                 "FROM tb_entrevistado";
         
         // Selecionar entrevistado através da matrícula.
         $result = $this->db->select($select);
+        
+        print_r($result);
                
         return $result;
     }
