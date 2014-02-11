@@ -40,13 +40,14 @@ class dao_class {
         
         $select = "SELECT cd_entrevistado, nr_matricula, dt_nascimento, nr_peso, nr_altura, tp_sexo ".
                 "FROM tb_entrevistado";
+                //" WHERE ysnData BETWEEN '.$dataInicial.' and '.$dataFinal;
         
         // Selecionar entrevistado através da matrícula.
         $result = $this->db->select($select);
         
-        print_r($result);
+        $rows = $this->db->get_rows($result);
                
-        return $result;
+        return $rows;
     }
 
         /**

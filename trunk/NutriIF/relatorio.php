@@ -24,15 +24,17 @@
             
             $dao = new dao_class();
 
-            $rowTodosEntrevistados = $dao->selectEntrevistados();
+            $entrevistados = $dao->selectEntrevistados();
             
             /*
              *  Está aparecendo esse erro Rhavy: Fatal error: Call to undefined method dao_class::selectEntrevistados() in C:\wamp\www\NutrIF\relatorio.php on line 51
              * 
              */
-            foreach ($rowTodosEntrevistados as $entrevistado) {
-                 
+            foreach ($entrevistados as $entrevistado) {                
                 echo "Matricula: ".$entrevistado['nr_matricula'];
+                echo "Código: ".$entrevistado['cd_entrevistado'];
+                echo "Nascimento: ".$entrevistado['dt_nascimento'];
+                echo "Nascimento: ".$entrevistado['nr_peso']."<br>";                
             }
         ?>
 
