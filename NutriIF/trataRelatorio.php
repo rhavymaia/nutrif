@@ -8,9 +8,8 @@ require_once ('util/date.php');
 require_once ('util/constantes.php');
 require_once ('trataCalculaPercentilIMCIdade.php');
 
-    $dao = new dao_class();
 
-    $rowTodosEntrevistados = $dao->selectTodosEntrevistados();
+     $dao = new dao_class();
     
     print_r($rowTodosEntrevistados);
    
@@ -23,7 +22,7 @@ require_once ('trataCalculaPercentilIMCIdade.php');
 
     
     
-    $_SESSION['qtd'] = $qtd;
+   /* $_SESSION['qtd'] = $qtd;*/
     
     header("location: relatorio.php");
 
