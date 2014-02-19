@@ -12,77 +12,21 @@ require_once ('util/constantes.php');
 $matricula = $_POST['matricula'];
 
 if (validaFormCalculaPercentilIMC()) {
-
-    $dao = new dao_class();
-
-    // Consultar o entrevostado.
-    $rowEntrevistado = $dao->selectEntrevistado($matricula);
-
+    
     // Verificar se a checagem não gera problemas de tipo.
+    $rowEntrevistado = consultarEntrevistado($matricula);
+    
     if ($rowEntrevistado) {
 
-        $dados = consultarEntrevistado($matricula);
-        $_SESSION['imc'] = $dados['imc'];
-        $_SESSION['sexo'] = $dados['sexo'];       
-
-        // Para idade abaixo de 228 meses (19 Anos)
-        if ($dados['idadeMeses'] <= IDADE_PERCENTIL_19) {
-            
-            $percentilInferior = 0;
-            $percentilSuperior = 0;
-            $percentilMediano = 0;
-            
-            $percentilMediano = $dao->selectPercentil($dados['imc'], 
-                    $dados['sexo'], $dados['idadeMeses']);
-
-            // Buscar percentis nas proximidades
-            if (!$percentilMediano) {
-
-                // Margens dos percentis baseado no cálculo inicial.
-                $margemIMCInferior = $dados['imc'] - MARGEM_LIMITE_PERCENTIL;
-                $margemIMCSuperior = $dados['imc'] + MARGEM_LIMITE_PERCENTIL;
-
-                // Valores crescentes e decrescentes do IMC.
-                $imcDecrescente = $dados['imc'];
-                $imcCrescente = $dados['imc'];
-
-                // Verificação do percentil inferior.
-                while ($percentilInferior == 0 && $imcDecrescente >= $margemIMCInferior) {
-                    $imcDecrescente = $imcDecrescente - 0.1;
-                    $percentilInferior = $dao->selectPercentil($imcDecrescente, $dados['sexo'], $dados['idadeMeses']);
-                }
-
-                // Verificação do percentil superior.
-                while ($percentilSuperior == 0 && $imcCrescente <= $margemIMCSuperior) {
-                    $imcCrescente = $imcCrescente + 0.1;
-                    $percentilSuperior = $dao->selectPercentil($imcCrescente, $dados['sexo'], $dados['idadeMeses']);
-                }
-            }
-
-            // Enviar para a próxima tela os valores
-            $_SESSION['percentilMediano'] = $percentilMediano['vl_percentil'];
-            $_SESSION['percentilSuperior'] = $percentilSuperior['vl_percentil'];
-            $_SESSION['percentilInferior'] = $percentilInferior['vl_percentil'];
-            
-            // Redirecionar para a página de resultado.
-            header("location: formCalculaPercentilIMCIdade.php");
-        } else {
-            
-            // Tratar pessoas maiores de 19 anos           
-            if ($_SESSION['imc'] < 18.5) {
-                $_SESSION['perfilIMC'] = PERFIL_MAGREZA;
-            } else if (($_SESSION['imc'] >= 18.5) && ($_SESSION['imc'] <= 24.9)) {
-                $_SESSION['perfilIMC'] = PERFIL_EUTROFICO;
-            } else if (($_SESSION['imc'] >= 25.0) && ($_SESSION['imc'] <= 29.9)) {
-                $_SESSION['perfilIMC'] = PERFIL_SOBREPESO;
-            } else if (($_SESSION['imc'] >= 30.0) && ($_SESSION['imc'] <= 34.9)) {
-                $_SESSION['perfilIMC'] = PERFIL_OBESO;
-            } else if ($_SESSION['imc'] >= 35.0) {
-                $_SESSION['perfilIMC'] = PERFIL_OBESO_MORBIDO;
-            }
-            
-            header("location: formCalculaPercentilIMCIdade.php");
-        }          
+        $resultados = calcularPercentil($rowEntrevistado); 
+        
+        // Enviar para a próxima tela os valores
+            $_SESSION['percentilMediano'] = $resultados[0];
+            $_SESSION['percentilInferior'] = $resultados[1];
+            $_SESSION['percentilSuperior'] = $resultados[2];
+            $_SESSION['perfilIMC'] = $resultados[3];
+            $_SESSION['imc'] = $resultados[4];
+          header("location: formCalculaPercentilIMCIdade.php");        
     } else {
         $msg = ("Matrícula não encontrada");
         $_SESSION['matricula'] = $matricula;
@@ -141,5 +85,73 @@ function validaFormCalculaPercentilIMC() {
         $_SESSION['erro'] = $msgsErro;
         
         return $ehValido;
+}
+
+function calcularPercentil($rowEntrevistado){
+    
+    //Inicialização das variáveis
+    $perfilIMC= 0;
+    $percentilInferior = 0;
+    $percentilSuperior = 0;
+    $percentilMediano = 0;
+    
+    
+        $dados = $rowEntrevistado;
+        
+        // Para idade abaixo de 228 meses (19 Anos)
+        if ($dados['idadeMeses'] <= IDADE_PERCENTIL_19) {
+            $dao = new dao_class();
+            
+            $percentilMediano = $dao->selectPercentil($dados['imc'], 
+                    $dados['sexo'], $dados['idadeMeses']);
+
+            // Buscar percentis nas proximidades
+            if (!$percentilMediano) {
+
+                // Margens dos percentis baseado no cálculo inicial.
+                $margemIMCInferior = $dados['imc'] - MARGEM_LIMITE_PERCENTIL;
+                $margemIMCSuperior = $dados['imc'] + MARGEM_LIMITE_PERCENTIL;
+
+                // Valores crescentes e decrescentes do IMC.
+                $imcDecrescente = $dados['imc'];
+                $imcCrescente = $dados['imc'];
+
+                // Verificação do percentil inferior.
+                while ($percentilInferior == 0 && $imcDecrescente >= $margemIMCInferior) {
+                    $imcDecrescente = $imcDecrescente - 0.1;
+                    $percentilInferior = $dao->selectPercentil($imcDecrescente, $dados['sexo'], $dados['idadeMeses']);
+                }
+
+                // Verificação do percentil superior.
+                while ($percentilSuperior == 0 && $imcCrescente <= $margemIMCSuperior) {
+                    $imcCrescente = $imcCrescente + 0.1;
+                    $percentilSuperior = $dao->selectPercentil($imcCrescente, $dados['sexo'], $dados['idadeMeses']);
+                }
+            }
+   
+            } else {
+            
+            // Tratar pessoas maiores de 19 anos           
+            if ($dados['imc'] < 18.5) {
+                $perfilIMC = PERFIL_MAGREZA;
+            } else if (($dados['imc'] >= 18.5) && ($dados['imc'] <= 24.9)) {
+                $perfilIMC = PERFIL_EUTROFICO;
+            } else if (($dados['imc'] >= 25.0) && ($dados['imc'] <= 29.9)) {
+                $perfilIMC = PERFIL_SOBREPESO;
+            } else if (($dados['imc'] >= 30.0) && ($dados['imc'] <= 34.9)) {
+                $perfilIMC = PERFIL_OBESO;
+            } else if ($dados['imc'] >= 35.0) {
+                $perfilIMC = PERFIL_OBESO_MORBIDO;
+            }
+}
+        $resultados = array();
+    
+        $resultados[0]= $percentilMediano;
+        $resultados[1]= $percentilInferior;
+        $resultados[2]= $percentilSuperior;
+        $resultados[3]= $perfilIMC;
+        $resultados[4]= $dados['imc'];
+
+    return $resultados;
 }
 ?>
