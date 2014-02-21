@@ -33,6 +33,7 @@ require_once 'template/headerForm.php';
 
 <div id="centralizar">
 <?php
+    settype($_SESSION['percentilSuperior'], "integer");
 if (isset($_SESSION['imc'])) {
     echo('<div class="caixa_azul">');
     if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) || isset($_SESSION['percentilInferior'])) {
