@@ -90,11 +90,16 @@ function validaFormCalculaPercentilIMC() {
 function calcularPercentil($rowEntrevistado){
     
     //Inicialização das variáveis
-    $perfilIMC= 0;
+    /*$perfilIMC= 0;
     $percentilInferior = 0;
     $percentilSuperior = 0;
     $percentilMediano = 0;
     
+    
+   /* settype($perfilIMC, "integer");
+    settype($percentilSuperior, "integer");
+    settype($percentilInferior, "integer");
+    settype($percentilMediano, "integer");*/
     
         $dados = $rowEntrevistado;
         
@@ -147,8 +152,8 @@ function calcularPercentil($rowEntrevistado){
         $resultados = array();
     
         $resultados[0]= $percentilMediano;
-        $resultados[1]= $percentilInferior;
-        $resultados[2]= $percentilSuperior;
+        $resultados[1]= $percentilInferior['vl_percentil'];
+        $resultados[2]= $percentilSuperior['vl_percentil'];
         $resultados[3]= $perfilIMC;
         $resultados[4]= $dados['imc'];
 
