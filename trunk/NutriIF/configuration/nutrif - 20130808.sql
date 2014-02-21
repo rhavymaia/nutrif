@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `tb_entrevistado` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tb_anaminese`
+-- Estrutura da tabela `tb_anamnese`
 --
 
 CREATE TABLE IF NOT EXISTS `tb_anamnese` (
@@ -152,6 +152,7 @@ CREATE TABLE IF NOT EXISTS `tb_pesquisa` (
 CREATE TABLE IF NOT EXISTS `tb_perfilalimentar` (
   `cd_perfilalimentar` int(11) NOT NULL AUTO_INCREMENT,
   `cd_entrevistado` int(11) NOT NULL,
+  `cd_anamnese` int(11) NOT NULL,
   `r1` varchar(1) NOT NULL,
   `r2` varchar(1) NOT NULL,
   `r3` varchar(1) NOT NULL,

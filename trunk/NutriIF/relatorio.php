@@ -31,20 +31,33 @@
              *  Está aparecendo esse erro Rhavy: Fatal error: Call to undefined method dao_class::selectEntrevistados() in C:\wamp\www\NutrIF\relatorio.php on line 51
              * 
              */
-            foreach ($entrevistados as $entrevistado) {
-                echo '<div class="caixa_azul">';               
-                echo "Matricula: ".$entrevistado['nr_matricula'];
-               // echo '</div>';
-               // echo '<div class="caixa_azul">';  
-                echo " | Código: ".$entrevistado['cd_entrevistado'];
-               // echo '</div>';
-               // echo '<div class="caixa_azul">';  
-                echo " | Nascimento: ".$entrevistado['dt_nascimento'];
-                //echo '</div>';
-                //echo '<div class="caixa_azul">';  
-                echo " | Peso: ".$entrevistado['nr_peso']."<br>"; 
-                echo '</div>';
+            echo "<table>";
+            echo "<tr>";
+            echo "<th>Matrícula</th>";
+            echo "<th>Código</th>";
+            echo "<th>Nascimento</th>";
+            echo "<th>Peso</th>";
+            echo "</tr>"; 
+            
+            foreach ($entrevistados as $entrevistado) { 
+                
+                echo "<tr>";
+                echo "<td>";
+                echo $entrevistado['nr_matricula'];
+                echo "</td>";
+                echo "<td>";
+                echo $entrevistado['cd_entrevistado'];
+                echo "</td>";
+                echo "<td>";
+                echo $entrevistado['dt_nascimento']; 
+                echo "</td>";
+                echo "<td>";
+                echo $entrevistado['nr_peso']."<br>"; 
+                echo "</td>";
+                echo "</tr>";
             }
+            
+            echo "</table>";
         ?>
 
     </form>
