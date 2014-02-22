@@ -151,7 +151,7 @@ function calcularPercentil($rowEntrevistado){
 }
         $resultados = array();
     
-        $resultados[0]= $percentilMediano;
+        $resultados[0]= $percentilMediano['vl_percentil'];
         $resultados[1]= $percentilInferior['vl_percentil'];
         $resultados[2]= $percentilSuperior['vl_percentil'];
         $resultados[3]= $perfilIMC;
