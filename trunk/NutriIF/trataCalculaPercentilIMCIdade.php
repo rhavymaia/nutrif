@@ -43,27 +43,28 @@ function consultarEntrevistado($matricula) {
 
     $rowEntrevistado = $dao->selectEntrevistado($matricula);
     
-    // Peso em quilograma
-    $peso = $rowEntrevistado['nr_peso'];
-    
-    // Altura em centímetro
-    $alturaCm = $rowEntrevistado['nr_altura'];   
+    if ($rowEntrevistado){
+        // Peso em quilograma
+        $peso = $rowEntrevistado['nr_peso'];
 
-    // Calcular IMC com os dados do entrevistado.
-    $alturaMetros = $alturaCm/100;
+        // Altura em centímetro
+        $alturaCm = $rowEntrevistado['nr_altura'];   
 
-    // Cálculo do IMC
-    $imc = number_format($peso/pow($alturaMetros, 2), 1);
+        // Calcular IMC com os dados do entrevistado.
+        $alturaMetros = $alturaCm/100;
 
-    $entrevistado = array(
-        'peso' => $peso,
-        'alturaCm' => $alturaCm,
-        'sexo' => $rowEntrevistado['tp_sexo'],
-        'dtNascimento' => $rowEntrevistado['dt_nascimento'],
-        'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
-        'imc' => $imc
-    );
+        // Cálculo do IMC
+        $imc = number_format($peso/pow($alturaMetros, 2), 1);
 
+        $entrevistado = array(
+            'peso' => $peso,
+            'alturaCm' => $alturaCm,
+            'sexo' => $rowEntrevistado['tp_sexo'],
+            'dtNascimento' => $rowEntrevistado['dt_nascimento'],
+            'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
+            'imc' => $imc
+        );
+    }
     return $entrevistado;
 }
 
