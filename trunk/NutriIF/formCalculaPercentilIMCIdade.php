@@ -3,7 +3,7 @@ require_once ('util/constantes.php');
 require_once ('validate/erro.php');
 require_once ('validate/validate.php');
 // Cabeçalho e menu da página html.
-require_once 'template/headerForm.php';
+require_once ('template/headerForm.php');
 ?> 
 
 <div class="container">
@@ -34,7 +34,7 @@ require_once 'template/headerForm.php';
 <div id="centralizar">
 <?php
 
-if (isset($_SESSION['imc']) || (($_SESSION['imc']) != 0)) {
+if (isset($_SESSION['imc'])) {
     echo('<div class="caixa_azul">');
     if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) || isset($_SESSION['percentilInferior'])) {
                            
@@ -53,8 +53,7 @@ if (isset($_SESSION['imc']) || (($_SESSION['imc']) != 0)) {
                 echo ("<p> Situação: " . $_SESSION['perfilIMC'] . "</p>");
             }
         } else {
-            echo("Nenhum valor encontrado");
-         
+            echo(isset($_SESSION['matricula']) ? "": VAZIO);
         echo '</div>';
     }
 
