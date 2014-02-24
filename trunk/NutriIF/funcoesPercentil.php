@@ -1,41 +1,8 @@
 <?php
-
-session_start();
-
-// Cabeçalho e menu da página html.
 require_once ('database/dao.class.php');
 require_once ('validate/validate.php');
 require_once ('util/date.php');
 require_once ('util/constantes.php');
-
-//Inicialização de variáveis.
-$matricula = $_POST['matricula'];
-
-if (validaFormCalculaPercentilIMC()) {
-    
-    // Verificar se a checagem não gera problemas de tipo.
-    $rowEntrevistado = consultarEntrevistado($matricula);
-    
-    if ($rowEntrevistado) {
-
-        $resultados = calcularPercentil($rowEntrevistado); 
-        
-        // Enviar para a próxima tela os valores
-            $_SESSION['percentilMediano'] = $resultados[0];
-            $_SESSION['percentilInferior'] = $resultados[1];
-            $_SESSION['percentilSuperior'] = $resultados[2];
-            $_SESSION['perfilIMC'] = $resultados[3];
-            $_SESSION['imc'] = $resultados[4];
-          header("location: formCalculaPercentilIMCIdade.php");        
-    } else {
-        $msg = ("Matrícula não encontrada");
-        $_SESSION['matricula'] = $matricula;
-        $_SESSION['erro'] = $msg;
-        header("location: formCalculaPercentilIMCIdade.php");
-    }
-} else {
-    header("location: formCalculaPercentilIMCIdade.php");
-}
 
 function consultarEntrevistado($matricula) {
 
@@ -68,29 +35,13 @@ function consultarEntrevistado($matricula) {
     return $entrevistado;
 }
 
-function validaFormCalculaPercentilIMC() {
-        
-        $ehValido = true;
-        $msgsErro = array();
-        
-        $matricula = $_POST['matricula'];
-        
-        if (!ehNumerico($matricula) || !(strlen($matricula) == TAM_MATRICULA)) {
-            
-            $msgErro = array('matricula' => "Informe uma matrícula válida. Somente número são permitidos");
-            array_push($msgsErro, $msgErro);
-            
-            $ehValido = false;            
-        }
-        
-        $_SESSION['erro'] = $msgsErro;
-        
-        return $ehValido;
-}
-
 function calcularPercentil($rowEntrevistado){
        
         $dados = $rowEntrevistado;
+        $percentilInferior=0;
+        $percentilSuperior = 0;
+        $percentilMediano = 0;
+        $perfilIMC= null;
         
         // Para idade abaixo de 228 meses (19 Anos)
         if ($dados['idadeMeses'] <= IDADE_PERCENTIL_19) {
