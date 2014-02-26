@@ -54,7 +54,7 @@ require_once ('util/constantes.php');
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="relatorio.php">
+                                        <a href="relatorioPercentilIMCEntrevistados.php">
                                             <img src="images/list.png">  Relatório de Entrevistados
                                         </a>
                                     </li>

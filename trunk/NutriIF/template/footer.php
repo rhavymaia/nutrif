@@ -9,7 +9,7 @@
 					<li><a href="formCalculaPercentilIMCIdade.php">Cálculo de Percentil</a></li>
                                         <li><a href="formListarEntrevistado.php">Procurar Entrevistado</a></li>
                                         <li><a href="formCalculaVCT.php">Cálculo do VCT</a></li>
-                                        <p><li><a href="relatorio.php">Relatório de Entrevistados</a></li>
+                                        <p><li><a href="relatorioPercentilIMCEntrevistados.php">Relatório de Entrevistados</a></li>
                                         <li><a href="formPerfilAlimentarEntrevistado.php">Perfil Alimentar</a></li>';
                                         }        
                                         

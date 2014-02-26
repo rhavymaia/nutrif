@@ -74,29 +74,33 @@ function calcularPercentil($rowEntrevistado){
                 }
             }
    
-            } else {
-            
-            // Tratar pessoas maiores de 19 anos           
-            if ($dados['imc'] < 18.5) {
-                $perfilIMC = PERFIL_MAGREZA;
-            } else if (($dados['imc'] >= 18.5) && ($dados['imc'] <= 24.9)) {
-                $perfilIMC = PERFIL_EUTROFICO;
-            } else if (($dados['imc'] >= 25.0) && ($dados['imc'] <= 29.9)) {
-                $perfilIMC = PERFIL_SOBREPESO;
-            } else if (($dados['imc'] >= 30.0) && ($dados['imc'] <= 34.9)) {
-                $perfilIMC = PERFIL_OBESO;
-            } else if ($dados['imc'] >= 35.0) {
-                $perfilIMC = PERFIL_OBESO_MORBIDO;
+            } else {            
+                // Tratar pessoas maiores de 19 anos           
+                if ($dados['imc'] < 18.5) {
+                    $perfilIMC = PERFIL_MAGREZA;
+                } else if (($dados['imc'] >= 18.5) && ($dados['imc'] <= 24.9)) {
+                    $perfilIMC = PERFIL_EUTROFICO;
+                } else if (($dados['imc'] >= 25.0) && ($dados['imc'] <= 29.9)) {
+                    $perfilIMC = PERFIL_SOBREPESO;
+                } else if (($dados['imc'] >= 30.0) && ($dados['imc'] <= 34.9)) {
+                    $perfilIMC = PERFIL_OBESO;
+                } else if ($dados['imc'] >= 35.0) {
+                    $perfilIMC = PERFIL_OBESO_MORBIDO;
+                }
             }
-}
-        $resultados = array();
-    
-        $resultados[0]= $percentilMediano['vl_percentil'];
-        $resultados[1]= $percentilInferior['vl_percentil'];
-        $resultados[2]= $percentilSuperior['vl_percentil'];
-        $resultados[3]= $perfilIMC;
-        $resultados[4]= $dados['imc'];
+                        
+            $resultados = array('percentilMediano' => $percentilMediano['vl_percentil'], 
+                'percentilInferior' => $percentilInferior['vl_percentil'],
+                'percentilSuperior'=> $percentilSuperior['vl_percentil'],
+                'perfilIMC'=> $perfilIMC,
+                'imc'=> $dados['imc']
+                );
 
-    return $resultados;
+            
+            return $resultados;
 }
+
+    function determinarClassificacaoPercentil($dados){
+
+    }
 ?>
