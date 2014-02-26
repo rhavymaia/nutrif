@@ -36,7 +36,8 @@ require_once ('template/headerForm.php');
 
 if (isset($_SESSION['imc'])) {
     echo('<div class="caixa_azul">');
-    if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) || isset($_SESSION['percentilInferior'])) {
+    if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) 
+            || isset($_SESSION['percentilInferior'])) {
                            
                 if ($_SESSION['percentilMediano']) {
                     echo("Percentil: " . $_SESSION['percentilMediano']);
