@@ -54,6 +54,7 @@
             foreach ($entrevistados as $entrevistado) { 
                 
                 echo "<tr>";
+                echo "Relatorio pelo percentil";
                 echo "<td>";
                 echo $entrevistado['nr_matricula'];
                 echo "</td>";
@@ -204,6 +205,7 @@
             echo "</tr>";
             
             echo "<tr>";
+            echo "Relatorio pelo imc";
             echo "<td>";
             echo $qtd_magreza;
             echo "</td>";
