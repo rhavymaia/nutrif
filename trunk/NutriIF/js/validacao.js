@@ -20,7 +20,7 @@ function validaFormRegistroAntropometrico() {
         return false;
     }  
 
-    if (formulario.peso.value.trim() == vazio) {
+  /*  if (formulario.peso.value.trim() == vazio) {
         adicionaErro(formulario.peso.name);
         return false;
     }
@@ -28,11 +28,8 @@ function validaFormRegistroAntropometrico() {
     if (formulario.altura.value.trim() == vazio) {
         adicionaErro(formulario.altura.name);
         return false;
-    }
-    /*
-     * sexo, nível
-     */
-
+    }*/
+   
     return true;
 }
 

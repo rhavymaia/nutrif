@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `tb_entrevistado` (
     `nr_matricula` bigint(11) NOT NULL,    
     `nm_entrevistado` varchar(200) NOT NULL,
     `dt_nascimento` date NOT NULL,
+    `tp_sexo` char(1) NOT NULL,
     `cd_nivelescolar` int(11) NOT NULL,
     `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`cd_entrevistado`),
@@ -34,7 +35,6 @@ CREATE TABLE IF NOT EXISTS `tb_anamnese` (
     `dt_anaminese` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `nr_peso` double NOT NULL,
     `nr_altura` double NOT NULL,
-    `tp_sexo` char(1) NOT NULL,
     `tp_entrevistado` int(15) NOT NULL,
     `nr_nivel_esporte` int(11) NOT NULL,
     `cd_perfilalimentar` int(11),
@@ -84,7 +84,9 @@ CREATE TABLE IF NOT EXISTS `tb_nivelescolar` (
 
 CREATE TABLE IF NOT EXISTS `tb_nutricionista` (
     `cd_nutricionista` int(11) NOT NULL,
+    `cd_usuario` int(11) NOT NULL,
     `nm_nutricionista` varchar(50) NOT NULL,
+    `dt_nascimento` date NOT NULL,
     `cd_instituicao` int(11) NOT NULL,
     `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`cd_nutricionista`)

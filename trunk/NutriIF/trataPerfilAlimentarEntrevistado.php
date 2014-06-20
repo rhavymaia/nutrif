@@ -36,6 +36,8 @@ function consultarCodigoEntrevistado($matricula) {
     $dao = new dao_class();
 
     $rowEntrevistado = $dao->selectEntrevistado($matricula);
+    
+    $matricula1= $rowEntrevistado['nr_matricula'];
 
     $codigo = $rowEntrevistado['cd_entrevistado'];
 
