@@ -23,8 +23,24 @@ class dao_class {
      public function selectEntrevistado($matricula) {
         
         // Montar consulta.
-        $select = "SELECT cd_entrevistado, nr_matricula, dt_nascimento, nr_peso, nr_altura, tp_sexo ".
+        $select = "SELECT cd_entrevistado, nr_matricula, dt_nascimento".
                 "FROM tb_entrevistado ".
+                "WHERE nr_matricula = ".$matricula;
+        
+        // Selecionar entrevistado através da matrícula.
+        $result = $this->db->select($select);
+        
+        // Recuperar única linha do resultado. Matrícula é chave única.
+        $row = $this->db->get_row($result);
+        
+        return $row;
+    }
+    
+         public function selectDadosAntropometricos($matricula) {
+        
+        // Montar consulta.
+        $select = "SELECT nr_peso, nr_altura, tp_sexo ".
+                "FROM tb_anamnese".
                 "WHERE nr_matricula = ".$matricula;
         
         // Selecionar entrevistado através da matrícula.
@@ -90,6 +106,12 @@ class dao_class {
         return $id;
     }
     
+    public function inserirDadosAntropometricos($data) {
+
+        $id = $this->db->insert_array('tb_anamnese', $data);
+        return $id;
+    }
+    
     public function inserirIMCPercentil($data) {
 
         $id = $this->db->insert_array('tb_imc_percentil', $data);
@@ -103,8 +125,8 @@ class dao_class {
     }
     
     public function selectLogin($login, $senha) {
-        $sql = "SELECT nutri.nm_nutricionista, nutri.nm_login, nutri.nm_senha"
-                . " FROM tb_nutricionista AS nutri"
+        $sql = "SELECT nutri.nm_login, nutri.nm_senha"
+                . " FROM tb_usuario AS nutri"
                 . " WHERE"
                 . " nutri.nm_login = '" . $login . "'"
                 . " AND nutri.nm_senha = '" . $senha . "'";

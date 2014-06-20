@@ -10,12 +10,14 @@ function consultarEntrevistado($matricula) {
 
     $rowEntrevistado = $dao->selectEntrevistado($matricula);
     
-    if ($rowEntrevistado){
+    $rowDadosAntropometricos= $dao->selectDadosAntropometricos($matricula);
+    
+    if ($rowEntrevistado && $rowDadosAntropometricos){
         // Peso em quilograma
-        $peso = $rowEntrevistado['nr_peso'];
+        $peso = $rowDadosAntropometricos['nr_peso'];
 
         // Altura em centímetro
-        $alturaCm = $rowEntrevistado['nr_altura'];   
+        $alturaCm = $rowDadosAntropometricos['nr_altura'];   
 
         // Calcular IMC com os dados do entrevistado.
         $alturaMetros = $alturaCm/100;
@@ -26,7 +28,7 @@ function consultarEntrevistado($matricula) {
         $entrevistado = array(
             'peso' => $peso,
             'alturaCm' => $alturaCm,
-            'sexo' => $rowEntrevistado['tp_sexo'],
+            'sexo' => $rowDadosAntropometricos['tp_sexo'],
             'dtNascimento' => $rowEntrevistado['dt_nascimento'],
             'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento']),
             'imc' => $imc
@@ -95,12 +97,8 @@ function calcularPercentil($rowEntrevistado){
                 'perfilIMC'=> $perfilIMC,
                 'imc'=> $dados['imc']
                 );
-
             
             return $resultados;
 }
 
-    function determinarClassificacaoPercentil($dados){
-
-    }
 ?>

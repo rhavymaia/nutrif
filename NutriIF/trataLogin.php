@@ -18,7 +18,7 @@
         
         if ($rowLogin){
             $vetor = array(
-            'nome' => $rowLogin['nm_nutricionista'],
+            'nome' => $rowLogin['nm_login']
              );
             $nome = $vetor['nome'];
              echo '<script language="javascript" type="text/javascript">';  

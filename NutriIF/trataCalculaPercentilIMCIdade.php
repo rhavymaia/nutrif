@@ -16,7 +16,7 @@ if (validaFormCalculaPercentilIMC()) {
     
     // Verificar se a checagem não gera problemas de tipo.
     $rowEntrevistado = consultarEntrevistado($matricula);
-    
+
     if ($rowEntrevistado) {
 
         $resultados = calcularPercentil($rowEntrevistado); 

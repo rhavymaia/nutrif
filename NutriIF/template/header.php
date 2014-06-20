@@ -64,6 +64,16 @@ require_once ('util/constantes.php');
                                         </a>
                                     </li>
                                     <li>
+                                        <a href="formCadastrarEntrevistado.php">
+                                            <img src="images/book-lines.png">  Cadastro do aluno
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="formCadastrarNutricionista.php">
+                                            <img src="images/book-lines.png">  Cadastro do Nutricionista
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="logout.php">
                                             <img src="images/locked.png">  Logout
                                         </a>

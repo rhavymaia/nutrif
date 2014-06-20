@@ -51,7 +51,7 @@
             echo "<th>Peso</th>";
             echo "</tr>"; 
             
-             echo "Relatorio pelo percentil";
+             
              foreach ($entrevistados as $entrevistado) { 
                 
                 echo "<tr>";
@@ -71,7 +71,7 @@
                 echo "</tr>";
             }
                
-            echo "Relatorio pelo imc";
+            
             foreach ($entrevistados as $entrevistado) {
 
             $dados = consultarEntrevistado($entrevistado['nr_matricula']);
