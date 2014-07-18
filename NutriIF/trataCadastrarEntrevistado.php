@@ -14,8 +14,7 @@
     $nascimento = $_POST['nascimento'];
     $sexo = $_POST['sexo'];
     $nivel = $_POST['nivel'];
-    
-
+   
     //Verificar os campos obrigatórios, os tipos e formatos dos dados avaliados
     if(validaFormRegistroAntropometrico()){
             
@@ -23,7 +22,7 @@
             'nr_matricula' => $matricula,
             'dt_nascimento' => $nascimento,
             'cd_nivelescolar' => $nivel, 
-            /*'tp_sexo' => $sexo,*/
+            'tp_sexo' => $sexo,
             'nm_entrevistado' => $aluno
         );
         $dao1 = new dao_class();
@@ -45,7 +44,7 @@
         $_SESSION['aluno']= $aluno;
         $_SESSION['matricula']= $matricula;
         $_SESSION['nivel']= $nivel;
-        //$_SESSION['sexo']= $sexo;
+        $_SESSION['sexo']= $sexo;
         header("location: formCadastrarEntrevistado.php");        
     }
     
@@ -72,12 +71,12 @@
             $ehValido = false;            
         } 
         
-       /* if (ehVazio($_POST['sexo'])) {
+        if (ehVazio($_POST['sexo'])) {
             $msgErro = array('sexo' => "O sexo selecionado é inválido.");
             array_push($msgsErro, $msgErro);
             $ehValido = false;            
         }
-        */
+        
         if (ehVazio($_POST['nivel'])) {
             $msgErro = array('nivel' => "O nível selecionado é inválido.");
             array_push($msgsErro, $msgErro);

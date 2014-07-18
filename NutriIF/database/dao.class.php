@@ -23,9 +23,9 @@ class dao_class {
      public function selectEntrevistado($matricula) {
         
         // Montar consulta.
-        $select = "SELECT cd_entrevistado, nr_matricula, dt_nascimento".
-                "FROM tb_entrevistado ".
-                "WHERE nr_matricula = ".$matricula;
+        $select = "SELECT cd_entrevistado, nr_matricula, dt_nascimento "
+                ."FROM tb_entrevistado "
+                ."WHERE nr_matricula = ".$matricula;
         
         // Selecionar entrevistado através da matrícula.
         $result = $this->db->select($select);
@@ -39,9 +39,9 @@ class dao_class {
          public function selectDadosAntropometricos($matricula) {
         
         // Montar consulta.
-        $select = "SELECT nr_peso, nr_altura, tp_sexo ".
-                "FROM tb_anamnese".
-                "WHERE nr_matricula = ".$matricula;
+        $select = "SELECT e.nr_peso, e.nr_altura, a.tp_sexo ".
+                "FROM tb_anamnese AS a, tb_entrevistado AS e".
+                "WHERE e.nr_matricula = ".$matricula;
         
         // Selecionar entrevistado através da matrícula.
         $result = $this->db->select($select);

@@ -13,7 +13,7 @@ $matricula = $_POST['matricula'];
 if (validaFormCalculaPercentilIMC($matricula)) {
     
     $codigoEntrevistado = consultarCodigoEntrevistado($matricula);
-    
+ 
     $_SESSION['codigoEntrevistado'] = $codigoEntrevistado;
     
     $_SESSION['ind'] = 1;
