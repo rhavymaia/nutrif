@@ -15,9 +15,7 @@ if (validaFormCalculaPercentilIMC($matricula)) {
     $codigoEntrevistado = consultarCodigoEntrevistado($matricula);
  
     $_SESSION['codigoEntrevistado'] = $codigoEntrevistado;
-    
-    $_SESSION['ind'] = 1;
-    
+       
     // Verificar se a checagem não gera problemas de tipo.
     if ($codigoEntrevistado) {
         header("location: formPerfilAlimentarParte1.php");
@@ -37,9 +35,7 @@ function consultarCodigoEntrevistado($matricula) {
 
     $rowEntrevistado = $dao->selectEntrevistado($matricula);
     
-    $matricula1= $rowEntrevistado['nr_matricula'];
-
-    $codigo = $rowEntrevistado['cd_entrevistado'];
+     $codigo = $rowEntrevistado['cd_entrevistado'];
 
     return $codigo;
 }
@@ -53,7 +49,7 @@ function validaFormCalculaPercentilIMC() {
         
         if (!ehNumerico($matricula) || !(strlen($matricula) == TAM_MATRICULA)) {
             
-            $msgErro = array('matricula' => "Informe uma matrícula válida. Somente número são permitidos");
+            $msgErro = array('matricula' => "Informe uma matrícula válida. Somente número são permitidos.");
             array_push($msgsErro, $msgErro);
             
             $ehValido = false;            

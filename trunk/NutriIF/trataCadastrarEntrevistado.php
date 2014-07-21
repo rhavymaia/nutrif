@@ -16,8 +16,7 @@
     $nivel = $_POST['nivel'];
    
     //Verificar os campos obrigatórios, os tipos e formatos dos dados avaliados
-    if(validaFormRegistroAntropometrico()){
-            
+    if(validaFormRegistroAntropometrico()){          
         $data_cadastro = array(
             'nr_matricula' => $matricula,
             'dt_nascimento' => $nascimento,

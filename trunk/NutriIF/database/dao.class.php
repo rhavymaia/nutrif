@@ -39,8 +39,8 @@ class dao_class {
          public function selectDadosAntropometricos($matricula) {
         
         // Montar consulta.
-        $select = "SELECT e.nr_peso, e.nr_altura, a.tp_sexo ".
-                "FROM tb_anamnese AS a, tb_entrevistado AS e".
+        $select = "SELECT a.nr_peso, a.nr_altura, e.tp_sexo ".
+                "FROM tb_anamnese AS a, tb_entrevistado AS e ".
                 "WHERE e.nr_matricula = ".$matricula;
         
         // Selecionar entrevistado através da matrícula.
@@ -125,11 +125,11 @@ class dao_class {
     }
     
     public function selectLogin($login, $senha) {
-        $sql = "SELECT nutri.nm_login, nutri.nm_senha"
-                . " FROM tb_usuario AS nutri"
+        $sql = "SELECT usuario.nm_login, usuario.nm_senha"
+                . " FROM tb_usuario AS usuario"
                 . " WHERE"
-                . " nutri.nm_login = '" . $login . "'"
-                . " AND nutri.nm_senha = '" . $senha . "'";
+                . " usuario.nm_login = '" . $login . "'"
+                . " AND usuario.nm_senha = '" . $senha . "'";
 
         // Selecionar Usuário através de Login.
         $result = $this->db->select($sql);

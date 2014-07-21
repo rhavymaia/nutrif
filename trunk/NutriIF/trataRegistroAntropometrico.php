@@ -24,14 +24,14 @@
         $data_cadastro = array(
             'nr_matricula' => $matricula,
             'dt_nascimento' => $nascimento,
-            'cd_nivelescolar' => $nivel, 
+            'cd_nivelescolar' => $nivel,
+            'tp_sexo' => $sexo,
             'nm_entrevistado' => $aluno
         );
         
         $data_antropometria = array(
             'nr_peso' => $peso,            
             'nr_altura' => $altura,
-            'tp_sexo' => $sexo,
             'tp_entrevistado' => TP_ALUNO,
             'nr_nivel_esporte' => $esporte    
         );
