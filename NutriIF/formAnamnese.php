@@ -24,6 +24,10 @@
           name="formAnamnese">
 
                 <!-- Validação inicial no lado do cliente -->
+        <label for= "matricula"> <em>*</em> Matrícula:
+            <input type="text" name="matricula"/>
+        </label>
+                
         <label for= "peso"> <em>*</em> Peso:
             <input type="text" name="peso"/>
             <em>kg</em>
