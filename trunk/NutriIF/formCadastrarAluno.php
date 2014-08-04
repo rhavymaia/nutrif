@@ -21,10 +21,12 @@
 
     <form action="trataCadastrarAluno.php" 
           method="POST"
-          name="formCadastrarAluno">
+          name="formCadastrarAluno"
+          onsubmit="return validaFormRegistroAntropometrico();"
+          onreset="return resetValidacao();">
 
         <label for="nome_aluno"> <em>*</em> Nome:
-            <input type="text" name="nome_nutricinista"/>
+            <input type="text" name="nome_aluno"/>
         </label>
 
         <label for="instituicao"> <em>*</em> Instituição:
@@ -62,7 +64,7 @@
         </label>
         
         <label for="senha1"> <em>*</em> Senha:
-            <input type="password" name="senha"/> 
+            <input type="password" name="senha1"/> 
         </label>
         <label for="senha2"> <em>*</em> Repetir senha:
             <input type="password" name="senha2"/> 

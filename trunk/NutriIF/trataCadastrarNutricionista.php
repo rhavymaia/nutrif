@@ -27,10 +27,6 @@
         
         $id_usuario = $dao->inserirUsuario($data_cadastro_usuario);
         
-        //Selecionar código de usuário
-        
-        //$select= "SELECT cd_usuario FROM tb_usuario WHERE";
-        
         //inserir no banco       
         $data_cadastro_nutri = array(
             'cd_usuario'=> $id_usuario,
