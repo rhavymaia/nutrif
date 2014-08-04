@@ -20,17 +20,21 @@
           
         $dao = new dao_class();
         
-       /* $data_cadastro_usuario = array(
+        $data_cadastro_usuario = array(
             'nm_login'=> $login,
-            'nm_senha'=> $senha1,
+            'nm_senha'=> $senha1
         );
         
-        $id_usuario = $dao->inserirUsuario($data_cadastro_usuario);*/
+        $id_usuario = $dao->inserirUsuario($data_cadastro_usuario);
+        
+        //Selecionar código de usuário
+        
+        //$select= "SELECT cd_usuario FROM tb_usuario WHERE";
         
         //inserir no banco       
         $data_cadastro_nutri = array(
-            'nm_nutricionista'=> $nome_nutri
-            
+            'cd_usuario'=> $id_usuario,
+            'nm_nutricionista'=> $nome_nutri       
         );        
         $id_nutri = $dao->inserirNutricionista($data_cadastro_nutri);
         
