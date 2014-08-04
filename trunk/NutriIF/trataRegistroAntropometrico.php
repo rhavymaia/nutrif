@@ -26,15 +26,16 @@
             'dt_nascimento' => $nascimento,
             'cd_nivelescolar' => $nivel,
             'tp_sexo' => $sexo,
-            'nm_entrevistado' => $aluno
+            'nm_entrevistado' => $aluno,
         );
         
         $data_antropometria = array(
             'nr_peso' => $peso,            
             'nr_altura' => $altura,
             'tp_entrevistado' => TP_ALUNO,
-            'nr_nivel_esporte' => $esporte    
+            'nr_nivel_esporte' => $esporte,    
         );
+        
         
         $dao1 = new dao_class();
         $id1 = $dao1->inserirEntrevistado($data_cadastro);
