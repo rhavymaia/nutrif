@@ -106,9 +106,15 @@ class dao_class {
         return $id;
     }
     
-    public function inserirDadosAntropometricos($data) {
+    public function inserirNutricionista($data) {
 
-        $id = $this->db->insert_array('tb_anamnese', $data);
+        $id = $this->db->insert_array('tb_nutricionista', $data);
+        return $id;
+    }
+    
+    public function inserirUsuario($data) {
+
+        $id = $this->db->insert_array('tb_usuario', $data);
         return $id;
     }
     
@@ -121,6 +127,12 @@ class dao_class {
     public function inserirRespostasPerfilAlimentar($data) {
 
         $id = $this->db->insert_array('tb_resposta', $data);
+        return $id;
+    }
+    
+    public function inserirDadosAntropometricos($data) {
+
+        $id = $this->db->insert_array('tb_anamnese', $data);
         return $id;
     }
     

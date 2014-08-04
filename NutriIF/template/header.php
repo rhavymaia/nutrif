@@ -64,13 +64,18 @@ require_once ('util/constantes.php');
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="formCadastrarEntrevistado.php">
-                                            <img src="images/book-lines.png">  Cadastro do aluno
+                                        <a href="formCadastrarNutricionista.php">
+                                            <img src="images/cadas.png">  Cadastro de Nutricionista
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="formCadastrarNutricionista.php">
-                                            <img src="images/book-lines.png">  Cadastro do Nutricionista
+                                        <a href="formCadastrarAluno.php">
+                                            <img src="images/cadas.png">  Cadastro de Aluno
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="formAnamnese.php">
+                                            <img src="images/cadas.png">  Anamnese
                                         </a>
                                     </li>
                                     <li>
@@ -83,6 +88,7 @@ require_once ('util/constantes.php');
                                     <a href="formLogin.php">
                                         <img src="images/unlocked.png">  Login
                                     </a>
+                                                                     
                                 </li>';
                         }
                     ?>
