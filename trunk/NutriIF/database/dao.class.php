@@ -101,11 +101,18 @@ class dao_class {
      * @return type
      */
     public function inserirEntrevistado($data) {
-
+        
+        
         $id = $this->db->insert_array('tb_entrevistado', $data);
+        
         return $id;
     }
     
+    /**
+     * Inserir dados de usuário na tabela usuário
+     * @param type $data
+     * @return type
+     */
     public function inserirNutricionista($data) {
 
         $id = $this->db->insert_array('tb_nutricionista', $data);
