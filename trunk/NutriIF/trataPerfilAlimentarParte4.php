@@ -59,6 +59,7 @@ if (validaFormPerfilAlimentarParte4()){
         $respostas[21] = $_SESSION['quest18'];
 
         $data = array(
+                'cd_entrevistado'=> $_SESSION['codigoEntrevistado'],
                  'r1'=> $respostas[1],
                  'r2'=> $respostas[2], 
                  'r3'=> $respostas[3],
@@ -80,10 +81,8 @@ if (validaFormPerfilAlimentarParte4()){
                  'r16'=> $respostas[19],
                  'r17'=> $respostas[20],
                  'r18'=> $respostas[21],
-                 'resultado'=> $resultadofinal,
-                 'cd_entrevistado'=> $_SESSION['codigoEntrevistado'],
-
-             );
+                 'resultado'=> $resultadofinal
+                              );
 
         $dao = new dao_class();
         $id = $dao->inserirRespostasPerfilAlimentar($data);

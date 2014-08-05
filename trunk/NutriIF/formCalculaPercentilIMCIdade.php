@@ -47,7 +47,7 @@ if (isset($_SESSION['imc'])) {
                     if ($_SESSION['percentilInferior'])
                         echo("<p> Percentil Inferior: " . $_SESSION['percentilInferior'] . "</p>");               
                     } 
-        
+                echo $_SESSION['situacao'];
             }else {
                 echo ("<p>Aluno acima de 19 anos. </p>");
                 echo ("<p>Valor de imc: " . $_SESSION['imc'] . "</p>");
@@ -70,6 +70,7 @@ if (isset($_SESSION['imc'])) {
     unset($_SESSION['percentilMediano']);
     unset($_SESSION['percentilSuperior']);
     unset($_SESSION['percentilInferior']);
+    unset($_SESSION['situacao']);
 ?>
 <?php
 // Rodapé da página html.
