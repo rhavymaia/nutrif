@@ -101,4 +101,114 @@ function calcularPercentil($rowEntrevistado){
             return $resultados;
 }
 
+    function verificarSituacaoDoPercentil($percentilEntrevistado){
+    
+                if (!ehVazio($percentilEntrevistado['percentilMediano']) 
+                    || !ehVazio($percentilEntrevistado['percentilInferior']) 
+                    || !ehVazio($percentilEntrevistado['percentilSuperior'])) {
+
+                if (!ehVazio($percentilEntrevistado['percentilMediano'])) {
+                    
+                    if ($percentilEntrevistado['percentilMediano'] < 0.1)
+                       return "Magreza acentuada";
+                    else
+                    if (!ehVazio($percentilEntrevistado['percentilMediano'] >= 0.1 && 
+                            ($percentilEntrevistado['percentilMediano'] < 3)))
+                        return "Magreza";
+                    else
+                    if (($percentilEntrevistado['percentilMediano'] >= 3 && 
+                            ($percentilEntrevistado['percentilMediano'] <= 85)))
+                        return "Eutrofia";
+                    else
+                    if (($percentilEntrevistado['percentilMediano'] >= 85 && 
+                            ($percentilEntrevistado['percentilMediano'] <= 97)))
+                        return "Sobrepeso";
+                    else
+                    if (($percentilEntrevistado['percentilMediano'] > 97) && 
+                            ($percentilEntrevistado['percentilMediano'] <= 99.9))
+                        return "Obesidade";
+                    else
+                    if ($percentilEntrevistado['percentilMediano'] > 99.9)
+                        return "Obesidade grave";               
+                    
+                } else if(!ehVazio($percentilEntrevistado['percentilInferior']) 
+                        && !ehVazio($percentilEntrevistado['percentilSuperior'])) {
+                    
+                    if ($percentilEntrevistado['percentilInferior'] < 0.1)
+                        return "Magreza acentuada";
+                    else
+                    if (($percentilEntrevistado['percentilInferior'] >= 0.1 && 
+                            ($percentilEntrevistado['percentilSuperior'] < 3)))
+                        return "Magreza";
+                    else
+                    if (($percentilEntrevistado['percentilInferior'] >= 3 && 
+                            ($percentilEntrevistado['percentilSuperior'] <= 85)))
+                        return "Eutrofia";
+                    else
+                    if (($percentilEntrevistado['percentilInferior'] >= 85 && 
+                            ($percentilEntrevistado['percentilSuperior'] <= 97)))
+                        return "Sobrepeso";
+                    else
+                    if (($percentilEntrevistado['percentilInferior'] > 97) && 
+                            ($percentilEntrevistado['percentilSuperior'] <= 99.9))
+                         return "Obesidade";
+                    else
+                    if ($percentilEntrevistado['percentilSuperior'] > 99.9)
+                         return "Obesidade grave"; 
+                    
+                    
+                  } else if (!ehVazio($percentilEntrevistado['percentilInferior']) 
+                        && ehVazio($percentilEntrevistado['percentilSuperior'])){
+                      
+                    if ($percentilEntrevistado['percentilInferior'] < 0.1)
+                        return "Magreza acentuada";
+                    else
+                    if (!ehVazio($percentilEntrevistado['percentilInferior'] >= 0.1 && 
+                            ($percentilEntrevistado['percentilInferior'] < 3)))
+                        return "Magreza";
+                    else
+                    if (($percentilEntrevistado['percentilInferior'] >= 3 && 
+                            ($percentilEntrevistado['percentilInferior'] <= 85)))
+                        return "Eutrofia";
+                    else
+                    if (($percentilEntrevistado['percentilInferior'] >= 85 && 
+                            ($percentilEntrevistado['percentilInferior'] <= 97)))
+                        return "Sobrepeso";
+                    else
+                    if (($percentilEntrevistado['percentilInferior'] > 97) && 
+                            ($percentilEntrevistado['percentilInferior'] <= 99.9))
+                        return "Obesidade";
+                    else
+                    if ($percentilEntrevistado['percentilInferior'] > 99.9)
+                        return "Obesidade grave";
+                      
+                  } else if (!ehVazio($percentilEntrevistado['percentilSuperior']) 
+                        && ehVazio($percentilEntrevistado['percentilInferior'])){
+                      
+                    if ($percentilEntrevistado['percentilSuperior'] < 0.1)
+                        return "Magreza acentuada";
+                    else
+                    if (($percentilEntrevistado['percentilSuperior'] >= 0.1 && 
+                            ($percentilEntrevistado['percentilSuperior'] < 3)))
+                        return "Magreza";
+                    else
+                    if (($percentilEntrevistado['percentilSuperior'] >= 3 && 
+                            ($percentilEntrevistado['percentilSuperior'] <= 85)))
+                        return "Eutrofia";
+                    else
+                    if (($percentilEntrevistado['percentilSuperior'] >= 85 && 
+                            ($percentilEntrevistado['percentilSuperior'] <= 97)))
+                        return "Sobrepeso";
+                    else
+                    if (($percentilEntrevistado['percentilSuperior'] > 97) && 
+                            ($percentilEntrevistado['percentilSuperior'] <= 99.9))
+                        return "Obesidade";
+                    else
+                    if ($percentilEntrevistado['percentilSuperior'] > 99.9)
+                        return "Obesidade grave";
+                        
+                  } 
+            }
+}
+
 ?>

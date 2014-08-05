@@ -39,9 +39,9 @@ class dao_class {
          public function selectDadosAntropometricos($matricula) {
         
         // Montar consulta.
-        $select = "SELECT a.nr_peso, a.nr_altura, e.tp_sexo ".
+        $select = "SELECT a.nr_peso, a.nr_altura, e.tp_sexo, e.dt_nascimento ".
                 "FROM tb_anamnese AS a, tb_entrevistado AS e ".
-                "WHERE e.nr_matricula = ".$matricula;
+                "WHERE e.cd_entrevistado = a.cd_entrevistado AND e.nr_matricula = ".$matricula;
         
         // Selecionar entrevistado através da matrícula.
         $result = $this->db->select($select);
@@ -54,8 +54,9 @@ class dao_class {
     
     public function selectEntrevistados(){
         
-        $select = "SELECT cd_entrevistado, nr_matricula, dt_nascimento, nr_peso, nr_altura, tp_sexo ".
-                "FROM tb_entrevistado";
+        $select = "SELECT e.cd_entrevistado, e.nr_matricula, e.dt_nascimento, "
+                . "a.nr_peso, a.nr_altura, e.tp_sexo "
+                ."FROM tb_entrevistado AS e, tb_anamnese AS a";
                 //" WHERE ysnData BETWEEN '.$dataInicial.' and '.$dataFinal;
         
         // Selecionar entrevistado através da matrícula.
@@ -133,7 +134,7 @@ class dao_class {
     
     public function inserirRespostasPerfilAlimentar($data) {
 
-        $id = $this->db->insert_array('tb_resposta', $data);
+        $id = $this->db->insert_array('tb_perfilalimentar', $data);
         return $id;
     }
     
