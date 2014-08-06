@@ -16,13 +16,16 @@ if (validaFormCalculaVCT()){
 
         $dao = new dao_class();
 
-        $rowEntrevistado = $dao->selectEntrevistado($matricula);
+       // $rowEntrevistado = $dao->selectEntrevistado($matricula);
+        
+        $rowDadosAntropometricos = $dao->selectDadosAntropometricos($matricula);
 
         $vetor = array(
-            'peso' => $rowEntrevistado['nr_peso'],
-            'alturaCm' => $rowEntrevistado['nr_altura'],
-            'sexo' => $rowEntrevistado['tp_sexo'],
-            'idadeMeses' => getIdade($rowEntrevistado['dt_nascimento'])                
+            'peso' => $rowDadosAntropometricos['nr_peso'],
+            'alturaCm' => $rowDadosAntropometricos['nr_altura'],
+            'sexo' => $rowDadosAntropometricos['tp_sexo'],
+            'idade' => getIdade($rowDadosAntropometricos['dt_nascimento'])/12,//verificar função pra converter data de nasc em idade normal
+            'nivel_esporte' => $rowDadosAntropometricos['nr_nivel_esporte']
         );
         return $vetor;
     }
@@ -30,91 +33,47 @@ if (validaFormCalculaVCT()){
  $dados = capturarDadosVCT($matricula);
 
     
-    if ($dados && $dados['idadeMeses'] != 0) {
+    if ($dados && $dados['idade'] != 0) {
         if ($dados['sexo'] == 'M'){
             
-                //case 120 . 131 ://10 a 11
-                if (($dados['idadeMeses'] >= 120) && ($dados['idadeMeses'] < 131)){
-                    $vct = ($dados['peso'] * 37.7);
+            $tmb = 65.5 + (9.6 * $dados['peso']) + (1.8 * $dados['alturaCm']) - (4.7 * $dados['idade']);
+               /* if (($dados['idade'] >= 10) && ($dados['idade'] <= 18)){
+                    $vct = (($dados['peso'] * 16.6)+ (77 * $dados['alturaCm'])+ 572);
                   }
-              //  case 132 . 143 ://11 a 12
                   
-                elseif (($dados['idadeMeses'] >= 132) && ($dados['idadeMeses'] < 143)){
-                    $vct = ($dados['peso'] * 35.1);
+                elseif (($dados['idade'] > 18) && ($dados['idade'] <= 30)){
+                    $vct = (($dados['peso'] * 15.4)+ (27 * $dados['alturaCm'])+ 717);
                 }
-                //case 144 . 155 ://12 a 13
-                elseif (($dados['idadeMeses'] >= 144) && ($dados['idadeMeses'] < 155)){
-                    $vct = ($dados['peso'] * 33.4);
+                elseif (($dados['idade'] > 30) && ($dados['idade'] <= 60)){
+                    $vct = (($dados['peso'] * 11.3)+ (16 * $dados['alturaCm'])+ 901);
                 }
-                
-                //case 156 . 167 ://13 a 14
-                elseif (($dados['idadeMeses'] >= 156) && ($dados['idadeMeses'] < 167)){
-                    $vct = ($dados['peso'] * 31.4);
-                } 
-                
-                //case 168 . 179 ://14 a 15
-                elseif (($dados['idadeMeses'] >= 168) && ($dados['idadeMeses'] < 179)){
-                        $vct = ($dados['peso'] * 29.9);
-                }
-                    
-                //case 180 . 191 ://15 a 16
-                 elseif (($dados['idadeMeses'] >= 180) && ($dados['idadeMeses'] < 191)){
-                        $vct = ($dados['peso'] * 28.7);
-                 }
-                
-                //case 192 . 203 ://16 a 17
-                 elseif (($dados['idadeMeses'] >= 192) && ($dados['idadeMeses'] < 203)){
-                      $vct = ($dados['peso'] * 27.9);
-                 }
-                
-                //case 204 . 227 ://17 a 18
-                 elseif ($dados['idadeMeses'] >= 204){
-                        $vct = ($dados['peso'] * 27.5);
-                 }
+                elseif (($dados['idade'] > 60)){
+                     $vct = (($dados['peso'] * 8.8)+ (1128 * $dados['alturaCm'])- 1071);
+                }   
+                * 
+                */ 
         }else{
-                            
-                //case 120 . 131 ://10 a 11
-                if (($dados['idadeMeses'] >= 120) && ($dados['idadeMeses'] < 131)){
-                       $vct = ($dados['peso'] * 34.3);
-                }
-                
-                //case 132 . 143 ://11 a 12
-                elseif (($dados['idadeMeses'] >= 132) && ($dados['idadeMeses'] < 143)){
-                    $vct = ($dados['peso'] * 31.5);
-                }
-                
-                //case 144 . 155 ://12 a 13
-                 elseif (($dados['idadeMeses'] >= 144) && ($dados['idadeMeses'] < 155)){
-                    $vct = ($dados['peso'] * 29.1);
-                 }
-                
-                //case 156 . 167 ://13 a 14
-                 elseif (($dados['idadeMeses'] >= 156) && ($dados['idadeMeses'] < 167)){
-                    $vct = ($dados['peso'] * 27.5);
-                 }
-                
-                //case 168 . 179 ://14 a 15
-                 elseif (($dados['idadeMeses'] >= 168) && ($dados['idadeMeses'] < 179)){
-                    $vct = ($dados['peso'] * 26.7);
-                 }
-                    
-                //case 180 . 191 ://15 a 16
-                 elseif (($dados['idadeMeses'] >= 180) && ($dados['idadeMeses'] < 191)){
-                    $vct = ($dados['peso'] * 26.3);
-                 }
-                
-                //case 192 . 203 ://16 a 17
-                 elseif (($dados['idadeMeses'] >= 192) && ($dados['idadeMeses'] < 203)){
-                    $vct = ($dados['peso'] * 26.0);
-                 }
-                
-                //case 204 . 227 ://17 a 18
-                  elseif ($dados['idadeMeses'] >= 204){
-                    $vct = ($dados['peso'] * 25.9);
+             $tmb = 655 + (14 * $dados['peso']) + (5 * $dados['alturaCm']) - (6.7 * $dados['idade']);
+             
+            /*
+               if (($dados['idade'] >= 10) && ($dados['idade'] <= 18)){
+                    $vct = (($dados['peso'] * 7.4)+ (482 * $dados['alturaCm'])+ 217);
                   }
+                  
+                elseif (($dados['idade'] > 18) && ($dados['idade'] <= 30)){
+                    $vct = (($dados['peso'] * 13.3)+ (334 * $dados['alturaCm'])+ 35);
+                }
+                elseif (($dados['idade'] > 30) && ($dados['idade'] <= 60)){
+                    $vct = (($dados['peso'] * 8.7)+ (255 * $dados['alturaCm'])+ 865);
+                }
+                elseif (($dados['idade'] > 60)){
+                     $vct = (($dados['peso'] * 9.2)+ (637 * $dados['alturaCm'])- 302);
+                }    
+             * 
+             */
+        }
             
-            }
-        
+            $vct = $tmb*$dados['nivel_esporte'];
             $_SESSION['vct'] = $vct;
             header("location: formCalculaVCT.php");
         }else{

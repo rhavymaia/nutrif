@@ -40,13 +40,35 @@
         </label>
 
         <!-- Validação inicial no lado do cliente -->
-        <label for= "esporte"> <em>*</em> Quantas vezes pratica atividade física por semana:
+        <!--<label for= "esporte"> <em>*</em> Quantas vezes pratica atividade física por semana:
             <select name="esporte">
                 <option value=""</option>
                 <option value="1"> 0 - 2 </option>
                 <option value="2"> 3 - 5  </option>
                 <option value="3"> 5 ou mais </option>
             </select>
+        </label>-->
+        
+        
+        <label for="esporte1">*Nível de atividade física:</label>
+            <input type="radio" name="esporte" value="1.2" id="e1"><b>Sedentária:</b>
+            Sentada em frente à uma escrivaninha ou em casa o dia todo sem atividade física
+        </label> 
+        <label for="esporte2">                                   
+            <input type="radio" name="esporte" value="1.375" id="e2"><b>Leve:</b> 
+            Atividades domésticas ou caminhadas com duração de pelo menos 15 minutos de 2 a 3 na semana.
+        </label>        
+        <label for="esporte3">   
+            <input type="radio" name="esporte" value="1.55" id="e3"><b>Moderada:</b>
+            Caminhadas com duração de pelo menos 30 minutos, dança, jogos de recreação com amigos - de 2 a 3 vezes na semana
+        </label>        
+        <label for="esporte4">     
+            <input type="radio" name="esporte" value="1.725" id="e4"><b>Alta:</b>
+        Praticante de Cooper com duração de pelo menos 30 minutos, musculação, ginástica e jogos de recreação com amigos - mais de 3 vezes na semana
+        </label>
+        <label for="esporte5">     
+            <input type="radio" name="esporte" value="1.9" id="e5"><b>Muito alta:</b>
+        Praticante de triathlon, maratonas, ciclismo e atletas profissionais
         </label>
 
         <input type="submit" value="Enviar"/>

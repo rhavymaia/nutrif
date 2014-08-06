@@ -39,7 +39,7 @@ class dao_class {
          public function selectDadosAntropometricos($matricula) {
         
         // Montar consulta.
-        $select = "SELECT a.nr_peso, a.nr_altura, e.tp_sexo, e.dt_nascimento ".
+        $select = "SELECT a.nr_peso, a.nr_altura, e.tp_sexo, e.dt_nascimento, a.nr_nivel_esporte ".
                 "FROM tb_anamnese AS a, tb_entrevistado AS e ".
                 "WHERE e.cd_entrevistado = a.cd_entrevistado AND e.nr_matricula = ".$matricula;
         
@@ -54,7 +54,7 @@ class dao_class {
     
     public function selectEntrevistados(){
         
-        $select = "SELECT e.cd_entrevistado, e.nr_matricula, e.dt_nascimento, "
+        $select = "SELECT e.cd_entrevistado, e.nr_matricula, e.dt_nascimento "
                 . "a.nr_peso, a.nr_altura, e.tp_sexo "
                 ."FROM tb_entrevistado AS e, tb_anamnese AS a";
                 //" WHERE ysnData BETWEEN '.$dataInicial.' and '.$dataFinal;
@@ -94,7 +94,27 @@ class dao_class {
 
         return $row;        
     }
-   
+    
+    /**
+     * Selecionar código do perfil alimentar do entrevistado
+     */
+    
+    public function selecionarPerfilAlimentar($id){
+        
+        $sql ="SELECT p.cd_perfilalimentar "
+                . "FROM tb_perfilalimentar AS p, tb_entrevistado AS e "
+                . "WHERE e.cd_entrevistado = p.cd_entrevistado "
+                . "AND e.cd_entrevistado= ".$id;
+        
+         // Selecionar perfil alimentar através dos dados encontrados na consulta ao entrevistado
+        $result = $this->db->select($sql);
+        // Recuperar única linha do resultado.
+        $row = $this->db->get_row($result);
+
+        return $row; 
+    }
+
+
     /**
      * Inserir entrevistados da avaliação antropométrica.
      * 
