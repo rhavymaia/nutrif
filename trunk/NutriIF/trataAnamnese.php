@@ -21,9 +21,12 @@
         
         //consultar cd_entrevistado pela matrícula
         $rowEntrevistado = $dao->selectEntrevistado($matricula);
+        
+        $rowPerfilAlimentar = $dao->selecionarPerfilAlimentar($rowEntrevistado['cd_entrevistado']);
                 
         $data_antropometria = array(
             'cd_entrevistado' => $rowEntrevistado['cd_entrevistado'],
+            'cd_perfilalimentar' => $rowPerfilAlimentar['cd_perfilalimentar'],
             'nr_peso' => $peso,            
             'nr_altura' => $altura,
             'nr_nivel_esporte' => $esporte    
