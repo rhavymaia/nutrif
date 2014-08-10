@@ -133,25 +133,19 @@
         // return false by default
         return false;
     }
-    
-
  
-    function validaEmail($email) {
-        //verifica se e-mail esta no formato correto de escrita
-        if (!ereg('^([a-zA-Z0-9.-])*([@])([a-z0-9]).([a-z]{2,3})', $email)) {
-            $mensagem = 'E-mail Inv&aacute;lido!';
-            return $mensagem;
-        } else {
-            //Valida o dominio
-            $dominio = explode('@', $email);
-            if (!checkdnsrr($dominio[1], 'A')) {
-                $mensagem = 'E-mail Inv&aacute;lido!';
-                return $mensagem;
-            } else {
-                return true;
-            } // Retorno true para indicar que o e-mail é valido
-        }
+    function isValidEmail($email){
+	//Verifica se o valor é válido
+	//Caso falhe, não é necessário continuar
+	if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+	return false;
+		 
+	//Extrai o domínio
+	list($user, $host) = explode("@", $email);
+	//Verifica se o domínio esta acessível
+	if (!checkdnsrr($host, "MX") && !checkdnsrr($host, "A"))
+            return false;	 
+	return true;
     }
- 
 
 ?>

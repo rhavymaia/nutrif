@@ -70,7 +70,7 @@
             </select>
         </label>
         
-        <label for="login"> <em>*</em> Login:
+        <label for="login"> <em>*</em> Login (e-mail):
             <input type="text" name="login" onFocus="this.className = 'select'" 
                 onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['login']) ? $_SESSION['login'] : VAZIO) ?>"/> 
         </label>

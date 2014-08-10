@@ -38,17 +38,6 @@
             <input type="text" name="altura"/>
             <em>cm</em>
         </label>
-
-        <!-- Validação inicial no lado do cliente -->
-        <!--<label for= "esporte"> <em>*</em> Quantas vezes pratica atividade física por semana:
-            <select name="esporte">
-                <option value=""</option>
-                <option value="1"> 0 - 2 </option>
-                <option value="2"> 3 - 5  </option>
-                <option value="3"> 5 ou mais </option>
-            </select>
-        </label>-->
-        
         
         <label for="esporte1">*Nível de atividade física:</label>
             <input type="radio" name="esporte" value="1.2" id="e1"><b>Sedentária:</b>
