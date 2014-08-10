@@ -38,7 +38,7 @@ if (isset($_SESSION['imc'])) {
     echo('<div class="caixa_azul">');
     if (isset($_SESSION['percentilMediano']) || isset($_SESSION['percentilSuperior']) 
             || isset($_SESSION['percentilInferior'])) {
-                           
+        
                 if ($_SESSION['percentilMediano']) {
                     echo("Percentil: " . $_SESSION['percentilMediano']);
                 } else if ($_SESSION['percentilSuperior'] || $_SESSION['percentilInferior']) {
@@ -47,11 +47,16 @@ if (isset($_SESSION['imc'])) {
                     if ($_SESSION['percentilInferior'])
                         echo("<p> Percentil Inferior: " . $_SESSION['percentilInferior'] . "</p>");               
                     } 
-                echo $_SESSION['situacao'];
-            }else {
+                echo $_SESSION['perfilPercentil'];                
+            }else if ($_SESSION['idadeMeses'] > IDADE_PERCENTIL_19){
                 echo ("<p>Aluno acima de 19 anos. </p>");
                 echo ("<p>Valor de imc: " . $_SESSION['imc'] . "</p>");
                 echo ("<p> Situação: " . $_SESSION['perfilIMC'] . "</p>");
+            }else{
+                echo '<script language="javascript" type="text/javascript">';
+                    echo 'window.alert("Percentil não encontrado. Verifique se as medidas antropométricas são válidas para um caso real!");';  
+                    echo 'window.location.href="formCalculaPercentilIMCIdade.php";';
+                    echo '</script>'; 
             }
         } else {
             echo(isset($_SESSION['matricula']) ? "": VAZIO);

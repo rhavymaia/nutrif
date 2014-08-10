@@ -13,6 +13,7 @@
     $aluno = $_POST['nome_aluno'];
     $matricula = $_POST['matricula'];
     $nascimento = $_POST['nascimento'];
+    $instituicao = $_POST['instituicao'];
     $sexo = $_POST['sexo'];
     $nivel = $_POST['nivel'];
     $senha1 = $_POST['senha1'];
@@ -20,7 +21,7 @@
     $login =  $_POST['login'];
     
     //Verificar os campos obrigatórios, os tipos e formatos dos dados avaliados
-    if(validaFormRegistroAntropometrico()){
+    if(validaFormCadastrarAluno()){
         
         $dao =  new dao_class();
         
@@ -50,7 +51,7 @@
              echo 'window.alert("Cadastro realizado com sucesso!");';  
              echo 'window.location.href="formCadastrarAluno.php";';
              echo '</script>'; 
-        } else {           
+        } else {   
             header("location: mensagem_erro.php");          
         }      
     } else{
@@ -60,11 +61,13 @@
         $_SESSION['nome_aluno']= $aluno;
         $_SESSION['matricula']= $matricula;
         $_SESSION['nivel']= $nivel;
+        $_SESSION['instituicao']= $instituicao;
         $_SESSION['sexo']= $sexo;
+        $_SESSION['login']= $login;
         header("location: formCadastrarAluno.php");        
     }
     
-    function validaFormRegistroAntropometrico() {
+    function validaFormCadastrarAluno() {
         
         $ehValido = true;
         $msgsErro = array();
@@ -104,7 +107,26 @@
                 ."A data deve está no formato \"dd/mm/aaaa\".");
             array_push($msgsErro, $msgErro);
             $ehValido = false;            
-        }              
+        }
+        
+        if (ehVazio($_POST['login'])) {
+            $msgErro = array('login' => "Preencha o campo login.");
+            array_push($msgsErro, $msgErro);
+            $ehValido = false;            
+        }
+        
+         if (ehVazio($_POST['senha1']) || ehVazio($_POST['senha2']) ) {
+            $msgErro = array('senha' => "Preencha os dois campos senha!");
+            array_push($msgsErro, $msgErro);
+            $ehValido = false;            
+        }
+        
+       /*if($_POST['senha1'] != $_POST['senha2']){
+            echo '<script language="javascript" type="text/javascript">';
+             echo 'window.alert("As senhas não conferem!");';  
+             echo 'window.location.href="formCadastrarAluno.php";';
+             echo '</script>'; 
+            }*/
 
         $_SESSION['erro'] = $msgsErro;
         

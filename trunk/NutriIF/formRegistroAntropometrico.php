@@ -3,6 +3,7 @@
     require_once ('validate/erro.php');
     // Cabeçalho e menu da página html.
     require_once 'template/headerForm.php';
+    
 ?>
 
 <div class="container">

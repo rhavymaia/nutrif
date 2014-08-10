@@ -33,6 +33,7 @@ function validaFormRegistroAntropometrico() {
     return true;
 }
 
+
 function formatar(src, mask) {
 
     // permitindo alguns caracteres importantes
