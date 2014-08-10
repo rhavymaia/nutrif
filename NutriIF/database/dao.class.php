@@ -101,7 +101,7 @@ class dao_class {
     
     public function selecionarPerfilAlimentar($id){
         
-        $sql ="SELECT p.cd_perfilalimentar "
+        $sql ="SELECT p.cd_perfilalimentar, p.cd_entrevistado "
                 . "FROM tb_perfilalimentar AS p, tb_entrevistado AS e "
                 . "WHERE e.cd_entrevistado = p.cd_entrevistado "
                 . "AND e.cd_entrevistado= ".$id;

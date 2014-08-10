@@ -21,7 +21,7 @@ if (validaFormCalculaPercentilIMC()) {
 
         $resultados = calcularPercentil($rowEntrevistado); 
         
-        $situacao= verificarSituacaoDoPercentil($resultados);
+        //$situacao= verificarSituacaoDoPercentil($resultados);
         
         // Enviar para a próxima tela os valores
             $_SESSION['percentilMediano'] = $resultados['percentilMediano'];
@@ -29,7 +29,8 @@ if (validaFormCalculaPercentilIMC()) {
             $_SESSION['percentilSuperior'] = $resultados['percentilSuperior'];
             $_SESSION['perfilIMC'] = $resultados['perfilIMC'];
             $_SESSION['imc'] = $resultados['imc'];
-            $_SESSION['situacao'] = $situacao;
+            $_SESSION['perfilPercentil'] = $resultados['perfilPercentil'];
+            $_SESSION['idadeMeses'] = $resultados['idadeMeses'];
           header("location: formCalculaPercentilIMCIdade.php");        
     } else {
         $msg = ("Matrícula não encontrada");

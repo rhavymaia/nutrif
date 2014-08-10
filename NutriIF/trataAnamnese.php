@@ -23,7 +23,7 @@
         $rowEntrevistado = $dao->selectEntrevistado($matricula);
         
         $rowPerfilAlimentar = $dao->selecionarPerfilAlimentar($rowEntrevistado['cd_entrevistado']);
-                
+    
         $data_antropometria = array(
             'cd_entrevistado' => $rowEntrevistado['cd_entrevistado'],
             'cd_perfilalimentar' => $rowPerfilAlimentar['cd_perfilalimentar'],
@@ -35,13 +35,29 @@
         $id = $dao->inserirDadosAntropometricos($data_antropometria);
         
         if (ehNumerico($id)) { 
+            
+            if ($rowEntrevistado){
            
-             echo '<script language="javascript" type="text/javascript">';
-             echo 'window.alert("Dados da anamnese cadastrados com sucesso!");';  
-             echo 'window.location.href="formAnamnese.php";';
-             echo '</script>'; 
+                if($rowPerfilAlimentar){
+                    echo '<script language="javascript" type="text/javascript">';
+                    echo 'window.alert("Dados da anamnese cadastrados com sucesso!");';  
+                    echo 'window.location.href="formAnamnese.php";';
+                    echo '</script>';  
+                }else{
+                    echo '<script language="javascript" type="text/javascript">';
+                    echo 'window.alert("O aluno não respondeu ao Questionário de avaliação alimentar para completar o seu cadastro!");';  
+                    echo 'window.location.href="formAnamnese.php";';
+                    echo '</script>'; 
+                    }
+             
+            } else{
+                echo '<script language="javascript" type="text/javascript">';
+                echo 'window.alert("O aluno não está cadastrado!");';  
+                echo 'window.location.href="formAnamnese.php";';
+                echo '</script>'; 
+            }
          
-        } else {           
+        } else { 
             header("location: mensagem_erro.php");          
         }      
     } else{
@@ -51,7 +67,7 @@
         $_SESSION['altura']= $altura;
         $_SESSION['esporte']= $esporte;
         
-        header("location: formRegistroAntropometrico.php");        
+        header("location: formAnamnese.php");        
     }
     
     function validaFormRegistroAntropometrico() {
@@ -82,7 +98,7 @@
         }
 
         if (ehVazio($_POST['esporte'])) {
-            $msgErro = array('esporte' => "Informe a quantidade de atividade física realizada por semana.");
+            $msgErro = array('esporte' => "Informe o seu nível de atividade fisica.");
             $ehValido = false;            
         }
         
