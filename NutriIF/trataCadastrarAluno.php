@@ -119,7 +119,7 @@
             $msgErro = array('senha' => "Preencha os dois campos senha!");
             array_push($msgsErro, $msgErro);
             $ehValido = false;            
-        }
+         }
         
        /*if($_POST['senha1'] != $_POST['senha2']){
             echo '<script language="javascript" type="text/javascript">';
@@ -127,6 +127,12 @@
              echo 'window.location.href="formCadastrarAluno.php";';
              echo '</script>'; 
             }*/
+         
+         if (!isValidEmail($_POST['login'])){
+             $msgErro = array('email' => "formato de e-mail inválido!");
+             array_push($msgsErro, $msgErro);
+             $ehValido = false;  
+         }
 
         $_SESSION['erro'] = $msgsErro;
         
