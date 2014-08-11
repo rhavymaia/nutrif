@@ -1,6 +1,5 @@
 <?php
 
-//ajuda senhor
     session_start();
     
     // Importação
@@ -13,7 +12,6 @@
     $aluno = $_POST['nome_aluno'];
     $matricula = $_POST['matricula'];
     $nascimento = $_POST['nascimento'];
-    $instituicao = $_POST['instituicao'];
     $sexo = $_POST['sexo'];
     $nivel = $_POST['nivel'];
     $senha1 = $_POST['senha1'];
@@ -138,4 +136,5 @@
         
         return $ehValido;
     }
+
 ?>

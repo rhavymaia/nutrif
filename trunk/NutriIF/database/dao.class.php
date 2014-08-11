@@ -113,6 +113,18 @@ class dao_class {
 
         return $row; 
     }
+    
+    public function selecionarPesquisas(){
+        
+        $select = "SELECT cd_pesquisa, nm_pesquisa ".
+                "FROM tb_pesquisa";
+        
+        $result = $this->db->select($select);
+        
+        $rows = $this->db->get_rows($result);
+               
+        return $rows;
+    }
 
 
     /**
@@ -149,6 +161,12 @@ class dao_class {
     public function inserirIMCPercentil($data) {
 
         $id = $this->db->insert_array('tb_imc_percentil', $data);
+        return $id;
+    }
+    
+     public function inserirPesquisa($data) {
+
+        $id = $this->db->insert_array('tb_pesquisa', $data);
         return $id;
     }
     

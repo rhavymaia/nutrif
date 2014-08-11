@@ -51,7 +51,7 @@ if (validaFormPerfilAlimentarParte4()){
         //Passando os dados para a variável de sessão
         session_start();            
         $respostas = $_SESSION['respostas'];
-
+       
         $respostas[17] = $_SESSION['quest14'];
         $respostas[18] = $_SESSION['quest15'];
         $respostas[19] = $_SESSION['quest16'];
