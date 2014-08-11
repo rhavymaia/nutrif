@@ -79,6 +79,12 @@ require_once ('util/constantes.php');
                                         </a>
                                     </li>
                                     <li>
+                                        <a href="formCadastrarPesquisa.php">
+                                            <img src="images/cadas.png">  Cadastrar Pesquisa
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
                                         <a href="logout.php">
                                             <img src="images/locked.png">  Logout
                                         </a>

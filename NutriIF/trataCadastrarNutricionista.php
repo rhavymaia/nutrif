@@ -14,6 +14,8 @@
     $login = $_POST['login'];
     $senha1 = $_POST['senha1'];
     $senha2 = $_POST['senha2'];
+    $crn = $_POST['crn'];
+    $siap = $_POST['siap'];
 
     //Verificar os campos obrigatórios, os tipos e formatos dos dados avaliados
     if(validaFormCadastrarNutricionista()){

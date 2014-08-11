@@ -3,6 +3,7 @@
     require_once ('validate/erro.php');
     // Cabeçalho e menu da página html.
     require_once 'template/headerForm.php';
+    require_once ('database/dao.class.php');
 ?>
 
 <div class="container">
@@ -18,12 +19,28 @@
             isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
+    
+    
+     <?php       
+            $dao = new dao_class();
+            
+            $pesquisas = $dao->selecionarPesquisas();
+            
+            foreach ($pesquisas as $pesquisa) { 
+                
+                echo "<tr>";
+                echo "<td>";
+                echo $pesquisa['nm_pesquisa'];
+                echo "</td>";
+                echo "</tr>";
+            }
+            
+        ?>
 
     <form action="trataAnamnese.php" 
           method="POST"
           name="formAnamnese">
 
-                <!-- Validação inicial no lado do cliente -->
         <label for= "matricula"> <em>*</em> Matrícula:
             <input type="text" name="matricula"/>
         </label>
@@ -63,6 +80,7 @@
         <input type="submit" value="Enviar"/>
         <input type="reset" value="Limpar"/>
     </form>
+    
 <?php
 // Após preenchimento do formulário limpar as variáveis da sessão.   
 //Erro da validação, sessão será destruída

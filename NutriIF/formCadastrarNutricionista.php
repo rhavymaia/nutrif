@@ -35,6 +35,14 @@
             <input type="text" name="login" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['login']) ? $_SESSION['login'] : VAZIO) ?>"/> 
         </label>
         
+        <label for="login"> <em>*</em> CRN:
+            <input type="text" name="crn" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['crn']) ? $_SESSION['crn'] : VAZIO) ?>"/> 
+        </label>
+        
+        <label for="login"> <em>*</em> SIAP:
+            <input type="text" name="siap" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['siap']) ? $_SESSION['siap'] : VAZIO) ?>"/> 
+        </label>
+        
         <label for="senha1"> <em>*</em> Senha:
             <input type="password" name="senha1"/> 
         </label>
