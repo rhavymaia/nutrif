@@ -19,24 +19,7 @@
             isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
         ?>                    
     </ul>
-    
-    
-     <?php       
-            $dao = new dao_class();
-            
-            $pesquisas = $dao->selecionarPesquisas();
-            
-            foreach ($pesquisas as $pesquisa) { 
-                
-                echo "<tr>";
-                echo "<td>";
-                echo $pesquisa['nm_pesquisa'];
-                echo "</td>";
-                echo "</tr>";
-            }
-            
-        ?>
-
+       
     <form action="trataAnamnese.php" 
           method="POST"
           name="formAnamnese">

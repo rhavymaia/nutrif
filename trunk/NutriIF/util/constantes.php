@@ -20,6 +20,8 @@
     
     define('TL_RELATORIO', 'Relatório'); 
     
+    define('TL_PESQUISAS', 'Pesquisas cadastradas'); 
+    
     define('VAZIO', '');
     
     define ('FATOR',8);

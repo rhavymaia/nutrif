@@ -74,7 +74,7 @@ require_once ('util/constantes.php');
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="formAnamnese.php">
+                                        <a href="listarpesquisas.php">
                                             <img src="images/cadas.png">  Anamnese
                                         </a>
                                     </li>
@@ -82,8 +82,7 @@ require_once ('util/constantes.php');
                                         <a href="formCadastrarPesquisa.php">
                                             <img src="images/cadas.png">  Cadastrar Pesquisa
                                         </a>
-                                    </li>
-                                    
+                                    </li>                                                                       
                                     <li>
                                         <a href="logout.php">
                                             <img src="images/locked.png">  Logout
