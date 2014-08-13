@@ -4,9 +4,10 @@
 	overflow:hidden;
 	zoom:1;
 	position:relative;
-	float:center;
-        text-align:center;
-        alignment-adjust: center;
+	float:left;
+        width: 800px;
+        text-align:left;
+        alignment-adjust: left;
 }
 .coin-slider a {
 	text-decoration:none;
