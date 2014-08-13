@@ -10,24 +10,32 @@ require_once 'template/header.php';
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/coin-slider.min.js"></script>
 
-<div id="centralizar">
+<div id="esquerda">
     <div id="content">
         <div class="inside">
+            <table>
+            <tr>
+            <td width="800px">    
             <div class="slider">
                 <div id="coin-slider"> 
-                    <img src="images/slide1.jpg" width="960" height="360" alt="" />
-                    <img src="images/slide2.jpg" width="960" height="360" alt="" />
-                    <img src="images/slide3.jpg" width="960" height="360" alt="" />
+                    <img src="images/slide1.jpg" width="800" height="360" alt="" />
+                    <img src="images/slide2.jpg" width="800" height="360" alt="" />
+                    <img src="images/slide3.jpg" width="800" height="360" alt="" />
                 </div>
-                <div class="clear"></div>
-            </div>
-            <p> 
+            </td>
+            <td><a class="linkprincipal" href="www.google.com.br">Cadastre-se</a></td></tr> 
+                <tr>
+           <td width="800px">
+               
+           
+       
                 Software para obter o perfil alimentar e antropométrico, 
                 individual e coletivo, dos estudantes do Instituto Federal 
                 de Educação, Ciência e Tecnologia da Paraíba, campus Campina 
                 Grande, a fim de auxiliar o nutricionista na definição da 
                 quantidade calórica média das refeições do Restaurante Estudantil. 
-            </p>
+                </td></tr>  
+              </table></div> 
         </div>
     </div>
 </div>
