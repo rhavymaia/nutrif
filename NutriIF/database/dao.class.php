@@ -196,7 +196,7 @@ class dao_class {
     }
     
     public function selectLogin($login, $senha) {
-        $sql = "SELECT usuario.nm_login, usuario.nm_senha"
+        $sql = "SELECT usuario.nm_login, usuario.nm_senha, cd_tipousuario "
                 . " FROM tb_usuario AS usuario"
                 . " WHERE"
                 . " usuario.nm_login = '" . $login . "'"

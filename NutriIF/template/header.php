@@ -33,11 +33,15 @@ require_once ('util/constantes.php');
                         session_start();
 
                         if (isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE) {
-                            echo '<li>
-                                        <a href="formRegistroAntropometrico.php">
-                                            <img src="images/cadas.png">  Cadastro Antropométrico
+                            
+                            if($_SESSION['tp_usuario'] == TP_ALUNO){
+                                 echo '<li>
+                                        <a href="formPerfilAlimentarEntrevistado.php">
+                                            <img src="images/book-lines.png">  Perfil Alimentar
                                         </a>
-                                    </li>
+                                    </li>';
+                            }else{
+                            echo '
                                     <li>
                                         <a href="formCalculaPercentilIMCIdade.php">
                                             <img src="images/rulers.png">  Cálculo do Percentil
@@ -52,17 +56,7 @@ require_once ('util/constantes.php');
                                         <a href="formCalculaVCT.php">
                                             <img src="images/calc.png">  Cálculo do VCT
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a href="relatorioPercentilIMCEntrevistados.php">
-                                            <img src="images/list.png">  Relatório de Entrevistados
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="formPerfilAlimentarEntrevistado.php">
-                                            <img src="images/book-lines.png">  Perfil Alimentar
-                                        </a>
-                                    </li>
+                                    </li>                                                                       
                                     <li>
                                         <a href="formCadastrarNutricionista.php">
                                             <img src="images/cadas.png">  Cadastro de Nutricionista
@@ -88,6 +82,7 @@ require_once ('util/constantes.php');
                                             <img src="images/locked.png">  Logout
                                         </a>
                                     </li>';
+                            }
                         } else {
                             echo'<li>
                                     <a href="formLogin.php">

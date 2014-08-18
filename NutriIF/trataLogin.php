@@ -17,14 +17,12 @@
         $rowLogin = $dao->selectLogin($login, $senha);
         
         if ($rowLogin){
-            $vetor = array(
-            'nome' => $rowLogin['nm_login']
-             );
-            $nome = $vetor['nome'];
+            
              echo '<script language="javascript" type="text/javascript">';  
              echo 'window.location.href="index.php";';
              echo '</script>';
-             $_SESSION['id'] = $vetor['nome'];
+             $_SESSION['id'] = $rowLogin['nm_login'];
+             $_SESSION['tp_usuario'] = $rowLogin['cd_tipousuario'];
              $_SESSION['logado'] = TRUE;
         }else{
 
