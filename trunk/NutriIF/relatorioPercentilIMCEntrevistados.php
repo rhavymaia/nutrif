@@ -3,7 +3,7 @@
     require_once ('validate/validate.php');
     require_once ('util/constantes.php');
     require_once ('funcoesPercentil.php');
-    require_once 'template/headerForm.php';
+    require_once ('template/headerForm.php');
 ?>
 
 <div class="container">

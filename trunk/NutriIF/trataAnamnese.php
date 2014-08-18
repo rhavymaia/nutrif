@@ -13,6 +13,7 @@
     $peso = $_POST['peso'];
     $altura = $_POST['altura'];
     $esporte = $_POST['esporte'];
+    $pesquisa = $_POST['pesquisa'];
 
     //Verificar os campos obrigatórios, os tipos e formatos dos dados avaliados
     if(validaFormRegistroAntropometrico()){
@@ -27,22 +28,26 @@
         $data_antropometria = array(
             'cd_entrevistado' => $rowEntrevistado['cd_entrevistado'],
             'cd_perfilalimentar' => $rowPerfilAlimentar['cd_perfilalimentar'],
+            'cd_pesquisa' => $pesquisa,
             'nr_peso' => $peso,            
             'nr_altura' => $altura,
             'nr_nivel_esporte' => $esporte    
         );        
         
-        $id = $dao->inserirDadosAntropometricos($data_antropometria);
-        
-        if (ehNumerico($id)) { 
-            
             if ($rowEntrevistado){
            
                 if($rowPerfilAlimentar){
-                    echo '<script language="javascript" type="text/javascript">';
-                    echo 'window.alert("Dados da anamnese cadastrados com sucesso!");';  
-                    echo 'window.location.href="formAnamnese.php";';
-                    echo '</script>';  
+                    
+                    $id = $dao->inserirDadosAntropometricos($data_antropometria);
+                    
+                    if (ehNumerico($id)) { 
+                        echo '<script language="javascript" type="text/javascript">';
+                        echo 'window.alert("Dados da anamnese cadastrados com sucesso!");';  
+                        echo 'window.location.href="formAnamnese.php";';
+                        echo '</script>';  
+                    }else { 
+                        header("location: mensagem_erro.php");          
+                    }
                 }else{
                     echo '<script language="javascript" type="text/javascript">';
                     echo 'window.alert("O aluno não respondeu ao Questionário de avaliação alimentar para completar o seu cadastro!");';  
@@ -57,9 +62,7 @@
                 echo '</script>'; 
             }
          
-        } else { 
-            header("location: mensagem_erro.php");          
-        }      
+             
     } else{
        
         //jogar na sessão as variaveis do formulário

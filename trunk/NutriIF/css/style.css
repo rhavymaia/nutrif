@@ -192,7 +192,7 @@ a{
     display: block;
 }
 #content{
-    background-color: white;
+    background-color: rgb(244, 244, 244);
 }
 #content h2{
     color: rgb(49, 49, 49);
@@ -326,7 +326,6 @@ a{
 .inside{
     margin: 10px;
     padding: 10px;
-    background-color: white;
 }
 
 .inside p{
@@ -413,12 +412,6 @@ input[type="radio"]:hover{
     width: 920px;
     position: relative;
     text-align: center;
-}
-
-#esquerda{
-    float: left;
-    padding: 10px;
-    background-color: white;
 }
 
 #centralizar input[type=submit]{
@@ -535,22 +528,4 @@ tbody tr.odd { background: #F7F9FC; }
 
 tfoot th, tfoot td {
 	font-size: 85%;
-}
-
-a.linkprincipal{
-    float: right;
-    display: block;
-    border-radius: 3px 3px 3px 3px;
-    padding: 5px 5px 5px 5px;
-    margin: 13px 15px 10px 5px;
-    text-transform: uppercase;
-    text-align: center;
-    color: #000;
-    background-color: rgb(126, 186, 0);
-    font-size: 35px;
-    font-family: "Times New Roman", sans-serif;
-}
-a.linkprincipal:hover{
-    background-color: rgb(126, 186, 0);
-    color: #fff;
 }

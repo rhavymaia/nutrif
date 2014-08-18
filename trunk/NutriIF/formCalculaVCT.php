@@ -36,7 +36,7 @@ require_once 'template/headerForm.php';
         if (isset($_SESSION['vct'])) {
             echo '<div class="caixa_azul">';
             //procurar função para formatar saída desse valor
-            echo "<p>Valor Calórico Total (VCT): " .$_SESSION['vct'] . " cal/dia</p>";
+            echo "<p>Valor Calórico Total (VCT): " .number_format($_SESSION['vct'],2,',','.') . " cal/dia</p>";
             echo '</div>';
         }
     ?>

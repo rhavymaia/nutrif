@@ -36,7 +36,7 @@ if (validaFormCalculaVCT()){
     if ($dados && $dados['idade'] != 0) {
         if ($dados['sexo'] == 'M'){
             
-            $tmb = 65.5 + (9.6 * $dados['peso']) + (1.8 * $dados['alturaCm']) - (4.7 * $dados['idade']);
+            $tmb = 655 + (9.6 * $dados['peso']) + (1.8 * $dados['alturaCm']) - (4.7 * $dados['idade']);
                /* if (($dados['idade'] >= 10) && ($dados['idade'] <= 18)){
                     $vct = (($dados['peso'] * 16.6)+ (77 * $dados['alturaCm'])+ 572);
                   }
