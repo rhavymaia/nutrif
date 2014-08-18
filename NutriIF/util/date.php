@@ -1,11 +1,13 @@
 <?php
 
     /**
-     * Descrever a função
+     * Análise, conversões e formatação de datas
      * 
      * @param type $date
      * @return boolean|string
      */
+
+    // Retirada de caracteres especiais da data e formatação
     function converteData($date) {
 
         $char = strpos($date, "/") !== false ? "/" : "-";
@@ -25,13 +27,13 @@
     {
      //recebe o parâmetro e armazena em um array separado por -
      $data = explode('-', $data);
-     //armazena na variavel data os valores do vetor data e concatena /
+     //armazena na variavel data os valores do vetor data e concatena /  
      $data = $data[2].'/'.$data[1].'/'.$data[0];
 
      //retorna a string da ordem correta, formatada
      return $data;
     }
-       
+       // função que calcula idade do usuario em meses
     function getIdade($data) {
         
         $birthday = new DateTime($data);

@@ -19,7 +19,7 @@ function consultarEntrevistado($matricula) {
         // Altura em centímetro
         $alturaCm = $rowDadosAntropometricos['nr_altura'];   
 
-        // Calcular IMC com os dados do entrevistado.
+            // Calcular IMC com os dados do entrevistado.
         $alturaMetros = $alturaCm/100;
 
         // Cálculo do IMC

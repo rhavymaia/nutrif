@@ -10,7 +10,13 @@
                                         <li><a href="formListarEntrevistado.php">Procurar Entrevistado</a></li>
                                         <li><a href="formCalculaVCT.php">Cálculo do VCT</a></li>
                                         <p><li><a href="relatorioPercentilIMCEntrevistados.php">Relatório de Entrevistados</a></li>
-                                        <li><a href="formPerfilAlimentarEntrevistado.php">Perfil Alimentar</a></li>';
+                                        <li><a href="formPerfilAlimentarEntrevistado.php">Perfil Alimentar</a></li>
+
+                                        <li><a href="formularioCadastroNutricionista.php">
+                                            <img src="images/rulers.png">  Cadastro Nutricionista
+                                        </a></li>
+';
+                                        
                                         }        
                                         
                                         if (!isset($_SESSION['id'])) {

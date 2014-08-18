@@ -23,19 +23,32 @@
     <form action="trataAnamnese.php" 
           method="POST"
           name="formAnamnese">
+              
+        <?php
+            $dao = new dao_class();
+            $pesquisas = $dao->selecionarPesquisas();
+        ?> 
+            Selecione uma pesquisa:
+            <select name="pesquisa" id="pesq">
+                <?php
+                   foreach ($pesquisas as $pesquisa){
+                       echo("<option value='".$pesquisa['cd_pesquisa']."'>".$pesquisa['nm_pesquisa']."</option>");
+                   }                  
+                ?>
+            </select>
 
         <label for= "matricula"> <em>*</em> Matrícula:
-            <input type="text" name="matricula"/>
+            <input type="text" name="matricula" required/>
         </label>
                 
         <label for= "peso"> <em>*</em> Peso:
-            <input type="text" name="peso"/>
+            <input type="text" name="peso" required/>
             <em>kg</em>
         </label>
 
         <!-- Validação inicial no lado do cliente -->
         <label for= "altura"> <em>*</em> Altura:
-            <input type="text" name="altura"/>
+            <input type="text" name="altura" required/>
             <em>cm</em>
         </label>
         

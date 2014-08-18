@@ -67,7 +67,7 @@
         
         header("location: formRegistroAntropometrico.php");        
     }
-    
+   //verificando validacao do formulario
     function validaFormRegistroAntropometrico() {
         
         $ehValido = true;

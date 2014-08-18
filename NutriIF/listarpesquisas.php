@@ -16,26 +16,33 @@
         </p>
     </div>
 </div>
-        <?php       
+
+<div id="centralizar">
+<div class="caixa_azul">
+<form id="listarpesquisas" name="form1" method="post" action="formAnamnese.php">
+         Selecione uma pesquisa:
+        <?php
             $dao = new dao_class();
-            
             $pesquisas = $dao->selecionarPesquisas();
-            
-            echo "<table>";
-            echo "<th>Código</th>";
-            echo "<th>Nome</th>";
-            echo "<th>Adicionar Anamnese</th>";
-            foreach ($pesquisas as $pesquisa) {                 
-                echo "<tr>";
-                echo "<td>".$pesquisa['cd_pesquisa']."</td>";
-                echo "<td>".$pesquisa['nm_pesquisa']."</td>";
-                echo "<td>";
-                echo "<a href='formAnamnese.php'>link para a anamnese</a>";
-                echo "</td>";
-                echo "</tr>";
-            }
-             echo "</table>";
         ?> 
+           
+             <input type="submit" value="Nova anamnese"> 
+             
+            <select name="pesquisa" id="pesq"> Selecione uma pesquisa:
+                <?php
+                   foreach ($pesquisas as $pesquisa){
+                       echo("<option value='".$pesquisa['cd_pesquisa']."'>".$pesquisa['nm_pesquisa']."</option>");
+                   }                  
+                ?>
+            </select>
+
+</form>
+</div>
+</div>
+
+<div class="clear">
+    <!-- Vazio -->
+</div>
 
 <?php
 // Rodapé da página html.

@@ -74,7 +74,7 @@ require_once ('util/constantes.php');
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="listarpesquisas.php">
+                                        <a href="formAnamnese.php">
                                             <img src="images/cadas.png">  Anamnese
                                         </a>
                                     </li>

@@ -125,6 +125,19 @@ class dao_class {
                
         return $rows;
     }
+    
+    public function selecionarTipoUsuario($tipousuario){
+        
+        $select = "SELECT cd_tipousuario, nm_tipousuario "
+                . "FROM tb_tipousuario "
+                . "WHERE nm_tipousuario = ".$tipousuario;
+        
+        $result = $this->db->select($select);
+        
+        $row = $this->db->get_row($result);
+               
+        return $row;
+    }
 
 
     /**

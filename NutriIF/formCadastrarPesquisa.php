@@ -24,15 +24,15 @@
           name="formCadastrarPesquisa">
 
         <label for="nome_pesquisa"> <em>*</em> Nome da pesquisa:
-            <input type="text" name="nome_pesquisa" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['nome_pesquisa']) ? $_SESSION['nome_pesquisa'] : VAZIO) ?>"/>
+            <input type="text" name="nome_pesquisa" required onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['nome_pesquisa']) ? $_SESSION['nome_pesquisa'] : VAZIO) ?>"/>
         </label>
 
         <label for="dt_inicio"> <em>*</em> Data de início:
-            <input type="text" name="dt_inicio"  onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['dt_inicio']) ? $_SESSION['dt_inicio'] : VAZIO) ?>"/> 
+            <input type="text" name="dt_inicio"  required onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['dt_inicio']) ? $_SESSION['dt_inicio'] : VAZIO) ?>"/> 
         </label>
         
         <label for="dt_fim"> <em>*</em> Data de fim:
-            <input type="text" name="dt_fim"  onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['dt_fim']) ? $_SESSION['dt_fim'] : VAZIO) ?>"/> 
+            <input type="text" name="dt_fim"  required onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['dt_fim']) ? $_SESSION['dt_fim'] : VAZIO) ?>"/> 
         </label>
         
 

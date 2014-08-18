@@ -2,7 +2,7 @@
     require_once ('util/constantes.php');
     require_once ('validate/erro.php');
     // Cabeçalho e menu da página html.
-    require_once 'template/headerForm.php';
+    require_once 'template/header.php';
     //require_once 'js/validacao.js';
 ?>
 
@@ -28,22 +28,17 @@
           onreset="return resetValidacao();">
 
         <label for="nome_aluno"> <em>*</em> Nome:
-            <input type="text" name="nome_aluno" onFocus="this.className = 'select'" 
+            <input type="text" name="nome_aluno" required onFocus="this.className = 'select'" 
                 onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['nome_aluno']) ? $_SESSION['nome_aluno'] : VAZIO) ?>"/>
         </label>
 
-        <label for="instituicao"> <em>*</em> Instituição:
-            <input type="text" name="instituicao" onFocus="this.className = 'select'" 
-                onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['$instituicao']) ? $_SESSION['$instituicao'] : VAZIO) ?>"/> 
-        </label>
-        
          <label for="matricula"> <em>*</em> Matrícula:
-            <input type="text" name="matricula" onFocus="this.className = 'select'" 
+            <input type="text" name="matricula" required onFocus="this.className = 'select'" 
                 onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['matricula']) ? $_SESSION['matricula'] : VAZIO) ?>"/> 
         </label>
 
         <label for="nascimento"> <em>*</em> Data de Nascimento:
-            <input type="text" name="nascimento" onFocus="this.className = 'select'" 
+            <input type="date" name="nascimento" required onFocus="this.className = 'select'" 
                 onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['nascimento']) ? $_SESSION['nascimento'] : VAZIO) ?>"/>
         </label>
         
@@ -51,7 +46,7 @@
             <?php
             $sexoSelected = isset($_SESSION['sexo']) ? $_SESSION['sexo'] : VAZIO;
             ?>                        
-            <select name="sexo">
+            <select name="sexo" required>
                 <option value="" <?php if ($sexoSelected == VAZIO) echo 'selected'; ?>></option>
                 <option value="F" <?php if ($sexoSelected == 'F') echo 'selected'; ?>> Feminino </option>
                 <option value="M" <?php if ($sexoSelected == 'M') echo 'selected'; ?>> Masculino </option>
@@ -62,7 +57,7 @@
             <?php
             $nivelSelected = isset($_SESSION['nivel']) ? $_SESSION['nivel'] : VAZIO;
             ?>                        
-            <select name="nivel">
+            <select name="nivel" required>
                 <option value="" <?php if ($nivelSelected == VAZIO) echo 'selected'; ?>></option>
                 <option value="1" <?php if ($nivelSelected == '1') echo 'selected'; ?>> Integrado </option>
                 <option value="2" <?php if ($nivelSelected == '2') echo 'selected'; ?>> Subseqüente </option>
@@ -71,15 +66,15 @@
         </label>
         
         <label for="login"> <em>*</em> Login (e-mail):
-            <input type="text" name="login" onFocus="this.className = 'select'" 
+            <input type="email" name="login" required onFocus="this.className = 'select'" 
                 onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['login']) ? $_SESSION['login'] : VAZIO) ?>"/> 
         </label>
         
         <label for="senha1"> <em>*</em> Senha:
-            <input type="password" name="senha1"/> 
+            <input type="password" name="senha1" required/> 
         </label>
         <label for="senha2"> <em>*</em> Repetir senha:
-            <input type="password" name="senha2"/> 
+            <input type="password" name="senha2" required/> 
         </label>
 
         <input type="submit" value="Enviar"/>
@@ -92,7 +87,6 @@ unset($_SESSION['nome_aluno']);
 unset($_SESSION['matricula']);
 unset($_SESSION['nivel']);
 unset($_SESSION['sexo']);
-unset($_SESSION['instituicao']);
 unset($_SESSION['login']);
 
 //Erro da validação, sessão será destruída
