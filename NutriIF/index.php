@@ -36,9 +36,9 @@ require_once 'validate/erro.php';
 
 <div id="centralizar">
     <div id="content">
+        <a href="formCadastrarAluno.php">
         <input name="" type="button" 
-               onClick="window.open('formCadastrarAluno.php')" 
-               value="Cadastre-se já">
+               value="Cadastre-se já"></a>
     </div>
 </div>
  
