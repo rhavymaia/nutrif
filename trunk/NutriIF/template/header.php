@@ -36,7 +36,7 @@ require_once ('util/constantes.php');
                             
                             if($_SESSION['tp_usuario'] == TP_ALUNO){
                                  echo '<li>
-                                        <a href="formPerfilAlimentarEntrevistado.php">
+                                        <a href="formPerfilAlimentarParte1.php">
                                             <img src="images/book-lines.png">  Perfil Alimentar
                                         </a>
                                     </li>';

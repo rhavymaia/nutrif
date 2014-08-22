@@ -59,7 +59,7 @@ if (validaFormPerfilAlimentarParte4()){
         $respostas[21] = $_SESSION['quest18'];
 
         $data = array(
-                'cd_entrevistado'=> $_SESSION['codigoEntrevistado'],
+                'cd_entrevistado'=> $_SESSION['cd_usuario'],
                  'r1'=> $respostas[1],
                  'r2'=> $respostas[2], 
                  'r3'=> $respostas[3],
@@ -129,6 +129,6 @@ function validaFormPerfilAlimentarParte4() {
     return $ehValido;
 }
 
- unset ($_SESSION['codigoEntrevistado']);
+ unset ($_SESSION['cd_usuario']);
  unset ($_SESSION['respostas']);
 ?>

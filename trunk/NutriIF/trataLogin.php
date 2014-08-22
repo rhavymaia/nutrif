@@ -14,7 +14,7 @@
     if (validaFormLogin()){
         //Realizar consulta do login
         $dao = new dao_class();
-        $rowLogin = $dao->selectLogin($login, $senha);
+        $rowLogin = $dao->selectLogin($login, $senha, $cd_usuario);
         
         if ($rowLogin){
             
@@ -23,6 +23,7 @@
              echo '</script>';
              $_SESSION['id'] = $rowLogin['nm_login'];
              $_SESSION['tp_usuario'] = $rowLogin['cd_tipousuario'];
+             $_SESSION['cd_usuario'] = $rowLogin['cd_usuario'];
              $_SESSION['logado'] = TRUE;
         }else{
 
