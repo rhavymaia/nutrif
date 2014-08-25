@@ -33,14 +33,18 @@ require_once 'validate/erro.php';
     </div>
 </div>
  
+<?php
 
-<div id="centralizar">
+ if (isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE){
+echo '<div id="centralizar">
     <div id="content">
         <a href="formCadastrarAluno.php">
         <input name="" type="button" 
                value="Cadastre-se já"></a>
     </div>
-</div>
+ </div>';};
+ 
+ ?>
  
 <?php
 // Rodapé da página html.

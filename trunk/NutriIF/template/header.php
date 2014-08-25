@@ -22,11 +22,11 @@ require_once ('util/constantes.php');
             <div class="container">
                 <div id="logo"><a href="index.php"><img src="images/logo.png" ></a></div>
                 <ul id="menu">
-                    <li>
+                   <!-- <li>
                         <a href="index.php">
                             <img src="images/home.png">  Home
-                        </a>
-                    </li>
+                        </a> 
+                    </li>-->
 
                     <?php
                     
@@ -84,12 +84,20 @@ require_once ('util/constantes.php');
                                     </li>';
                             }
                         } else {
-                            echo'<li>
-                                    <a href="formLogin.php">
-                                        <img src="images/unlocked.png">  Login
-                                    </a>
-                                                                     
-                                </li>';
+                            echo'<table style="float:right;">
+                                    <tr><form action="trataLogin.php" method="POST" name="cadastro">
+
+                                    <td><label for="login"> <em></em> Login:
+                                       <input type="text" name="login" />
+                                    </label></td>
+                                     <td><label for="senha"> <em></em> Senha:
+                                          <input type="password" name="senha" />
+                                       </label>    </td>
+                                       
+                                       <td><input type="submit" value="Entrar" /></td>
+                                    </tr>  
+                                   
+                                </table>';
                         }
                     ?>
                 </ul>
