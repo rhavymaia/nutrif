@@ -1,6 +1,6 @@
 <?php
 
-    // ServiÃ§os
+    // Serviços
     require '../Slim/Slim/Slim.php';
     \Slim\Slim::registerAutoloader();
 
@@ -13,7 +13,7 @@
     
     $slim->run();
     
-    // FunÃ§Ãµes    
+    // Funções    
     require_once ('database/dao.class.php');
     
     function verificar() {
@@ -32,8 +32,7 @@
          $data_cadastro = array(
             'nr_matricula' => $matricula,
             'dt_nascimento' => $nascimento,
-            'cd_nivelescolar' => $nivel, 
-            /*'tp_sexo' => $sexo,*/
+            'cd_nivelescolar' => $nivel,
             'nm_entrevistado' => $aluno
         );
         $dao = new dao_class();
