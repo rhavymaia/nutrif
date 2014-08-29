@@ -78,8 +78,7 @@ class db_class {
    }
 
    function connect($host='', $user='', $pw='', $db='', $persistant=true) {
- 
-      // Opens a connection to MySQL and selects the database.  If any of the
+       // Opens a connection to MySQL and selects the database.  If any of the
       // function's parameter's are set, we want to update the class variables.  
       // If they are NOT set, then we're giong to use the currently existing
       // class variables.
@@ -92,9 +91,10 @@ class db_class {
  
       // Establish the connection.
       if ($persistant) 
-         $this->db_link = mysql_pconnect($this->host, $this->user, $this->pw);
+         //$this->db_link = mysql_pconnect($this->host, $this->user, $this->pw);
+         $this->db_link = new mysqli($this->host, $this->user, $this->pw, $this->db);
       else 
-         $this->db_link = mysql_connect($this->host, $this->user, $this->pw);
+         $this->db_link = new mysqli($this->host, $this->user, $this->pw, $this->db);
  
       // Check for an error establishing a connection
       if (!$this->db_link) {
@@ -103,7 +103,7 @@ class db_class {
       } 
   
       // Select the database
-      if (!$this->select_db($db)) return false;
+      //if (!$this->select_db($db)) return false;
  
       return $this->db_link;  // success
    }

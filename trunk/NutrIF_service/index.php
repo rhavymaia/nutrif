@@ -1,6 +1,9 @@
 <?php
     // Entidades
     require_once 'entidade/Server.class.php';
+    require_once 'database/dao.class.php';
+    require_once 'util/constantes.php';
+    
     // Slim
     require '../Slim/Slim/Slim.php';
     \Slim\Slim::registerAutoloader();
@@ -21,12 +24,48 @@
         echoRespnse(201, $server);
     }
 
+    /**
+     * Cadastrar Aluno.
+     * @param $aluno
+     *  {aluno:
+     *      {
+     *          nome: "valor"
+     *          login: "user@local.com"
+     *          senha: "valor"          
+     *          matricula: [1-9]
+     *          nascimento: dd/mm/YYYY
+     *          nivel: [1-9]
+     *          sexo: 'M' | 'F'         
+     *      }
+     *  }
+     *  
+     * @return 
+     * @author Rhavy Maia Guedes rhavy.maia@gmail.com
+     */
     function cadastrarAluno() {
-         $request = \Slim\Slim::getInstance()->request();
-         $body = $request->getBody();
-         $aluno = json_decode($body);
-         
-         // Persistir os dados no Banco.
+        $request = \Slim\Slim::getInstance()->request();
+        $body = $request->getBody();        
+        $aluno = json_decode($body);
+        
+        // Persistir os dados no Banco.
+        $dao =  new dao_class();
+        $data_cadastro_usuario = array(
+            'cd_tipousuario'=> TP_ALUNO,
+            'nm_login'=> $aluno->login,
+            'nm_senha'=> $aluno->senha
+        );
+        //$id_usuario = $dao->inserirUsuario($data_cadastro_usuario);
+
+        $data_cadastro = array(
+            'nr_matricula' => $aluno->matricula,
+            'dt_nascimento' => $aluno->nascimento,
+            'cd_nivelescolar' => $aluno->nivel, 
+            'tp_sexo' => $aluno->sexo,
+            'nm_entrevistado' => $aluno->nome
+        );        
+        //$id_entrevistado = $dao->inserirEntrevistado($data_cadastro);
+
+         // Resposta
          echoRespnse(201, $aluno);
     }
     
