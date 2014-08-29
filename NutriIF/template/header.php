@@ -31,6 +31,8 @@ require_once ('util/constantes.php');
                     <?php
                     
                         session_start();
+                        
+                        
 
                         if (isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE) {
                             
@@ -84,7 +86,7 @@ require_once ('util/constantes.php');
                                     </li>';
                             }
                         } //else {
-                        if (isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE){
+                        if (isset($_SESSION['logado']) == FALSE){
                             echo'
                                     <div class="login"><form action="trataLogin.php" method="POST" name="cadastro">
 
