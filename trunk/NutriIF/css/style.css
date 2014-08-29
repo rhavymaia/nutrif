@@ -558,8 +558,53 @@ div.caixa_erro{
     float:center;
     text-align:center;
     border: 1px solid red;
-   background-color: #ffebe8;
-   width: 50%;
+    background-color: #ffebe8;
+    width: 50%;
     border-radius: 5px;   
 }
 
+div.formCadastro{
+    float:right;
+    padding: 4%;
+    border-radius: 5px;
+    background-color: #e6fcd1;
+}
+
+div.formCadastro div{
+    margin-bottom: 10px;
+}
+
+
+img.img_cadastro{
+    border-radius: 10px;
+    border: 1px solid green;
+}
+
+div.container_cadastro{
+    width: 70%;
+}
+
+span.botao_cadastro{
+    padding-left:25px;
+    padding-right:25px;
+    padding-top:10px;
+    padding-bottom:10px;
+    background-color: rgb(126, 186, 0);
+    font-size:30px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+}
+
+span.botao_cadastro:hover{
+    background-color:rgb(128,128,128);
+    text-decoration: none;
+    color: black;
+}
+
+span.texto_cadastro{
+    font-size: 40px;
+    font-family: Verdana,Arial;
+    font-weight: 150;
+    color: green;
+}

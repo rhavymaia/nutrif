@@ -36,16 +36,18 @@ require_once 'validate/erro.php';
 <?php
 
  if (isset($_SESSION['logado']) == FALSE){
-echo '<div id="centralizar">
+echo '
+    <div id="centralizar">
+    <span class="texto_cadastro">Ainda não é cadastrado?</span><br><br>
     <div id="content">
         <a href="formCadastrarAluno.php">
-        <input name="" type="button" 
-               value="Cadastre-se já"></a>
+        <span class="botao_cadastro">Cadastre-se</span>
     </div>
+
  </div>';};
  
  ?>
- 
+ <br>
 <?php
 // Rodapé da página html.
 require_once 'template/footer.php';
