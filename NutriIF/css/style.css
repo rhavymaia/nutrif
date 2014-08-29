@@ -540,13 +540,13 @@ div.flutuar{
 }
 
 div.login_senha{
-    margin-left:-150px;
+    //margin-left:-150px;
 
 }
 div.login_entrar{
     position: absolute;
-    top:-10px;
-    left:600px;
+   // top:-10px;
+  //  left:600px;
 
 }
 
