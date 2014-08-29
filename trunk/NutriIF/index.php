@@ -35,7 +35,7 @@ require_once 'validate/erro.php';
  
 <?php
 
- if (isset($_SESSION['logado']) && $_SESSION['logado'] == TRUE){
+ if (isset($_SESSION['logado']) == FALSE){
 echo '<div id="centralizar">
     <div id="content">
         <a href="formCadastrarAluno.php">
