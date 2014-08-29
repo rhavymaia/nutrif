@@ -529,3 +529,37 @@ tbody tr.odd { background: #F7F9FC; }
 tfoot th, tfoot td {
 	font-size: 85%;
 }
+
+div.login div{
+    display: inline;
+
+}
+
+div.flutuar{
+    float:left;
+
+}
+
+div.login_senha{
+    margin-left:-150px;
+
+}
+div.login_entrar{
+    position: absolute;
+    top:-10px;
+    left:600px;
+
+}
+
+div.login label{
+    display: inline;
+}
+
+div.caixa_erro{
+    float:center;
+    text-align:center;
+    border: 1px solid red;
+   background-color: #ffebe8;
+       
+}
+

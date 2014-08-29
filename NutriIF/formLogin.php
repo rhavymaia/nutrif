@@ -1,6 +1,6 @@
 <?php
 // Cabeçalho e menu da página html.
-require_once ('template/header.php');
+require_once ('template/headerLogin.php');
 require_once ('util/constantes.php');
 require_once ('validate/erro.php');
 ?>
@@ -19,11 +19,11 @@ require_once ('validate/erro.php');
 
         <label for="login"> <em>*</em> Login: 
             <input type="text" name="login" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"/>
-        </label>
+        </label><div class="clear"></div>
         <label for="senha"> <em>*</em> Senha: 
             <input type="password" name="senha" onFocus="this.className = 'select'" onBlur="this.className = 'normal'"/>
         </label>    
-
+            <div class="clear"></div>
         <input type="submit" value="Entrar" />
         <input type="reset" value="Limpar" />
         

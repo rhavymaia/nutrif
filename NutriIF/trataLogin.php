@@ -26,11 +26,19 @@
              $_SESSION['cd_usuario'] = $rowLogin['cd_usuario'];
              $_SESSION['logado'] = TRUE;
         }else{
-
-             echo '<script language="javascript" type="text/javascript">';
+             $msgsErro = array();
+            $msgErro = array('errado' => "Login e/ou senha inválida");
+            array_push($msgsErro, $msgErro);
+            
+            $ehValido = false;   
+            $_SESSION['erro'] = $msgsErro;
+            header("location: formLogin.php");  
+        
+        return $ehValido;
+            /* echo '<script language="javascript" type="text/javascript">';
              echo 'window.alert("Login e/ou senha inválida");';  
              echo 'window.location.href="formLogin.php";';
-             echo '</script>';            
+             echo '</script>';    */        
         }
     } else {
         
