@@ -84,21 +84,24 @@ require_once ('util/constantes.php');
                                     </li>';
                             }
                         } else {
-                            echo'<table style="float:right;">
-                                    <tr><form action="trataLogin.php" method="POST" name="cadastro">
+                        
+                            echo'
+                                    <div class="login"><form action="trataLogin.php" method="POST" name="cadastro">
 
-                                    <td><label for="login"> <em></em> Login:
+                                    <div class="flutuar"><label for="login"> <em></em> Login:
                                        <input type="text" name="login" />
-                                    </label></td>
-                                     <td><label for="senha"> <em></em> Senha:
+                                    </label></div>
+                                    <div class="login_senha"><label for="senha"> <em></em> Senha:
                                           <input type="password" name="senha" />
-                                       </label>    </td>
-                                       
-                                       <td><input type="submit" value="Entrar" /></td>
-                                    </tr>  
+                                       </label></div>  
+                                       <div class="login_entrar">
+                                       <input type="submit" value="Entrar" style="float:right;"/>
+                                       </div>
+                                     </div>
                                    
-                                </table>';
-                        }
+                            ';
+                            }
+                        
                     ?>
                 </ul>
                 <div class="clear">
