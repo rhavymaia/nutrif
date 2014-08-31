@@ -53,6 +53,7 @@
 
         $aluno->idUsuario = $cd_usuario;
         $id_entrevistado = $db->inserirEntrevistado($aluno);
+        $aluno->idEntrevistado = $id_entrevistado;
 
         // Resposta
         echoRespnse(HTTP_CRIADO, $aluno);
