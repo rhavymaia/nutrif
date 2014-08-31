@@ -61,8 +61,8 @@ class DbHandler {
                 . " values(?, ?, ?, ?)");
         
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("iisi", $aluno->idUsuario, $aluno->matricula, 
-                        $aluno->nome,  $aluno->nivel);
+        $stmt->bind_param("iisi", $entrevistado->idUsuario, $entrevistado->matricula, 
+                        $entrevistado->nome,  $entrevistado->nivel);
         
         $result = $stmt->execute();        
         if ($result) {
