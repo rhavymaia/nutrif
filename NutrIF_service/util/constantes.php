@@ -4,4 +4,16 @@
     
     // Entrevistado Tipo Aluno
     define('TP_ALUNO', 1);
+    
+    // Usuário ativo
+    define('USUARIO_ATIVO', 1);
+    
+    // String vazia
+    define('VAZIO', '');
+    
+    // Constante do grupo da tabela por faixa de idade
+    define ('FATOR',8);
+    
+    // Código HTTP - Status: Criado
+    define ('HTTP_CRIADO', 201);
 ?>
