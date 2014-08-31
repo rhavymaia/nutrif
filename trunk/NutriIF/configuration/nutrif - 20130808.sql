@@ -21,6 +21,9 @@ CREATE TABLE IF NOT EXISTS `tb_entrevistado` (
     UNIQUE KEY `nr_matricula` (`nr_matricula`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+ALTER TABLE `tb_entrevistado` ADD `cd_usuario` INT NOT NULL AFTER `cd_entrevistado`;
+ALTER TABLE tb_entrevistado ADD CONSTRAINT uk_Matricula UNIQUE (nr_matricula);
+ALTER TABLE `tb_entrevistado` DROP `dt_nascimento`;
 -- --------------------------------------------------------
 
 --
