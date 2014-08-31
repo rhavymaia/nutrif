@@ -1,7 +1,7 @@
 <?php
     // Entidades
     require_once 'entidade/Server.class.php';
-    require_once 'database/dao.class.php';
+    require_once 'database/DbHandler.php';
     require_once 'util/constantes.php';
     
     // Slim
@@ -33,9 +33,9 @@
      *          login: "user@local.com"
      *          senha: "valor"          
      *          matricula: [1-9]
-     *          nascimento: dd/mm/YYYY
+     *          nascimento: "dd/mm/YYYY"
      *          nivel: [1-9]
-     *          sexo: 'M' | 'F'         
+     *          sexo: "M" | "F"         
      *      }
      *  }
      *  
@@ -48,25 +48,14 @@
         $aluno = json_decode($body);
         
         // Persistir os dados no Banco.
-        $dao =  new dao_class();
-        $data_cadastro_usuario = array(
-            'cd_tipousuario'=> TP_ALUNO,
-            'nm_login'=> $aluno->login,
-            'nm_senha'=> $aluno->senha
-        );
-        //$id_usuario = $dao->inserirUsuario($data_cadastro_usuario);
+        $db = new DbHandler();
+        $cd_usuario = $db->inserirUsuario($aluno);
 
-        $data_cadastro = array(
-            'nr_matricula' => $aluno->matricula,
-            'dt_nascimento' => $aluno->nascimento,
-            'cd_nivelescolar' => $aluno->nivel, 
-            'tp_sexo' => $aluno->sexo,
-            'nm_entrevistado' => $aluno->nome
-        );        
-        //$id_entrevistado = $dao->inserirEntrevistado($data_cadastro);
+        $aluno->idUsuario = $cd_usuario;
+        $id_entrevistado = $db->inserirEntrevistado($aluno);
 
-         // Resposta
-         echoRespnse(201, $aluno);
+        // Resposta
+        echoRespnse(HTTP_CRIADO, $aluno);
     }
     
     function echoRespnse($status_code, $response) {
