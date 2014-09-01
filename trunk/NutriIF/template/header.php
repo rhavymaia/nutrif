@@ -98,7 +98,7 @@ require_once ('util/constantes.php');
                                        </label></div>  
                                        <div class="login_entrar">
                                        <input type="submit" value="Entrar" style="float:right;"/>
-                                       </div>
+                                       </div></form>
                                      </div>
                                    
                             ';
