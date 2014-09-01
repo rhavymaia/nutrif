@@ -26,8 +26,7 @@
     <form action="trataCadastrarAluno.php" 
           method="POST"
           name="formCadastrarAluno"
-          onsubmit="return validaFormCadastrarAluno();"
-          onreset="return resetValidacao();">
+          >
         <div>
         <label for="nome_aluno"> <em>*</em> Nome:
             <input type="text" name="nome_aluno" required onFocus="this.className = 'select'" 

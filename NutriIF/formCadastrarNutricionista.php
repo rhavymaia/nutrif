@@ -24,7 +24,7 @@
           name="formCadastrarNutricionista">
 
         <label for="nome_nutri"> <em>*</em> Nome:
-            <input type="text" name="nome_nutri"  onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['nome_nutri']) ? $_SESSION['nome_nutri'] : VAZIO) ?>"/>
+            <input type="text" name="nome_nutri" required onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['nome_nutri']) ? $_SESSION['nome_nutri'] : VAZIO) ?>"/>
         </label>
 
         <label for="instituicao"> <em>*</em> Instituição:
@@ -32,7 +32,7 @@
         </label>
         
         <label for="login"> <em>*</em> Login:
-            <input type="text" name="login" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['login']) ? $_SESSION['login'] : VAZIO) ?>"/> 
+            <input type="email" name="login" onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['login']) ? $_SESSION['login'] : VAZIO) ?>"/> 
         </label>
         
         <label for="login"> <em>*</em> CRN:

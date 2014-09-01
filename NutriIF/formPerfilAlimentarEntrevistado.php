@@ -17,9 +17,10 @@ require_once 'template/headerForm.php';
         <!-- Lista de erros na validação -->
         <?php
                isset($_SESSION['erro']) ? showListErro($_SESSION['erro']) : VAZIO;
+               $matricula = $_SESSION['matricula'];
         ?>                    
     </ul>
-
+    
     <form action="trataPerfilAlimentarEntrevistado.php" method="POST">
 
         <label for="matricula">
@@ -27,7 +28,7 @@ require_once 'template/headerForm.php';
             <input type="text" name="matricula" onFocus="this.className = 'select'" 
                    onBlur="this.className = 'normal'" value= "<?php
                    echo(isset(
-                           $_SESSION['matricula']) ?
+                           $matricula) ?
                            $_SESSION['matricula'] : VAZIO);
                    ?>"
                    /> 
