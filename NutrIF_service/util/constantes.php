@@ -16,4 +16,7 @@
     
     // Código HTTP - Status: Criado
     define ('HTTP_CRIADO', 201);
+    
+    // Código HTTP - Requisição inválida
+    define ('HTTP_REQUISICAO_INVALIDA', 400);
 ?>
