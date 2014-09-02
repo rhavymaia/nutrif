@@ -23,7 +23,7 @@
         $server = new Server();
         $server->online = true;    
         // Responder a requisição. Código HTTP (cabeçalho) e Entidade (Body - JSON).
-        echoRespnse(201, $server);
+        echoRespnse(HTTP_CRIADO, $server);
     }
 
     /**
