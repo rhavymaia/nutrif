@@ -19,6 +19,8 @@ class Instituicao {
     
     private $estado;
     
+    public function __construct() {}
+    
     public function getCodigo() {
         return $this->codigo;
     }
