@@ -9,17 +9,19 @@
     \Slim\Slim::registerAutoloader();
 
     $slim = new \Slim\Slim();
-    $slim->get('/verificar', 'verificar');
+    $slim->get('/statusServer', 'statusServer');
     $slim->post('/cadastrarAluno','cadastrarAluno');    
     
     function authenticate(\Slim\Route $route) {
     }
 
-    // Funções                   
-    function verificar() {
+    // Funções    
+    /**
+     * Verificar status do servidor.
+     */
+    function statusServer() {
         $server = new Server();
-        $server->online = true;
-        
+        $server->online = true;    
         // Responder a requisição. Código HTTP (cabeçalho) e Entidade (Body - JSON).
         echoRespnse(201, $server);
     }
@@ -34,7 +36,7 @@
      *          senha: "valor"          
      *          matricula: [1-9]
      *          nascimento: "dd/mm/YYYY"
-     *          nivel: [1-9]
+     *          nivel: [1-3]
      *          sexo: "M" | "F"         
      *      }
      *  }
@@ -63,12 +65,10 @@
         $slim = \Slim\Slim::getInstance();
         // Http response code
         $slim->status($status_code);
-
         // setting response content type to json
         $slim->contentType('application/json');
-
         echo json_encode($response);
     }
 
-    $slim->run();
+$slim->run();
 ?>
