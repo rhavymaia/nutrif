@@ -15,6 +15,8 @@ class Entrevistado extends Usuario{
     
     private $dataRegistro;
     
+    public function __construct() {}
+    
     public function getMatricula() {
         return $this->matricula;
     }
