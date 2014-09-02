@@ -18,6 +18,13 @@
     // Funções    
     /**
      * Verificar status do servidor.
+     * 
+     * @return $server
+     * {
+     *      "online": true
+     * }
+     * 
+     * @author Rhavy Maia <rhavy.maia@gmail.com>
      */
     function statusServer() {
         $server = new Server();
@@ -29,20 +36,19 @@
     /**
      * Cadastrar Aluno.
      * @param $aluno
-     *  {aluno:
-     *      {
-     *          nome: "valor"
-     *          login: "user@local.com"
-     *          senha: "valor"          
-     *          matricula: [1-9]
-     *          nascimento: "dd/mm/YYYY"
-     *          nivel: [1-3]
-     *          sexo: "M" | "F"         
-     *      }
-     *  }
+     * {
+     *      nome: "valor"
+     *      login: "user@local.com"
+     *      senha: "valor"          
+     *      matricula: [1-9]
+     *      nascimento: "dd/mm/YYYY"
+     *      nivel: [1-3]
+     *      sexo: "M" | "F"
+     * }
      *  
-     * @return 
-     * @author Rhavy Maia Guedes rhavy.maia@gmail.com
+     * @return HTTP: 201, $aluno 
+     *      | HTTP:400, @erro 
+     * @author Rhavy Maia Guedes <rhavy.maia@gmail.com>
      */
     function cadastrarAluno() {
         $request = \Slim\Slim::getInstance()->request();
