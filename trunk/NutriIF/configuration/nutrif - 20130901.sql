@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `tb_entrevistado` (
 ALTER TABLE `tb_entrevistado` ADD `cd_usuario` INT NOT NULL AFTER `cd_entrevistado`;
 ALTER TABLE tb_entrevistado ADD CONSTRAINT uk_Matricula UNIQUE (nr_matricula);
 ALTER TABLE `tb_entrevistado` DROP `dt_nascimento`;
+ALTER TABLE `tb_entrevistado` DROP `nm_entrevistado`;
 -- --------------------------------------------------------
 
 --
@@ -96,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `tb_nutricionista` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 ALTER TABLE `tb_nutricionista` ADD `cd_usuario` INT NOT NULL AFTER `cd_nutricionista`;
+ALTER TABLE `tb_nutricionista` DROP `nm_nutricionista`;
 --
 -- Extraindo dados da tabela `tb_nutricionista`
 --
@@ -117,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `tb_usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 ALTER TABLE `tb_usuario` ADD `nm_usuario` VARCHAR(255) NOT NULL AFTER `nm_senha`;
+ALTER TABLE tb_usuario ADD CONSTRAINT uk_Login UNIQUE (nm_login);
 -- --------------------------------------------------------
 
 --
