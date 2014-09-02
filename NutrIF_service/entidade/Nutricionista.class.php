@@ -3,7 +3,7 @@
 require_once ('Usuario.class.php');
 
 /**
- * Description of Nutricionista
+ * Nutricionista
  *
  * @author Rhavy
  */

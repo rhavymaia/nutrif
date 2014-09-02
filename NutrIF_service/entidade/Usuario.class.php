@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Usuario
+ * Usuario
  *
  * @author Rhavy
  */
