@@ -27,15 +27,16 @@ class DbHandler {
         
         // insert query
         $stmt = $this->conn->prepare("INSERT INTO"
-                . " tb_usuario(nm_login, nm_senha, dt_nascimento, cd_tipousuario,"
-                . " fl_ativo)"
-                . " values(?, ?, ?, ".TP_ALUNO.", ".USUARIO_ATIVO.")");
+                . " tb_usuario(nm_login, nm_senha, nm_usuario,"
+                . " dt_nascimento, cd_tipousuario, fl_ativo)"
+                . " values(?, ?, ?, ?, ".TP_ALUNO.", ".USUARIO_ATIVO.")");
         
         $nascimento = $data = implode("-",
                 array_reverse(explode("/",$aluno->nascimento)));
         
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("sss",$aluno->login, $aluno->senha, $nascimento);
+        $stmt->bind_param("ssss", $aluno->login, $aluno->senha, $aluno->nome, 
+                $nascimento);
         
         $result = $stmt->execute();        
         if ($result) {
@@ -56,13 +57,12 @@ class DbHandler {
         
         // insert query
         $stmt = $this->conn->prepare("INSERT INTO"
-                . " tb_entrevistado(cd_usuario, nr_matricula, nm_entrevistado, "
-                . " cd_nivelescolar)"
-                . " values(?, ?, ?, ?)");
+                . " tb_entrevistado(cd_usuario, nr_matricula, cd_nivelescolar)"
+                . " values(?, ?, ?)");
         
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("iisi", $entrevistado->idUsuario, $entrevistado->matricula, 
-                        $entrevistado->nome,  $entrevistado->nivel);
+        $stmt->bind_param("iii", $entrevistado->idUsuario, $entrevistado->matricula,
+                $entrevistado->nivel);
         
         $result = $stmt->execute();        
         if ($result) {
