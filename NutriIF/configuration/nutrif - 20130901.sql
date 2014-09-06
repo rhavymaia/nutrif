@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `tb_nutricionista` (
 
 ALTER TABLE `tb_nutricionista` ADD `cd_usuario` INT NOT NULL AFTER `cd_nutricionista`;
 ALTER TABLE `tb_nutricionista` DROP `nm_nutricionista`;
+ALTER TABLE `tb_nutricionista` ADD `nm_crn` VARCHAR(10) NOT NULL AFTER `cd_usuario`;
 --
 -- Extraindo dados da tabela `tb_nutricionista`
 --
