@@ -43,8 +43,8 @@
      *  
      * @return $aluno
      *  {
-     *      idUsuario:
-     *      idEntrevistado:
+     *      idUsuario: [1-9]
+     *      idEntrevistado: [1-9]
      *  } 
      * @author Rhavy Maia Guedes rhavy.maia@gmail.com
      */
