@@ -21,8 +21,6 @@ class Anamnese {
     
     private $altura;
     
-    private $sexo;
-    
     private $nivelEsporte;
     
     private $perfilAlimentar;
@@ -55,10 +53,6 @@ class Anamnese {
 
     public function getAltura() {
         return $this->altura;
-    }
-
-    public function getSexo() {
-        return $this->sexo;
     }
 
     public function getNivelEsporte() {
@@ -95,10 +89,6 @@ class Anamnese {
 
     public function setAltura($altura) {
         $this->altura = $altura;
-    }
-
-    public function setSexo($sexo) {
-        $this->sexo = $sexo;
     }
 
     public function setNivelEsporte($nivelEsporte) {
