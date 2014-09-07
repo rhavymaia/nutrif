@@ -1,5 +1,6 @@
 <?php
 
+    require_once 'restclient/restclient.php';
     session_start();
    
     // Importação
@@ -24,7 +25,32 @@
    
         if(validaFormCadastrarAluno()){
 
-            $dao =  new dao_class();
+            $json = array(
+                "nome"=> $aluno,
+                "login"=> $login,
+                "senha"=> $senha1,
+                "matricula"=> $matricula,
+                "nascimento"=> $nascimento,
+                "nivel"=> $nivel,
+                "sexo"=> $sexo       
+            );
+            
+              
+    // Instaciação do objeto RestClient. A url base é passada como parâmetro 
+    // via array.
+    $restClient = new RestClient(
+                array('base_url' => "http://localhost/NutrIF_service")
+            );
+    
+    /*
+     * Informar qual é o serviço ('cadastrarAluno'), os dados do json ($json) e
+     * o header do HTTP ($header);
+     */
+    $header = array('user_agent'=> "nutrif-php/1.0", 'content-type'=> "application/json");
+    // Método POST.
+    $result = $restClient->post('cadastrarAluno', $json, $header);
+    $code = $result->info->http_code;
+           /* $dao =  new dao_class();
 
             $data_cadastro_usuario = array(
                 'cd_tipousuario'=> TP_ALUNO,
@@ -44,9 +70,9 @@
             );
 
             $dao1 = new dao_class();
-            $id1 = $dao1->inserirEntrevistado($data_cadastro);
+            $id1 = $dao1->inserirEntrevistado($data_cadastro);*/
 
-            if (ehNumerico($id1)) {
+            if ($code == 200 || $code == 201) {
 
                  echo '<script language="javascript" type="text/javascript">';
                  echo 'window.alert("Cadastro realizado com sucesso!");';  
