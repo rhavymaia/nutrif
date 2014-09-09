@@ -96,36 +96,33 @@
      *      'vct' : *[1-9].*[1-9]
      * }
      */
-    function analisarVCT(){
+    function analisarVCT() {
         $request = \Slim\Slim::getInstance()->request();
-        $body = $request->getBody();        
+        $body = $request->getBody();
         $aluno = json_decode($body);
-        
+
         $aluno->peso;
         $aluno->alturaCm;
         $aluno->sexo;
-        $aluno->idade; 
+        $aluno->idade;
         $aluno->nivelEsporte;
-        
-        if($aluno->sexo == 'M'){
-        $tmb = 655 + (9.6 *  $aluno->peso) + (1.8 *  $aluno->alturaCm) - (4.7 *  $aluno->idade);
-              $vct = array(
+
+        if ($aluno->sexo == 'M') {
+            $tmb = 655 + (9.6 * $aluno->peso) + (1.8 * $aluno->alturaCm) 
+                    - (4.7 * $aluno->idade);
+            $vct = array(
                 'vct' => $tmb * $aluno->nivelEsporte
             );
-             
-        }else{
-         $tmb = 655 + (14 *  $aluno->peso) + (5 *  $aluno->alturaCm) - (6.7 *  $aluno->idade);  
+        } else {
+            $tmb = 655 + (14 * $aluno->peso) + (5 * $aluno->alturaCm) - (6.7 * $aluno->idade);
             $vct = array(
                 'vct' => $tmb * $aluno->nivelEsporte
             );
         }
         
-        
         echoRespnse(HTTP_CRIADO, $vct);
-       
-        // Implementar lógica e negócio.
     }
-    
+
     /**
      * 
      * @param $imc
