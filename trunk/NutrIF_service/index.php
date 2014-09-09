@@ -100,25 +100,24 @@
         $request = \Slim\Slim::getInstance()->request();
         $body = $request->getBody();
         $aluno = json_decode($body);
+        
+        $peso = $aluno->peso;
+        $altura = $aluno->alturaCm;
+        $idade = $aluno->idade;
 
-        $aluno->peso;
-        $aluno->alturaCm;
-        $aluno->sexo;
-        $aluno->idade;
-        $aluno->nivelEsporte;
-
+        // Receber altura em metros e converter para centímetros.
         if ($aluno->sexo == 'M') {
-            $tmb = 655 + (9.6 * $aluno->peso) + (1.8 * $aluno->alturaCm) 
-                    - (4.7 * $aluno->idade);
-            $vct = array(
-                'vct' => $tmb * $aluno->nivelEsporte
-            );
+            $tmb = 655 + (9.6 * $peso) + (1.8 * $altura) 
+                    - (4.7 * $idade);            
         } else {
-            $tmb = 655 + (14 * $aluno->peso) + (5 * $aluno->alturaCm) - (6.7 * $aluno->idade);
-            $vct = array(
-                'vct' => $tmb * $aluno->nivelEsporte
-            );
+            $tmb = 655 + (14 * $peso) + (5 * $altura) 
+                    - (6.7 * $idade);            
         }
+        
+        // Construir o JSON de resposta.
+        $vct = array(
+                'vct' => ($tmb * $aluno->nivelEsporte)
+                );
         
         echoRespnse(HTTP_CRIADO, $vct);
     }
