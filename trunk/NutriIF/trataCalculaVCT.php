@@ -1,5 +1,5 @@
 <?php
-
+require_once 'restclient/restclient.php';
 session_start();
 
 // Cabeçalho e menu da página html.
@@ -34,52 +34,20 @@ if (validaFormCalculaVCT()){
 
     
     if ($dados && $dados['idade'] != 0) {
-        if ($dados['sexo'] == 'M'){
-            
-            $tmb = 655 + (9.6 * $dados['peso']) + (1.8 * $dados['alturaCm']) - (4.7 * $dados['idade']);
-               /* if (($dados['idade'] >= 10) && ($dados['idade'] <= 18)){
-                    $vct = (($dados['peso'] * 16.6)+ (77 * $dados['alturaCm'])+ 572);
-                  }
-                  
-                elseif (($dados['idade'] > 18) && ($dados['idade'] <= 30)){
-                    $vct = (($dados['peso'] * 15.4)+ (27 * $dados['alturaCm'])+ 717);
-                }
-                elseif (($dados['idade'] > 30) && ($dados['idade'] <= 60)){
-                    $vct = (($dados['peso'] * 11.3)+ (16 * $dados['alturaCm'])+ 901);
-                }
-                elseif (($dados['idade'] > 60)){
-                     $vct = (($dados['peso'] * 8.8)+ (1128 * $dados['alturaCm'])- 1071);
-                }   
-                * 
-                */ 
-        }else{
-             $tmb = 655 + (14 * $dados['peso']) + (5 * $dados['alturaCm']) - (6.7 * $dados['idade']);
-             
-            /*
-               if (($dados['idade'] >= 10) && ($dados['idade'] <= 18)){
-                    $vct = (($dados['peso'] * 7.4)+ (482 * $dados['alturaCm'])+ 217);
-                  }
-                  
-                elseif (($dados['idade'] > 18) && ($dados['idade'] <= 30)){
-                    $vct = (($dados['peso'] * 13.3)+ (334 * $dados['alturaCm'])+ 35);
-                }
-                elseif (($dados['idade'] > 30) && ($dados['idade'] <= 60)){
-                    $vct = (($dados['peso'] * 8.7)+ (255 * $dados['alturaCm'])+ 865);
-                }
-                elseif (($dados['idade'] > 60)){
-                     $vct = (($dados['peso'] * 9.2)+ (637 * $dados['alturaCm'])- 302);
-                }    
-             * 
-             */
-        }
-            
-            $vct = $tmb*$dados['nivel_esporte'];
+        
+         $restClient = new RestClient(
+                array('base_url' => "http://localhost/NutrIF_service")
+        );
+         
+         $header = array('user_agent' => "nutrif-php/1.0", 'content-type' => "application/json");
+        // Método get.
+         $result = $restClient->get('analisarVCT', $vetor, $header);
+         $vct = $result->info->http_code;
+   
             $_SESSION['vct'] = $vct;
             header("location: formCalculaVCT.php");
         }else{
             $msg = ("Matrícula não encontrada");
-            //$_SESSION['matricula'] = $matricula; 
-            //**É preciso colocar a matrícula na sessão? pois não está apagando nas outras páginas
             $_SESSION['erro'] = $msg;
             header("location: formCalculaVCT.php");
         }
