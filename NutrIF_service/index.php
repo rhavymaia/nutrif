@@ -10,7 +10,9 @@
 
     $slim = new \Slim\Slim();
     $slim->get('/statusServer', 'statusServer');
-    $slim->post('/cadastrarAluno','cadastrarAluno');    
+    $slim->post('/cadastrarAluno','cadastrarAluno');  
+    $slim->post('/analisarVCT','analisarVCT');
+    $slim->post('/calcularIMC','calcularIMC');    
     
     function authenticate(\Slim\Route $route) {
     }
@@ -76,6 +78,66 @@
             echoRespnse(HTTP_ERRO_INTERNO, $erro);            
         }        
     }
+    
+    /**
+     * Analisar o Valor calórico total (VCT);
+     * 
+     * @param $aluno 
+     * 	{
+     *      'peso' : *[1-9].*[1-9],
+     *      'alturaCm' : *[1-9].*[1-9],
+     *      'sexo' : 'M' | 'F',
+     *      'idade' : [1-9],
+     *      'nivelEsporte': [1-3]
+     *  }
+     * 
+     */
+    function analisarVCT(){
+        $request = \Slim\Slim::getInstance()->request();
+        $body = $request->getBody();        
+        $aluno = json_decode($body);
+        
+        $aluno->peso;
+        $aluno->alturaCm;
+        $aluno->sexo;
+        $aluno->idade; 
+        $aluno->nivelEsporte;
+        
+        if($aluno->sexo == 'M'){
+        $tmb = 655 + (9.6 *  $aluno->peso) + (1.8 *  $aluno->alturaCm) - (4.7 *  $aluno->idade);
+        }else{
+        $tmb = 655 + (14 *  $aluno->peso) + (5 *  $aluno->alturaCm) - (6.7 *  $aluno->idade);    
+        }
+        // Implementar lógica e negócio.
+    }
+    
+    /**
+     * 
+     * @param $imc
+     * {
+     *      'idUsuario' : [1-9],
+     *      'peso' : *[1-9].*[1-9],
+     *      'alturaCm' : *[1-9].*[1-9],
+     *      'idade': [1-9]
+     * }
+     */
+    function calcularIMC() {
+        $request = \Slim\Slim::getInstance()->request();
+        $body = $request->getBody();        
+        $imc = json_decode($body);
+        
+        $imc->idUsuario;
+        $imc->peso;
+        $imc->altura;
+        $imc->idade; 
+        
+        // Sugestão de OO.
+        $imcObjt = new Anamnese();
+        
+        // Implementar lógica do IMC. 
+        
+    }
+    
     
     function echoRespnse($status_code, $response) {
         $slim = \Slim\Slim::getInstance();
