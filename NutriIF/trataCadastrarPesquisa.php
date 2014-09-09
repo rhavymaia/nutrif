@@ -2,7 +2,22 @@
 
     session_start();
     
+  //  $cURL = v1_init("192.168.1.146/NutrIF_service");
+    
+    
    // Importação
+  
+    /*
+    $cURL = curl_init('http://localhost/WebServer/getComentario');
+		
+    curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
+
+    $resultado = curl_exec($cURL);
+
+    curl_close($cURL);*/
+    
+    
+    
     require_once ('database/dao.class.php');
     require_once ('validate/validate.php');
     require_once ('util/date.php');
@@ -12,8 +27,12 @@
     $dt_inicio = $_POST['dt_inicio'];
     $dt_fim = $_POST['dt_fim'];
     
+    $res = $c->post(
+    'http://localhost/NutrIF_service/CadastraPesquisa', json_encode(array('nome' => 'nome_pesquisa', 'inicio' => 'dt_inicio', 'fim' => 'dt_fim'))
+    );
+    // Elias
     
-    $dao = new dao_class();
+  /*  $dao = new dao_class();
     
     $data_cadastro_pesquisa = array(
         'nm_pesquisa'=> $nome_pesquisa,
@@ -21,6 +40,6 @@
         'dt_fim'=> $dt_fim
     );
         
-    $id_pesquisa = $dao->inserirPesquisa($data_cadastro_pesquisa);
+    $id_pesquisa = $dao->inserirPesquisa($data_cadastro_pesquisa);*/
     
 ?>

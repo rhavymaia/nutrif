@@ -3,6 +3,7 @@
     require_once ('validate/erro.php');
     // Cabeçalho e menu da página html.
     require_once 'template/header.php';
+    require_once 'js/mascara.js'
     //require_once 'js/validacao.js';
 ?>
 
@@ -39,7 +40,7 @@
         </label></div>
         <div>
         <label for="nascimento"> <em>*</em> Data de Nascimento:
-            <input type="date" name="nascimento" required onFocus="this.className = 'select'" 
+            <input type="text" name="nascimento" required onFocus="this.className = 'select'" id="data"
                 onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['nascimento']) ? $_SESSION['nascimento'] : VAZIO) ?>"/>
         </label></div>
         <div>        
