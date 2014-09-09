@@ -14,7 +14,7 @@
     if (validaFormLogin()){
         //Realizar consulta do login
         $dao = new dao_class();
-        $rowLogin = $dao->selectLogin($login, $senha, $cd_usuario);
+        $rowLogin = $dao->selectLogin($login, $senha);
         
         if ($rowLogin){
             
