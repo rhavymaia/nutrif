@@ -19,4 +19,7 @@
     
     // Código HTTP - Requisição inválida
     define ('HTTP_REQUISICAO_INVALIDA', 400);
+    
+    // Código HTTP - Erro interno
+    define ('HTTP_ERRO_INTERNO', 500);
 ?>

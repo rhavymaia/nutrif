@@ -25,6 +25,9 @@ class DbHandler {
      */
     public function inserirUsuario($aluno) {
         
+        //caso usuário não seja criado o valor 0 será atribuído
+         $cd_usuario = 0;
+         
         // insert query
         $stmt = $this->conn->prepare("INSERT INTO"
                 . " tb_usuario(nm_login, nm_senha, nm_usuario,"
