@@ -3144,6 +3144,7 @@ CREATE TABLE IF NOT EXISTS `tb_nutricionista` (
   PRIMARY KEY (`cd_nutricionista`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+ALTER TABLE  `tb_nutricionista` ADD  `nr_siape` INT NOT NULL ;
 -- --------------------------------------------------------
 
 --
