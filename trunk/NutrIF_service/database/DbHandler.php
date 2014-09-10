@@ -76,5 +76,38 @@ class DbHandler {
         
         return $cd_entrevistado;
     }
+    
+    /**
+     * Descrição
+     * @param type $login
+     * @param type $senha
+     * @return type
+     */
+    function selectLogin($login, $senha) {
+        
+        $sql = "SELECT usuario.nm_login, usuario.nm_usuario, cd_tipousuario, cd_usuario "
+                . " FROM tb_usuario AS usuario"
+                . " WHERE"
+                . " usuario.nm_login = ?"
+                . " AND usuario.nm_senha = ?";
+
+         $stmt = $this->conn->prepare($sql);
+         
+        // Parâmetros: tipos das entradas, entradas.
+        $stmt->bind_param("ss", $login, $senha);
+
+        $tupla = $stmt->fetchAll(PDO::FETCH_OBJ);
+        
+        $usuario = null;
+        if (isset($tupla)) {
+            $usuario = new Usuario();
+            $usuario->setLogin($tupla['nm_login']);
+            $usuario->setCodigo($tupla['cd_usuario']);
+            $usuario->setNome($tupla['nm_usuario']);
+            $usuario->setTipoUsuario($tupla['cd_tipousuario']);
+        }                
+        
+        return $usuario;
+    }
 }
 ?>

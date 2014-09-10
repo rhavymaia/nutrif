@@ -14,6 +14,9 @@
     // Constante do grupo da tabela por faixa de idade
     define ('FATOR',8);
     
+    // Constante do fator centimetro
+    define('FATOR_CENTIMETRO', 100);
+    
     // Código HTTP - Status: Criado
     define ('HTTP_CRIADO', 201);
     

@@ -13,7 +13,8 @@
     $slim->post('/cadastrarAluno','cadastrarAluno');  
     $slim->post('/analisarVCT','analisarVCT');
     $slim->post('/calcularIMC','calcularIMC');    
-    
+    $slim->post('/verificarLogin','verificarLogin');
+   
     function authenticate(\Slim\Route $route) {
     }
 
@@ -85,7 +86,7 @@
      * @param $aluno 
      * 	{
      *      'peso' : *[1-9].*[1-9],
-     *      'alturaCm' : *[1-9].*[1-9],
+     *      'altura' : *[1-9].*[1-9],
      *      'sexo' : 'M' | 'F',
      *      'idade' : [1-9],
      *      'nivelEsporte' : [1-4]
@@ -102,15 +103,15 @@
         $aluno = json_decode($body);
         
         $peso = $aluno->peso;
-        $altura = $aluno->alturaCm;
+        $alturaCm = ($aluno->altura * FATOR_CENTIMETRO);
         $idade = $aluno->idade;
 
         // Receber altura em metros e converter para centímetros.
         if ($aluno->sexo == 'M') {
-            $tmb = 655 + (9.6 * $peso) + (1.8 * $altura) 
+            $tmb = 655 + (9.6 * $peso) + (1.8 * $alturaCm) 
                     - (4.7 * $idade);            
         } else {
-            $tmb = 655 + (14 * $peso) + (5 * $altura) 
+            $tmb = 655 + (14 * $peso) + (5 * $alturaCm) 
                     - (6.7 * $idade);            
         }
         
@@ -149,6 +150,31 @@
         
     }
     
+    /**
+     * 
+     */
+    function verificarLogin() {
+        $request = \Slim\Slim::getInstance()->request();
+        $body = $request->getBody();
+        $usuario = json_decode($body);
+
+        $login = $usuario->login;
+        $senha = $usuario->senha;
+
+
+        $db = new DbHandler();
+        $cd_usuario = $db->selectLogin($login, $senha);
+
+        if ($cd_usuario == null) {
+            $erro = array(
+                "codigo" => 001,
+                "mensagem" => "Impossivel criar usuario."
+            );
+            echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+        } else {
+            echoRespnse(HTTP_CRIADO, $usuario);
+        }
+    }
     
     function echoRespnse($status_code, $response) {
         $slim = \Slim\Slim::getInstance();
