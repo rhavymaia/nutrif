@@ -22,6 +22,10 @@ class Usuario {
     private $ativo;
     
     private $dataRegistro;
+    
+    public function toArray() {
+        return get_object_vars($this);
+    }
 
     public function __construct() {}
 
