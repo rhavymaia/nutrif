@@ -3,6 +3,7 @@
     require_once 'entidade/Server.class.php';
     require_once 'database/DbHandler.php';
     require_once 'util/constantes.php';
+    require_once './entidade/Usuario.class.php';
     
     // Slim
     require '../Slim/Slim/Slim.php';
@@ -156,24 +157,29 @@
     function verificarLogin() {
         $request = \Slim\Slim::getInstance()->request();
         $body = $request->getBody();
-        $usuario = json_decode($body);
+        $usuarioJson = json_decode($body);
 
-        $login = $usuario->login;
-        $senha = $usuario->senha;
-
+        $login = $usuarioJson->login;
+        $senha = $usuarioJson->senha;
 
         $db = new DbHandler();
-        $cd_usuario = $db->selectLogin($login, $senha);
-
-        if ($cd_usuario == null) {
+        $usuario = $db->selectLogin($login, $senha);
+        
+        $u = objectToArray($usuario);        
+        
+        echoRespnse(HTTP_CRIADO, $u);
+        /*
+        if (empty($usuario)) {
+            
             $erro = array(
-                "codigo" => 001,
-                "mensagem" => "Impossivel criar usuario."
+                "codigo" => 002,
+                "mensagem" => "Usuario nao encontrado."
             );
+            
             echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
         } else {
             echoRespnse(HTTP_CRIADO, $usuario);
-        }
+        }*/
     }
     
     function echoRespnse($status_code, $response) {
@@ -183,6 +189,16 @@
         // setting response content type to json
         $slim->contentType('application/json');
         echo json_encode($response);
+    }
+
+    
+    
+    function objectToArray($object) {
+        $arr = array();
+        for ($i = 0; $i < count($object); $i++) {
+            $arr[] = get_object_vars($object[$i]);
+        }
+        return $arr;
     }
 
 $slim->run();
