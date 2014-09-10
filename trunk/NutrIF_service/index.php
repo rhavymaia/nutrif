@@ -165,7 +165,7 @@
         $db = new DbHandler();
         $usuario = $db->selectLogin($login, $senha);
         
-        $u = objectToArray($usuario);        
+        $u = $usuario->toArray();        
         
         echoRespnse(HTTP_CRIADO, $u);
         /*
