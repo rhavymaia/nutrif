@@ -1,12 +1,14 @@
 <?php
 
 require_once './util/constantes.php';
+require_once './entidade/Usuario.class.php';
 
 /**
- * Class to handle all db operations
- * This class will have CRUD methods for database tables
+ * Descrição
  *
- * @author Ravi Tamada
+ * @author Rhavy Maia rhavy.maia@gmail.com
+ * @author Larissa Félix
+ * @author Elias Gabriel Almeida
  * @link URL Tutorial link
  */
 class DbHandler {
@@ -23,7 +25,7 @@ class DbHandler {
 
     /**
      * Inserir o usuário.
-     * @param type $dados
+     * @param type $aluno
      */
     public function inserirUsuario($aluno) {
 
@@ -33,15 +35,18 @@ class DbHandler {
         // insert query
         $stmt = $this->conn->prepare("INSERT INTO"
                 . " tb_usuario(nm_login, nm_senha, nm_usuario,"
-                . " dt_nascimento, cd_tipousuario, fl_ativo)"
-                . " values(?, ?, ?, ?, " . TP_ALUNO . ", " . USUARIO_ATIVO . ")");
-
-        $nascimento = $data = implode("-", array_reverse(explode("/", $aluno->nascimento)));
-
+                . " dt_nascimento, nm_sexo, cd_tipousuario, fl_ativo)"
+                . " values(?, ?, ?, ?, ?, ".TP_ALUNO.", ".USUARIO_ATIVO.")");
+        
+        $nascimento = $data = implode("-",
+                array_reverse(explode("/",$aluno->nascimento)));
+        
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("ssss", $aluno->login, $aluno->senha, $aluno->nome, $nascimento);
-
-        $result = $stmt->execute();
+        $stmt->bind_param("sssss", $aluno->login, $aluno->senha, $aluno->nome, 
+                $nascimento, $aluno->sexo);
+        
+        // Executar a consulta.
+        $result = $stmt->execute();        
         if ($result) {
             $cd_usuario = $stmt->insert_id;
         }
@@ -75,7 +80,7 @@ class DbHandler {
 
         return $cd_entrevistado;
     }
-
+    
     /**
      * Descrição
      * @param type $login
@@ -84,7 +89,10 @@ class DbHandler {
      */
     function selectLogin($login, $senha) {
 
-        $sql = "SELECT usuario.nm_login, usuario.nm_usuario, cd_tipousuario, cd_usuario "
+        $usuario = NULL;
+        
+        $sql = "SELECT usuario.nm_login, usuario.nm_usuario, usuario.cd_tipousuario, "
+                . "usuario.cd_usuario "
                 . " FROM tb_usuario AS usuario"
                 . " WHERE"
                 . " usuario.nm_login = ?"
@@ -94,18 +102,22 @@ class DbHandler {
 
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("ss", $login, $senha);
-
-        $tupla = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-        $usuario = null;
-        if (isset($tupla)) {
+                
+        if ($stmt->execute()) {
+            
+            $stmt->bind_result($login, $nome, $tipoUsuario, $codigo);
+            $stmt->fetch();            
             $usuario = new Usuario();
-            $usuario->setLogin($tupla['nm_login']);
-            $usuario->setCodigo($tupla['cd_usuario']);
-            $usuario->setNome($tupla['nm_usuario']);
-            $usuario->setTipoUsuario($tupla['cd_tipousuario']);
+            $usuario->setLogin($login);
+            $usuario->setCodigo($codigo);
+            $usuario->setNome($nome);
+            $usuario->setTipoUsuario($tipoUsuario);
+            
+                      
         }
-
+        
+        $stmt->close(); 
+        
         return $usuario;
     }
 
