@@ -102,8 +102,10 @@ class DbHandler {
 
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("ss", $login, $senha);
-                
-        if ($stmt->execute()) {
+        $resultStmt = $stmt->execute();
+        $stmt->store_result();
+        
+        if ($resultStmt && $stmt->num_rows>0) {
             
             $stmt->bind_result($login, $nome, $tipoUsuario, $codigo);
             $stmt->fetch();            
@@ -111,9 +113,7 @@ class DbHandler {
             $usuario->setLogin($login);
             $usuario->setCodigo($codigo);
             $usuario->setNome($nome);
-            $usuario->setTipoUsuario($tipoUsuario);
-            
-                      
+            $usuario->setTipoUsuario($tipoUsuario);                     
         }
         
         $stmt->close(); 
