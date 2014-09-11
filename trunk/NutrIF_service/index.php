@@ -1,9 +1,10 @@
 <?php
-    // Entidades
-    require_once 'entidade/Server.class.php';
+    // Entidades    
     require_once 'database/DbHandler.php';
     require_once 'util/constantes.php';
+    require_once 'entidade/Server.class.php';
     require_once './entidade/Usuario.class.php';
+    require_once './entidade/Erro.php';
     
     // Slim
     require '../Slim/Slim/Slim.php';
@@ -125,7 +126,7 @@
     }
 
     /**
-     * 
+     * Descrição
      * @param $imc
      * {
      *      'idUsuario' : [1-9],
@@ -147,12 +148,18 @@
         // Sugestão de OO.
         $imcObjt = new Anamnese();
         
-        // Implementar lógica do IMC. 
-        
+        // Implementar lógica do IMC.         
     }
     
     /**
+     * Descrição
+     * @param $usuario
+     *  {
+     *      login:"valor",
+     *      senha:"valor"
+     *  }
      * 
+     * @return $usuario HTTP-
      */
     function verificarLogin() {
         $request = \Slim\Slim::getInstance()->request();
@@ -165,21 +172,14 @@
         $db = new DbHandler();
         $usuario = $db->selectLogin($login, $senha);
         
-        $u = $usuario->toArray();        
-        
-        echoRespnse(HTTP_CRIADO, $u);
-        /*
-        if (empty($usuario)) {
-            
-            $erro = array(
-                "codigo" => 002,
-                "mensagem" => "Usuario nao encontrado."
-            );
-            
+        if (empty($usuario)) {            
+            $erro = new Erro();
+            $erro->codigo = 002;
+            $erro->mensagem = "Usuario nao encontrado.";
             echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
         } else {
-            echoRespnse(HTTP_CRIADO, $usuario);
-        }*/
+            echoRespnse(HTTP_ACEITO, $usuario->toArray());
+        }
     }
     
     function echoRespnse($status_code, $response) {
@@ -189,16 +189,6 @@
         // setting response content type to json
         $slim->contentType('application/json');
         echo json_encode($response);
-    }
-
-    
-    
-    function objectToArray($object) {
-        $arr = array();
-        for ($i = 0; $i < count($object); $i++) {
-            $arr[] = get_object_vars($object[$i]);
-        }
-        return $arr;
     }
 
 $slim->run();
