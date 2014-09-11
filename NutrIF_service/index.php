@@ -74,10 +74,9 @@
             // Resposta
             echoRespnse(HTTP_CRIADO, $aluno);
         }else{
-            $erro = array(
-                "codigo" => 001,
-                "mensagem" => "Impossivel criar usuario."
-            );
+            $erro = new Erro();
+            $erro->codigo = 001;
+            $erro->mensagem = "Impossivel criar usuario.";
             echoRespnse(HTTP_ERRO_INTERNO, $erro);            
         }        
     }
@@ -159,7 +158,8 @@
      *      senha:"valor"
      *  }
      * 
-     * @return $usuario HTTP-
+     * @return $usuario HTTP-202
+     * @return $erro HTTP-400
      */
     function verificarLogin() {
         $request = \Slim\Slim::getInstance()->request();
