@@ -27,7 +27,7 @@ class DbHandler {
      * Inserir o usuário.
      * @param type $aluno
      */
-    public function inserirUsuario($aluno) {
+    public function inserirUsuario($aluno, $tipo_usuario) {
 
         //caso usuário não seja criado o valor 0 será atribuído
         $cd_usuario = 0;
@@ -36,7 +36,7 @@ class DbHandler {
         $stmt = $this->conn->prepare("INSERT INTO"
                 . " tb_usuario(nm_login, nm_senha, nm_usuario,"
                 . " dt_nascimento, nm_sexo, cd_tipousuario, fl_ativo)"
-                . " values(?, ?, ?, ?, ?, ".TP_ALUNO.", ".USUARIO_ATIVO.")");
+                . " values(?, ?, ?, ?, ?, ".$tipo_usuario.", ".USUARIO_ATIVO.")");
         
         $nascimento = $data = implode("-",
                 array_reverse(explode("/",$aluno->nascimento)));
@@ -81,6 +81,28 @@ class DbHandler {
         return $cd_entrevistado;
     }
     
+    function inserirNutricionista($nutricionista){
+        
+         // insert query
+        $stmt = $this->conn->prepare("INSERT INTO"
+                . " tb_nutricionista(cd_usuario, nm_crn, nm_siape, cd_instituicao)"
+                . " values(?, ?, ?, ?)");
+        
+        // Parâmetros: tipos das entradas, entradas.
+        $stmt->bind_param("iiii", $nutricionista->idUsuario, $nutricionista->crn,
+                $nutricionista->siape, $nutricionista->instituicao);
+        
+        $result = $stmt->execute();        
+        if ($result) {
+            $cd_nutricionista = $stmt->insert_id; 
+        }    
+
+        $stmt->close();
+        
+        return $cd_nutricionista;
+    }
+    
+    
     /**
      * Descrição
      * @param type $login
@@ -121,6 +143,8 @@ class DbHandler {
         return $usuario;
     }
 
+    
+    
 }
 
 ?>

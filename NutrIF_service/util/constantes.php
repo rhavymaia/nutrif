@@ -3,7 +3,10 @@
     define('CONSTANTE', 'valor');
     
     // Entrevistado Tipo Aluno
-    define('TP_ALUNO', 1);
+    define('TP_ALUNO', 2);
+    
+    // Tipo Nutricionista
+    define('TP_NUTRICIONISTA', 1);
     
     // Usuário ativo
     define('USUARIO_ATIVO', 1);
