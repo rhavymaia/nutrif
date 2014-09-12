@@ -28,7 +28,8 @@ class DbConnect {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }
 
-        //$this->conn->set_charset("utf8");
+        // Charset - UTF-8
+        $this->conn->set_charset("utf8");
         
         // returing connection resource
         return $this->conn;
