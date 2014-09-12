@@ -5,6 +5,7 @@
     require_once 'entidade/Server.class.php';
     require_once './entidade/Usuario.class.php';
     require_once './entidade/Erro.php';
+    require_once './util/JsonUtil.php';
     
     // Slim
     require '../Slim/Slim/Slim.php';
@@ -74,6 +75,57 @@
             $aluno->idEntrevistado = $id_entrevistado;
             // Resposta
             echoRespnse(HTTP_CRIADO, $aluno);
+        }else{
+            $erro = new Erro();
+            $erro->codigo = 001;
+            $erro->mensagem = "Impossível criar usuário.";
+            echoRespnse(HTTP_ERRO_INTERNO, $erro);            
+        }        
+    }
+    
+    /**
+     * Cadastrar Nutricionista.
+     * @param $nutricionista
+     *  
+     *  {
+     *      nome: "valor",
+     *      login: "user@local.com",
+     *      senha: "valor",          
+     *      crn: [4-10],
+     *      siape: [8],
+     *      nascimento: "dd/mm/YYYY",
+     *      instituicao: [1-9]
+     *      sexo: "M" | "F"         
+     *  }
+     *  
+     *  
+     * @return $nutricionista (http - 200)
+     *  {
+     *      idUsuario: [1-9],
+     *      idNutricionista: [1-9]
+     *  }
+     * @return $erro (http - 400)
+     *  {
+     *      codigo: [1-9],
+     *      mensagem: "Erro"
+     * } 
+     * @author Larissa Félix larissafelix.felix@gmail.com
+     */
+    function cadastrarNutricionista() {
+        $request = \Slim\Slim::getInstance()->request();
+        $body = $request->getBody();        
+        $nutricionista = json_decode($body);
+        
+        // Persistir os dados no Banco.
+        $db = new DbHandler();
+        $cd_usuario = $db->inserirUsuario($nutricionista, TP_NUTRICIONISTA);
+        
+        if($cd_usuario != 0){
+            $nutricionista->idUsuario = $cd_usuario;
+            $id_nutricionista = $db->inserirNutricionista($nutricionista);
+            $nutricionista->idNutricionista = $id_nutricionista;
+            // Resposta
+            echoRespnse(HTTP_CRIADO, $nutricionista);
         }else{
             $erro = new Erro();
             $erro->codigo = 001;
@@ -211,6 +263,13 @@
      *  }
      * 
      * @return $usuario HTTP-202
+     *  {
+     *      codigo: 21,
+     *      login: "user4@local.com",
+     *      nome:"João Silva",
+     *      tipoUsuario: "1",
+     *      ativo: TRUE | FALSE,
+     *  }
      * @return $erro HTTP-400
      */
     function verificarLogin() {
@@ -227,7 +286,8 @@
         if (empty($usuario)) {            
             $erro = new Erro();
             $erro->codigo = 002;
-            $erro->mensagem = "Usuario nao encontrado.";
+            $erro->mensagem = "Usuário não encontrado.";
+            
             echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
         } else {
             echoRespnse(HTTP_ACEITO, $usuario->toArray());
@@ -238,11 +298,18 @@
     function echoRespnse($status_code, $response) {
         $slim = \Slim\Slim::getInstance();
         // Http response code
+        $slim->response()->header('Content-Type', 
+                'application/json;charset=utf-8');
         $slim->status($status_code);
         // setting response content type to json
-        $slim->contentType('application/json');
-        echo json_encode($response);
+        $slim->contentType('application/json');       
+        
+        // Chamada ao método estático para conversão de caracter UTF-8.
+        // Tranforma o array ou objeto em JSON.
+        echo json_encode(JsonUtil::utf8json($response));
+        
+        $slim->stop();
     }
-
+    
 $slim->run();
 ?>
