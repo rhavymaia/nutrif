@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 
 --
 -- Estrutura da tabela `tb_anamnese`
---
+
 
 CREATE TABLE IF NOT EXISTS `tb_anamnese` (
   `cd_anamnese` int(11) NOT NULL AUTO_INCREMENT,
@@ -3144,7 +3144,8 @@ CREATE TABLE IF NOT EXISTS `tb_nutricionista` (
   PRIMARY KEY (`cd_nutricionista`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE  `tb_nutricionista` ADD  `nr_siape` INT NOT NULL ;
+ALTER TABLE  `tb_nutricionista` ADD  `nm_siape` INT NOT NULL ;
+ALTER TABLE  `tb_nutricionista` CHANGE  `nm_crn`  `nm_crn` INT NOT NULL ;
 -- --------------------------------------------------------
 
 --
