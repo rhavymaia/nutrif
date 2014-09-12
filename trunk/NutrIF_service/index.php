@@ -13,6 +13,7 @@
     $slim = new \Slim\Slim();
     $slim->get('/statusServer', 'statusServer');
     $slim->post('/cadastrarAluno','cadastrarAluno');  
+    $slim->post('/cadastrarNutricionista','cadastrarNutricionista'); 
     $slim->post('/analisarVCT','analisarVCT');
     $slim->post('/calcularIMC','calcularIMC');    
     $slim->post('/verificarLogin','verificarLogin');
@@ -65,7 +66,7 @@
         
         // Persistir os dados no Banco.
         $db = new DbHandler();
-        $cd_usuario = $db->inserirUsuario($aluno);
+        $cd_usuario = $db->inserirUsuario($aluno, TP_ALUNO);
         
         if($cd_usuario != 0){
             $aluno->idUsuario = $cd_usuario;
@@ -73,6 +74,29 @@
             $aluno->idEntrevistado = $id_entrevistado;
             // Resposta
             echoRespnse(HTTP_CRIADO, $aluno);
+        }else{
+            $erro = new Erro();
+            $erro->codigo = 001;
+            $erro->mensagem = "Impossivel criar usuario.";
+            echoRespnse(HTTP_ERRO_INTERNO, $erro);            
+        }        
+    }
+    
+    function cadastrarNutricionista() {
+        $request = \Slim\Slim::getInstance()->request();
+        $body = $request->getBody();        
+        $nutricionista = json_decode($body);
+        
+        // Persistir os dados no Banco.
+        $db = new DbHandler();
+        $cd_usuario = $db->inserirUsuario($nutricionista, TP_NUTRICIONISTA);
+        
+        if($cd_usuario != 0){
+            $nutricionista->idUsuario = $cd_usuario;
+            $id_nutricionista = $db->inserirNutricionista($nutricionista);
+            $nutricionista->idNutricionista = $id_nutricionista;
+            // Resposta
+            echoRespnse(HTTP_CRIADO, $nutricionista);
         }else{
             $erro = new Erro();
             $erro->codigo = 001;
@@ -182,6 +206,7 @@
         }
     }
     
+      
     function echoRespnse($status_code, $response) {
         $slim = \Slim\Slim::getInstance();
         // Http response code
