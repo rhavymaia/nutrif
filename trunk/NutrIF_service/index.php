@@ -82,6 +82,34 @@
         }        
     }
     
+    /**
+     * Cadastrar Nutricionista.
+     * @param $nutricionista
+     *  
+     *  {
+     *      nome: "valor",
+     *      login: "user@local.com",
+     *      senha: "valor",          
+     *      crn: [4-10],
+     *      siape: [8],
+     *      nascimento: "dd/mm/YYYY",
+     *      instituicao: [1-9]
+     *      sexo: "M" | "F"         
+     *  }
+     *  
+     *  
+     * @return $nutricionista (http - 200)
+     *  {
+     *      idUsuario: [1-9],
+     *      idNutricionista: [1-9]
+     *  }
+     * @return $erro (http - 400)
+     *  {
+     *      codigo: [1-9],
+     *      mensagem: "Erro"
+     * } 
+     * @author Larissa Félix larissafelix.felix@gmail.com
+     */
     function cadastrarNutricionista() {
         $request = \Slim\Slim::getInstance()->request();
         $body = $request->getBody();        

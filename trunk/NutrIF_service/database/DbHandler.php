@@ -81,6 +81,11 @@ class DbHandler {
         return $cd_entrevistado;
     }
     
+    /**
+     * 
+     * @param type $nutricionista
+     * @return type
+     */
     function inserirNutricionista($nutricionista){
         
          // insert query
@@ -143,6 +148,43 @@ class DbHandler {
         return $usuario;
     }
 
+    public function selectPercentil($imc, $sexo, $idadeMeses){
+        
+        $percentil = NULL;
+        
+        // Consultar o Percentil na tabela tb_imc_percentil.            
+        $sql = "SELECT imc.cd_percentil, percentil.vl_percentil"
+            . " FROM"
+            . " tb_imc_percentil AS imc, tb_percentil AS percentil"
+            . " WHERE" 
+            . " imc.tp_sexo = ?"
+            . " AND imc.cd_fator = ?"
+            . " AND imc.vl_fator = ?"
+            . " AND imc.vl_imc_percentil = ?"
+            . " AND imc.cd_percentil = percentil.cd_percentil";
+
+         $stmt = $this->conn->prepare($sql);
+
+        // Parâmetros: tipos das entradas, entradas.
+        $stmt->bind_param("ss", $login, $senha);
+        $resultStmt = $stmt->execute();
+        $stmt->store_result();
+        
+        if ($resultStmt && $stmt->num_rows>0) {
+            
+            $stmt->bind_result($login, $nome, $tipoUsuario, $codigo);
+            $stmt->fetch();            
+            $usuario = new Usuario();
+            $usuario->setLogin($login);
+            $usuario->setCodigo($codigo);
+            $usuario->setNome($nome);
+            $usuario->setTipoUsuario($tipoUsuario);                     
+        }
+        
+        $stmt->close(); 
+        
+        return $usuario;
+    }
     
     
 }
