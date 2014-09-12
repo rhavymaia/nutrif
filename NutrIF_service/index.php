@@ -39,7 +39,6 @@ function statusServer() {
 /**
  * Cadastrar Aluno.
  * @param $aluno
- *  
  *  {
  *      nome: "valor",
  *      login: "user@local.com",
@@ -48,8 +47,7 @@ function statusServer() {
  *      nascimento: "dd/mm/YYYY",
  *      nivel: [1-3],
  *      sexo: "M" | "F"         
- *  }
- *  
+ *  } 
  *  
  * @return $aluno (http - 200)
  *  {
@@ -60,7 +58,7 @@ function statusServer() {
  *  {
  *      codigo: [1-9],
  *      mensagem: "Erro"
- * } 
+ *  } 
  * @author Rhavy Maia Guedes rhavy.maia@gmail.com
  */
 function cadastrarAluno() {
@@ -89,7 +87,6 @@ function cadastrarAluno() {
 /**
  * Cadastrar Nutricionista.
  * @param $nutricionista
- *  
  *  {
  *      nome: "valor",
  *      login: "user@local.com",
@@ -101,7 +98,6 @@ function cadastrarAluno() {
  *      sexo: "M" | "F"         
  *  }
  *  
- *  
  * @return $nutricionista (http - 200)
  *  {
  *      idUsuario: [1-9],
@@ -111,7 +107,7 @@ function cadastrarAluno() {
  *  {
  *      codigo: [1-9],
  *      mensagem: "Erro"
- * } 
+ *  } 
  * @author Larissa Félix larissafelix.felix@gmail.com
  */
 function cadastrarNutricionista() {
@@ -132,7 +128,7 @@ function cadastrarNutricionista() {
     } else {
         $erro = new Erro();
         $erro->codigo = 001;
-        $erro->mensagem = "Impossivel criar usuario.";
+        $erro->mensagem = "Impossível criar usuario.";
         echoRespnse(HTTP_ERRO_INTERNO, $erro);
     }
 }
@@ -141,7 +137,7 @@ function cadastrarNutricionista() {
  * Analisar o Valor calórico total (VCT);
  * 
  * @param $aluno 
- * 	{
+ *  {
  *      'peso' : *[1-9].*[1-9],
  *      'altura' : *[1-9].*[1-9],
  *      'sexo' : 'M' | 'F',
@@ -150,9 +146,9 @@ function cadastrarNutricionista() {
  *  }
  * 
  * @return $vct 
- * {
+ *  {
  *      'vct' : *[1-9].*[1-9]
- * }
+ *  }
  */
 function analisarVCT() {
     $request = \Slim\Slim::getInstance()->request();
@@ -244,15 +240,20 @@ function verificarLogin() {
     }
 }
 
-
-
+/**
+ * Envio do response.
+ * 
+ * @param type $status_code
+ * @param type $response
+ */
 function echoRespnse($status_code, $response) {
     $slim = \Slim\Slim::getInstance();
+    
     // Http response code
-    $slim->response()->header('Content-Type', 'application/json;charset=utf-8');
     $slim->status($status_code);
-    // setting response content type to json
-    $slim->contentType('application/json');
+    
+    // Setting response content type to json
+    $slim->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     // Chamada ao método estático para conversão de caracter UTF-8.
     // Tranforma o array ou objeto em JSON.

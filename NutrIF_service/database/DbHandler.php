@@ -27,7 +27,7 @@ class DbHandler {
      * Inserir o usuário.
      * @param type $aluno
      */
-    public function inserirUsuario($aluno, $tipo_usuario) {
+    public function inserirUsuario($aluno, $tipoUsuario) {
 
         //caso usuário não seja criado o valor 0 será atribuído
         $cd_usuario = 0;
@@ -36,7 +36,7 @@ class DbHandler {
         $stmt = $this->conn->prepare("INSERT INTO"
                 . " tb_usuario(nm_login, nm_senha, nm_usuario,"
                 . " dt_nascimento, nm_sexo, cd_tipousuario, fl_ativo)"
-                . " values(?, ?, ?, ?, ?, ".$tipo_usuario.", ".USUARIO_ATIVO.")");
+                . " values(?, ?, ?, ?, ?, ".$tipoUsuario.", ".USUARIO_ATIVO.")");
         
         $nascimento = $data = implode("-",
                 array_reverse(explode("/",$aluno->nascimento)));
@@ -48,12 +48,12 @@ class DbHandler {
         // Executar a consulta.
         $result = $stmt->execute();        
         if ($result) {
-            $cd_usuario = $stmt->insert_id;
+            $cdUsuario = $stmt->insert_id;
         }
 
         $stmt->close();
 
-        return $cd_usuario;
+        return $cdUsuario;
     }
 
     /**
