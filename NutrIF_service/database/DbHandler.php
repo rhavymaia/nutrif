@@ -27,7 +27,7 @@ class DbHandler {
      * Inserir o usuário.
      * @param type $aluno
      */
-    public function inserirUsuario($aluno, $tipoUsuario) {
+    public function inserirUsuario($aluno, $tipo_usuario) {
 
         //caso usuário não seja criado o valor 0 será atribuído
         $cd_usuario = 0;
@@ -36,7 +36,7 @@ class DbHandler {
         $stmt = $this->conn->prepare("INSERT INTO"
                 . " tb_usuario(nm_login, nm_senha, nm_usuario,"
                 . " dt_nascimento, nm_sexo, cd_tipousuario, fl_ativo)"
-                . " values(?, ?, ?, ?, ?, ".$tipoUsuario.", ".USUARIO_ATIVO.")");
+                . " values(?, ?, ?, ?, ?, ".$tipo_usuario.", ".USUARIO_ATIVO.")");
         
         $nascimento = $data = implode("-",
                 array_reverse(explode("/",$aluno->nascimento)));
@@ -48,12 +48,12 @@ class DbHandler {
         // Executar a consulta.
         $result = $stmt->execute();        
         if ($result) {
-            $cdUsuario = $stmt->insert_id;
+            $cd_usuario = $stmt->insert_id;
         }
 
         $stmt->close();
 
-        return $cdUsuario;
+        return $cd_usuario;
     }
 
     /**
@@ -86,7 +86,7 @@ class DbHandler {
      * @param type $nutricionista
      * @return type
      */
-    function inserirNutricionista($nutricionista){
+    public function inserirNutricionista($nutricionista){
         
          // insert query
         $stmt = $this->conn->prepare("INSERT INTO"
@@ -114,7 +114,7 @@ class DbHandler {
      * @param type $senha
      * @return type
      */
-    function selectLogin($login, $senha) {
+    public function selectLogin($login, $senha) {
 
         $usuario = NULL;
         
@@ -147,18 +147,26 @@ class DbHandler {
         
         return $usuario;
     }
-
-    public function selectPercentil($imc, $sexo, $idadeMeses){
+    
+   /**
+     * 
+     * @param type $imc
+     * @param type $sexo
+     * @param type $idadeMeses
+     * @return \Percentil
+     */
+    public function selecionarPercentil($imc, $sexo, $idadeMeses){
         
         $percentil = NULL;
         
         // Consultar o Percentil na tabela tb_imc_percentil.            
-        $sql = "SELECT imc.cd_percentil, percentil.vl_percentil"
+        $sql = "SELECT imc.cd_percentil, percentil.vl_percentil, imc.tp_sexo, "
+            . "imc.vl_fator, imc.vl_imc_percentil"
             . " FROM"
             . " tb_imc_percentil AS imc, tb_percentil AS percentil"
             . " WHERE" 
             . " imc.tp_sexo = ?"
-            . " AND imc.cd_fator = ?"
+            . " AND imc.cd_fator = ".FATOR
             . " AND imc.vl_fator = ?"
             . " AND imc.vl_imc_percentil = ?"
             . " AND imc.cd_percentil = percentil.cd_percentil";
@@ -166,26 +174,29 @@ class DbHandler {
          $stmt = $this->conn->prepare($sql);
 
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("ss", $login, $senha);
+        $stmt->bind_param("sid", $sexo, $idadeMeses, $imc);
         $resultStmt = $stmt->execute();
         $stmt->store_result();
         
         if ($resultStmt && $stmt->num_rows>0) {
             
-            $stmt->bind_result($login, $nome, $tipoUsuario, $codigo);
-            $stmt->fetch();            
-            $usuario = new Usuario();
-            $usuario->setLogin($login);
-            $usuario->setCodigo($codigo);
-            $usuario->setNome($nome);
-            $usuario->setTipoUsuario($tipoUsuario);                     
+            $stmt->bind_result($cdPercentil, $vlPercentil, $tpSexo, 
+                    $vlFatorIdade, $imcPercentil);
+            $stmt->fetch();  
+            
+            $percentil = new Percentil();
+            $percentil->setCdPercentil($cdPercentil);
+            $percentil->setVlPercentil($vlPercentil);   
+            $percentil->setImc($imcPercentil);
+            $percentil->setIdadeMeses($vlFatorIdade);
+            $percentil->setSexo($tpSexo);
+            
         }
         
         $stmt->close(); 
         
-        return $usuario;
+        return $percentil;
     }
-    
     
 }
 
