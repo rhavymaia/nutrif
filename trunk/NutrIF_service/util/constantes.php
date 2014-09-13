@@ -1,5 +1,5 @@
 <?php
-    // Tamanho da matrícula
+    // Exemplo de constante. Incluir comentário.
     define('CONSTANTE', 'valor');
     
     // Entrevistado Tipo Aluno
@@ -20,6 +20,13 @@
     // Constante do fator centimetro
     define('FATOR_CENTIMETRO', 100);
     
+    // Usuáro não cadastrado
+    define('ID_NAO_RETORNADO', 0);
+    
+    // Sexo masculino.
+    define('MASCULINO', 'm');
+    
+    // Código HTTP
     // Código HTTP - Status: Criado
     define ('HTTP_CRIADO', 201);
     

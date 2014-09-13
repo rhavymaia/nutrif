@@ -23,8 +23,7 @@ $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
 
 
-function authenticate(\Slim\Route $route) {
-    
+function authenticate(\Slim\Route $route) {   
 }
 
 // Funções    
@@ -62,7 +61,7 @@ function statusServer() {
  *  {
  *      codigo: [1-9],
  *      mensagem: "Erro"
- * } 
+ *  } 
  * @author Rhavy Maia Guedes rhavy.maia@gmail.com
  */
 function cadastrarAluno() {
@@ -70,12 +69,13 @@ function cadastrarAluno() {
     $body = $request->getBody();
     $aluno = json_decode($body);
 
+    //TODO: Validação do dados de entrada para o cadastro do entrevistado.
     // Persistir os dados no Banco.
     $db = new DbHandler();
-    $cd_usuario = $db->inserirUsuario($aluno, TP_ALUNO);
+    $cdUsuario = $db->inserirUsuario($aluno, TP_ALUNO);
 
-    if ($cd_usuario != 0) {
-        $aluno->idUsuario = $cd_usuario;
+    if ($cdUsuario != ID_NAO_RETORNADO) {
+        $aluno->idUsuario = $cdUsuario;
         $id_entrevistado = $db->inserirEntrevistado($aluno);
         $aluno->idEntrevistado = $id_entrevistado;
         // Resposta
@@ -103,7 +103,6 @@ function cadastrarAluno() {
  *      sexo: "M" | "F"         
  *  }
  *  
- *  
  * @return $nutricionista (http - 200)
  *  {
  *      idUsuario: [1-9],
@@ -113,7 +112,7 @@ function cadastrarAluno() {
  *  {
  *      codigo: [1-9],
  *      mensagem: "Erro"
- * } 
+ *  } 
  * @author Larissa Félix larissafelix.felix@gmail.com
  */
 function cadastrarNutricionista() {
@@ -121,11 +120,12 @@ function cadastrarNutricionista() {
     $body = $request->getBody();
     $nutricionista = json_decode($body);
 
+    //TODO: Validação do dados de entrada para o cadastro do entrevistado.
     // Persistir os dados no Banco.
     $db = new DbHandler();
     $cd_usuario = $db->inserirUsuario($nutricionista, TP_NUTRICIONISTA);
 
-    if ($cd_usuario != 0) {
+    if ($cd_usuario != ID_NAO_RETORNADO) {
         $nutricionista->idUsuario = $cd_usuario;
         $id_nutricionista = $db->inserirNutricionista($nutricionista);
         $nutricionista->idNutricionista = $id_nutricionista;
@@ -134,7 +134,7 @@ function cadastrarNutricionista() {
     } else {
         $erro = new Erro();
         $erro->codigo = 001;
-        $erro->mensagem = "Impossivel criar usuario.";
+        $erro->mensagem = "Impossível criar usuário.";
         echoRespnse(HTTP_ERRO_INTERNO, $erro);
     }
 }
@@ -143,7 +143,7 @@ function cadastrarNutricionista() {
  * Analisar o Valor calórico total (VCT);
  * 
  * @param $aluno 
- * 	{
+ *  {
  *      'peso' : *[1-9].*[1-9],
  *      'altura' : *[1-9].*[1-9],
  *      'sexo' : 'M' | 'F',
@@ -152,9 +152,9 @@ function cadastrarNutricionista() {
  *  }
  * 
  * @return $vct 
- * {
+ *  {
  *      'vct' : *[1-9].*[1-9]
- * }
+ *  }
  */
 function analisarVCT() {
     $request = \Slim\Slim::getInstance()->request();
@@ -165,10 +165,13 @@ function analisarVCT() {
     $alturaCm = ($aluno->altura * FATOR_CENTIMETRO);
     $idade = $aluno->idade;
 
+    //TODO: Validação do dados de entrada.
     // Receber altura em metros e converter para centímetros.
-    if ($aluno->sexo == 'M') {
+    if ($aluno->sexo == MASCULINO) {
+        //TODO: Inserir explicação da fórmula;
         $tmb = 655 + (9.6 * $peso) + (1.8 * $alturaCm) - (4.7 * $idade);
     } else {
+        //TODO: Inserir explicação da fórmula;
         $tmb = 655 + (14 * $peso) + (5 * $alturaCm) - (6.7 * $idade);
     }
 
@@ -232,6 +235,8 @@ function verificarLogin() {
     $login = $usuarioJson->login;
     $senha = $usuarioJson->senha;
 
+    //TODO: Validação do dados de entrada para o login do usuário.
+    
     $db = new DbHandler();
     $usuario = $db->selectLogin($login, $senha);
 
@@ -267,7 +272,6 @@ function verificarLogin() {
  */
 
 function verificarPercentil() {
-
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $percentilJson = json_decode($body);
@@ -276,12 +280,14 @@ function verificarPercentil() {
     $idadeMeses = $percentilJson->idadeMeses;
     $sexo = $percentilJson->sexo;
 
+    //TODO: Validação do dados de entrada para o cálulo do Percentil.
+    
     $db = new DbHandler();
     $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
 
     if (empty($percentil)) {
         $erro = new Erro();
-        $erro->codigo = 002;
+        $erro->codigo = 003;
         $erro->mensagem = "Percentil não encontrado.";
 
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
@@ -291,17 +297,14 @@ function verificarPercentil() {
 }
 
 function echoRespnse($status_code, $response) {
-    $slim = \Slim\Slim::getInstance();
-    // Http response code
-    $slim->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $slim = \Slim\Slim::getInstance();    
+    // Http response code    
     $slim->status($status_code);
     // setting response content type to json
-    $slim->contentType('application/json');
-
+    $slim->response()->header('Content-Type', 'application/json;charset=utf-8');
     // Chamada ao método estático para conversão de caracter UTF-8.
     // Tranforma o array ou objeto em JSON.
     echo json_encode(JsonUtil::utf8json($response));
-
     $slim->stop();
 }
 
