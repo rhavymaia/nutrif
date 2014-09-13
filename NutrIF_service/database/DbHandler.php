@@ -27,33 +27,33 @@ class DbHandler {
      * Inserir o usuário.
      * @param type $aluno
      */
-    public function inserirUsuario($aluno, $tipo_usuario) {
+    public function inserirUsuario($aluno, $tipoUsuario) {
 
         //caso usuário não seja criado o valor 0 será atribuído
-        $cd_usuario = 0;
+        $cdUsuario = 0;
 
         // insert query
         $stmt = $this->conn->prepare("INSERT INTO"
                 . " tb_usuario(nm_login, nm_senha, nm_usuario,"
                 . " dt_nascimento, nm_sexo, cd_tipousuario, fl_ativo)"
-                . " values(?, ?, ?, ?, ?, ".$tipo_usuario.", ".USUARIO_ATIVO.")");
+                . " values(?, ?, ?, ?, ?, ".$tipoUsuario.", ".USUARIO_ATIVO.")");
         
         $nascimento = $data = implode("-",
                 array_reverse(explode("/",$aluno->nascimento)));
         
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("sssss", $aluno->login, $aluno->senha, $aluno->nome, 
-                $nascimento, $aluno->sexo);
+                $nascimento, strtolower($aluno->sexo));
         
         // Executar a consulta.
         $result = $stmt->execute();        
         if ($result) {
-            $cd_usuario = $stmt->insert_id;
+            $cdUsuario = $stmt->insert_id;
         }
 
         $stmt->close();
 
-        return $cd_usuario;
+        return $cdUsuario;
     }
 
     /**
@@ -118,7 +118,8 @@ class DbHandler {
 
         $usuario = NULL;
         
-        $sql = "SELECT usuario.nm_login, usuario.nm_usuario, usuario.cd_tipousuario, "
+        $sql = "SELECT usuario.nm_login, usuario.nm_usuario, "
+                . "usuario.cd_tipousuario, "
                 . "usuario.cd_usuario "
                 . " FROM tb_usuario AS usuario"
                 . " WHERE"
@@ -132,8 +133,7 @@ class DbHandler {
         $resultStmt = $stmt->execute();
         $stmt->store_result();
         
-        if ($resultStmt && $stmt->num_rows>0) {
-            
+        if ($resultStmt && $stmt->num_rows>0) {            
             $stmt->bind_result($login, $nome, $tipoUsuario, $codigo);
             $stmt->fetch();            
             $usuario = new Usuario();
