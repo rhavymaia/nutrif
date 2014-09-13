@@ -5,6 +5,7 @@ require_once 'database/DbHandler.php';
 require_once 'util/constantes.php';
 require_once 'entidade/Server.class.php';
 require_once './entidade/Usuario.class.php';
+require_once './entidade/Percentil.class.php';
 require_once './entidade/Erro.php';
 require_once './util/JsonUtil.php';
 
@@ -19,6 +20,7 @@ $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
 $slim->post('/analisarVCT', 'analisarVCT');
 $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
+$slim->post('/verificarPercentil', 'verificarPercentil');
 
 
 function authenticate(\Slim\Route $route) {
@@ -39,6 +41,7 @@ function statusServer() {
 /**
  * Cadastrar Aluno.
  * @param $aluno
+ *  
  *  {
  *      nome: "valor",
  *      login: "user@local.com",
@@ -47,7 +50,8 @@ function statusServer() {
  *      nascimento: "dd/mm/YYYY",
  *      nivel: [1-3],
  *      sexo: "M" | "F"         
- *  } 
+ *  }
+ *  
  *  
  * @return $aluno (http - 200)
  *  {
@@ -58,7 +62,7 @@ function statusServer() {
  *  {
  *      codigo: [1-9],
  *      mensagem: "Erro"
- *  } 
+ * } 
  * @author Rhavy Maia Guedes rhavy.maia@gmail.com
  */
 function cadastrarAluno() {
@@ -87,6 +91,7 @@ function cadastrarAluno() {
 /**
  * Cadastrar Nutricionista.
  * @param $nutricionista
+ *  
  *  {
  *      nome: "valor",
  *      login: "user@local.com",
@@ -98,6 +103,7 @@ function cadastrarAluno() {
  *      sexo: "M" | "F"         
  *  }
  *  
+ *  
  * @return $nutricionista (http - 200)
  *  {
  *      idUsuario: [1-9],
@@ -107,7 +113,7 @@ function cadastrarAluno() {
  *  {
  *      codigo: [1-9],
  *      mensagem: "Erro"
- *  } 
+ * } 
  * @author Larissa Félix larissafelix.felix@gmail.com
  */
 function cadastrarNutricionista() {
@@ -128,7 +134,7 @@ function cadastrarNutricionista() {
     } else {
         $erro = new Erro();
         $erro->codigo = 001;
-        $erro->mensagem = "Impossível criar usuario.";
+        $erro->mensagem = "Impossivel criar usuario.";
         echoRespnse(HTTP_ERRO_INTERNO, $erro);
     }
 }
@@ -137,7 +143,7 @@ function cadastrarNutricionista() {
  * Analisar o Valor calórico total (VCT);
  * 
  * @param $aluno 
- *  {
+ * 	{
  *      'peso' : *[1-9].*[1-9],
  *      'altura' : *[1-9].*[1-9],
  *      'sexo' : 'M' | 'F',
@@ -146,9 +152,9 @@ function cadastrarNutricionista() {
  *  }
  * 
  * @return $vct 
- *  {
+ * {
  *      'vct' : *[1-9].*[1-9]
- *  }
+ * }
  */
 function analisarVCT() {
     $request = \Slim\Slim::getInstance()->request();
@@ -241,19 +247,56 @@ function verificarLogin() {
 }
 
 /**
- * Envio do response.
+ * Descrição
+ * @param $percentil
+ *  {
+ *    sexo: "M" | "F",
+ *    idadeMeses: [1-9], 
+ *    imc: [1-9] 
+ *  }
  * 
- * @param type $status_code
- * @param type $response
+ * @return $percentil HTTP-202
+ *  {
+ *      vlPercentil: [1-9],
+ *      cdPercentil: [1-9],
+ *      sexo: "M" | "F",
+ *      imc: [1-9],
+ *      idadeMeses": [1-9]
+ * }
+ * @return $erro HTTP-400
  */
+
+function verificarPercentil() {
+
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $percentilJson = json_decode($body);
+
+    $imc = $percentilJson->imc;
+    $idadeMeses = $percentilJson->idadeMeses;
+    $sexo = $percentilJson->sexo;
+
+    $db = new DbHandler();
+    $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
+
+    if (empty($percentil)) {
+        $erro = new Erro();
+        $erro->codigo = 002;
+        $erro->mensagem = "Percentil não encontrado.";
+
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    } else {
+        echoRespnse(HTTP_ACEITO, $percentil->toArray());
+    }
+}
+
 function echoRespnse($status_code, $response) {
     $slim = \Slim\Slim::getInstance();
-    
     // Http response code
-    $slim->status($status_code);
-    
-    // Setting response content type to json
     $slim->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $slim->status($status_code);
+    // setting response content type to json
+    $slim->contentType('application/json');
 
     // Chamada ao método estático para conversão de caracter UTF-8.
     // Tranforma o array ou objeto em JSON.
