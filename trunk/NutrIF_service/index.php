@@ -78,16 +78,24 @@ function cadastrarAluno() {
     if ($cdUsuario != ID_NAO_RETORNADO
             && $cdUsuario != USUARIO_EXISTENTE) {
         $aluno->idUsuario = $cdUsuario;
-        $id_entrevistado = $db->inserirEntrevistado($aluno);
-        $aluno->idEntrevistado = $id_entrevistado;
-        // Resposta
-        echoRespnse(HTTP_CRIADO, $aluno);
+        $idEntrevistado = $db->inserirEntrevistado($aluno);
         
+        if ($idEntrevistado != ENTREVISTADO_EXISTENTE) {
+            $aluno->idEntrevistado = $idEntrevistado;
+            $aluno->tpUsuario = TP_ALUNO;
+            // Resposta com sucesso.
+            echoRespnse(HTTP_CRIADO, $aluno);
+        } else {
+            $erro = new Erro();
+            $erro->codigo = 005;
+            $erro->mensagem = "Entrevistado já cadastrado.";
+            echoRespnse(HTTP_CONFLITO, $erro);
+        }        
     } else if ($cdUsuario == USUARIO_EXISTENTE) {
         $erro = new Erro();
         $erro->codigo = 004;
         $erro->mensagem = "Usuário já cadastrado.";
-        echoRespnse(HTTP_ERRO_INTERNO, $erro);
+        echoRespnse(HTTP_CONFLITO, $erro);
     } else {
         $erro = new Erro();
         $erro->codigo = 001;

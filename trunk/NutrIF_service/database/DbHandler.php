@@ -88,23 +88,43 @@ class DbHandler {
      */
     public function inserirEntrevistado($entrevistado) {
 
-        // insert query
-        $stmt = $this->conn->prepare("INSERT INTO"
-                . " tb_entrevistado(cd_usuario, nr_matricula, cd_nivelescolar)"
-                . " values(?, ?, ?)");
+        $cdEntrevistado = ID_NAO_RETORNADO;
+        
+        if (!$this->ehEntrevistadoExistente($entrevistado->matricula)) {
+            // insert query
+            $stmt = $this->conn->prepare("INSERT INTO"
+                    . " tb_entrevistado(cd_usuario, nr_matricula,"
+                    . " cd_nivelescolar)"
+                    . " values(?, ?, ?)");
 
-        // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("iii", $entrevistado->idUsuario, $entrevistado->matricula, 
-                $entrevistado->nivel);
+            // Parâmetros: tipos das entradas, entradas.
+            $stmt->bind_param("iii", $entrevistado->idUsuario, $entrevistado->matricula, 
+                    $entrevistado->nivel);
 
-        $result = $stmt->execute();
-        if ($result) {
-            $cd_entrevistado = $stmt->insert_id;
+            $result = $stmt->execute();
+            if ($result) {
+                $cdEntrevistado = $stmt->insert_id;
+            }
+
+            $stmt->close();
+        } else {
+            $cdEntrevistado = ENTREVISTADO_EXISTENTE;
         }
-
+        
+        return $cdEntrevistado;
+    }
+    
+    private function ehEntrevistadoExistente($matricula) {
+        
+        $stmt = $this->conn->prepare("SELECT entrevistado.cd_entrevistado "
+                . "FROM tb_entrevistado AS entrevistado "
+                . "WHERE entrevistado.nr_matricula = ?");
+        $stmt->bind_param("i", $matricula);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
         $stmt->close();
-
-        return $cd_entrevistado;
+        return $num_rows > 0;
     }
     
     /**
