@@ -26,6 +26,9 @@
     // Usuáro não cadastrado
     define('USUARIO_EXISTENTE', -1);
     
+    // Usuáro não cadastrado
+    define('ENTREVISTADO_EXISTENTE', -1);
+    
     // Sexo masculino.
     define('MASCULINO', 'm');
     
@@ -40,5 +43,8 @@
     define ('HTTP_REQUISICAO_INVALIDA', 400);
     
     // Código HTTP - Erro interno
-    define ('HTTP_ERRO_INTERNO', 500);
+    define ('HTTP_CONFLITO', 409);
+    
+    // Código HTTP - Erro interno
+    define ('HTTP_ERRO_INTERNO', 500);    
 ?>
