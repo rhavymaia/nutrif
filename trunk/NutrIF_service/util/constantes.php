@@ -23,6 +23,9 @@
     // Usuáro não cadastrado
     define('ID_NAO_RETORNADO', 0);
     
+    // Usuáro não cadastrado
+    define('USUARIO_EXISTENTE', -1);
+    
     // Sexo masculino.
     define('MASCULINO', 'm');
     

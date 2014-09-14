@@ -70,16 +70,24 @@ function cadastrarAluno() {
     $aluno = json_decode($body);
 
     //TODO: Validação do dados de entrada para o cadastro do entrevistado.
-    // Persistir os dados no Banco.
+    //TODO: Verificar se o usuário já está cadastrado.    
+    // Persistir os dados na tabela tb_usuario.
     $db = new DbHandler();
     $cdUsuario = $db->inserirUsuario($aluno, TP_ALUNO);
 
-    if ($cdUsuario != ID_NAO_RETORNADO) {
+    if ($cdUsuario != ID_NAO_RETORNADO
+            && $cdUsuario != USUARIO_EXISTENTE) {
         $aluno->idUsuario = $cdUsuario;
         $id_entrevistado = $db->inserirEntrevistado($aluno);
         $aluno->idEntrevistado = $id_entrevistado;
         // Resposta
         echoRespnse(HTTP_CRIADO, $aluno);
+        
+    } else if ($cdUsuario == USUARIO_EXISTENTE) {
+        $erro = new Erro();
+        $erro->codigo = 004;
+        $erro->mensagem = "Usuário já cadastrado.";
+        echoRespnse(HTTP_ERRO_INTERNO, $erro);
     } else {
         $erro = new Erro();
         $erro->codigo = 001;

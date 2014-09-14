@@ -25,37 +25,62 @@ class DbHandler {
 
     /**
      * Inserir o usuário.
-     * @param type $aluno
+     * @param type $usuario
      */
-    public function inserirUsuario($aluno, $tipoUsuario) {
+    public function inserirUsuario($usuario, $tipoUsuario) {
 
         //caso usuário não seja criado o valor 0 será atribuído
-        $cdUsuario = 0;
+        $cdUsuario = ID_NAO_RETORNADO;
 
-        // insert query
-        $stmt = $this->conn->prepare("INSERT INTO"
-                . " tb_usuario(nm_login, nm_senha, nm_usuario,"
-                . " dt_nascimento, nm_sexo, cd_tipousuario, fl_ativo)"
-                . " values(?, ?, ?, ?, ?, ".$tipoUsuario.", ".USUARIO_ATIVO.")");
-        
-        $nascimento = $data = implode("-",
-                array_reverse(explode("/",$aluno->nascimento)));
-        
-        // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("sssss", $aluno->login, $aluno->senha, $aluno->nome, 
-                $nascimento, strtolower($aluno->sexo));
-        
-        // Executar a consulta.
-        $result = $stmt->execute();        
-        if ($result) {
-            $cdUsuario = $stmt->insert_id;
+        if (!$this->ehUsuarioExistente($usuario->login)) {   
+            // Caso o usuário não exista será construída o Insert na tb_usuario.
+            $stmt = $this->conn->prepare("INSERT INTO tb_usuario(nm_login, "
+                    . "nm_senha, nm_usuario, dt_nascimento, nm_sexo, "
+                    . "cd_tipousuario, fl_ativo)"
+                    . " values(?, ?, ?, ?, ?, ".$tipoUsuario.", "
+                    .USUARIO_ATIVO.")");
+
+            $nascimento = $data = implode("-",
+                    array_reverse(explode("/",$usuario->nascimento)));
+            $sexo = strtolower($usuario->sexo);
+            
+            // Parâmetros: tipos das entradas, entradas.
+            $stmt->bind_param("sssss", $usuario->login, $usuario->senha, 
+                    $usuario->nome, $nascimento, $sexo);
+
+            // Executar a consulta.
+            $result = $stmt->execute();        
+            if ($result) {
+                $cdUsuario = $stmt->insert_id;
+            }
+            $stmt->close();
+        } else {
+            // Código para usuário já existente.
+            $cdUsuario = USUARIO_EXISTENTE;
         }
-
-        $stmt->close();
-
+        
         return $cdUsuario;
     }
 
+    /**
+     * Verifica login(e-mail) baseado em e-mail duplicado no banco.
+     * 
+     * @param String $login
+     * @return boolean
+     */
+    private function ehUsuarioExistente($login) {
+        
+        $stmt = $this->conn->prepare("SELECT usuario.cd_usuario "
+                . "FROM tb_usuario AS usuario "
+                . "WHERE usuario.nm_login = ?");
+        $stmt->bind_param("s", $login);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+    }
+    
     /**
      * Inserir entrevistado.
      * @param type $entrevistado
@@ -69,7 +94,8 @@ class DbHandler {
                 . " values(?, ?, ?)");
 
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("iii", $entrevistado->idUsuario, $entrevistado->matricula, $entrevistado->nivel);
+        $stmt->bind_param("iii", $entrevistado->idUsuario, $entrevistado->matricula, 
+                $entrevistado->nivel);
 
         $result = $stmt->execute();
         if ($result) {
