@@ -51,7 +51,6 @@ function statusServer() {
  *      sexo: "M" | "F"         
  *  }
  *  
- *  
  * @return $aluno (http - 200)
  *  {
  *      idUsuario: [1-9],
@@ -69,8 +68,7 @@ function cadastrarAluno() {
     $body = $request->getBody();
     $aluno = json_decode($body);
 
-    //TODO: Validação do dados de entrada para o cadastro do entrevistado.
-    //TODO: Verificar se o usuário já está cadastrado.    
+    //TODO: Validação do dados de entrada para o cadastro do entrevistado.  
     // Persistir os dados na tabela tb_usuario.
     $db = new DbHandler();
     $cdUsuario = $db->inserirUsuario($aluno, TP_ALUNO);
