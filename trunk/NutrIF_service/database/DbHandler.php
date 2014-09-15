@@ -31,22 +31,23 @@ class DbHandler {
 
         //caso usuário não seja criado o valor 0 será atribuído
         $cdUsuario = ID_NAO_RETORNADO;
-
+        
         if (!$this->ehUsuarioExistente($usuario->login)) {   
             // Caso o usuário não exista será construída o Insert na tb_usuario.
             $stmt = $this->conn->prepare("INSERT INTO tb_usuario(nm_login, "
-                    . "nm_senha, nm_usuario, dt_nascimento, nm_sexo, "
+                    . "nm_senha, vl_authkey, nm_usuario, dt_nascimento, nm_sexo, "
                     . "cd_tipousuario, fl_ativo)"
-                    . " values(?, ?, ?, ?, ?, ".$tipoUsuario.", "
+                    . " values(?, ?, ?, ?, ?, ?, ".$tipoUsuario.", "
                     .USUARIO_ATIVO.")");
 
             $nascimento = $data = implode("-",
                     array_reverse(explode("/",$usuario->nascimento)));
             $sexo = strtolower($usuario->sexo);
+            $authKey = $this->gerarAuthKey();
             
             // Parâmetros: tipos das entradas, entradas.
-            $stmt->bind_param("sssss", $usuario->login, $usuario->senha, 
-                    $usuario->nome, $nascimento, $sexo);
+            $stmt->bind_param("ssssss", $usuario->login, $usuario->senha, 
+                    $authKey, $usuario->nome, $nascimento, $sexo);
 
             // Executar a consulta.
             $result = $stmt->execute();        
@@ -68,8 +69,7 @@ class DbHandler {
      * @param String $login
      * @return boolean
      */
-    private function ehUsuarioExistente($login) {
-        
+    private function ehUsuarioExistente($login) {        
         $stmt = $this->conn->prepare("SELECT usuario.cd_usuario "
                 . "FROM tb_usuario AS usuario "
                 . "WHERE usuario.nm_login = ?");
@@ -79,6 +79,13 @@ class DbHandler {
         $num_rows = $stmt->num_rows;
         $stmt->close();
         return $num_rows > 0;
+    }
+    
+    /**
+     * Generating random Unique MD5 String for user Api key
+     */
+    private function gerarAuthKey() {
+        return md5(uniqid(rand(), true));
     }
     
     /**
