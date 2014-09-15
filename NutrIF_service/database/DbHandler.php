@@ -2,6 +2,7 @@
 
 require_once './util/constantes.php';
 require_once './entidade/Usuario.class.php';
+require_once './entidade/Pesquisa.class.php';
 
 /**
  * Descrição
@@ -133,6 +134,7 @@ class DbHandler {
         $stmt->close();
         return $num_rows > 0;
     }
+
     
     /**
      * 
@@ -141,26 +143,42 @@ class DbHandler {
      */
     public function inserirNutricionista($nutricionista){
         
-         // insert query
-        $stmt = $this->conn->prepare("INSERT INTO"
-                . " tb_nutricionista(cd_usuario, nm_crn, nm_siape, cd_instituicao)"
-                . " values(?, ?, ?, ?)");
-        
-        // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("iiii", $nutricionista->idUsuario, $nutricionista->crn,
-                $nutricionista->siape, $nutricionista->instituicao);
-        
-        $result = $stmt->execute();        
-        if ($result) {
-            $cd_nutricionista = $stmt->insert_id; 
-        }    
+     $cdNutricionista = ID_NAO_RETORNADO;
+     
+     if (!$this->ehNutricionistaExistente($nutricionista->crn,$nutricionista->siape)){
+            // insert query
+           $stmt = $this->conn->prepare("INSERT INTO"
+                   . " tb_nutricionista(cd_usuario, nm_crn, nm_siape, cd_instituicao)"
+                   . " values(?, ?, ?, ?)");
 
-        $stmt->close();
-        
-        return $cd_nutricionista;
+           // Parâmetros: tipos das entradas, entradas.
+           $stmt->bind_param("iiii", $nutricionista->idUsuario, $nutricionista->crn,
+                   $nutricionista->siape, $nutricionista->instituicao);
+
+           $result = $stmt->execute();        
+           if ($result) {
+               $cdNutricionista = $stmt->insert_id; 
+               $stmt->close();
+           }    
+        }else{
+         $cdNutricionista = ENTREVISTADO_EXISTENTE;  
+        }
+           return $cdNutricionista;
     }
     
-    
+    private function ehNutricionistaExistente($crn,$siap) {
+ 
+        $stmt = $this->conn->prepare("SELECT cd_nutricionista "
+                . "FROM tb_nutricionista "
+                . "WHERE nm_crn = ? OR nm_siape = ?");
+        $stmt->bind_param("ii",$crn,$siap);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+    }
+
     /**
      * Descrição
      * @param type $login
