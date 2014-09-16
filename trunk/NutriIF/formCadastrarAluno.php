@@ -3,7 +3,7 @@
     require_once ('validate/erro.php');
     // Cabeçalho e menu da página html.
     require_once 'template/header.php';
-    require_once 'js/mascara.js'
+    //require_once 'js/mascara.js'
     //require_once 'js/validacao.js';
 ?>
 
