@@ -10,3 +10,6 @@ ALTER TABLE `tb_usuario` ADD `vl_authkey` VARCHAR(32) NOT NULL AFTER `nm_senha`;
 
 -- 15/09/2014
 ALTER TABLE  `tb_nutricionista` CHANGE  `cd_nutricionista`  `cd_nutricionista` INT( 11 ) NOT NULL AUTO_INCREMENT
+
+-- 16/09/2014
+ALTER TABLE  `tb_anamnese` CHANGE  `dt_anaminese`  `dt_anamnese` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
