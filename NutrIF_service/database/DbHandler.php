@@ -122,6 +122,11 @@ class DbHandler {
         return $cdEntrevistado;
     }
     
+    /**
+     * 
+     * @param type $matricula
+     * @return type
+     */
     private function ehEntrevistadoExistente($matricula) {
         
         $stmt = $this->conn->prepare("SELECT entrevistado.cd_entrevistado "
@@ -161,17 +166,24 @@ class DbHandler {
                $stmt->close();
            }    
         }else{
+         //Lembrar de mudar os nomes das constantes para servir pra aluno e nutricionista
          $cdNutricionista = ENTREVISTADO_EXISTENTE;  
         }
            return $cdNutricionista;
     }
     
+    /**
+     * 
+     * @param type $crn
+     * @param type $siap
+     * @return type
+     */
     private function ehNutricionistaExistente($crn,$siap) {
  
         $stmt = $this->conn->prepare("SELECT cd_nutricionista "
                 . "FROM tb_nutricionista "
                 . "WHERE nm_crn = ? OR nm_siape = ?");
-        $stmt->bind_param("ii",$crn,$siap);
+        $stmt->bind_param("ii",$crn, $siap);
         $stmt->execute();
         $stmt->store_result();
         $num_rows = $stmt->num_rows;
