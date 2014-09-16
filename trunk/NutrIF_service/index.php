@@ -139,13 +139,31 @@ function cadastrarNutricionista() {
     $db = new DbHandler();
     $cd_usuario = $db->inserirUsuario($nutricionista, TP_NUTRICIONISTA);
 
-    if ($cd_usuario != ID_NAO_RETORNADO) {
+    if ($cd_usuario != ID_NAO_RETORNADO && $cd_usuario != USUARIO_EXISTENTE) {
         $nutricionista->idUsuario = $cd_usuario;
         $id_nutricionista = $db->inserirNutricionista($nutricionista);
-        $nutricionista->idNutricionista = $id_nutricionista;
-        // Resposta
-        echoRespnse(HTTP_CRIADO, $nutricionista);
-    } else {
+                
+        if ($id_nutricionista != ENTREVISTADO_EXISTENTE){
+            $nutricionista->idNutricionista = $id_nutricionista;
+            $nutricionista->tpUsuario = TP_NUTRICIONISTA;
+            
+            //Resposta com sucesso
+            echoRespnse(HTTP_CRIADO, $nutricionista);
+        }
+        else{
+            $erro = new Erro();
+            $erro->codigo = 005;
+            $erro->mensagem = "Nutricionista já cadastrado(a).";
+            echoRespnse(HTTP_CONFLITO, $erro); 
+        }
+        
+    } else if ($cd_usuario == USUARIO_EXISTENTE){
+        $erro = new Erro();
+        $erro->codigo = 004;
+        $erro->mensagem = "Usuário já cadastrado.";
+        echoRespnse(HTTP_CONFLITO, $erro);       
+        
+    }else{
         $erro = new Erro();
         $erro->codigo = 001;
         $erro->mensagem = "Impossível criar usuário.";
