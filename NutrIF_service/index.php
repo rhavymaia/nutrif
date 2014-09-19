@@ -21,6 +21,7 @@ $slim->post('/analisarVCT', 'analisarVCT');
 $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
+$slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
 
 
 function authenticate(\Slim\Route $route) {   
@@ -326,6 +327,43 @@ function verificarPercentil() {
     } else {
         echoRespnse(HTTP_ACEITO, $percentil->toArray());
     }
+}
+
+/** @param $anamnese
+{
+    "nutricionista": [1-9],
+    "entrevistado": [1-9],
+    "pesquisa": [1-9],
+    "peso": [1-9],
+    "altura": [1-9],
+    "nivelEsporte": [1-5],
+    "perfilAlimentar": [1-9]
+    }
+ */
+ 
+function cadastrarAnamnese(){
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $anamnese = json_decode($body);
+    
+    $cd_anamnese = NULL;
+
+    //TODO: Validação do dados de entrada para o cadastro da anamnese.
+    // Persistir os dados no Banco.
+    $db = new DbHandler();
+    $cd_anamnese = $db->inserirDadosAntropometricos($anamnese);
+    
+    if (empty($cd_anamnese)) {
+        $erro = new Erro();
+        $erro->codigo = 002;
+        $erro->mensagem = "Problema ao inserir a anamnese.";
+
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    } else {
+        echoRespnse(HTTP_CRIADO, $anamnese);
+    }
+    
+
 }
 
 function echoRespnse($status_code, $response) {

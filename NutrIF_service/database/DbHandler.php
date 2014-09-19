@@ -281,6 +281,35 @@ class DbHandler {
         return $percentil;
     }
     
+    /**
+     * 
+     * @param type $anamnese
+     * @return type
+     */
+    function inserirDadosAntropometricos($anamnese){
+      
+        $cdAnamnese = ID_NAO_RETORNADO;
+        
+         $stmt = $this->conn->prepare("INSERT INTO"
+                   . " tb_anamnese(cd_nutricionista, cd_entrevistado, cd_pesquisa,"
+                   . " nr_peso, nr_altura, nr_nivel_esporte, cd_perfilalimentar)"
+                   . " values(?, ?, ?, ?, ?, ?, ?)");
+         
+        // Parâmetros: tipos das entradas, entradas.
+           $stmt->bind_param("iiiiddi", $anamnese->nutricionista, $anamnese->entrevistado,
+                   $anamnese->pesquisa, $anamnese->peso, $anamnese->altura, 
+                   $anamnese->nivelEsporte, $anamnese->perfilAlimentar);
+
+           $result = $stmt->execute();        
+           if ($result) {
+               $cdAnamnese = $stmt->insert_id; 
+               $stmt->close();
+           }    
+  
+        return $cdAnamnese;
+    }
+    
+   
 }
 
 ?>
