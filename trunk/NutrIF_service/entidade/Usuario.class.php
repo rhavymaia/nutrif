@@ -16,6 +16,8 @@ class Usuario {
     private $nome;
     
     private $nascimento;
+
+    private $sexo;
     
     private $tipoUsuario;
     
@@ -47,6 +49,14 @@ class Usuario {
 
     public function getSenha() {
         return $this->senha;
+    }
+    
+    public function getSexo() {
+        return $this->sexo;
+    }
+
+    public function setSexo($sexo) {
+        $this->sexo = $sexo;
     }
 
     public function setSenha($senha) {

@@ -22,7 +22,7 @@ $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
-
+$slim->post('/verificarPercentil2', 'verificarPercentil2');
 
 function authenticate(\Slim\Route $route) {   
 }
@@ -329,6 +329,7 @@ function verificarPercentil() {
     }
 }
 
+
 /** @param $anamnese
 {
     "nutricionista": [1-9],
@@ -362,10 +363,41 @@ function cadastrarAnamnese(){
     } else {
         echoRespnse(HTTP_CRIADO, $anamnese);
     }
-    
-
 }
 
+function verificarPercentil2() {
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $percentilJson = json_decode($body);
+
+    $matricula = $percentilJson->matricula;
+    
+    $db = new DbHandler();
+        
+    $entrevistado = $db->selectEntrevistado($matricula);
+    
+    $dadosAntropometricos= $db->selectDadosAntropometricos($matricula);
+    
+    $peso = $dadosAntropometricos->getPeso();
+ 
+    $alturaMetros = ($dadosAntropometricos->getAltura())/100;   
+
+    // Cálculo do IMC
+    $imc = number_format($peso/pow($alturaMetros, 2), 1);
+    
+    $percentil = $db->selecionarPercentil($imc, $entrevistado->getNascimento(), 
+            $entrevistado->getSexo());
+
+    if (empty($percentil)) {
+        $erro = new Erro();
+        $erro->codigo = 003;
+        $erro->mensagem = "Percentil não encontrado.";
+
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    } else {
+        echoRespnse(HTTP_ACEITO, $percentil->toArray());
+    }
+}
 function echoRespnse($status_code, $response) {
     $slim = \Slim\Slim::getInstance();    
     // Http response code    
@@ -377,6 +409,8 @@ function echoRespnse($status_code, $response) {
     echo json_encode(JsonUtil::utf8json($response));
     $slim->stop();
 }
+
+
 
 $slim->run();
 ?>

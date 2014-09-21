@@ -9,7 +9,17 @@ require_once ('Usuario.class.php');
  */
 class Entrevistado extends Usuario{
     
-    private $matricula;
+    private $codigo;
+    
+    public function getCodigo() {
+        return $this->codigo;
+    }
+
+    public function setCodigo($codigo) {
+        $this->codigo = $codigo;
+    }
+
+        private $matricula;
     
     private $nivelEscolar;
     
