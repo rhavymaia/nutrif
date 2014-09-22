@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Anamnese
+ * Description of Anamnese
  *
  * @author Rhavy
  */
@@ -9,13 +9,13 @@ class Anamnese {
     
     private $codigo;
     
-    private $nutricionista;
+    private $data;
     
     private $entrevistado;
     
-    private $pesquisa;
+    private $nutricionista;
     
-    private $dtAnamnese;
+    private $pesquisa;
     
     private $peso;
     
@@ -27,24 +27,28 @@ class Anamnese {
     
     public function __construct(){}
     
+    public function setCodigo($codigo) {
+        $this->codigo = $codigo;
+    }
+    
     public function getCodigo() {
         return $this->codigo;
     }
-
-    public function getNutricionista() {
-        return $this->nutricionista;
+    
+    public function getData() {
+        return $this->data;
     }
 
     public function getEntrevistado() {
         return $this->entrevistado;
     }
 
-    public function getPesquisa() {
-        return $this->pesquisa;
+    public function getNutricionista() {
+        return $this->nutricionista;
     }
 
-    public function getDtAnamnese() {
-        return $this->dtAnamnese;
+    public function getPesquisa() {
+        return $this->pesquisa;
     }
 
     public function getPeso() {
@@ -63,24 +67,20 @@ class Anamnese {
         return $this->perfilAlimentar;
     }
 
-    public function setCodigo($codigo) {
-        $this->codigo = $codigo;
-    }
-
-    public function setNutricionista($nutricionista) {
-        $this->nutricionista = $nutricionista;
+    public function setData($data) {
+        $this->data = $data;
     }
 
     public function setEntrevistado($entrevistado) {
         $this->entrevistado = $entrevistado;
     }
 
-    public function setPesquisa($pesquisa) {
-        $this->pesquisa = $pesquisa;
+    public function setNutricionista($nutricionista) {
+        $this->nutricionista = $nutricionista;
     }
 
-    public function setDtAnamnese($dtAnamnese) {
-        $this->dtAnamnese = $dtAnamnese;
+    public function setPesquisa($pesquisa) {
+        $this->pesquisa = $pesquisa;
     }
 
     public function setPeso($peso) {
@@ -98,9 +98,8 @@ class Anamnese {
     public function setPerfilAlimentar($perfilAlimentar) {
         $this->perfilAlimentar = $perfilAlimentar;
     }
-    
-      public function toArray() {
-        return get_object_vars($this);
-    }
+
+
 }
+
 ?>

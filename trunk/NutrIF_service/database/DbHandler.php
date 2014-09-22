@@ -3,6 +3,8 @@
 require_once './util/constantes.php';
 require_once './entidade/Usuario.class.php';
 require_once './entidade/Pesquisa.class.php';
+require_once './entidade/Entrevistado.class.php';
+require_once './entidade/Anamnese.class.php';
 
 /**
  * Descrição
@@ -342,41 +344,50 @@ class DbHandler {
         return $percentil;
     }
 
-    public function selectEntrevistado($matricula) {
+    public function selectDadosEntrevistado($matricula) {
         
-        $entrevistado = NULL;
+        $anamnese = NULL;
 
         // Montar consulta.
-        $sql = "SELECT e.cd_entrevistado, e.nr_matricula, "
-                . "u.dt_nascimento, u.nm_sexo "
-                . "FROM tb_entrevistado AS e, tb_usuario AS u "
-                . "WHERE e.cd_usuario = u.cd_usuario AND e.nr_matricula = ?";
+        $sql = "SELECT e.cd_entrevistado, e.nr_matricula, u.dt_nascimento,"
+            . " u.nm_sexo, a.nr_peso, a.nr_altura"
+            ." FROM tb_entrevistado AS e, tb_usuario AS u, tb_anamnese AS a"
+            ." WHERE e.cd_usuario = u.cd_usuario"
+            ." AND e.cd_entrevistado = a.cd_entrevistado"
+            ." AND e.nr_matricula = ?";
 
          $stmt = $this->conn->prepare($sql);
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("i",$matricula);
+        $stmt->bind_param("i", $matricula);
         $resultStmt = $stmt->execute();
         $stmt->store_result();
 
         if ($resultStmt && $stmt->num_rows > 0) {
 
-            $stmt->bind_result($cdEntrevistado, $nrMatricula, $dtNascimento, $tpSexo);
+            $stmt->bind_result($cdEntrevistado, $nrMatricula, $dtNascimento,
+                    $tpSexo, $peso, $altura);
             $stmt->fetch();
 
             $entrevistado = new Entrevistado();
             $entrevistado->setMatricula($nrMatricula);
             $entrevistado->setNascimento($dtNascimento);
             $entrevistado->setSexo($tpSexo);
+            $entrevistado->setCodigo($cdEntrevistado);
             
+            $anamnese = new Anamnese();
+            $anamnese->setPeso($peso);
+            $anamnese->setAltura($altura);   
+            $anamnese->setEntrevistado($entrevistado);
+             
         }
 
         $stmt->close();
 
-        return $entrevistado;
+        return $anamnese;
         
     }
 
-    public function selectDadosAntropometricos($entrevistado) {
+    public function selectDadosAntropometricos($matricula) {
 
         $dadosAntropometricos = NULL;
         // Montar consulta.
@@ -384,8 +395,9 @@ class DbHandler {
                 "FROM tb_anamnese ".
                 "WHERE nr_matricula = ?";
 
+         $stmt = $this->conn->prepare($sql);
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("i",$entrevistado);
+        $stmt->bind_param("i", $matricula);
         $resultStmt = $stmt->execute();
         $stmt->store_result();
 

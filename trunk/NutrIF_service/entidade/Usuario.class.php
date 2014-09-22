@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Usuario
+ * Description of Usuario
  *
  * @author Rhavy
  */
@@ -13,11 +13,7 @@ class Usuario {
     
     private $senha;
     
-    private $nome;
-    
     private $nascimento;
-
-    private $sexo;
     
     private $tipoUsuario;
     
@@ -25,32 +21,26 @@ class Usuario {
     
     private $dataRegistro;
     
-    public function toArray() {
-        return get_object_vars($this);
-    }
+    private $sexo;
 
     public function __construct() {}
-
-    public function getCodigo() {
-        return $this->codigo;
-    }
 
     public function setCodigo($codigo) {
         $this->codigo = $codigo;
     }
 
-    public function getLogin() {
-        return $this->login;
+    public function getCodigo() {
+        return $this->codigo;
     }
 
     public function setLogin($login) {
         $this->login = $login;
     }
 
-    public function getSenha() {
-        return $this->senha;
+    public function getLogin() {
+        return $this->login;
     }
-    
+
     public function getSexo() {
         return $this->sexo;
     }
@@ -59,48 +49,45 @@ class Usuario {
         $this->sexo = $sexo;
     }
 
-    public function setSenha($senha) {
+        public function setSenha($senha) {
         $this->senha = $senha;
     }
 
-    public function getNome() {
-        return $this->nome;
-    }
-
-    public function setNome($nome) {
-        $this->nome = $nome;
-    }
-
-    public function getNascimento() {
-        return $this->nascimento;
+    public function getSenha() {
+        return $this->senha;
     }
 
     public function setNascimento($nascimento) {
         $this->nascimento = $nascimento;
     }
 
-    public function getTipoUsuario() {
-        return $this->tipoUsuario;
+    public function getNascimento() {
+        return $this->nascimento;
     }
-
+    
     public function setTipoUsuario($tipoUsuario) {
         $this->tipoUsuario = $tipoUsuario;
     }
 
-    public function getAtivo() {
-        return $this->ativo;
+    public function getTipoUsuario() {
+        return $this->tipoUsuario;
     }
 
     public function setAtivo($ativo) {
         $this->ativo = $ativo;
     }
 
-    public function getDataRegistro() {
-        return $this->dataRegistro;
+    public function getAtivo() {
+        return $this->ativo;
     }
 
     public function setDataRegistro($dataRegistro) {
         $this->dataRegistro = $dataRegistro;
     }
+
+    public function getDataRegistro() {
+        return $this->dataRegistro;
+    }
 }
+
 ?>

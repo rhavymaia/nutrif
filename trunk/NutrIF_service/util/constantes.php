@@ -17,6 +17,12 @@
     // Constante do grupo da tabela por faixa de idade
     define ('FATOR',8);
     
+    //Margem de busca por valor do percentil
+    define ('MARGEM_LIMITE_PERCENTIL', 4);
+
+    // tabela de imc de 5 aos 19 anos
+    define ('IDADE_PERCENTIL_19', 228);
+    
     // Constante do fator centimetro
     define('FATOR_CENTIMETRO', 100);
     

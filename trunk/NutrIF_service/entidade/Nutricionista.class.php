@@ -3,42 +3,33 @@
 require_once ('Usuario.class.php');
 
 /**
- * Nutricionista
+ * Description of Nutricionista
  *
  * @author Rhavy
  */
 class Nutricionista extends Usuario{
         
-    private $crn;
-    
-    private $siape;
+    private $nome;
     
     private $instituicao;
     
     public function __construct(){}
     
-    public function getCrn() {
-        return $this->crn;
+    public function setNome($nome) { 
+         $this->nome = $nome; 
     }
-
-    public function getSiape() {
-        return $this->siape;
+    
+    public function getNome() { 
+        return $this->nome; 
     }
-
-    public function getInstituicao() {
-        return $this->instituicao;
+    
+    public function setInstituicao($instituicao) { 
+         $this->instituicao = $instituicao; 
     }
-
-    public function setCrn($crn) {
-        $this->crn = $crn;
-    }
-
-    public function setSiape($siape) {
-        $this->siape = $siape;
-    }
-
-    public function setInstituicao($instituicao) {
-        $this->instituicao = $instituicao;
-    }       
+    
+    public function getInstituicao() { 
+        return $this->instituicao; 
+    }        
 }
+
 ?>

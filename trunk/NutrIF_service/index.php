@@ -8,6 +8,7 @@ require_once './entidade/Usuario.class.php';
 require_once './entidade/Percentil.class.php';
 require_once './entidade/Erro.php';
 require_once './util/JsonUtil.php';
+require_once './util/funcoesPercentil.php';
 
 // Slim
 require '../Slim/Slim/Slim.php';
@@ -24,7 +25,8 @@ $slim->post('/verificarPercentil', 'verificarPercentil');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
 $slim->post('/verificarPercentil2', 'verificarPercentil2');
 
-function authenticate(\Slim\Route $route) {   
+function authenticate(\Slim\Route $route) {
+    
 }
 
 // Funções    
@@ -74,11 +76,10 @@ function cadastrarAluno() {
     $db = new DbHandler();
     $cdUsuario = $db->inserirUsuario($aluno, TP_ALUNO);
 
-    if ($cdUsuario != ID_NAO_RETORNADO
-            && $cdUsuario != USUARIO_EXISTENTE) {
+    if ($cdUsuario != ID_NAO_RETORNADO && $cdUsuario != USUARIO_EXISTENTE) {
         $aluno->idUsuario = $cdUsuario;
         $idEntrevistado = $db->inserirEntrevistado($aluno);
-        
+
         if ($idEntrevistado != ENTREVISTADO_EXISTENTE) {
             $aluno->idEntrevistado = $idEntrevistado;
             $aluno->tpUsuario = TP_ALUNO;
@@ -89,7 +90,7 @@ function cadastrarAluno() {
             $erro->codigo = 005;
             $erro->mensagem = "Entrevistado já cadastrado.";
             echoRespnse(HTTP_CONFLITO, $erro);
-        }        
+        }
     } else if ($cdUsuario == USUARIO_EXISTENTE) {
         $erro = new Erro();
         $erro->codigo = 004;
@@ -143,28 +144,25 @@ function cadastrarNutricionista() {
     if ($cd_usuario != ID_NAO_RETORNADO && $cd_usuario != USUARIO_EXISTENTE) {
         $nutricionista->idUsuario = $cd_usuario;
         $id_nutricionista = $db->inserirNutricionista($nutricionista);
-                
-        if ($id_nutricionista != ENTREVISTADO_EXISTENTE){
+
+        if ($id_nutricionista != ENTREVISTADO_EXISTENTE) {
             $nutricionista->idNutricionista = $id_nutricionista;
             $nutricionista->tpUsuario = TP_NUTRICIONISTA;
-            
+
             //Resposta com sucesso
             echoRespnse(HTTP_CRIADO, $nutricionista);
-        }
-        else{
+        } else {
             $erro = new Erro();
             $erro->codigo = 005;
             $erro->mensagem = "Nutricionista já cadastrado(a).";
-            echoRespnse(HTTP_CONFLITO, $erro); 
+            echoRespnse(HTTP_CONFLITO, $erro);
         }
-        
-    } else if ($cd_usuario == USUARIO_EXISTENTE){
+    } else if ($cd_usuario == USUARIO_EXISTENTE) {
         $erro = new Erro();
         $erro->codigo = 004;
         $erro->mensagem = "Usuário já cadastrado.";
-        echoRespnse(HTTP_CONFLITO, $erro);       
-        
-    }else{
+        echoRespnse(HTTP_CONFLITO, $erro);
+    } else {
         $erro = new Erro();
         $erro->codigo = 001;
         $erro->mensagem = "Impossível criar usuário.";
@@ -269,9 +267,9 @@ function verificarLogin() {
     $senha = $usuarioJson->senha;
 
     //TODO: Validação do dados de entrada para o login do usuário.
-    
+
     $db = new DbHandler();
-    $usuario = $db->selectLogin($login, $senha);
+    $usuario = $db->selectLzogin($login, $senha);
 
     if (empty($usuario)) {
         $erro = new Erro();
@@ -303,7 +301,6 @@ function verificarLogin() {
  * }
  * @return $erro HTTP-400
  */
-
 function verificarPercentil() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
@@ -314,7 +311,7 @@ function verificarPercentil() {
     $sexo = $percentilJson->sexo;
 
     //TODO: Validação do dados de entrada para o cálulo do Percentil.
-    
+
     $db = new DbHandler();
     $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
 
@@ -329,31 +326,29 @@ function verificarPercentil() {
     }
 }
 
-
 /** @param $anamnese
-{
-    "nutricionista": [1-9],
-    "entrevistado": [1-9],
-    "pesquisa": [1-9],
-    "peso": [1-9],
-    "altura": [1-9],
-    "nivelEsporte": [1-5],
-    "perfilAlimentar": [1-9]
-    }
+  {
+  "nutricionista": [1-9],
+  "entrevistado": [1-9],
+  "pesquisa": [1-9],
+  "peso": [1-9],
+  "altura": [1-9],
+  "nivelEsporte": [1-5],
+  "perfilAlimentar": [1-9]
+  }
  */
- 
-function cadastrarAnamnese(){
+function cadastrarAnamnese() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $anamnese = json_decode($body);
-    
+
     $cd_anamnese = NULL;
 
     //TODO: Validação do dados de entrada para o cadastro da anamnese.
     // Persistir os dados no Banco.
     $db = new DbHandler();
     $cd_anamnese = $db->inserirDadosAntropometricos($anamnese);
-    
+
     if (empty($cd_anamnese)) {
         $erro = new Erro();
         $erro->codigo = 002;
@@ -371,35 +366,41 @@ function verificarPercentil2() {
     $percentilJson = json_decode($body);
 
     $matricula = $percentilJson->matricula;
-    
+
     $db = new DbHandler();
-        
-    $entrevistado = $db->selectEntrevistado($matricula);
-    
-    $dadosAntropometricos= $db->selectDadosAntropometricos($matricula);
-    
-    $peso = $dadosAntropometricos->getPeso();
- 
-    $alturaMetros = ($dadosAntropometricos->getAltura())/100;   
+
+    $anamnese = $db->selectDadosEntrevistado($matricula);
+
+    $entrevistado = $anamnese->getEntrevistado();
+
+    $peso = $anamnese->getPeso();
+
+    $alturaMetros = ($anamnese->getAltura()) / 100;
+
+    $sexo = $entrevistado->getSexo();
+
+    $idadeMeses = converterData($entrevistado->getNascimento());
 
     // Cálculo do IMC
-    $imc = number_format($peso/pow($alturaMetros, 2), 1);
+    $imc = number_format($peso / pow($alturaMetros, 2), 1);
     
-    $percentil = $db->selecionarPercentil($imc, $entrevistado->getNascimento(), 
-            $entrevistado->getSexo());
+    //pesquisar por percentil
+    $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
+    
 
     if (empty($percentil)) {
         $erro = new Erro();
         $erro->codigo = 003;
-        $erro->mensagem = "Percentil não encontrado.";
+        $erro->mensagem = "Percentil nao encontrado";
 
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
         echoRespnse(HTTP_ACEITO, $percentil->toArray());
     }
 }
+
 function echoRespnse($status_code, $response) {
-    $slim = \Slim\Slim::getInstance();    
+    $slim = \Slim\Slim::getInstance();
     // Http response code    
     $slim->status($status_code);
     // setting response content type to json
@@ -409,8 +410,6 @@ function echoRespnse($status_code, $response) {
     echo json_encode(JsonUtil::utf8json($response));
     $slim->stop();
 }
-
-
 
 $slim->run();
 ?>
