@@ -11,6 +11,7 @@ class Entrevistado extends Usuario{
     
     private $codigo;
     
+    
     public function getCodigo() {
         return $this->codigo;
     }
@@ -19,7 +20,7 @@ class Entrevistado extends Usuario{
         $this->codigo = $codigo;
     }
 
-        private $matricula;
+    private $matricula;
     
     private $nivelEscolar;
     
