@@ -23,7 +23,8 @@ $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
-$slim->post('/verificarPercentil2', 'verificarPercentil2');
+$slim->post('/verificarAnamnesesPercentilEntrevistado', 
+        'verificarAnamnesesPercentilEntrevistado');
 
 function authenticate(\Slim\Route $route) {
     
@@ -237,7 +238,7 @@ function calcularIMC() {
     // Sugestão de OO.
     $imcObjt = new Anamnese();
 
-    // Implementar lógica do IMC.         
+    //TODO: Implementar lógica do IMC.         
 }
 
 /**
@@ -342,14 +343,12 @@ function cadastrarAnamnese() {
     $body = $request->getBody();
     $anamnese = json_decode($body);
 
-    $cd_anamnese = NULL;
-
     //TODO: Validação do dados de entrada para o cadastro da anamnese.
     // Persistir os dados no Banco.
     $db = new DbHandler();
-    $cd_anamnese = $db->inserirDadosAntropometricos($anamnese);
+    $cdAnamnese = $db->inserirAnamnese($anamnese);
 
-    if (empty($cd_anamnese)) {
+    if (empty($cdAnamnese)) {
         $erro = new Erro();
         $erro->codigo = 002;
         $erro->mensagem = "Problema ao inserir a anamnese.";
@@ -360,43 +359,26 @@ function cadastrarAnamnese() {
     }
 }
 
-function verificarPercentil2() {
+/**
+ * Inserir comentário da documentação.
+ * {
+ *  "matricula": *[1-9]
+ * }
+ */
+function verificarAnamnesesPercentilEntrevistado() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $percentilJson = json_decode($body);
 
     $matricula = $percentilJson->matricula;
 
+    // Consultar a(s) anamnese(s) do entrevistado.
     $db = new DbHandler();
-
-    $anamnese = $db->selectDadosEntrevistado($matricula);
-
-    $entrevistado = $anamnese->getEntrevistado();
-
-    $peso = $anamnese->getPeso();
-
-    $alturaMetros = ($anamnese->getAltura()) / 100;
-
-    $sexo = $entrevistado->getSexo();
-
-    $idadeMeses = converterData($entrevistado->getNascimento());
-
-    // Cálculo do IMC
-    $imc = number_format($peso / pow($alturaMetros, 2), 1);
+    $anamneses = $db->selectAnamnesesEntrevistado($matricula);
     
-    //pesquisar por percentil
-    $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
-    
+    // Calcular percentil para cada anamnese.
 
-    if (empty($percentil)) {
-        $erro = new Erro();
-        $erro->codigo = 003;
-        $erro->mensagem = "Percentil nao encontrado";
-
-        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    } else {
-        echoRespnse(HTTP_ACEITO, $percentil->toArray());
-    }
+    // Retornar percentis e anamneses.
 }
 
 function echoRespnse($status_code, $response) {

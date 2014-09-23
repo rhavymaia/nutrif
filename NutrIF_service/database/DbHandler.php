@@ -48,7 +48,8 @@ class DbHandler {
             $authKey = $this->gerarAuthKey();
 
             // Parâmetros: tipos das entradas, entradas.
-            $stmt->bind_param("ssssss", $usuario->login, $usuario->senha, $authKey, $usuario->nome, $nascimento, $sexo);
+            $stmt->bind_param("ssssss", $usuario->login, $usuario->senha, 
+                    $authKey, $usuario->nome, $nascimento, $sexo);
 
             // Executar a consulta.
             $result = $stmt->execute();
@@ -281,7 +282,7 @@ class DbHandler {
      * @param type $anamnese
      * @return type
      */
-    function inserirDadosAntropometricos($anamnese) {
+    function inserirAnamnese($anamnese) {
 
         $cdAnamnese = ID_NAO_RETORNADO;
 
@@ -291,7 +292,10 @@ class DbHandler {
                 . " values(?, ?, ?, ?, ?, ?, ?)");
 
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("iiiiddi", $anamnese->nutricionista, $anamnese->entrevistado, $anamnese->pesquisa, $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte, $anamnese->perfilAlimentar);
+        $stmt->bind_param("iiiiddi", $anamnese->nutricionista, 
+                $anamnese->entrevistado, $anamnese->pesquisa, 
+                $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte, 
+                $anamnese->perfilAlimentar);
 
         $result = $stmt->execute();
         if ($result) {
@@ -344,9 +348,14 @@ class DbHandler {
         return $percentil;
     }
 
-    public function selectDadosEntrevistado($matricula) {
+    /**
+     * Descrição
+     * @param type $matricula
+     * @return array
+     */
+    public function selectAnamnesesEntrevistado($matricula) {
         
-        $anamnese = NULL;
+        $anamneses = array();
 
         // Montar consulta.
         $sql = "SELECT e.cd_entrevistado, e.nr_matricula, u.dt_nascimento,"
@@ -354,39 +363,36 @@ class DbHandler {
             ." FROM tb_entrevistado AS e, tb_usuario AS u, tb_anamnese AS a"
             ." WHERE e.cd_usuario = u.cd_usuario"
             ." AND e.cd_entrevistado = a.cd_entrevistado"
-            ." AND e.nr_matricula = ?";
+            ." AND e.nr_matricula = ".$matricula;
 
-         $stmt = $this->conn->prepare($sql);
-        // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("i", $matricula);
-        $resultStmt = $stmt->execute();
-        $stmt->store_result();
+        $result = $this->conn->query($sql);
+           
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                
+                $entrevistado = new Entrevistado();
+                $entrevistado->setCodigo($row["cd_entrevistado"]);
+                $entrevistado->setMatricula($row["nr_matricula"]);
+                $entrevistado->setNascimento($row["dt_nascimento"]);
+                $entrevistado->setSexo($row["nm_sexo"]);                
 
-        if ($resultStmt && $stmt->num_rows > 0) {
-
-            $stmt->bind_result($cdEntrevistado, $nrMatricula, $dtNascimento,
-                    $tpSexo, $peso, $altura);
-            $stmt->fetch();
-
-            $entrevistado = new Entrevistado();
-            $entrevistado->setMatricula($nrMatricula);
-            $entrevistado->setNascimento($dtNascimento);
-            $entrevistado->setSexo($tpSexo);
-            $entrevistado->setCodigo($cdEntrevistado);
-            
-            $anamnese = new Anamnese();
-            $anamnese->setPeso($peso);
-            $anamnese->setAltura($altura);   
-            $anamnese->setEntrevistado($entrevistado);
-             
+                $anamnese = new Anamnese();
+                $anamnese->setPeso($row["nr_peso"]);
+                $anamnese->setAltura($row["nr_altura"]);   
+                $anamnese->setEntrevistado($entrevistado);
+                
+                array_push($anamneses, $anamnese->toArray());
+            }  
         }
-
-        $stmt->close();
-
-        return $anamnese;
         
+        return $anamneses;        
     }
 
+    /**
+     * Descrição
+     * @param type $matricula
+     * @return \Anamnese
+     */
     public function selectDadosAntropometricos($matricula) {
 
         $dadosAntropometricos = NULL;
