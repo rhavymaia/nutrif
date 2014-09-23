@@ -13,6 +13,12 @@ class Percentil {
     private $imc;
     private $idadeMeses;
    
+    function __construct() {}
+
+    public function toArray() {
+        return get_object_vars($this);
+    }
+    
     public function getSexo() {
         return $this->sexo;
     }
@@ -52,11 +58,5 @@ class Percentil {
     public function setIdadeMeses($idadeMeses) {
         $this->idadeMeses = $idadeMeses;
     }
-
-    
-    public function toArray() {
-        return get_object_vars($this);
-    }
 }
-
 ?>

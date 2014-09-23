@@ -27,6 +27,10 @@ class Anamnese {
     
     public function __construct(){}
     
+    public function toArray() {
+        return get_object_vars($this);
+    }
+    
     public function setCodigo($codigo) {
         $this->codigo = $codigo;
     }
@@ -98,8 +102,5 @@ class Anamnese {
     public function setPerfilAlimentar($perfilAlimentar) {
         $this->perfilAlimentar = $perfilAlimentar;
     }
-
-
 }
-
 ?>
