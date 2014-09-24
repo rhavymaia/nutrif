@@ -369,7 +369,8 @@ class DbHandler {
         $result = $this->conn->query($sql);
            
         if ($result) {
-            while ($row = $result->fetch_assoc()) {                
+            while ($row = $result->fetch_assoc()) {       
+                
                 $entrevistado = new Entrevistado();
                 $entrevistado->setCodigo($row["cd_entrevistado"]);
                 $entrevistado->setMatricula($row["nr_matricula"]);

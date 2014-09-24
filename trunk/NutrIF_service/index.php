@@ -270,7 +270,7 @@ function verificarLogin() {
     //TODO: Validação do dados de entrada para o login do usuário.
 
     $db = new DbHandler();
-    $usuario = $db->selectLzogin($login, $senha);
+    $usuario = $db->selectLogin($login, $senha);
 
     if (empty($usuario)) {
         $erro = new Erro();
@@ -376,9 +376,43 @@ function verificarAnamnesesPercentilEntrevistado() {
     $db = new DbHandler();
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
     
+    $percentis = array();
+    
     // Calcular percentil para cada anamnese.
+    foreach ($anamneses as $anamnese) {
+        
+        $anamnese = (object)$anamnese;
+        
+        $entrevistado = $anamnese->getEntrevistado();
+
+        $peso = $anamnese->getPeso();
+
+        $alturaMetros = ($anamnese->getAltura()) / 100;
+
+        $sexo = $entrevistado->getSexo();
+
+        $idadeMeses = converterData($entrevistado->getNascimento());
+
+        // Cálculo do IMC
+        $imc = number_format($peso / pow($alturaMetros, 2), 1);
+
+        //pesquisar por percentil
+        $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
+        
+        array_push($percentis, $percentil);
+    }
 
     // Retornar percentis e anamneses.
+    
+    if (empty($percentis)) {
+        $erro = new Erro();
+        $erro->codigo = count($percentis);
+        $erro->mensagem = "Percentil nao encontrado";
+
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    } else {
+        echoRespnse(HTTP_ACEITO, $percentis);
+    }
 }
 
 function echoRespnse($status_code, $response) {
