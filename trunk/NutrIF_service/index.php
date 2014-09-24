@@ -217,7 +217,7 @@ function analisarVCT() {
 
 /**
  * Descrição
- * @param $imc
+ * @param $entrevistado
  * {
  *      'idUsuario' : [1-9],
  *      'peso' : *[1-9].*[1-9],
@@ -228,15 +228,15 @@ function analisarVCT() {
 function calcularIMC() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
-    $imc = json_decode($body);
+    $entrevistado = json_decode($body);
 
-    $imc->idUsuario;
-    $imc->peso;
-    $imc->altura;
-    $imc->idade;
+    $entrevistado->idUsuario;
+    $entrevistado->peso;
+    $entrevistado->altura;
+    $entrevistado->idade;
 
     // Sugestão de OO.
-    $imcObjt = new Anamnese();
+    $imc = new Imc();
 
     //TODO: Implementar lógica do IMC.         
 }

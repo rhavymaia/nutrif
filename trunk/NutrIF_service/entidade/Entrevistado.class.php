@@ -10,15 +10,6 @@ require_once ('Usuario.class.php');
 class Entrevistado extends Usuario{
     
     private $codigo;
-    
-    
-    public function getCodigo() {
-        return $this->codigo;
-    }
-
-    public function setCodigo($codigo) {
-        $this->codigo = $codigo;
-    }
 
     private $matricula;
     
@@ -30,6 +21,14 @@ class Entrevistado extends Usuario{
     
     public function toArray() {
         return get_object_vars($this);
+    }
+    
+    public function getCodigo() {
+        return $this->codigo;
+    }
+
+    public function setCodigo($codigo) {
+        $this->codigo = $codigo;
     }
     
     public function getMatricula() {
