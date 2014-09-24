@@ -30,10 +30,14 @@ class JsonUtil {
             if(is_array($val)) {
                 /* recurse on array elements */
                 $newArray[$key] = utf8json($val);
+            } else if (is_object($val)) {                    
+               /* encode object values */
+               $newArray[$key] = utf8_encode($val->toArray());
             } else {
                 /* encode string values */
-                $newArray[$key] = utf8_encode($val);
-            }
+               $newArray[$key] = utf8_encode($val); 
+            }                
+            
         }
         /* return utf8 encoded array */
         return $newArray;
