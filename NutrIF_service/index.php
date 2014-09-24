@@ -23,8 +23,7 @@ $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
-$slim->post('/verificarAnamnesesPercentilEntrevistado', 
-        'verificarAnamnesesPercentilEntrevistado');
+$slim->post('/verificarAnamnesesPercentilEntrevistado', 'verificarAnamnesesPercentilEntrevistado');
 
 function authenticate(\Slim\Route $route) {
     
@@ -230,15 +229,16 @@ function calcularIMC() {
     $body = $request->getBody();
     $entrevistado = json_decode($body);
 
-    $entrevistado->idUsuario;
-    $entrevistado->peso;
-    $entrevistado->altura;
-    $entrevistado->idade;
+    $peso = $entrevistado->peso;
+    $altura = $entrevistado->altura;
 
-    // Sugestão de OO.
-    $imc = new Imc();
-
-    //TODO: Implementar lógica do IMC.         
+    $imc = number_format($peso / pow($altura, 2), 1);
+    
+    // Construir o JSON de resposta.
+    $jsonIMC = array(
+        'imc' => $imc
+    );
+    echoRespnse(HTTP_CRIADO, $jsonIMC);
 }
 
 /**
@@ -375,14 +375,14 @@ function verificarAnamnesesPercentilEntrevistado() {
     // Consultar a(s) anamnese(s) do entrevistado.
     $db = new DbHandler();
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
-    
+
     $percentis = array();
-    
+
     // Calcular percentil para cada anamnese.
     foreach ($anamneses as $anamnese) {
-        
+
         $anamnese = (object)$anamnese;
-        
+
         $entrevistado = $anamnese->getEntrevistado();
 
         $peso = $anamnese->getPeso();
@@ -398,12 +398,12 @@ function verificarAnamnesesPercentilEntrevistado() {
 
         //pesquisar por percentil
         $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
-        
+
         array_push($percentis, $percentil);
     }
 
     // Retornar percentis e anamneses.
-    
+
     if (empty($percentis)) {
         $erro = new Erro();
         $erro->codigo = count($percentis);
