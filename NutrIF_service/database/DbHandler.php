@@ -241,8 +241,8 @@ class DbHandler {
         $percentil = NULL;
 
         // Consultar o Percentil na tabela tb_imc_percentil.            
-        $sql = "SELECT imc.cd_percentil, percentil.vl_percentil, imc.tp_sexo, "
-                . "imc.vl_fator, imc.vl_imc_percentil"
+        $sql = "SELECT imc.cd_percentil, percentil.vl_percentil, imc.tp_sexo,"
+                . " imc.vl_fator, imc.vl_imc_percentil"
                 . " FROM"
                 . " tb_imc_percentil AS imc, tb_percentil AS percentil"
                 . " WHERE"
@@ -256,12 +256,13 @@ class DbHandler {
 
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("sid", $sexo, $idadeMeses, $imc);
-        $resultStmt = $stmt->execute();
+        $result = $stmt->execute();
         $stmt->store_result();
 
-        if ($resultStmt && $stmt->num_rows > 0) {
+        if ($result && $stmt->num_rows > 0) {
 
-            $stmt->bind_result($cdPercentil, $vlPercentil, $tpSexo, $vlFatorIdade, $imcPercentil);
+            $stmt->bind_result($cdPercentil, $vlPercentil, $tpSexo, 
+                    $vlFatorIdade, $imcPercentil);
             $stmt->fetch();
 
             $percentil = new Percentil();
@@ -368,8 +369,7 @@ class DbHandler {
         $result = $this->conn->query($sql);
            
         if ($result) {
-            while ($row = $result->fetch_assoc()) {
-                
+            while ($row = $result->fetch_assoc()) {                
                 $entrevistado = new Entrevistado();
                 $entrevistado->setCodigo($row["cd_entrevistado"]);
                 $entrevistado->setMatricula($row["nr_matricula"]);
@@ -381,7 +381,7 @@ class DbHandler {
                 $anamnese->setAltura($row["nr_altura"]);   
                 $anamnese->setEntrevistado($entrevistado);
                 
-                array_push($anamneses, $anamnese->toArray());
+                array_push($anamneses, $anamnese);
             }  
         }
         

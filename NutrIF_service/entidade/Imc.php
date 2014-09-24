@@ -7,18 +7,17 @@
  */
 class Imc {
     
-    private $anamnese;
+    private $valor;
     
     function __construct() {
     }
-
-    public function getAnamnese() {
-        return $this->anamnese;
+    
+    public function getValor() {
+        return $this->valor;
     }
 
-    public function setAnamnese($anamnese) {
-        $this->anamnese = $anamnese;
+    public function setValor($valor) {
+        $this->valor = $valor;
     }
 }
-
 ?>
