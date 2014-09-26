@@ -228,6 +228,7 @@ function calcularIMC() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $entrevistado = json_decode($body);
+    
 
     $peso = $entrevistado->peso;
     $altura = $entrevistado->altura;
@@ -240,6 +241,8 @@ function calcularIMC() {
     );
     echoRespnse(HTTP_CRIADO, $jsonIMC);
 }
+
+
 
 /**
  * Descrição
@@ -377,6 +380,7 @@ function verificarAnamnesesPercentilEntrevistado() {
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
 
     $percentis = array();
+    $imcs = array();
 
     // Calcular percentil para cada anamnese.
     foreach ($anamneses as $anamnese) {
@@ -398,8 +402,20 @@ function verificarAnamnesesPercentilEntrevistado() {
 
         //pesquisar por percentil
         $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
+        
+        if ($idadeMeses <= IDADE_PERCENTIL_19){
+            if ($percentil){
+               array_push($percentis, $percentil);
+            }else{
+                $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);
+                array_push($percentis, $percentil);
+            }
+            
+        }else{
+             array_push($percentis, $imc);
+        }
 
-        array_push($percentis, $percentil);
+        
     }
 
     // Retornar percentis e anamneses.
