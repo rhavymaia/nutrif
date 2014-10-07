@@ -380,7 +380,6 @@ function verificarAnamnesesPercentilEntrevistado() {
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
 
     $percentis = array();
-    $imcs = array();
 
     // Calcular percentil para cada anamnese.
     foreach ($anamneses as $anamnese) {
@@ -404,22 +403,18 @@ function verificarAnamnesesPercentilEntrevistado() {
         $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
         
         if ($idadeMeses <= IDADE_PERCENTIL_19){
-            if ($percentil){
-               array_push($percentis, $percentil);
+            if (!is_null($percentil)){
+                array_push($percentis, $percentil);
             }else{
                 $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);
                 array_push($percentis, $percentil);
-            }
-            
+            }            
         }else{
              array_push($percentis, $imc);
-        }
-
-        
+        }        
     }
-
+    
     // Retornar percentis e anamneses.
-
     if (empty($percentis)) {
         $erro = new Erro();
         $erro->codigo = count($percentis);
