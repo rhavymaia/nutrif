@@ -12,13 +12,33 @@ class Percentil {
     private $sexo;
     private $imc;
     private $idadeMeses;
-   
-    function __construct() {}   
+    private $percentilInferior;
+    private $percentilSuperior;
+
+    public function getPercentilInferior() {
+        return $this->percentilInferior;
+    }
+
+    public function getPercentilSuperior() {
+        return $this->percentilSuperior;
+    }
+
+    public function setPercentilInferior($percentilInferior) {
+        $this->percentilInferior = $percentilInferior;
+    }
+
+    public function setPercentilSuperior($percentilSuperior) {
+        $this->percentilSuperior = $percentilSuperior;
+    }
+
+    function __construct() {
+        
+    }
 
     public function toArray() {
         return get_object_vars($this);
     }
-    
+
     public function getSexo() {
         return $this->sexo;
     }
@@ -58,5 +78,7 @@ class Percentil {
     public function setIdadeMeses($idadeMeses) {
         $this->idadeMeses = $idadeMeses;
     }
+
 }
+
 ?>
