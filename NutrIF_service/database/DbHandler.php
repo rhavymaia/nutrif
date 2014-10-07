@@ -258,7 +258,7 @@ class DbHandler {
         $stmt->bind_param("sid", $sexo, $idadeMeses, $imc);
         $result = $stmt->execute();
         $stmt->store_result();
-
+        
         if ($result && $stmt->num_rows > 0) {
 
             $stmt->bind_result($cdPercentil, $vlPercentil, $tpSexo, 
@@ -270,11 +270,11 @@ class DbHandler {
             $percentil->setVlPercentil($vlPercentil);
             $percentil->setImc($imcPercentil);
             $percentil->setIdadeMeses($vlFatorIdade);
-            $percentil->setSexo($tpSexo);
+            $percentil->setSexo($tpSexo);        
         }
-
+        
         $stmt->close();
-
+       
         return $percentil;
     }
 
@@ -324,11 +324,15 @@ class DbHandler {
                 . " AND imc.cd_percentil = percentil.cd_percentil";
 
         $stmt = $this->conn->prepare($sql);
+        
+        
+      
 
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("sid", $imc, $sexo, $idadeMeses);
         $resultStmt = $stmt->execute();
         $stmt->store_result();
+  
 
         if ($resultStmt && $stmt->num_rows > 0) {
 
@@ -423,6 +427,49 @@ class DbHandler {
 
         return $dadosAntropometricos;
     }
+    
+    private function ehPesquisaExistente($pesquisa) {
+
+        $stmt = $this->conn->prepare("SELECT cd_pesquisa "
+                . "FROM td_pesquisa "
+                . "WHERE cd_pesquisa = ?");
+        $stmt->bind_param("i", $pesquisa->codigo);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+    }
+
+    function inserirPesquisa($pesquisa){
+
+        $cdPesquisa = ID_NAO_RETORNADO;
+
+        if(!$this->ehPesquisaExistente($pesquisa->codigo)){
+        $stmt = $this->conn->prepare("INSERT INTO"
+                . " tb_pesquisa(cd_pesquisa, nm_pesquisa, dt_inicio, dt_fim,"
+                . " cd_instituicao, cd_nutricionista "
+                . " values(?, ?, ?, ?, ?, ?)");
+
+        // Parâmetros: tipos das entradas, entradas.
+        $stmt->bind_param("isssii", $pesquisa->codigo, $pesquisa->nome, 
+                $pesquisa->dataInicio, $pesquisa->dataFim, $pesquisa->instituicao, 
+                $pesquisa->nutricionista);
+
+        $result = $stmt->execute();
+        if ($result) {
+            $cdPesquisa = $stmt->insert_id;
+            $stmt->close();
+        }
+    }else{
+        // Código para usuário já existente.
+        $cdPesquisa = PESQUISA_EXISTENTE;
+    }
+
+        return $cdPesquisa;
+    }
+    
+    
 
 }
 

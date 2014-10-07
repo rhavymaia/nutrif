@@ -23,7 +23,8 @@ $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
-$slim->post('/verificarAnamnesesPercentilEntrevistado', 'verificarAnamnesesPercentilEntrevistado');
+$slim->post('/verificarAnamnesesPercentilEntrevistado', 
+        'verificarAnamnesesPercentilEntrevistado');
 
 function authenticate(\Slim\Route $route) {
     
@@ -228,21 +229,19 @@ function calcularIMC() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $entrevistado = json_decode($body);
-    
+
 
     $peso = $entrevistado->peso;
     $altura = $entrevistado->altura;
 
     $imc = number_format($peso / pow($altura, 2), 1);
-    
+
     // Construir o JSON de resposta.
     $jsonIMC = array(
         'imc' => $imc
     );
     echoRespnse(HTTP_CRIADO, $jsonIMC);
 }
-
-
 
 /**
  * Descrição
@@ -369,6 +368,7 @@ function cadastrarAnamnese() {
  * }
  */
 function verificarAnamnesesPercentilEntrevistado() {
+    
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $percentilJson = json_decode($body);
@@ -380,11 +380,12 @@ function verificarAnamnesesPercentilEntrevistado() {
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
 
     $percentis = array();
+    $cars = array();
 
     // Calcular percentil para cada anamnese.
     foreach ($anamneses as $anamnese) {
 
-        $anamnese = (object)$anamnese;
+        $anamnese = (object) $anamnese;
 
         $entrevistado = $anamnese->getEntrevistado();
 
@@ -402,18 +403,19 @@ function verificarAnamnesesPercentilEntrevistado() {
         //pesquisar por percentil
         $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
         
-        if ($idadeMeses <= IDADE_PERCENTIL_19){
-            if (!is_null($percentil)){
-                array_push($percentis, $percentil);
-            }else{
+        if ($idadeMeses <= IDADE_PERCENTIL_19) {              
+            if (!empty($percentil)) {
+                array_push($percentis, $percentil);               
+            } else {
                 $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);
+                //echoRespnse(HTTP_ACEITO, array("cdPercentil"=> "foi"));
                 array_push($percentis, $percentil);
-            }            
-        }else{
-             array_push($percentis, $imc);
-        }        
+            }
+        } else {
+            array_push($percentis, $imc);
+        }
     }
-    
+
     // Retornar percentis e anamneses.
     if (empty($percentis)) {
         $erro = new Erro();
@@ -425,6 +427,28 @@ function verificarAnamnesesPercentilEntrevistado() {
         echoRespnse(HTTP_ACEITO, $percentis);
     }
 }
+
+function cadastrarPesquisa() {
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $anamnese = json_decode($body);
+
+    //TODO: Validação do dados de entrada para o cadastro da pesquisa.
+    // Persistir os dados no Banco.
+    $db = new DbHandler();
+    $cdAnamnese = $db->inserirAnamnese($anamnese);
+
+    if (empty($cdAnamnese)) {
+        $erro = new Erro();
+        $erro->codigo = 002;
+        $erro->mensagem = "Problema ao inserir a anamnese.";
+
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    } else {
+        echoRespnse(HTTP_CRIADO, $anamnese);
+    }
+}
+
 
 function echoRespnse($status_code, $response) {
     $slim = \Slim\Slim::getInstance();
