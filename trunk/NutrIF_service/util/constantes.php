@@ -32,6 +32,9 @@
     // Usuáro não cadastrado
     define('USUARIO_EXISTENTE', -1);
     
+     // Usuáro não cadastrado
+    define('PESQUISA_EXISTENTE', -1);
+    
     // Usuáro não cadastrado
     define('ENTREVISTADO_EXISTENTE', -1);
     
