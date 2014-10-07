@@ -408,7 +408,7 @@ function verificarAnamnesesPercentilEntrevistado() {
                 array_push($percentis, $percentil);               
             } else {
                 $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);
-                //echoRespnse(HTTP_ACEITO, array("cdPercentil"=> "foi"));
+                echoRespnse(HTTP_ACEITO, $percentil);
                 array_push($percentis, $percentil);
             }
         } else {
