@@ -241,8 +241,8 @@ class DbHandler {
         $percentil = NULL;
 
         // Consultar o Percentil na tabela tb_imc_percentil.            
-        $sql = "SELECT imc.cd_percentil, percentil.vl_percentil, imc.tp_sexo,"
-                . " imc.vl_fator, imc.vl_imc_percentil"
+        $sql = "SELECT percentil.cd_percentil, percentil.vl_percentil, "
+                . "imc.tp_sexo, imc.vl_fator, imc.vl_imc_percentil"
                 . " FROM"
                 . " tb_imc_percentil AS imc, tb_percentil AS percentil"
                 . " WHERE"

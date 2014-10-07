@@ -13,7 +13,7 @@ class Percentil {
     private $imc;
     private $idadeMeses;
    
-    function __construct() {}
+    function __construct() {}   
 
     public function toArray() {
         return get_object_vars($this);
