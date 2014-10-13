@@ -428,12 +428,12 @@ class DbHandler {
         return $dadosAntropometricos;
     }
     
-    private function ehPesquisaExistente($pesquisa) {
+    private function ehPesquisaExistente($cdPesquisa) {
 
         $stmt = $this->conn->prepare("SELECT cd_pesquisa "
-                . "FROM td_pesquisa "
+                . "FROM tb_pesquisa "
                 . "WHERE cd_pesquisa = ?");
-        $stmt->bind_param("i", $pesquisa->codigo);
+        $stmt->bind_param("i", $cdPesquisa);
         $stmt->execute();
         $stmt->store_result();
         $num_rows = $stmt->num_rows;
@@ -444,16 +444,19 @@ class DbHandler {
     function inserirPesquisa($pesquisa){
 
         $cdPesquisa = ID_NAO_RETORNADO;
-
-        if(!$this->ehPesquisaExistente($pesquisa->codigo)){
+        
         $stmt = $this->conn->prepare("INSERT INTO"
-                . " tb_pesquisa(cd_pesquisa, nm_pesquisa, dt_inicio, dt_fim,"
+                . " tb_pesquisa(nm_pesquisa, dt_inicio, dt_fim,"
                 . " cd_instituicao, cd_nutricionista "
-                . " values(?, ?, ?, ?, ?, ?)");
+                . " values(?, ?, ?, ?, ?)");
 
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("isssii", $pesquisa->codigo, $pesquisa->nome, 
-                $pesquisa->dataInicio, $pesquisa->dataFim, $pesquisa->instituicao, 
+        
+        $dataInicio = implode("-", array_reverse(explode("/", $pesquisa->dataInicio)));
+        $dataFim = implode("-", array_reverse(explode("/", $pesquisa->dataFim)));
+        
+        $stmt->bind_param("sssii", $pesquisa->nome, 
+                $dataInicio, $dataFim, $pesquisa->instituicao, 
                 $pesquisa->nutricionista);
 
         $result = $stmt->execute();
@@ -461,10 +464,7 @@ class DbHandler {
             $cdPesquisa = $stmt->insert_id;
             $stmt->close();
         }
-    }else{
-        // Código para usuário já existente.
-        $cdPesquisa = PESQUISA_EXISTENTE;
-    }
+    
 
         return $cdPesquisa;
     }
