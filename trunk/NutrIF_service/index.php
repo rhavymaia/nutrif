@@ -25,6 +25,8 @@ $slim->post('/verificarPercentil', 'verificarPercentil');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
 $slim->post('/verificarAnamnesesPercentilEntrevistado', 
         'verificarAnamnesesPercentilEntrevistado');
+$slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
+
 
 function authenticate(\Slim\Route $route) {
     
@@ -431,21 +433,21 @@ function verificarAnamnesesPercentilEntrevistado() {
 function cadastrarPesquisa() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
-    $anamnese = json_decode($body);
+    $pesquisa = json_decode($body);
 
     //TODO: Validação do dados de entrada para o cadastro da pesquisa.
     // Persistir os dados no Banco.
     $db = new DbHandler();
-    $cdAnamnese = $db->inserirAnamnese($anamnese);
+    $cdPesquisa = $db->inserirPesquisa($pesquisa);
 
-    if (empty($cdAnamnese)) {
+    if (empty($cdPesquisa)) {
         $erro = new Erro();
         $erro->codigo = 002;
-        $erro->mensagem = "Problema ao inserir a anamnese.";
+        $erro->mensagem = "Problema ao inserir a pesquisa.";
 
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
-        echoRespnse(HTTP_CRIADO, $anamnese);
+        echoRespnse(HTTP_CRIADO, $pesquisa);
     }
 }
 
