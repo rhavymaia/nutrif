@@ -401,23 +401,26 @@ function verificarAnamnesesPercentilEntrevistado() {
 
         // Cálculo do IMC
         $imc = number_format($peso / pow($alturaMetros, 2), 1);
-
-        //pesquisar por percentil
-        $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
         
-        if ($idadeMeses <= IDADE_PERCENTIL_19) {              
+        if ($idadeMeses <= IDADE_PERCENTIL_19) {         
+            //pesquisar por percentil
+            $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
+            
             if (!empty($percentil)) {
                 array_push($percentis, $percentil);               
             } else {
-                $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);
-                echoRespnse(HTTP_ACEITO, $percentil);
-                array_push($percentis, $percentil);
+                //echoRespnse(HTTP_ACEITO, array('a'=> 'AAA', 'b'=> 'AAA'));
+                echoRespnse(HTTP_ACEITO, array('teste' => array('a'=> 'AAA', 'b'=> 'AAA')));
+                //$percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);
+                
+                $teste = array("a"=> "AAA", "b"=> "AAA", "c"=> "AAA", "d"=> "AAA");
+                //array_push($percentis, $teste);   
             }
         } else {
             array_push($percentis, $imc);
         }
     }
-
+/*
     // Retornar percentis e anamneses.
     if (empty($percentis)) {
         $erro = new Erro();
@@ -427,7 +430,7 @@ function verificarAnamnesesPercentilEntrevistado() {
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
         echoRespnse(HTTP_ACEITO, $percentis);
-    }
+    }*/
 }
 
 function cadastrarPesquisa() {

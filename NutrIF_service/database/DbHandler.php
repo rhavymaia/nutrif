@@ -156,7 +156,8 @@ class DbHandler {
                     . " values(?, ?, ?, ?)");
 
             // Parâmetros: tipos das entradas, entradas.
-            $stmt->bind_param("iiii", $nutricionista->idUsuario, $nutricionista->crn, $nutricionista->siape, $nutricionista->instituicao);
+            $stmt->bind_param("iiii", $nutricionista->idUsuario, $nutricionista->crn, 
+                    $nutricionista->siape, $nutricionista->instituicao);
 
             $result = $stmt->execute();
             if ($result) {
@@ -323,10 +324,7 @@ class DbHandler {
                 . " AND imc.vl_imc_percentil = ?"
                 . " AND imc.cd_percentil = percentil.cd_percentil";
 
-        $stmt = $this->conn->prepare($sql);
-        
-        
-      
+        $stmt = $this->conn->prepare($sql);              
 
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("sid", $imc, $sexo, $idadeMeses);
@@ -433,6 +431,7 @@ class DbHandler {
         $stmt = $this->conn->prepare("SELECT cd_pesquisa "
                 . "FROM tb_pesquisa "
                 . "WHERE cd_pesquisa = ?");
+        
         $stmt->bind_param("i", $cdPesquisa);
         $stmt->execute();
         $stmt->store_result();

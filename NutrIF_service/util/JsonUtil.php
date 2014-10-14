@@ -29,16 +29,17 @@ class JsonUtil {
         foreach ($inArray as $key => $val) {
             if (is_array($val)) {
                 /* recurse on array elements */
-                 $newArray[$key] = utf8json($val); 
+                 $newArray[$key] = utf8json(json_encode($val)); 
             } else if (!is_null($val) && is_object($val)) {                
                 $newArray[$key] = utf8_encode(json_encode($val->toArray()));
             } else {
                 /* encode string values */
-                $newArray[$key] = utf8_encode($val);
+                $newArray[$key] = utf8_encode(json_encode($val));
             }
         }
         /* return utf8 encoded array */
         return $newArray;
     }
+     
 
 }
