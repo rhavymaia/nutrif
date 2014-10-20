@@ -87,6 +87,7 @@ function cadastrarAluno() {
             $aluno->idEntrevistado = $idEntrevistado;
             $aluno->tpUsuario = TP_ALUNO;
             // Resposta com sucesso.
+            $aluno->mensagem = "Cadastro realizado com sucesso!";
             echoRespnse(HTTP_CRIADO, $aluno);
         } else {
             $erro = new Erro();
