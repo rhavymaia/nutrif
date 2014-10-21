@@ -231,19 +231,30 @@ function analisarVCT() {
 function calcularIMC() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
-    $entrevistado = json_decode($body);
+    $dadosIMC = json_decode($body);
+    $imc = 0;
+    
+    $peso = $dadosIMC->peso;
+    $altura = $dadosIMC->altura;
 
+    if (($peso> 0) && ($altura>0))
+        $imc = number_format($peso / pow($altura, 2), 1);
+    
+    if ($imc<=0) {
+        $erro = new Erro();
+        $erro->setCodigo(002);
+        $erro->setMensagem("Não foi possível calcular IMC!");
 
-    $peso = $entrevistado->peso;
-    $altura = $entrevistado->altura;
-
-    $imc = number_format($peso / pow($altura, 2), 1);
-
-    // Construir o JSON de resposta.
-    $jsonIMC = array(
-        'imc' => $imc
-    );
-    echoRespnse(HTTP_CRIADO, $jsonIMC);
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro->toArray());
+    } else {
+        // Construir o JSON de resposta.
+        $jsonIMC = array(
+            'imc' => $imc
+        );
+        echoRespnse(HTTP_ACEITO, $jsonIMC);
+    }
+    
+    
 }
 
 /**
