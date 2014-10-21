@@ -15,5 +15,24 @@ class Erro {
     
      public function toArray() {
         return get_object_vars($this);
-    }       
+    }  
+    
+    public function getCodigo() {
+        return $this->codigo;
+    }
+
+    public function getMensagem() {
+        return $this->mensagem;
+    }
+
+    public function setCodigo($codigo) {
+        $this->codigo = $codigo;
+    }
+
+    public function setMensagem($mensagem) {
+        $this->mensagem = $mensagem;
+    }
+
+
+    
 }
