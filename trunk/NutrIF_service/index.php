@@ -238,7 +238,7 @@ function calcularIMC() {
     $altura = $dadosIMC->altura;
 
     if (($peso> 0) && ($altura>0))
-        $imc = number_format($peso / pow($altura, 2), 1);
+        $imc = (double)number_format($peso/pow($altura, 2), 1);
     
     if ($imc<=0) {
         $erro = new Erro();
