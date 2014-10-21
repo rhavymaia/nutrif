@@ -242,19 +242,19 @@ function calcularIMC() {
     
     if ($imc<=0) {
         $erro = new Erro();
-        $erro->setCodigo(002);
-        $erro->setMensagem("Não foi possível calcular IMC!");
+        $erro->codigo = 002;
+        $erro->mensagem = "Não foi possível calcular IMC!";
 
-        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro->toArray());
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
         // Construir o JSON de resposta.
         $jsonIMC = array(
             'imc' => $imc
         );
+        
         echoRespnse(HTTP_ACEITO, $jsonIMC);
     }
-    
-    
+ 
 }
 
 /**
@@ -291,7 +291,7 @@ function verificarLogin() {
     if (empty($usuario)) {
         $erro = new Erro();
         $erro->codigo = 002;
-        $erro->mensagem = "Usuário não encontrado.";
+        $erro->mensagem = "Usuario nao encontrado.";
 
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
@@ -370,6 +370,7 @@ function cadastrarAnamnese() {
         $erro->mensagem = "Problema ao inserir a anamnese.";
 
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+        
     } else {
         echoRespnse(HTTP_CRIADO, $anamnese);
     }
@@ -467,7 +468,7 @@ function cadastrarPesquisa() {
 }
 
 
-function echoRespnse($status_code, $response) {
+function echoRespnse($status_code, $response){
     $slim = \Slim\Slim::getInstance();
     // Http response code    
     $slim->status($status_code);

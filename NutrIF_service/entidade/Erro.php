@@ -13,10 +13,6 @@ class Erro {
     
     function __construct() {}
     
-     public function toArray() {
-        return get_object_vars($this);
-    }  
-    
     public function getCodigo() {
         return $this->codigo;
     }
@@ -33,6 +29,9 @@ class Erro {
         $this->mensagem = $mensagem;
     }
 
-
+    public function toArray() {
+        return get_object_vars($this);
+    }
+    
     
 }
