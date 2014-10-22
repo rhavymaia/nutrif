@@ -9,6 +9,7 @@ require_once './entidade/Percentil.class.php';
 require_once './entidade/Erro.php';
 require_once './util/JsonUtil.php';
 require_once './util/funcoesPercentil.php';
+require_once 'Zend/Json.php';
 
 // Slim
 require '../Slim/Slim/Slim.php';
@@ -38,7 +39,7 @@ function authenticate(\Slim\Route $route) {
  */
 function statusServer() {
     $server = new Server();
-    $server->online = true;
+    $server->online = "true";
     // Responder a requisição. Código HTTP (cabeçalho) e Entidade (Body - JSON).
     echoRespnse(HTTP_CRIADO, $server);
 }
@@ -291,7 +292,7 @@ function verificarLogin() {
     if (empty($usuario)) {
         $erro = new Erro();
         $erro->codigo = 002;
-        $erro->mensagem = "Usuario nao encontrado.";
+        $erro->mensagem = "Usuário não encontrado.";
 
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
@@ -393,15 +394,14 @@ function verificarAnamnesesPercentilEntrevistado() {
     // Consultar a(s) anamnese(s) do entrevistado.
     $db = new DbHandler();
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
-
+    
     $percentis = array();
-    $cars = array();
 
     // Calcular percentil para cada anamnese.
     foreach ($anamneses as $anamnese) {
 
         $anamnese = (object) $anamnese;
-
+        
         $entrevistado = $anamnese->getEntrevistado();
 
         $peso = $anamnese->getPeso();
@@ -422,12 +422,10 @@ function verificarAnamnesesPercentilEntrevistado() {
             if (!empty($percentil)) {
                 array_push($percentis, $percentil);               
             } else {
-                //echoRespnse(HTTP_ACEITO, array('a'=> 'AAA', 'b'=> 'AAA'));
-                echoRespnse(HTTP_ACEITO, array('teste' => array('a'=> 'AAA', 'b'=> 'AAA')));
-                //$percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);
                 
-                $teste = array("a"=> "AAA", "b"=> "AAA", "c"=> "AAA", "d"=> "AAA");
-                //array_push($percentis, $teste);   
+                $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);               
+                array_push($percentis, $percentil);                
+                echoRespnse(HTTP_ACEITO, $percentis);
             }
         } else {
             array_push($percentis, $imc);
@@ -476,7 +474,11 @@ function echoRespnse($status_code, $response){
     $slim->response()->header('Content-Type', 'application/json;charset=utf-8');
     // Chamada ao método estático para conversão de caracter UTF-8.
     // Tranforma o array ou objeto em JSON.
-    echo json_encode(JsonUtil::utf8json($response));
+    echo json_encode(JsonUtil::objectToArray($response));
+    //echo json_encode($response, JSON_HEX_QUOT | JSON_HEX_TAG);    
+    //echo json_encode($response, JSON_FORCE_OBJECT, true);
+    //echo Zend_Json::encode($response);
+    
     $slim->stop();
 }
 
