@@ -7,14 +7,22 @@
  */
 class Percentil {
 
-    private $vlPercentil;
-    private $cdPercentil;
-    private $sexo;
-    private $imc;
-    private $idadeMeses;
-    private $percentilInferior;
-    private $percentilSuperior;
+    public $vlPercentil;
+    
+    public $cdPercentil;
+    
+    public $sexo;
+    
+    public $imc;
+    
+    public $idadeMeses;
+    
+    public $percentilInferior;
+    
+    public $percentilSuperior;
 
+    function __construct() {}
+    
     public function getPercentilInferior() {
         return $this->percentilInferior;
     }
@@ -29,10 +37,6 @@ class Percentil {
 
     public function setPercentilSuperior($percentilSuperior) {
         $this->percentilSuperior = $percentilSuperior;
-    }
-
-    function __construct() {
-        
     }
 
     public function toArray() {

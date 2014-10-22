@@ -7,17 +7,17 @@
  */
 class Paciente {
 
-    private $codigo;
+    public $codigo;
     
-    private $matricula;
+    public $matricula;
     
-    private $nome;
+    public $nome;
     
-    private $nascimento;
+    public $nascimento;
     
-    private $nivelEscolar;
+    public $nivelEscolar;
     
-    private $dataRegistro;
+    public $dataRegistro;
 
     public function __construct() {}
 
