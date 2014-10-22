@@ -9,9 +9,9 @@ require_once ('Usuario.class.php');
  */
 class Nutricionista extends Usuario{
         
-    private $nome;
+    public $nome;
     
-    private $instituicao;
+    public $instituicao;
     
     public function __construct(){}
     

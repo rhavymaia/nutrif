@@ -7,11 +7,11 @@
  */
 class PerfilAlimentar {
     // Guia de bolso do Ministerio da saúde.
-    private $aluno;
+    public $aluno;
     
-    private $respostas;
+    public $respostas;
     
-    private $dataRegistro;
+    public $dataRegistro;
     
     function __construct() {}
     

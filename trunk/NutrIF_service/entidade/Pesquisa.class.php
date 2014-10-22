@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Pesquisa
  *
@@ -12,19 +7,19 @@
  */
 class Pesquisa {
 
-    private $codigo;
+    public $codigo;
     
-    private $nome;
+    public $nome;
     
-    private $dataInicio;
+    public $dataInicio;
     
-    private $dataFim;
+    public $dataFim;
     
-    private $instituicao;
+    public $instituicao;
     
-    private $nutricionista;
+    public $nutricionista;
     
-    private $dataResgistro;
+    public $dataResgistro;
     
     public function getCodigo() {
         return $this->codigo;

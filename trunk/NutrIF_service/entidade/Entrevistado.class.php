@@ -9,13 +9,13 @@ require_once ('Usuario.class.php');
  */
 class Entrevistado extends Usuario{
     
-    private $codigo;
+    public $codigo;
 
-    private $matricula;
+    public $matricula;
     
-    private $nivelEscolar;
+    public $nivelEscolar;
     
-    private $dataRegistro;
+    public $dataRegistro;
     
     public function __construct() {}
     

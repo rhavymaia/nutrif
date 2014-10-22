@@ -7,23 +7,23 @@
  */
 class Anamnese {
     
-    private $codigo;
+    public $codigo;
     
-    private $data;
+    public $data;
     
-    private $entrevistado;
+    public $entrevistado;
     
-    private $nutricionista;
+    public $nutricionista;
     
-    private $pesquisa;
+    public $pesquisa;
     
-    private $peso;
+    public $peso;
     
-    private $altura;
+    public $altura;
     
-    private $nivelEsporte;
+    public $nivelEsporte;
     
-    private $perfilAlimentar;
+    public $perfilAlimentar;
     
     public function __construct(){}
     
