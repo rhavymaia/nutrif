@@ -7,7 +7,7 @@
  */
 class Imc {
     
-    private $valor;
+    public $valor;
     
     function __construct() {
     }
