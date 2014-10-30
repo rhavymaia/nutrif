@@ -26,21 +26,21 @@ function calcularPercentilMargens($imc, $sexo, $idadeMeses) {
     $imcCrescente = $imc;
     
     $db = new DbHandler();
+    
+     $percentil = new Percentil();
 
     // Verificação do percentil inferior.
-    while ($percentilInferior == 0 && $imcDecrescente >= $margemIMCInferior) {
+    while (!$percentilInferior && $imcDecrescente >= $margemIMCInferior) {
         $imcDecrescente = $imcDecrescente - 0.1;
         $percentilInferior = $db->selecionarPercentil($imcDecrescente, $sexo, $idadeMeses);
     }
 
     // Verificação do percentil superior.
-    while ($percentilSuperior == 0 && $imcCrescente <= $margemIMCSuperior) {
+    while (!$percentilSuperior && $imcCrescente <= $margemIMCSuperior) {
         $imcCrescente = $imcCrescente + 0.1;
         $percentilSuperior = $db->selecionarPercentil($imcCrescente, $sexo, $idadeMeses);
     }
-    
-    $percentil = new Percentil();
-    
+
     $percentil->setPercentilInferior($percentilInferior);
     $percentil->setPercentilSuperior($percentilSuperior);
     
