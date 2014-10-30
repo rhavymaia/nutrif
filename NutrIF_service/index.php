@@ -9,7 +9,6 @@ require_once './entidade/Percentil.class.php';
 require_once './entidade/Erro.php';
 require_once './util/JsonUtil.php';
 require_once './util/funcoesPercentil.php';
-require_once 'Zend/Json.php';
 
 // Slim
 require '../Slim/Slim/Slim.php';
@@ -19,15 +18,13 @@ $slim = new \Slim\Slim();
 $slim->get('/statusServer', 'statusServer');
 $slim->post('/cadastrarAluno', 'cadastrarAluno');
 $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
-$slim->post('/analisarVCT', 'analisarVCT');
+$slim->post('/calcularVCT', 'calcularVCT');
 $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
-$slim->post('/verificarAnamnesesPercentilEntrevistado', 
-        'verificarAnamnesesPercentilEntrevistado');
+$slim->post('/verificarAnamnesesPercentilEntrevistado', 'verificarAnamnesesPercentilEntrevistado');
 $slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
-
 
 function authenticate(\Slim\Route $route) {
     
@@ -104,7 +101,7 @@ function cadastrarAluno() {
     } else {
         $erro = new Erro();
         $erro->codigo = 001;
-        $erro->mensagem = "Impossível criar usuário.";
+        $erro->mensagem = "Impossivel criar usuario.";
         echoRespnse(HTTP_ERRO_INTERNO, $erro);
     }
 }
@@ -159,18 +156,18 @@ function cadastrarNutricionista() {
         } else {
             $erro = new Erro();
             $erro->codigo = 005;
-            $erro->mensagem = "Nutricionista já cadastrado(a).";
+            $erro->mensagem = "Nutricionista ja cadastrado(a).";
             echoRespnse(HTTP_CONFLITO, $erro);
         }
     } else if ($cd_usuario == USUARIO_EXISTENTE) {
         $erro = new Erro();
         $erro->codigo = 004;
-        $erro->mensagem = "Usuário já cadastrado.";
+        $erro->mensagem = "Usuario ja cadastrado.";
         echoRespnse(HTTP_CONFLITO, $erro);
     } else {
         $erro = new Erro();
         $erro->codigo = 001;
-        $erro->mensagem = "Impossível criar usuário.";
+        $erro->mensagem = "Impossivel criar usuario.";
         echoRespnse(HTTP_ERRO_INTERNO, $erro);
     }
 }
@@ -192,7 +189,105 @@ function cadastrarNutricionista() {
  *      'vct' : *[1-9].*[1-9]
  *  }
  */
-function analisarVCT() {
+function calcularVCT() {
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $aluno = json_decode($body);
+
+    $matricula = $aluno->matricula;
+
+    /* $peso = $aluno->peso;
+      $alturaCm = ($aluno->altura * FATOR_CENTIMETRO);
+      $idade = $aluno->idade; */
+
+    // Consultar a(s) anamnese(s) do entrevistado.
+    $db = new DbHandler();
+    $anamneses = $db->selectAnamnesesEntrevistado($matricula);
+
+    $vcts = array();
+
+    $anamnese = new Anamnese();
+
+    // Calcular percentil para cada anamnese.
+    foreach ($anamneses as $anamnese) {
+
+        $anamnese = (object) $anamnese;
+
+        $entrevistado = $anamnese->getEntrevistado();
+
+        $peso = $anamnese->getPeso();
+
+        $altura = ($anamnese->getAltura());
+
+        $sexo = $entrevistado->getSexo();
+
+        $idade = converterData($entrevistado->getNascimento()) / 12;
+
+        $nivelEsporte = $anamnese->getNivelEsporte();
+        
+        $vlNivelEsporte = 1;
+        $tmb = 0;
+
+        //Verificando valores para os níveis de atividade física
+        if ($nivelEsporte == 1) {
+            if ($sexo == "M") {
+                $vlNivelEsporte = 1.55;
+            } else
+            if ($sexo == "F")
+                $vlNivelEsporte = 1.56;
+        }else
+        if ($nivelEsporte == 2) {
+            if ($sexo == "M")
+                $vlNivelEsporte = 1.78;
+            else
+            if ($sexo == "F")
+                $vlNivelEsporte = 1.64;
+        }else
+        if ($nivelEsporte == 3) {
+            if ($sexo == "M")
+                $vlNivelEsporte = 2.10;
+            else
+            if ($sexo == "F")
+                $vlNivelEsporte = 1.82;
+        }
+
+        if ($sexo == "M") {
+            if ($idade >= 10 && $idade < 18)
+                $tmb = (16.6 * $peso) + (77 * $altura + 572);
+            else
+            if ($idade >= 18 && $idade < 30)
+                $tmb = (15.4 * $peso) + (27 * $altura + 717);
+            else
+            if ($idade >= 30 && $idade <= 60)
+                $tmb = (11.3 * $peso) + (16 * $altura + 901);
+            else
+            if ($idade > 60)
+                $tmb = (8.8 * $peso) + (1.128 * $altura - 1071);
+        }else
+        if ($sexo == "F") {
+            if ($idade >= 10 && $idade < 18)
+                $tmb = (7.4 * $peso) + (482 * $altura + 217);
+            else
+            if ($idade >= 18 && $idade < 30)
+                $tmb = (13.3 * $peso) + (334 * $altura + 35);
+            else
+            if ($idade >= 30 && $idade <= 60)
+                $tmb = (8.7 * $peso) - (255 * $altura + 865);
+            else
+            if ($idade > 60)
+                $tmb = (9.2 * $peso) + (637 * $altura - 302);
+        }
+
+        $vct = $tmb * $vlNivelEsporte;
+
+        // Construir o JSON de resposta.
+        $vcts = array_push($vcts, $vct);
+    }
+
+    echoRespnse(HTTP_CRIADO, $vcts);
+}
+
+function calcularVCTDireto() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $aluno = json_decode($body);
@@ -213,7 +308,7 @@ function analisarVCT() {
 
     // Construir o JSON de resposta.
     $vct = array(
-        'vct' => ($tmb * $aluno->nivelEsporte)
+        'vct' => (double) ($tmb * $aluno->nivelEsporte)
     );
 
     echoRespnse(HTTP_CRIADO, $vct);
@@ -234,17 +329,17 @@ function calcularIMC() {
     $body = $request->getBody();
     $dadosIMC = json_decode($body);
     $imc = 0;
-    
+
     $peso = $dadosIMC->peso;
     $altura = $dadosIMC->altura;
 
-    if (($peso> 0) && ($altura>0))
-        $imc = (double)number_format($peso/pow($altura, 2), 1);
-    
-    if ($imc<=0) {
+    if (($peso > 0) && ($altura > 0))
+        $imc = (double) number_format($peso / pow($altura, 2), 1);
+
+    if ($imc <= 0) {
         $erro = new Erro();
         $erro->codigo = 002;
-        $erro->mensagem = "Não foi possível calcular IMC!";
+        $erro->mensagem = "Nao foi possivel calcular IMC!";
 
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
@@ -252,10 +347,9 @@ function calcularIMC() {
         $jsonIMC = array(
             'imc' => $imc
         );
-        
+
         echoRespnse(HTTP_ACEITO, $jsonIMC);
     }
- 
 }
 
 /**
@@ -336,7 +430,7 @@ function verificarPercentil() {
     if (empty($percentil)) {
         $erro = new Erro();
         $erro->codigo = 003;
-        $erro->mensagem = "Percentil não encontrado.";
+        $erro->mensagem = "Percentil nao encontrado.";
 
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
@@ -371,7 +465,6 @@ function cadastrarAnamnese() {
         $erro->mensagem = "Problema ao inserir a anamnese.";
 
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-        
     } else {
         echoRespnse(HTTP_CRIADO, $anamnese);
     }
@@ -384,7 +477,7 @@ function cadastrarAnamnese() {
  * }
  */
 function verificarAnamnesesPercentilEntrevistado() {
-    
+
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $percentilJson = json_decode($body);
@@ -414,34 +507,35 @@ function verificarAnamnesesPercentilEntrevistado() {
 
         // Cálculo do IMC
         $imc = number_format($peso / pow($alturaMetros, 2), 1);
-        
-        if ($idadeMeses <= IDADE_PERCENTIL_19) {         
+
+        if ($idadeMeses <= IDADE_PERCENTIL_19) {
             //pesquisar por percentil
             $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
-            
+
             if (!empty($percentil)) {
-                array_push($percentis, $percentil);               
+                array_push($percentis, $percentil);
             } else {
                 
                 $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);               
                 array_push($percentis, $percentil);                
-                echoRespnse(HTTP_ACEITO, $percentis);
+                echoRespnse(HTTP_ACEITO, $percentis); 
             }
         } else {
             array_push($percentis, $imc);
         }
     }
-/*
-    // Retornar percentis e anamneses.
-    if (empty($percentis)) {
-        $erro = new Erro();
-        $erro->codigo = count($percentis);
-        $erro->mensagem = "Percentil nao encontrado";
+    
+    /*
+      // Retornar percentis e anamneses.
+      if (empty($percentis)) {
+      $erro = new Erro();
+      $erro->codigo = count($percentis);
+      $erro->mensagem = "Percentil nao encontrado";
 
-        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    } else {
-        echoRespnse(HTTP_ACEITO, $percentis);
-    }*/
+      echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+      } else {
+      echoRespnse(HTTP_ACEITO, $percentis);
+      } */
 }
 
 function cadastrarPesquisa() {
@@ -465,8 +559,7 @@ function cadastrarPesquisa() {
     }
 }
 
-
-function echoRespnse($status_code, $response){
+function echoRespnse($status_code, $response) {
     $slim = \Slim\Slim::getInstance();
     // Http response code    
     $slim->status($status_code);
