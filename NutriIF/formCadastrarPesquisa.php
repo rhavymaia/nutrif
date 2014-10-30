@@ -28,11 +28,11 @@
         </label>
 
         <label for="dt_inicio"> <em>*</em> Data de início:
-            <input type="text" name="dt_inicio"  required onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['dt_inicio']) ? $_SESSION['dt_inicio'] : VAZIO) ?>"/> 
+            <input type="date" name="dt_inicio"  required onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['dt_inicio']) ? $_SESSION['dt_inicio'] : VAZIO) ?>"/> 
         </label>
         
         <label for="dt_fim"> <em>*</em> Data de fim:
-            <input type="text" name="dt_fim"  required onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['dt_fim']) ? $_SESSION['dt_fim'] : VAZIO) ?>"/> 
+            <input type="date" name="dt_fim"  required onFocus="this.className = 'select'" onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['dt_fim']) ? $_SESSION['dt_fim'] : VAZIO) ?>"/> 
         </label>
         
 

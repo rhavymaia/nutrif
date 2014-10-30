@@ -5,7 +5,14 @@
 					<li><a href="index.php">Home</a></li>
                                         <?php
                                         if (isset($_SESSION['id'])) {
-					echo '<li><a href="formRegistroAntropometrico.php">Cadastro Antropométrico</a></li>
+                                            if($_SESSION['tp_usuario'] == TP_ALUNO){
+                                 echo '<li>
+                                        <a href="formPerfilAlimentarParte1.php">
+                                            <img src="images/book-lines.png">  Perfil Alimentar
+                                        </a>
+                                    </li>';
+                                            }else{
+                                 echo '<li><a href="formRegistroAntropometrico.php">Cadastro Antropométrico</a></li>
 					<li><a href="formCalculaPercentilIMCIdade.php">Cálculo de Percentil</a></li>
                                         <li><a href="formListarEntrevistado.php">Procurar Entrevistado</a></li>
                                         <li><a href="formCalculaVCT.php">Cálculo do VCT</a></li>
@@ -17,7 +24,7 @@
                                         </a></li>
 ';
                                         
-                                        }        
+                                        }        }
                                         
                                         if (!isset($_SESSION['id'])) {
                                         echo '<li><a href="formLogin.php">Login</a></li></p>';

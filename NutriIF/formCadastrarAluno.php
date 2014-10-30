@@ -1,3 +1,4 @@
+
 <?php
     require_once ('util/constantes.php');
     require_once ('validate/erro.php');
@@ -41,7 +42,8 @@
         <div>
         <label for="nascimento"> <em>*</em> Data de Nascimento:
             <input type="text" name="nascimento" required onFocus="this.className = 'select'" id="data"
-                onBlur="this.className = 'normal'" value= "<?php echo(isset($_SESSION['nascimento']) ? $_SESSION['nascimento'] : VAZIO) ?>"/>
+                onBlur="this.className = 'normal'" value="<?php echo(isset($_SESSION['nascimento']) ? $_SESSION['nascimento'] : VAZIO) ?>"
+                onkeyup="javascript:makeDate('nascimento')" maxlength="10"/>
         </label></div>
         <div>        
         <label for="sexo" value= "<?php echo(''); ?>"> <em>*</em> Sexo 

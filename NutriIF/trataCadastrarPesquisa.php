@@ -39,7 +39,17 @@
         'dt_inicio'=> $dt_inicio,
         'dt_fim'=> $dt_fim
     );
-        
+    
     $id_pesquisa = $dao->inserirPesquisa($data_cadastro_pesquisa);*/
+    
+     if (ehNumerico($id_pesquisa)) {
+
+                 echo '<script language="javascript" type="text/javascript">';
+                 echo 'window.alert("Pesquisa cadastrada com sucesso!");';  
+                 echo 'window.location.href="index.php";';
+                 echo '</script>';
+            } else {  
+                header("location: mensagem_erro.php");          
+            }     
     
 ?>
