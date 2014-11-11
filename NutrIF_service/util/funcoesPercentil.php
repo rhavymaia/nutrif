@@ -44,7 +44,6 @@ function calcularPercentilMargens($imc, $sexo, $idadeMeses) {
     $percentil->setPercentilInferior($percentilInferior);
     $percentil->setPercentilSuperior($percentilSuperior);
     
-
     return $percentil;
 }
 
