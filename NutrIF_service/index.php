@@ -18,6 +18,7 @@ $slim = new \Slim\Slim();
 $slim->get('/statusServer', 'statusServer');
 $slim->post('/cadastrarAluno', 'cadastrarAluno');
 $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
+$slim->post('/calcularVCTDireto', 'calcularVCTDireto');
 $slim->post('/calcularVCT', 'calcularVCT');
 $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
@@ -196,10 +197,6 @@ function calcularVCT() {
 
     $matricula = $aluno->matricula;
 
-    /* $peso = $aluno->peso;
-      $alturaCm = ($aluno->altura * FATOR_CENTIMETRO);
-      $idade = $aluno->idade; */
-
     // Consultar a(s) anamnese(s) do entrevistado.
     $db = new DbHandler();
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
@@ -208,7 +205,8 @@ function calcularVCT() {
 
     $anamnese = new Anamnese();
 
-    // Calcular percentil para cada anamnese.
+    // Calcular vct para cada anamnese.
+    
     foreach ($anamneses as $anamnese) {
 
         $anamnese = (object) $anamnese;
@@ -221,10 +219,10 @@ function calcularVCT() {
 
         $sexo = $entrevistado->getSexo();
 
-        $idade = converterData($entrevistado->getNascimento()) / 12;
+        $idade = converterData($entrevistado->getNascimento())/12;
 
         $nivelEsporte = $anamnese->getNivelEsporte();
-        
+
         $vlNivelEsporte = 1;
         $tmb = 0;
 
@@ -280,6 +278,7 @@ function calcularVCT() {
 
         $vct = $tmb * $vlNivelEsporte;
 
+        $vcts = array();            
         // Construir o JSON de resposta.
         $vcts = array_push($vcts, $vct);
     }
@@ -293,22 +292,66 @@ function calcularVCTDireto() {
     $aluno = json_decode($body);
 
     $peso = $aluno->peso;
-    $alturaCm = ($aluno->altura * FATOR_CENTIMETRO);
+    $altura = $aluno->altura;
     $idade = $aluno->idade;
+    $nivelEsporte = $aluno->nivelEsporte;
+    $sexo = $aluno->sexo;
 
-    //TODO: Validação do dados de entrada.
-    // Receber altura em metros e converter para centímetros.
-    if ($aluno->sexo == MASCULINO) {
-        //TODO: Inserir explicação da fórmula;
-        $tmb = 655 + (9.6 * $peso) + (1.8 * $alturaCm) - (4.7 * $idade);
-    } else {
-        //TODO: Inserir explicação da fórmula;
-        $tmb = 655 + (14 * $peso) + (5 * $alturaCm) - (6.7 * $idade);
+    $vlNivelEsporte = 0;
+    $tmb = 0;
+
+    //Verificando valores para os níveis de atividade física
+    if ($nivelEsporte == 1) {
+        if ($sexo == "M") {
+            $vlNivelEsporte = 1.55;
+        } else
+        if ($sexo == "F")
+            $vlNivelEsporte = 1.56;
+    }else
+    if ($nivelEsporte == 2) {
+        if ($sexo == "M")
+            $vlNivelEsporte = 1.78;
+        else
+        if ($sexo == "F")
+            $vlNivelEsporte = 1.64;
+    }else
+    if ($nivelEsporte == 3) {
+        if ($sexo == "M")
+            $vlNivelEsporte = 2.10;
+        else
+        if ($sexo == "F")
+            $vlNivelEsporte = 1.82;
     }
 
+    if ($sexo == "M") {
+        if ($idade >= 10 && $idade < 18)
+            $tmb = (16.6 * $peso) + (77 * $altura + 572);
+        else
+        if ($idade >= 18 && $idade < 30)
+            $tmb = (15.4 * $peso) + (27 * $altura + 717);
+        else
+        if ($idade >= 30 && $idade <= 60)
+            $tmb = (11.3 * $peso) + (16 * $altura + 901);
+        else
+        if ($idade > 60)
+            $tmb = (8.8 * $peso) + (1.128 * $altura - 1071);
+    }else
+    if ($sexo == "F") {
+        if ($idade >= 10 && $idade < 18)
+            $tmb = (7.4 * $peso) + (482 * $altura + 217);
+        else
+        if ($idade >= 18 && $idade < 30)
+            $tmb = (13.3 * $peso) + (334 * $altura + 35);
+        else
+        if ($idade >= 30 && $idade <= 60)
+            $tmb = (8.7 * $peso) - (255 * $altura + 865);
+        else
+        if ($idade > 60)
+            $tmb = (9.2 * $peso) + (637 * $altura - 302);
+    }
     // Construir o JSON de resposta.
     $vct = array(
-        'vct' => (double) ($tmb * $aluno->nivelEsporte)
+        'vct' => (double) ($tmb * $vlNivelEsporte)
     );
 
     echoRespnse(HTTP_CRIADO, $vct);
@@ -487,14 +530,14 @@ function verificarAnamnesesPercentilEntrevistado() {
     // Consultar a(s) anamnese(s) do entrevistado.
     $db = new DbHandler();
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
-    
+
     $percentis = array();
 
     // Calcular percentil para cada anamnese.
     foreach ($anamneses as $anamnese) {
 
         $anamnese = (object) $anamnese;
-        
+
         $entrevistado = $anamnese->getEntrevistado();
 
         $peso = $anamnese->getPeso();
@@ -515,16 +558,16 @@ function verificarAnamnesesPercentilEntrevistado() {
             if (!empty($percentil)) {
                 array_push($percentis, $percentil);
             } else {
-                
-                $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);               
-                array_push($percentis, $percentil);                
-                echoRespnse(HTTP_ACEITO, $percentis); 
+
+                $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);
+                array_push($percentis, $percentil);
+                echoRespnse(HTTP_ACEITO, $percentis);
             }
         } else {
             array_push($percentis, $imc);
         }
     }
-    
+
     /*
       // Retornar percentis e anamneses.
       if (empty($percentis)) {
@@ -571,7 +614,7 @@ function echoRespnse($status_code, $response) {
     //echo json_encode($response, JSON_HEX_QUOT | JSON_HEX_TAG);    
     //echo json_encode($response, JSON_FORCE_OBJECT, true);
     //echo Zend_Json::encode($response);
-    
+
     $slim->stop();
 }
 
