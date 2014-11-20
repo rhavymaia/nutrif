@@ -284,6 +284,7 @@ function calcularVCTAnamneses() {
 }
 
 function calcularVCT() {
+    
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $aluno = json_decode($body);
@@ -292,8 +293,10 @@ function calcularVCT() {
     $altura = $aluno->altura;
     $nivelEsporte = $aluno->nivelEsporte;
     // Entrevistado
-    $idade = $aluno->entrevistado->nascimento;   
+    $nascimento = $aluno->entrevistado->nascimento;   
     $sexo = $aluno->entrevistado->sexo;
+    
+    $idade = calcularIdade(formata_data($nascimento));
 
     $vlNivelEsporte = 0;
     $tmb = 0;
@@ -322,7 +325,7 @@ function calcularVCT() {
     }
 
     if ($sexo == "M") {
-        if ($idade >= 10 && $idade < 18)
+        if (($idade < 18) && ($idade >= 10))
             $tmb = (16.6 * $peso) + (77 * $altura + 572);
         else
         if ($idade >= 18 && $idade < 30)
@@ -351,7 +354,7 @@ function calcularVCT() {
     // Construir o JSON de resposta.
     $vct = new Vct();
     $vct->setValor(($tmb * $vlNivelEsporte));
-
+    
     echoRespnse(HTTP_CRIADO, $vct);
 }
 
