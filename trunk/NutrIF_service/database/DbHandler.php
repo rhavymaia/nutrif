@@ -443,7 +443,7 @@ class DbHandler {
         return $num_rows > 0;
     }
 
-    function inserirPesquisa($pesquisa){
+/*    function inserirPesquisa($pesquisa){
 
         $cdPesquisa = ID_NAO_RETORNADO;
         
@@ -470,8 +470,9 @@ class DbHandler {
 
         return $cdPesquisa;
     }
-    
-    
+ */   
+   
+
 
 }
 

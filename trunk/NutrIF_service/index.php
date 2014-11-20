@@ -25,7 +25,8 @@ $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
-$slim->post('/verificarAnamnesesPercentilEntrevistado', 'verificarAnamnesesPercentilEntrevistado');
+$slim->post('/verificarAnamnesesPercentilEntrevistado', 
+        'verificarAnamnesesPercentilEntrevistado');
 $slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
 
 function authenticate(\Slim\Route $route) {
@@ -35,6 +36,11 @@ function authenticate(\Slim\Route $route) {
 // Funções    
 /**
  * Verificar status do servidor.
+ * 
+ */
+
+/**
+ * 
  */
 function statusServer() {
     $server = new Server();
@@ -216,7 +222,7 @@ function calcularVCTAnamneses() {
 
         $altura = ($anamnese->getAltura());
 
-        $sexo = $entrevistado->getSexo();
+        $sexo = strtoupper($entrevistado->getSexo());
         
         $idade = calcularIdade($entrevistado->getNascimento());
        
