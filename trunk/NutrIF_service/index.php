@@ -19,8 +19,8 @@ $slim = new \Slim\Slim();
 $slim->get('/statusServer', 'statusServer');
 $slim->post('/cadastrarAluno', 'cadastrarAluno');
 $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
-$slim->post('/calcularVCTDireto', 'calcularVCTDireto');
 $slim->post('/calcularVCT', 'calcularVCT');
+$slim->post('/calcularVCTAnamneses', 'calcularVCTAnamneses');
 $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
@@ -191,7 +191,7 @@ function cadastrarNutricionista() {
  *      'vct' : *[1-9].*[1-9]
  *  }
  */
-function calcularVCT() {
+function calcularVCTAnamneses() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $aluno = json_decode($body);
@@ -283,16 +283,17 @@ function calcularVCT() {
     echoRespnse(HTTP_CRIADO, $vcts);
 }
 
-function calcularVCTDireto() {
+function calcularVCT() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $aluno = json_decode($body);
 
     $peso = $aluno->peso;
     $altura = $aluno->altura;
-    $idade = $aluno->idade;
     $nivelEsporte = $aluno->nivelEsporte;
-    $sexo = $aluno->sexo;
+    // Entrevistado
+    $idade = $aluno->entrevistado->nascimento;   
+    $sexo = $aluno->entrevistado->sexo;
 
     $vlNivelEsporte = 0;
     $tmb = 0;
@@ -346,10 +347,10 @@ function calcularVCTDireto() {
         if ($idade > 60)
             $tmb = (9.2 * $peso) + (637 * $altura - 302);
     }
+    
     // Construir o JSON de resposta.
-    $vct = array(
-        'vct' => (double) ($tmb * $vlNivelEsporte)
-    );
+    $vct = new Vct();
+    $vct->setValor(($tmb * $vlNivelEsporte));
 
     echoRespnse(HTTP_CRIADO, $vct);
 }
