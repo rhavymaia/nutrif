@@ -6,6 +6,7 @@ require_once 'util/constantes.php';
 require_once 'entidade/Server.class.php';
 require_once './entidade/Usuario.class.php';
 require_once './entidade/Percentil.class.php';
+require_once './entidade/Vct.php';
 require_once './entidade/Erro.php';
 require_once './util/JsonUtil.php';
 require_once './util/funcoesPercentil.php';
@@ -200,16 +201,14 @@ function calcularVCT() {
     // Consultar a(s) anamnese(s) do entrevistado.
     $db = new DbHandler();
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
-
-    $vcts = array();
-
-    $anamnese = new Anamnese();
-
-    // Calcular vct para cada anamnese.
+        
+    $vcts = array();   
     
-    foreach ($anamneses as $anamnese) {
+    $vlNivelEsporte = 0;
+    $tmb = 0;
 
-        $anamnese = (object) $anamnese;
+    // Calcular vct para cada anamnese.    
+    foreach ($anamneses as $anamnese) {
 
         $entrevistado = $anamnese->getEntrevistado();
 
@@ -218,13 +217,10 @@ function calcularVCT() {
         $altura = ($anamnese->getAltura());
 
         $sexo = $entrevistado->getSexo();
-
-        $idade = converterData($entrevistado->getNascimento())/12;
-
+        
+        $idade = calcularIdade($entrevistado->getNascimento());
+       
         $nivelEsporte = $anamnese->getNivelEsporte();
-
-        $vlNivelEsporte = 1;
-        $tmb = 0;
 
         //Verificando valores para os níveis de atividade física
         if ($nivelEsporte == 1) {
@@ -276,11 +272,12 @@ function calcularVCT() {
                 $tmb = (9.2 * $peso) + (637 * $altura - 302);
         }
 
-        $vct = $tmb * $vlNivelEsporte;
-
-        $vcts = array();            
+        $vct = new Vct();
+        $vct->setValor($tmb * $vlNivelEsporte);
+        $vct->setAnamnese($anamnese);
+        
         // Construir o JSON de resposta.
-        $vcts = array_push($vcts, $vct);
+        array_push($vcts, $vct);
     }
 
     echoRespnse(HTTP_CRIADO, $vcts);
