@@ -202,7 +202,7 @@ class DbHandler {
 
         $sql = "SELECT usuario.nm_login, usuario.nm_usuario, "
                 . "usuario.cd_tipousuario, "
-                . "usuario.cd_usuario "
+                . "usuario.cd_usuario, usuario.dt_nascimento, usuario.nm_sexo "
                 . " FROM tb_usuario AS usuario"
                 . " WHERE"
                 . " usuario.nm_login = ?"
@@ -216,13 +216,16 @@ class DbHandler {
         $stmt->store_result();
 
         if ($resultStmt && $stmt->num_rows > 0) {
-            $stmt->bind_result($login, $nome, $tipoUsuario, $codigo);
+            $stmt->bind_result($login, $nome, $tipoUsuario, $codigo, 
+                    $dtNascimento, $sexo);
             $stmt->fetch();
             $usuario = new Usuario();
             $usuario->setLogin($login);
             $usuario->setCodigo($codigo);
             $usuario->setNome($nome);
             $usuario->setTipoUsuario($tipoUsuario);
+            $usuario->setNascimento($dtNascimento);
+            $usuario->setSexo($sexo);
         }
 
         $stmt->close();
