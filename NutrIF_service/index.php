@@ -286,7 +286,8 @@ function calcularVCTAnamneses() {
         array_push($vcts, $vct);
     }
 
-    echoRespnse(HTTP_CRIADO, $vcts);
+    echoRespnse(HTTP_CRIADO, array("sexo"=> $sexo));
+    //echoRespnse(HTTP_CRIADO, $vcts);
 }
 
 function calcularVCT() {
@@ -300,7 +301,7 @@ function calcularVCT() {
     $nivelEsporte = $aluno->nivelEsporte;
     // Entrevistado
     $nascimento = $aluno->entrevistado->nascimento;   
-    $sexo = $aluno->entrevistado->sexo;
+    $sexo = strtoupper($aluno->entrevistado->sexo);
     
     $idade = calcularIdade(formata_data($nascimento));
 
