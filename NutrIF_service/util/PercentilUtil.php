@@ -1,8 +1,8 @@
 <?php
 
 require_once 'database/DbHandler.php';
-require_once './DataUtil.php';
-require_once './constantes.php';
+require_once 'DataUtil.php';
+require_once 'constantes.php';
 
 /**
  * Description of PercentilUtil
