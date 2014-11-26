@@ -1,10 +1,10 @@
 <?php
 
-require_once '../entidade/Vct.php';
-require_once '../entidade/Anamnese.class.php';
-require_once '../entidade/Entrevistado.class.php';
-require_once './DataUtil.php';
-require_once './constantes.php';
+require_once './entidade/Vct.class.php';
+require_once './entidade/Anamnese.class.php';
+require_once './entidade/Entrevistado.class.php';
+require_once 'DataUtil.php';
+require_once 'constantes.php';
 
 /**
  * Description of VCTUtil

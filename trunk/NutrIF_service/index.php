@@ -8,7 +8,7 @@ require_once 'entidade/Server.class.php';
 require_once './entidade/Entrevistado.class.php';
 require_once './entidade/Usuario.class.php';
 require_once './entidade/Percentil.class.php';
-require_once './entidade/Vct.php';
+require_once './entidade/Vct.class.php';
 require_once './entidade/Erro.php';
 require_once './util/JsonUtil.php';
 require_once './util/PercentilUtil.php';
