@@ -41,6 +41,19 @@
     // Sexo masculino.
     define('MASCULINO', 'm');
     
+    // Sexo feminino.
+    define('FEMININO', 'f');
+    
+    //
+    define('NIVEL_ESPORTE_LEVE', 1);
+    
+    //
+    define('NIVEL_ESPORTE_MODERADO', 2);
+    
+    //
+    define('NIVEL_ESPORTE_INTENSO', 3);
+    
+    
     // Código HTTP
     // Código HTTP - Status: Criado
     define ('HTTP_CRIADO', 201);
@@ -53,6 +66,9 @@
     
     // Código HTTP - Erro interno
     define ('HTTP_CONFLITO', 409);
+    
+    // Código HTTP - Não Encontrado.
+    define ('HTTP_NAO_ENCONTRADO', 404);
     
     // Código HTTP - Erro interno
     define ('HTTP_ERRO_INTERNO', 500);    

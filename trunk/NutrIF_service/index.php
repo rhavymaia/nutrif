@@ -3,13 +3,15 @@
 // Entidades    
 require_once 'database/DbHandler.php';
 require_once 'util/constantes.php';
+require_once 'util/VCTUtil.php';
 require_once 'entidade/Server.class.php';
+require_once './entidade/Entrevistado.class.php';
 require_once './entidade/Usuario.class.php';
 require_once './entidade/Percentil.class.php';
 require_once './entidade/Vct.php';
 require_once './entidade/Erro.php';
 require_once './util/JsonUtil.php';
-require_once './util/funcoesPercentil.php';
+require_once './util/PercentilUtil.php';
 
 // Slim
 require '../Slim/Slim/Slim.php';
@@ -86,27 +88,32 @@ function cadastrarAluno() {
     $cdUsuario = $db->inserirUsuario($aluno, TP_ALUNO);
 
     if ($cdUsuario != ID_NAO_RETORNADO && $cdUsuario != USUARIO_EXISTENTE) {
+        
         $aluno->idUsuario = $cdUsuario;
         $idEntrevistado = $db->inserirEntrevistado($aluno);
 
         if ($idEntrevistado != ENTREVISTADO_EXISTENTE) {
+            
             $aluno->idEntrevistado = $idEntrevistado;
             $aluno->tpUsuario = TP_ALUNO;
             // Resposta com sucesso.
             $aluno->mensagem = "Cadastro realizado com sucesso!";
             echoRespnse(HTTP_CRIADO, $aluno);
         } else {
+            
             $erro = new Erro();
             $erro->codigo = 005;
             $erro->mensagem = "Entrevistado já cadastrado.";
             echoRespnse(HTTP_CONFLITO, $erro);
         }
     } else if ($cdUsuario == USUARIO_EXISTENTE) {
+        
         $erro = new Erro();
         $erro->codigo = 004;
         $erro->mensagem = "Usuário já cadastrado.";
         echoRespnse(HTTP_CONFLITO, $erro);
     } else {
+        
         $erro = new Erro();
         $erro->codigo = 001;
         $erro->mensagem = "Impossivel criar usuario.";
@@ -152,10 +159,12 @@ function cadastrarNutricionista() {
     $cd_usuario = $db->inserirUsuario($nutricionista, TP_NUTRICIONISTA);
 
     if ($cd_usuario != ID_NAO_RETORNADO && $cd_usuario != USUARIO_EXISTENTE) {
+        
         $nutricionista->idUsuario = $cd_usuario;
         $id_nutricionista = $db->inserirNutricionista($nutricionista);
 
         if ($id_nutricionista != ENTREVISTADO_EXISTENTE) {
+            
             $nutricionista->idNutricionista = $id_nutricionista;
             $nutricionista->tpUsuario = TP_NUTRICIONISTA;
 
@@ -168,11 +177,13 @@ function cadastrarNutricionista() {
             echoRespnse(HTTP_CONFLITO, $erro);
         }
     } else if ($cd_usuario == USUARIO_EXISTENTE) {
+        
         $erro = new Erro();
         $erro->codigo = 004;
         $erro->mensagem = "Usuario ja cadastrado.";
         echoRespnse(HTTP_CONFLITO, $erro);
     } else {
+        
         $erro = new Erro();
         $erro->codigo = 001;
         $erro->mensagem = "Impossivel criar usuario.";
@@ -207,87 +218,30 @@ function calcularVCTAnamneses() {
     // Consultar a(s) anamnese(s) do entrevistado.
     $db = new DbHandler();
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
+
+    if (sizeof($anamneses)) {
         
-    $vcts = array();   
-    
-    $vlNivelEsporte = 0;
-    $tmb = 0;
+        $vcts = array();
 
-    // Calcular vct para cada anamnese.    
-    foreach ($anamneses as $anamnese) {
+        // Calcular vct para cada anamnese.    
+        foreach ($anamneses as $anamnese) {
 
-        $entrevistado = $anamnese->getEntrevistado();
+            $vct = VCTUtil::calculaVCT($anamnese);
+            $vct->setAnamnese($anamnese);
 
-        $peso = $anamnese->getPeso();
-
-        $altura = ($anamnese->getAltura());
-
-        $sexo = strtoupper($entrevistado->getSexo());
-        
-        $idade = calcularIdade($entrevistado->getNascimento());
-       
-        $nivelEsporte = $anamnese->getNivelEsporte();
-
-        //Verificando valores para os níveis de atividade física
-        if ($nivelEsporte == 1) {
-            if ($sexo == "M") {
-                $vlNivelEsporte = 1.55;
-            } else
-            if ($sexo == "F")
-                $vlNivelEsporte = 1.56;
-        }else
-        if ($nivelEsporte == 2) {
-            if ($sexo == "M")
-                $vlNivelEsporte = 1.78;
-            else
-            if ($sexo == "F")
-                $vlNivelEsporte = 1.64;
-        }else
-        if ($nivelEsporte == 3) {
-            if ($sexo == "M")
-                $vlNivelEsporte = 2.10;
-            else
-            if ($sexo == "F")
-                $vlNivelEsporte = 1.82;
+            // Construir o JSON de resposta.
+            array_push($vcts, $vct);
         }
-
-        if ($sexo == "M") {
-            if ($idade >= 10 && $idade < 18)
-                $tmb = (16.6 * $peso) + (77 * $altura + 572);
-            else
-            if ($idade >= 18 && $idade < 30)
-                $tmb = (15.4 * $peso) + (27 * $altura + 717);
-            else
-            if ($idade >= 30 && $idade <= 60)
-                $tmb = (11.3 * $peso) + (16 * $altura + 901);
-            else
-            if ($idade > 60)
-                $tmb = (8.8 * $peso) + (1.128 * $altura - 1071);
-        }else
-        if ($sexo == "F") {
-            if ($idade >= 10 && $idade < 18)
-                $tmb = (7.4 * $peso) + (482 * $altura + 217);
-            else
-            if ($idade >= 18 && $idade < 30)
-                $tmb = (13.3 * $peso) + (334 * $altura + 35);
-            else
-            if ($idade >= 30 && $idade <= 60)
-                $tmb = (8.7 * $peso) - (255 * $altura + 865);
-            else
-            if ($idade > 60)
-                $tmb = (9.2 * $peso) + (637 * $altura - 302);
-        }
-
-        $vct = new Vct();
-        $vct->setValor($tmb * $vlNivelEsporte);
-        $vct->setAnamnese($anamnese);
         
-        // Construir o JSON de resposta.
-        array_push($vcts, $vct);
+        echoRespnse(HTTP_CRIADO, $vcts);
+        
+    } else {
+        $erro = new Erro();
+        $erro->codigo = 008;
+        $erro->mensagem = "Não foi possível encontrar anamnese.";
+        
+        echoRespnse(HTTP_NAO_ENCONTRADO, $erro);
     }
-
-    echoRespnse(HTTP_CRIADO, array("sexo"=> $sexo));
-    //echoRespnse(HTTP_CRIADO, $vcts);
 }
 
 function calcularVCT() {
@@ -295,72 +249,29 @@ function calcularVCT() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $aluno = json_decode($body);
-
+    
+    // Entrevistado
+    $nascimento = $aluno->entrevistado->nascimento;   
+    $sexo = strtoupper($aluno->entrevistado->sexo);   
+    
+    // Anamnese.
     $peso = $aluno->peso;
     $altura = $aluno->altura;
     $nivelEsporte = $aluno->nivelEsporte;
-    // Entrevistado
-    $nascimento = $aluno->entrevistado->nascimento;   
-    $sexo = strtoupper($aluno->entrevistado->sexo);
+    $anamnese = new Anamnese();
+    $anamnese->setPeso($peso);
+    $anamnese->setAltura($altura);
+    $anamnese->setNivelEsporte($nivelEsporte);
     
-    $idade = calcularIdade(formata_data($nascimento));
-
-    $vlNivelEsporte = 0;
-    $tmb = 0;
-
-    //Verificando valores para os níveis de atividade física
-    if ($nivelEsporte == 1) {
-        if ($sexo == "M") {
-            $vlNivelEsporte = 1.55;
-        } else
-        if ($sexo == "F")
-            $vlNivelEsporte = 1.56;
-    }else
-    if ($nivelEsporte == 2) {
-        if ($sexo == "M")
-            $vlNivelEsporte = 1.78;
-        else
-        if ($sexo == "F")
-            $vlNivelEsporte = 1.64;
-    }else
-    if ($nivelEsporte == 3) {
-        if ($sexo == "M")
-            $vlNivelEsporte = 2.10;
-        else
-        if ($sexo == "F")
-            $vlNivelEsporte = 1.82;
-    }
-
-    if ($sexo == "M") {
-        if (($idade < 18) && ($idade >= 10))
-            $tmb = (16.6 * $peso) + (77 * $altura + 572);
-        else
-        if ($idade >= 18 && $idade < 30)
-            $tmb = (15.4 * $peso) + (27 * $altura + 717);
-        else
-        if ($idade >= 30 && $idade <= 60)
-            $tmb = (11.3 * $peso) + (16 * $altura + 901);
-        else
-        if ($idade > 60)
-            $tmb = (8.8 * $peso) + (1.128 * $altura - 1071);
-    }else
-    if ($sexo == "F") {
-        if ($idade >= 10 && $idade < 18)
-            $tmb = (7.4 * $peso) + (482 * $altura + 217);
-        else
-        if ($idade >= 18 && $idade < 30)
-            $tmb = (13.3 * $peso) + (334 * $altura + 35);
-        else
-        if ($idade >= 30 && $idade <= 60)
-            $tmb = (8.7 * $peso) - (255 * $altura + 865);
-        else
-        if ($idade > 60)
-            $tmb = (9.2 * $peso) + (637 * $altura - 302);
-    }
+    $entrevistado = new Entrevistado();
+    $entrevistado->setNascimento($nascimento);
+    $entrevistado->setSexo($sexo);
+    
+    $anamnese->setEntrevistado($entrevistado);
     
     // Construir o JSON de resposta.
-    $vct = new Vct();
-    $vct->setValor(($tmb * $vlNivelEsporte));
+    $vct = VCTUtil::calculaVCT($anamnese);
+    $vct->setAnamnese($anamnese);
     
     echoRespnse(HTTP_CRIADO, $vct);
 }
@@ -537,6 +448,7 @@ function verificarAnamnesesPercentilEntrevistado() {
 
     // Consultar a(s) anamnese(s) do entrevistado.
     $db = new DbHandler();
+    //TODO: Ajustar para a classe DataUtil.
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
 
     $percentis = array();
@@ -567,26 +479,14 @@ function verificarAnamnesesPercentilEntrevistado() {
                 array_push($percentis, $percentil);
             } else {
 
-                $percentil = calcularPercentilMargens($imc, $sexo, $idadeMeses);
+                $percentil = PercentilUtil::calcularPercentilMargens($imc, $sexo, $idadeMeses);
                 array_push($percentis, $percentil);
-                echoRespnse(HTTP_ACEITO, $percentis);
             }
         } else {
             array_push($percentis, $imc);
         }
     }
-
-    /*
-      // Retornar percentis e anamneses.
-      if (empty($percentis)) {
-      $erro = new Erro();
-      $erro->codigo = count($percentis);
-      $erro->mensagem = "Percentil nao encontrado";
-
-      echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-      } else {
-      echoRespnse(HTTP_ACEITO, $percentis);
-      } */
+    echoRespnse(HTTP_ACEITO, $percentis);
 }
 
 function cadastrarPesquisa() {
