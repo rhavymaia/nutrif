@@ -1,6 +1,6 @@
 <?php
 
-require_once 'database/DbHandler.php';
+
 
 function converterData($data) {
 

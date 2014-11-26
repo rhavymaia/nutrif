@@ -7,15 +7,15 @@
  */
 class Percentil {
 
-    public $vlPercentil;
-    
-    public $cdPercentil;
-    
-    public $sexo;
+    public $cdPercentil;    
     
     public $imc;
     
+    public $sexo;
+    
     public $idadeMeses;
+    
+    public $vlPercentil;
     
     public $percentilInferior;
     
