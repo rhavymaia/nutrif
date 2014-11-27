@@ -44,7 +44,7 @@ class VCTController {
         }
 
         // Cálculo da taxa metabolica basal por idade e sexo.
-        if ($sexo == MASCULINO) {
+        if (strtoupper($sexo) == MASCULINO) {
             if ($idade >= 10 && $idade < 18) {
                 $taxaMetabolicaBasal = (16.6 * $peso) + (77 * $altura + 572);
             } else if ($idade >= 18 && $idade < 30) {
@@ -54,7 +54,7 @@ class VCTController {
             } else if ($idade > 60) {
                 $taxaMetabolicaBasal = (8.8 * $peso) + (1.128 * $altura - 1071);
             }
-        } else if ($sexo == FEMININO) {
+        } else if (strtoupper($sexo) == FEMININO) {
             if ($idade >= 10 && $idade < 18) {
                 $taxaMetabolicaBasal = (7.4 * $peso) + (482 * $altura + 217);
             } else if ($idade >= 18 && $idade < 30) {
