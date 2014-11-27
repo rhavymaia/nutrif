@@ -1,6 +1,6 @@
 <?php
 
-require_once './util/constantes.php';
+require_once './util/Constantes.php';
 require_once './entidade/Usuario.class.php';
 require_once './entidade/Pesquisa.class.php';
 require_once './entidade/Entrevistado.class.php';

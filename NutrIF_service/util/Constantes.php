@@ -39,10 +39,10 @@
     define('ENTREVISTADO_EXISTENTE', -1);
     
     // Sexo masculino.
-    define('MASCULINO', 'm');
+    define('MASCULINO', 'M');
     
     // Sexo feminino.
-    define('FEMININO', 'f');
+    define('FEMININO', 'F');
     
     //
     define('NIVEL_ESPORTE_LEVE', 1);

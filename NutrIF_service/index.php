@@ -1,17 +1,19 @@
 <?php
 
 // Entidades    
-require_once 'database/DbHandler.php';
-require_once 'util/constantes.php';
-require_once 'util/VCTUtil.php';
-require_once 'entidade/Server.class.php';
+require_once './database/DbHandler.php';
+require_once './util/Constantes.php';
+require_once './util/DataUtil.php';
+require_once './entidade/Server.class.php';
 require_once './entidade/Entrevistado.class.php';
 require_once './entidade/Usuario.class.php';
 require_once './entidade/Percentil.class.php';
 require_once './entidade/Vct.class.php';
+require_once './entidade/Anamnese.class.php';
 require_once './entidade/Erro.php';
 require_once './util/JsonUtil.php';
-require_once './util/PercentilUtil.php';
+require_once './controller/PercentilController.php';
+require_once './controller/VCTController.php';
 
 // Slim
 require '../Slim/Slim/Slim.php';
@@ -31,17 +33,16 @@ $slim->post('/verificarAnamnesesPercentilEntrevistado',
         'verificarAnamnesesPercentilEntrevistado');
 $slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
 
-function authenticate(\Slim\Route $route) {
-    
-}
+/**
+ * Altenticação do usuário.
+ * 
+ * @param \Slim\Route $route
+ */
+function authenticate(\Slim\Route $route) {}
 
 // Funções    
 /**
  * Verificar status do servidor.
- * 
- */
-
-/**
  * 
  */
 function statusServer() {
@@ -226,7 +227,7 @@ function calcularVCTAnamneses() {
         // Calcular vct para cada anamnese.    
         foreach ($anamneses as $anamnese) {
 
-            $vct = VCTUtil::calculaVCT($anamnese);
+            $vct = VCTController::calculaVCT($anamnese);
             $vct->setAnamnese($anamnese);
 
             // Construir o JSON de resposta.
@@ -244,6 +245,11 @@ function calcularVCTAnamneses() {
     }
 }
 
+/**
+ * Calcular os Valores Calóricos Totais baseado no peso, altura, nível esportivo
+ * e data de nascimento do entrevistado.
+ * 
+ */
 function calcularVCT() {
     
     $request = \Slim\Slim::getInstance()->request();
@@ -263,6 +269,7 @@ function calcularVCT() {
     $anamnese->setAltura($altura);
     $anamnese->setNivelEsporte($nivelEsporte);
     
+    // Entrevistado
     $entrevistado = new Entrevistado();
     $entrevistado->setNascimento($nascimento);
     $entrevistado->setSexo($sexo);
@@ -270,7 +277,7 @@ function calcularVCT() {
     $anamnese->setEntrevistado($entrevistado);
     
     // Construir o JSON de resposta.
-    $vct = VCTUtil::calculaVCT($anamnese);
+    $vct = VCTController::calculaVCT($anamnese);
     $vct->setAnamnese($anamnese);
     
     echoRespnse(HTTP_CRIADO, $vct);
@@ -466,7 +473,7 @@ function verificarAnamnesesPercentilEntrevistado() {
 
         $sexo = $entrevistado->getSexo();
 
-        $idadeMeses = converterData($entrevistado->getNascimento());
+        $idadeMeses = DataUtil::calcularIdadeMeses($entrevistado->getNascimento());
 
         // Cálculo do IMC
         $imc = number_format($peso / pow($alturaMetros, 2), 1);
@@ -479,7 +486,7 @@ function verificarAnamnesesPercentilEntrevistado() {
                 array_push($percentis, $percentil);
             } else {
 
-                $percentil = PercentilUtil::calcularPercentilMargens($imc, $sexo, $idadeMeses);
+                $percentil = PercentilController::calcularPercentilMargens($imc, $sexo, $idadeMeses);
                 array_push($percentis, $percentil);
             }
         } else {
