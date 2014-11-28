@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * Description of MapaErro
+ *
+ * @author Rhavy
+ */
+class MapaErro {
+
+    private static $instance;
+    private static $erros;
+
+    function __construct() {
+        
+    }
+
+    // O método singleton 
+    public static function singleton() {
+        if (!isset(self::$instance)) {
+            self::$instance = new MapaErro();
+            self::$erros = array(
+                1 => "Impossivel criar usuario.",
+                2 => "Usuário não encontrado.",
+                3 => "Percentil nao encontrado.",
+                4 => "Usuário já cadastrado.",
+                5 => "Entrevistado(a) já cadastrado(a).",
+                6 => "Nutricionista ja cadastrado(a).",
+                7 => "Não foi possível calcular IMC.",
+                8 => "Não foi possível encontrar anamnese.",
+                9 => "Problema ao inserir a anamnese.",
+                10 => "Problema ao inserir a pesquisa."
+            );
+        }
+
+        return self::$instance;
+    }
+
+    public function getErro($codigo) {
+        
+        $erro = new Erro();
+        
+        if (array_key_exists($codigo, self::$erros)) {
+            $mensagem = self::$erros[$codigo];
+            $erro->setCodigo($codigo);
+            $erro->setMensagem($mensagem);
+        } else {
+            $erro->setCodigo($codigo);
+            $erro->setMensagem("Código de erro não definido.");
+        }     
+
+        return $erro;
+    }
+}
