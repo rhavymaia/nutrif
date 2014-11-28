@@ -44,5 +44,4 @@ class PercentilController {
 
         return $percentil;
     }
-
 }

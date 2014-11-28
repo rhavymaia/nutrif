@@ -9,8 +9,10 @@ require_once './entidade/Entrevistado.class.php';
 require_once './entidade/Usuario.class.php';
 require_once './entidade/Percentil.class.php';
 require_once './entidade/Vct.class.php';
+require_once './entidade/Imc.class.php';
 require_once './entidade/Anamnese.class.php';
-require_once './entidade/Erro.php';
+require_once './entidade/Erro.class.php';
+require_once './util/MapaErro.php';
 require_once './util/JsonUtil.php';
 require_once './controller/PercentilController.php';
 require_once './controller/VCTController.php';
@@ -21,12 +23,12 @@ require '../Slim/Slim/Slim.php';
 
 $slim = new \Slim\Slim();
 $slim->get('/statusServer', 'statusServer');
+$slim->post('/verificarLogin', 'verificarLogin'); //implementar oAuth
 $slim->post('/cadastrarAluno', 'cadastrarAluno');
 $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
-$slim->post('/calcularVCT', 'calcularVCT');
+$slim->post('/calcularVCT', 'calcularVCT'); // Revisado
 $slim->post('/calcularVCTAnamneses', 'calcularVCTAnamneses');
 $slim->post('/calcularIMC', 'calcularIMC');
-$slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/verificarPercentil', 'verificarPercentil');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
 $slim->post('/verificarAnamnesesPercentilEntrevistado', 
@@ -48,6 +50,7 @@ function authenticate(\Slim\Route $route) {}
 function statusServer() {
     $server = new Server();
     $server->online = "true";
+    
     // Responder a requisição. Código HTTP (cabeçalho) e Entidade (Body - JSON).
     echoRespnse(HTTP_CRIADO, $server);
 }
@@ -94,30 +97,22 @@ function cadastrarAluno() {
         $idEntrevistado = $db->inserirEntrevistado($aluno);
 
         if ($idEntrevistado != ENTREVISTADO_EXISTENTE) {
-            
+            // Entrevistado cadastrado com sucesso.
             $aluno->idEntrevistado = $idEntrevistado;
-            $aluno->tpUsuario = TP_ALUNO;
-            // Resposta com sucesso.
-            $aluno->mensagem = "Cadastro realizado com sucesso!";
+            $aluno->tpUsuario = TP_ALUNO;            
             echoRespnse(HTTP_CRIADO, $aluno);
         } else {
-            
-            $erro = new Erro();
-            $erro->codigo = 005;
-            $erro->mensagem = "Entrevistado já cadastrado.";
+            // Entrevistado(a) já cadastrado(a).
+            $erro = MapaErro::singleton()->getErro(5);
             echoRespnse(HTTP_CONFLITO, $erro);
         }
     } else if ($cdUsuario == USUARIO_EXISTENTE) {
-        
-        $erro = new Erro();
-        $erro->codigo = 004;
-        $erro->mensagem = "Usuário já cadastrado.";
+        // Usuário já cadastrado.
+        $erro = MapaErro::singleton()->getErro(4);
         echoRespnse(HTTP_CONFLITO, $erro);
     } else {
-        
-        $erro = new Erro();
-        $erro->codigo = 001;
-        $erro->mensagem = "Impossivel criar usuario.";
+        // Impossivel criar usuario.
+        $erro = MapaErro::singleton()->getErro(1);
         echoRespnse(HTTP_ERRO_INTERNO, $erro);
     }
 }
@@ -172,23 +167,57 @@ function cadastrarNutricionista() {
             //Resposta com sucesso
             echoRespnse(HTTP_CRIADO, $nutricionista);
         } else {
-            $erro = new Erro();
-            $erro->codigo = 005;
-            $erro->mensagem = "Nutricionista ja cadastrado(a).";
+            // Nutricionista já cadastrado(a).
+            $erro = MapaErro::singleton()->getErro(6);
             echoRespnse(HTTP_CONFLITO, $erro);
         }
     } else if ($cd_usuario == USUARIO_EXISTENTE) {
-        
-        $erro = new Erro();
-        $erro->codigo = 004;
-        $erro->mensagem = "Usuario ja cadastrado.";
+        // Usuário já cadastrado.
+        $erro = MapaErro::singleton()->getErro(4);
         echoRespnse(HTTP_CONFLITO, $erro);
     } else {
-        
-        $erro = new Erro();
-        $erro->codigo = 001;
-        $erro->mensagem = "Impossivel criar usuario.";
+        // Impossivel criar usuario.
+        $erro = MapaErro::singleton()->getErro(1);
         echoRespnse(HTTP_ERRO_INTERNO, $erro);
+    }
+}
+
+/**
+ * Descrição
+ * @param $usuario
+ *  {
+ *      'login':'valor',
+ *      'senha':'valor'
+ *  }
+ * 
+ * @return $usuario HTTP-202
+ *  {
+ *      codigo: 21,
+ *      login: "user4@local.com",
+ *      nome:"João Silva",
+ *      tipoUsuario: "1",
+ *      ativo: TRUE | FALSE,
+ *  }
+ * @return $erro HTTP-400
+ */
+function verificarLogin() {
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $usuarioJson = json_decode($body);
+
+    $login = $usuarioJson->login;
+    $senha = $usuarioJson->senha;
+
+    //TODO: Validação do dados de entrada para o login do usuário.
+
+    $db = new DbHandler();
+    $usuario = $db->selectLogin($login, $senha);
+
+    if (empty($usuario)) {
+        $erro = MapaErro::singleton()->getErro(2);
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    } else {
+        echoRespnse(HTTP_ACEITO, $usuario);
     }
 }
 
@@ -237,10 +266,8 @@ function calcularVCTAnamneses() {
         echoRespnse(HTTP_CRIADO, $vcts);
         
     } else {
-        $erro = new Erro();
-        $erro->codigo = 008;
-        $erro->mensagem = "Não foi possível encontrar anamnese.";
-        
+        // Não foi possível encontrar anamnese.
+        $erro = MapaErro::singleton()->getErro(8);        
         echoRespnse(HTTP_NAO_ENCONTRADO, $erro);
     }
 }
@@ -292,74 +319,34 @@ function calcularVCT() {
  *      'alturaCm' : *[1-9].*[1-9],
  *      'idade': [1-9]
  * }
+ * 
+ * @return @return $percentil HTTP-202
+ * {
+ *  'valor': [1-9]
+ * }
  */
 function calcularIMC() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
-    $dadosIMC = json_decode($body);
-    $imc = 0;
+    $entrevistado = json_decode($body);
+    
+    $valor = 0;
 
-    $peso = $dadosIMC->peso;
-    $altura = $dadosIMC->altura;
+    $peso = $entrevistado->peso;
+    $altura = $entrevistado->altura;
 
     if (($peso > 0) && ($altura > 0))
-        $imc = (double) number_format($peso / pow($altura, 2), 1);
-
-    if ($imc <= 0) {
-        $erro = new Erro();
-        $erro->codigo = 002;
-        $erro->mensagem = "Nao foi possivel calcular IMC!";
-
+        $valor = (double) number_format($peso / pow($altura, 2), 1);
+    
+    if ($valor <= 0) {
+        // Não foi possível calcular IMC.
+        $erro = MapaErro::singleton()->getErro(7);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
         // Construir o JSON de resposta.
-        $jsonIMC = array(
-            'imc' => $imc
-        );
-
-        echoRespnse(HTTP_ACEITO, $jsonIMC);
-    }
-}
-
-/**
- * Descrição
- * @param $usuario
- *  {
- *      login:"valor",
- *      senha:"valor"
- *  }
- * 
- * @return $usuario HTTP-202
- *  {
- *      codigo: 21,
- *      login: "user4@local.com",
- *      nome:"João Silva",
- *      tipoUsuario: "1",
- *      ativo: TRUE | FALSE,
- *  }
- * @return $erro HTTP-400
- */
-function verificarLogin() {
-    $request = \Slim\Slim::getInstance()->request();
-    $body = $request->getBody();
-    $usuarioJson = json_decode($body);
-
-    $login = $usuarioJson->login;
-    $senha = $usuarioJson->senha;
-
-    //TODO: Validação do dados de entrada para o login do usuário.
-
-    $db = new DbHandler();
-    $usuario = $db->selectLogin($login, $senha);
-
-    if (empty($usuario)) {
-        $erro = new Erro();
-        $erro->codigo = 002;
-        $erro->mensagem = "Usuário não encontrado.";
-
-        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    } else {
-        echoRespnse(HTTP_ACEITO, $usuario->toArray());
+        $imc = new Imc();
+        $imc->setValor($valor);
+        echoRespnse(HTTP_ACEITO, $imc);
     }
 }
 
@@ -397,10 +384,7 @@ function verificarPercentil() {
     $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
 
     if (empty($percentil)) {
-        $erro = new Erro();
-        $erro->codigo = 003;
-        $erro->mensagem = "Percentil nao encontrado.";
-
+        $erro = MapaErro::singleton()->getErro(3);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
         echoRespnse(HTTP_ACEITO, $percentil->toArray());
@@ -428,14 +412,12 @@ function cadastrarAnamnese() {
     $db = new DbHandler();
     $cdAnamnese = $db->inserirAnamnese($anamnese);
 
-    if (empty($cdAnamnese)) {
-        $erro = new Erro();
-        $erro->codigo = 002;
-        $erro->mensagem = "Problema ao inserir a anamnese.";
-
-        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    } else {
+    if (!empty($cdAnamnese)) {
         echoRespnse(HTTP_CRIADO, $anamnese);
+    } else {
+        // Não foi possível encontrar anamnese.
+        $erro = MapaErro::singleton()->getErro(9);
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);       
     }
 }
 
@@ -507,10 +489,7 @@ function cadastrarPesquisa() {
     $cdPesquisa = $db->inserirPesquisa($pesquisa);
 
     if (empty($cdPesquisa)) {
-        $erro = new Erro();
-        $erro->codigo = 002;
-        $erro->mensagem = "Problema ao inserir a pesquisa.";
-
+        $erro = MapaErro::singleton()->getErro(10);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     } else {
         echoRespnse(HTTP_CRIADO, $pesquisa);
