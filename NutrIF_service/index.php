@@ -32,6 +32,7 @@ $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
 $slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
 $slim->post('/calcularVCT', 'calcularVCT');
+$slim->post('/calcularVCTAnamnese', 'calcularVCTAnamnese');
 $slim->post('/calcularVCTAnamneses', 'calcularVCTAnamneses');
 $slim->post('/calcularIMC', 'calcularIMC');
 
@@ -347,7 +348,7 @@ function calcularVCT() {
         $vct = VCTController::calculaVCT($anamnese);
         $vct->setAnamnese($anamnese);
 
-        echoRespnse(HTTP_CRIADO, $vct);
+        echoRespnse(HTTP_OK, $vct);
     } else {
         
         $erro = MapaErro::singleton()->getErro($validacao);
@@ -356,7 +357,51 @@ function calcularVCT() {
 }
 
 /**
- * Analisar o Valor calórico total (VCT);
+ * Analisar o Valor calórico total (VCT) de uma anamnese;
+ * 
+ * @param $anamnese 
+ *  {
+ *      "codigo"  : *[0-9]
+ *  }
+ * 
+ * @return $vct
+ * {
+ *  "valor":[0-9].[0-9],
+ *  "anamnese":{
+ *      "entrevistado":{
+ *          "nascimento":"YYYY/MM/DD",
+ *          "sexo":'M' | 'F'},
+ *      "peso":[0-9].[0-9],
+ *      "altura":[0-9].[0-9],
+ *      "nivelEsporte": 1 | 2 | 3
+ *  }
+ * }
+ */
+function calcularVCTAnamnese() {
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $anamnese = json_decode($body);
+
+    $codigo = $anamnese->codigo;
+    
+    // Consultar a(s) anamnese(s) pelo código.
+    $db = new DbHandler();
+    $anamneseConsulta = $db->selectAnamnese($codigo);
+    
+    if (!empty($anamneseConsulta)) {
+        $vct = VCTController::calculaVCT($anamneseConsulta);
+        $vct->setAnamnese($anamneseConsulta);
+
+        echoRespnse(HTTP_OK, $vct);
+    } else {
+        // Não foi possível encontrar anamnese.
+        $erro = MapaErro::singleton()->getErro(8);        
+        echoRespnse(HTTP_NAO_ENCONTRADO, $erro);
+    }
+}
+
+/**
+ * Analisar o Valor calórico total (VCT) das anamneses de um usuário (entrevistado);
  * 
  * @param $aluno 
  *  {
@@ -401,7 +446,7 @@ function calcularVCTAnamneses() {
             array_push($vcts, $vct);
         }
         
-        echoRespnse(HTTP_CRIADO, $vcts);
+        echoRespnse(HTTP_OK, $vcts);
         
     } else {
         // Não foi possível encontrar anamnese.
