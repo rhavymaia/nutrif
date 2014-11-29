@@ -57,12 +57,19 @@ class JsonUtil {
             if (is_object($value) || is_array($value)) {
                 // but prevent cycles
                 if (!in_array($value, $references)) {
-                    $result[$key] = JsonUtil::objectToArray($value);
-                    $references[] = $value;
+                    // Verificar se o valor é nulo. Não adiciona tuplas 
+                    // vazias ao json
+                    if (!is_null($value) && !empty($value)) {
+                        $result[$key] = JsonUtil::objectToArray($value);
+                        $references[] = $value;
+                    }                   
                 }
             } else {
-                // simple values are untouched
-                $result[$key] = utf8_encode($value);
+                // Verificar se o valor é nulo. Não adiciona tuplas 
+                // vazias ao json
+                if (!is_null($value) && !empty($value))
+                    // simple values are untouched
+                    $result[$key] = utf8_encode($value);
             }
         }
         return $result;
