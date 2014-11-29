@@ -15,10 +15,7 @@ require_once './entidade/Erro.class.php';
 require_once './util/MapaErro.php';
 require_once './util/JsonUtil.php';
 require_once './controller/PercentilController.php';
-require_once './controller/IMCController.php';
 require_once './controller/VCTController.php';
-require_once './validate/LoginValidate.php';
-require_once './validate/VCTValidate.php';
 
 // Slim
 require '../Slim/Slim/Slim.php';
@@ -29,11 +26,14 @@ $slim->get('/statusServer', 'statusServer');
 $slim->post('/verificarLogin', 'verificarLogin'); //implementar oAuth
 $slim->post('/cadastrarAluno', 'cadastrarAluno');
 $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
-$slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
-$slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
-$slim->post('/calcularVCT', 'calcularVCT');
+$slim->post('/calcularVCT', 'calcularVCT'); // Revisado
 $slim->post('/calcularVCTAnamneses', 'calcularVCTAnamneses');
 $slim->post('/calcularIMC', 'calcularIMC');
+$slim->post('/verificarPercentil', 'verificarPercentil');
+$slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
+$slim->post('/verificarAnamnesesPercentilEntrevistado', 
+        'verificarAnamnesesPercentilEntrevistado');
+$slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
 
 /**
  * Altenticação do usuário.
@@ -182,54 +182,6 @@ function cadastrarNutricionista() {
     }
 }
 
-/** @param $anamnese
-  {
-  "nutricionista": [1-9],
-  "entrevistado": [1-9],
-  "pesquisa": [1-9],
-  "peso": [1-9],
-  "altura": [1-9],
-  "nivelEsporte": [1-5],
-  "perfilAlimentar": [1-9]
-  }
- */
-function cadastrarAnamnese() {
-    $request = \Slim\Slim::getInstance()->request();
-    $body = $request->getBody();
-    $anamnese = json_decode($body);
-
-    //TODO: Validação do dados de entrada para o cadastro da anamnese.
-    // Persistir os dados no Banco.
-    $db = new DbHandler();
-    $cdAnamnese = $db->inserirAnamnese($anamnese);
-
-    if (!empty($cdAnamnese)) {
-        echoRespnse(HTTP_CRIADO, $anamnese);
-    } else {
-        // Não foi possível encontrar anamnese.
-        $erro = MapaErro::singleton()->getErro(9);
-        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);       
-    }
-}
-
-function cadastrarPesquisa() {
-    $request = \Slim\Slim::getInstance()->request();
-    $body = $request->getBody();
-    $pesquisa = json_decode($body);
-
-    //TODO: Validação do dados de entrada para o cadastro da pesquisa.
-    // Persistir os dados no Banco.
-    $db = new DbHandler();
-    $cdPesquisa = $db->inserirPesquisa($pesquisa);
-
-    if (empty($cdPesquisa)) {
-        $erro = MapaErro::singleton()->getErro(10);
-        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    } else {
-        echoRespnse(HTTP_CRIADO, $pesquisa);
-    }
-}
-
 /**
  * Descrição
  * @param $usuario
@@ -256,102 +208,16 @@ function verificarLogin() {
     $login = $usuarioJson->login;
     $senha = $usuarioJson->senha;
 
-    // Validação do dados de entrada para o login do usuário.
-    $validacao = LoginValidate::validate($login, $senha);
-    
-    if ($validacao == VALIDO) {
-        
-        $db = new DbHandler();
-        $usuario = $db->selectLogin($login, $senha);
+    //TODO: Validação do dados de entrada para o login do usuário.
 
-        if (!empty($usuario)) {
-            // Dados do usuário.
-            echoRespnse(HTTP_ACEITO, $usuario);            
-        } else {
-            // Usuário não encontrado e não autorizado.
-            $erro = MapaErro::singleton()->getErro(2);
-            echoRespnse(NAO_AUTORIZADO, $erro);            
-        }
-    } else {
-        
-        $erro = MapaErro::singleton()->getErro($validacao);
+    $db = new DbHandler();
+    $usuario = $db->selectLogin($login, $senha);
+
+    if (empty($usuario)) {
+        $erro = MapaErro::singleton()->getErro(2);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    }    
-}
-
-/**
- * 
- * Calcular os Valores Calóricos Totais baseado no peso, altura, nível esportivo
- * e data de nascimento do entrevistado.
- * 
- * @param $anamnese
- * {
- *  "peso": [0-9].[0-9],
- *  "altura": [0-9].[0-9],
- *  "nivelEsporte": 1 | 2 | 3,
- *  "entrevistado":{
- *      "nascimento": "YYYY/MM/DD",
- *      "sexo" 'M' | 'F':
- *  }
- * }
- * 
- * @return $vct
- * {
- *  "valor":[0-9].[0-9],
- *  "anamnese":{
- *      "entrevistado":{
- *          "nascimento":"YYYY/MM/DD",
- *          "sexo":'M' | 'F'},
- *      "peso":[0-9].[0-9],
- *      "altura":[0-9].[0-9],
- *      "nivelEsporte": 1 | 2 | 3
- *  }
- * }
- */
-function calcularVCT() {
-
-    $request = \Slim\Slim::getInstance()->request();
-    $body = $request->getBody();
-    $anamneseJson = json_decode($body);
-
-    // Entrevistado
-    $nascimento = $anamneseJson->entrevistado->nascimento;
-    $sexo = strtoupper($anamneseJson->entrevistado->sexo);
-
-    // Anamnese.
-    $peso = $anamneseJson->peso;
-    $altura = $anamneseJson->altura;
-    $nivelEsporte = $anamneseJson->nivelEsporte;
-
-    // Validação dos dados: peso, altura, nível esportivo, sexo, data de
-    // nascimento.
-    
-    $validacao = VCTValidate::validate($peso, $altura, $nivelEsporte, 
-            $sexo, $nascimento);
-    
-    if ($validacao == VALIDO) {
-        
-        $anamnese = new Anamnese();
-        $anamnese->setPeso($peso);
-        $anamnese->setAltura($altura);
-        $anamnese->setNivelEsporte($nivelEsporte);
-
-        // Entrevistado
-        $entrevistado = new Entrevistado();
-        $entrevistado->setNascimento($nascimento);
-        $entrevistado->setSexo($sexo);
-
-        $anamnese->setEntrevistado($entrevistado);
-
-        // Construir o JSON de resposta.
-        $vct = VCTController::calculaVCT($anamnese);
-        $vct->setAnamnese($anamnese);
-
-        echoRespnse(HTTP_CRIADO, $vct);
     } else {
-        
-        $erro = MapaErro::singleton()->getErro($validacao);
-        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+        echoRespnse(HTTP_ACEITO, $usuario);
     }
 }
 
@@ -360,21 +226,13 @@ function calcularVCT() {
  * 
  * @param $aluno 
  *  {
- *      "matricula"  : [1-4]
+ *      'matricula' : [1-4]
  *  }
  * 
- * @return $vct
- * {
- *  "valor":[0-9].[0-9],
- *  "anamnese":{
- *      "entrevistado":{
- *          "nascimento":"YYYY/MM/DD",
- *          "sexo":'M' | 'F'},
- *      "peso":[0-9].[0-9],
- *      "altura":[0-9].[0-9],
- *      "nivelEsporte": 1 | 2 | 3
+ * @return $vct 
+ *  {
+ *      'vct' : *[1-9].*[1-9]
  *  }
- * }
  */
 function calcularVCTAnamneses() {
     $request = \Slim\Slim::getInstance()->request();
@@ -411,53 +269,227 @@ function calcularVCTAnamneses() {
 }
 
 /**
+ * Calcular os Valores Calóricos Totais baseado no peso, altura, nível esportivo
+ * e data de nascimento do entrevistado.
+ * 
+ */
+function calcularVCT() {
+    
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $aluno = json_decode($body);
+    
+    // Entrevistado
+    $nascimento = $aluno->entrevistado->nascimento;   
+    $sexo = strtoupper($aluno->entrevistado->sexo);   
+    
+    // Anamnese.
+    $peso = $aluno->peso;
+    $altura = $aluno->altura;
+    $nivelEsporte = $aluno->nivelEsporte;
+    $anamnese = new Anamnese();
+    $anamnese->setPeso($peso);
+    $anamnese->setAltura($altura);
+    $anamnese->setNivelEsporte($nivelEsporte);
+    
+    // Entrevistado
+    $entrevistado = new Entrevistado();
+    $entrevistado->setNascimento($nascimento);
+    $entrevistado->setSexo($sexo);
+    
+    $anamnese->setEntrevistado($entrevistado);
+    
+    // Construir o JSON de resposta.
+    $vct = VCTController::calculaVCT($anamnese);
+    $vct->setAnamnese($anamnese);
+    
+    echoRespnse(HTTP_CRIADO, $vct);
+}
+
+/**
  * Descrição
  * @param $entrevistado
  * {
- *  "peso" : *[1-9].*[1-9],
- *  "altura" : *[1-9].*[1-9]
+ *      'idUsuario' : [1-9],
+ *      'peso' : *[1-9].*[1-9],
+ *      'alturaCm' : *[1-9].*[1-9],
+ *      'idade': [1-9]
  * }
  * 
  * @return @return $percentil HTTP-202
  * {
- *  "valor": *[1-9].*[1-9]
+ *  'valor': [1-9]
  * }
  */
 function calcularIMC() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $entrevistado = json_decode($body);
+    
+    $valor = 0;
 
     $peso = $entrevistado->peso;
     $altura = $entrevistado->altura;
 
-    $valor = IMCController::calculaIMC($peso, $altura);
+    if (($peso > 0) && ($altura > 0))
+        $valor = (double) number_format($peso / pow($altura, 2), 1);
     
-    if ($valor > 0) {
-        // Enviar o IMC com seu valor.
-        $imc = new Imc();
-        $imc->setValor($valor);
-        echoRespnse(HTTP_ACEITO, $imc);        
-    } else {
+    if ($valor <= 0) {
         // Não foi possível calcular IMC.
         $erro = MapaErro::singleton()->getErro(7);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    } else {
+        // Construir o JSON de resposta.
+        $imc = new Imc();
+        $imc->setValor($valor);
+        echoRespnse(HTTP_ACEITO, $imc);
     }
 }
 
 /**
+ * Descrição
+ * @param $percentil
+ *  {
+ *    sexo: "M" | "F",
+ *    idadeMeses: [1-9], 
+ *    imc: [1-9] 
+ *  }
  * 
- * @param type $name Description
- * 
- * @return type Description
+ * @return $percentil HTTP-202
+ *  {
+ *      vlPercentil: [1-9],
+ *      cdPercentil: [1-9],
+ *      sexo: "M" | "F",
+ *      imc: [1-9],
+ *      idadeMeses": [1-9]
+ * }
+ * @return $erro HTTP-400
  */
-function calcularPerfilAntropometrico() {
-    
-    // Anamnese: Peso, altura, idade, sexo    
+function verificarPercentil() {
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $percentilJson = json_decode($body);
+
+    $imc = $percentilJson->imc;
+    $idadeMeses = $percentilJson->idadeMeses;
+    $sexo = $percentilJson->sexo;
+
+    //TODO: Validação do dados de entrada para o cálulo do Percentil.
+
+    $db = new DbHandler();
+    $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
+
+    if (empty($percentil)) {
+        $erro = MapaErro::singleton()->getErro(3);
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    } else {
+        echoRespnse(HTTP_ACEITO, $percentil->toArray());
+    }
 }
 
-function calcularPerfilAntropometricoAnamnese() {
-    
+/** @param $anamnese
+  {
+  "nutricionista": [1-9],
+  "entrevistado": [1-9],
+  "pesquisa": [1-9],
+  "peso": [1-9],
+  "altura": [1-9],
+  "nivelEsporte": [1-5],
+  "perfilAlimentar": [1-9]
+  }
+ */
+function cadastrarAnamnese() {
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $anamnese = json_decode($body);
+
+    //TODO: Validação do dados de entrada para o cadastro da anamnese.
+    // Persistir os dados no Banco.
+    $db = new DbHandler();
+    $cdAnamnese = $db->inserirAnamnese($anamnese);
+
+    if (!empty($cdAnamnese)) {
+        echoRespnse(HTTP_CRIADO, $anamnese);
+    } else {
+        // Não foi possível encontrar anamnese.
+        $erro = MapaErro::singleton()->getErro(9);
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);       
+    }
+}
+
+/**
+ * Inserir comentário da documentação.
+ * {
+ *  "matricula": *[1-9]
+ * }
+ */
+function verificarAnamnesesPercentilEntrevistado() {
+
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $percentilJson = json_decode($body);
+
+    $matricula = $percentilJson->matricula;
+
+    // Consultar a(s) anamnese(s) do entrevistado.
+    $db = new DbHandler();
+    //TODO: Ajustar para a classe DataUtil.
+    $anamneses = $db->selectAnamnesesEntrevistado($matricula);
+
+    $percentis = array();
+
+    // Calcular percentil para cada anamnese.
+    foreach ($anamneses as $anamnese) {
+
+        $anamnese = (object) $anamnese;
+
+        $entrevistado = $anamnese->getEntrevistado();
+
+        $peso = $anamnese->getPeso();
+
+        $alturaMetros = ($anamnese->getAltura()) / 100;
+
+        $sexo = $entrevistado->getSexo();
+
+        $idadeMeses = DataUtil::calcularIdadeMeses($entrevistado->getNascimento());
+
+        // Cálculo do IMC
+        $imc = number_format($peso / pow($alturaMetros, 2), 1);
+
+        if ($idadeMeses <= IDADE_PERCENTIL_19) {
+            //pesquisar por percentil
+            $percentil = $db->selecionarPercentil($imc, $sexo, $idadeMeses);
+
+            if (!empty($percentil)) {
+                array_push($percentis, $percentil);
+            } else {
+
+                $percentil = PercentilController::calcularPercentilMargens($imc, $sexo, $idadeMeses);
+                array_push($percentis, $percentil);
+            }
+        } else {
+            array_push($percentis, $imc);
+        }
+    }
+    echoRespnse(HTTP_ACEITO, $percentis);
+}
+
+function cadastrarPesquisa() {
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $pesquisa = json_decode($body);
+
+    //TODO: Validação do dados de entrada para o cadastro da pesquisa.
+    // Persistir os dados no Banco.
+    $db = new DbHandler();
+    $cdPesquisa = $db->inserirPesquisa($pesquisa);
+
+    if (empty($cdPesquisa)) {
+        $erro = MapaErro::singleton()->getErro(10);
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    } else {
+        echoRespnse(HTTP_CRIADO, $pesquisa);
+    }
 }
 
 function echoRespnse($status_code, $response) {

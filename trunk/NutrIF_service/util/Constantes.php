@@ -44,15 +44,14 @@
     // Sexo feminino.
     define('FEMININO', 'F');
     
-    //
+    // Nível Esportivo Leve
     define('NIVEL_ESPORTE_LEVE', 1);
     
-    //
+    // Nível Esportivo Moderado
     define('NIVEL_ESPORTE_MODERADO', 2);
     
-    //
-    define('NIVEL_ESPORTE_INTENSO', 3);
-    
+    // Nível Esportivo Intenso
+    define('NIVEL_ESPORTE_INTENSO', 3);    
     
     // Código HTTP
     // Código HTTP - Status: Criado
@@ -72,4 +71,25 @@
     
     // Código HTTP - Erro interno
     define ('HTTP_ERRO_INTERNO', 500);    
+    
+    // Código HTTP - Não-autorizado
+    define ('NAO_AUTORIZADO', 203);
+    
+    // Códigos de Erro.
+    // 
+    define ('VALIDO', 0);
+    
+    define ('INVALIDO', 1);
+    
+    define ('LOGIN_INVALIDO', 12);
+    
+    define ('SENHA_INVALIDO', 13);
+    
+    define ('PESO_INVALIDO', 14);
+    
+    define ('ALTURA_INVALIDO', 15);
+    
+    define ('SEXO_INVALIDO', 16);
+    
+    define ('NIVEL_ESPORTIVO_INVALIDO', 17);
 ?>

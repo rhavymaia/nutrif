@@ -28,13 +28,27 @@ class MapaErro {
                 7 => "Não foi possível calcular IMC.",
                 8 => "Não foi possível encontrar anamnese.",
                 9 => "Problema ao inserir a anamnese.",
-                10 => "Problema ao inserir a pesquisa."
+                10 => "Problema ao inserir a pesquisa.",
+                11 => "Dados inconpletos.",
+                LOGIN_INVALIDO => "Login inválido.",
+                SENHA_INVALIDO => "Senha inválida.",
+                PESO_INVALIDO => "Peso inválido.",
+                ALTURA_INVALIDO => "Altura inválida.",
+                NIVEL_ESPORTIVO_INVALIDO => "Nível esportivo inválido.",
+                SEXO_INVALIDO => "Sexo inválido.",
             );
         }
 
         return self::$instance;
     }
 
+    /**
+     * Encontrar o erro de acordo com seu código. O mapa de erros está cadastrado
+     * no mapa erros.
+     * 
+     * @param type $codigo
+     * @return \Erro
+     */
     public function getErro($codigo) {
         
         $erro = new Erro();

@@ -38,13 +38,13 @@ class DbHandler {
         if (!$this->ehUsuarioExistente($usuario->login)) {
             // Caso o usuário não exista será construída o Insert na tb_usuario.
             $stmt = $this->conn->prepare("INSERT INTO tb_usuario(nm_login, "
-                    . "nm_senha, vl_authkey, nm_usuario, dt_nascimento, nm_sexo, "
-                    . "cd_tipousuario, fl_ativo)"
+                    . "nm_senha, vl_authkey, nm_usuario, dt_nascimento,"
+                    . " nm_sexo, cd_tipousuario, fl_ativo)"
                     . " values(?, ?, ?, ?, ?, ?, " . $tipoUsuario . ", "
                     . USUARIO_ATIVO . ")");
 
             $nascimento = $data = implode("-", array_reverse(explode("/", $usuario->nascimento)));
-            $sexo = strtolower($usuario->sexo);
+            $sexo = strtoupper($usuario->sexo);
             $authKey = $this->gerarAuthKey();
 
             // Parâmetros: tipos das entradas, entradas.
