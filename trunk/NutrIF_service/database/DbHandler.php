@@ -354,6 +354,52 @@ class DbHandler {
         return $percentil;
     }
 
+    public function selectAnamnese($codigo) {
+
+        $anamnese = NULL;
+
+        $sql = "SELECT a.cd_anamnese, e.cd_entrevistado, e.nr_matricula,"
+            ." u.nm_usuario, u.dt_nascimento, u.nm_sexo, a.nr_peso, a.nr_altura,"
+            ." a.nr_nivel_esporte"
+            ." FROM tb_entrevistado AS e, tb_usuario AS u, tb_anamnese AS a"
+            ." WHERE e.cd_usuario = u.cd_usuario"
+            ." AND e.cd_entrevistado = a.cd_entrevistado"
+            ." AND a.cd_anamnese = ?";
+
+        $stmt = $this->conn->prepare($sql);
+
+        // Parâmetros: tipos das entradas, entradas.
+        $stmt->bind_param("i", $codigo);
+        $resultStmt = $stmt->execute();
+        $stmt->store_result();
+
+        if ($resultStmt && $stmt->num_rows > 0) {
+            
+            // Campos de retorno da anamnese.
+            $stmt->bind_result($codigoAnamnese, $codigoEntrevistado, $matricula, 
+                    $nome, $nascimento, $sexo, $peso, $altura, $nivelEsporte);
+            $stmt->fetch();
+            
+            $entrevistado = new Entrevistado();
+            $entrevistado->setCodigo($codigoEntrevistado);
+            $entrevistado->setNome($nome);
+            $entrevistado->setMatricula($matricula);
+            $entrevistado->setNascimento($nascimento);
+            $entrevistado->setSexo($sexo);                
+
+            $anamnese = new Anamnese();
+            $anamnese->setCodigo($codigoAnamnese);
+            $anamnese->setPeso($peso);
+            $anamnese->setAltura($altura);   
+            $anamnese->setNivelEsporte($nivelEsporte);
+            $anamnese->setEntrevistado($entrevistado);           
+        }
+
+        $stmt->close();
+
+        return $anamnese;
+    }
+    
     /**
      * Descrição
      * @param type $matricula
@@ -365,7 +411,7 @@ class DbHandler {
 
         // Montar consulta.
         $sql = "SELECT e.cd_entrevistado, e.nr_matricula, u.dt_nascimento,"
-            . " u.nm_sexo, a.nr_peso, a.nr_altura"
+            . " u.nm_sexo, a.nr_peso, a.nr_altura, a.nr_nivel_esporte"
             ." FROM tb_entrevistado AS e, tb_usuario AS u, tb_anamnese AS a"
             ." WHERE e.cd_usuario = u.cd_usuario"
             ." AND e.cd_entrevistado = a.cd_entrevistado"

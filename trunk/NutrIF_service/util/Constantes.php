@@ -53,7 +53,10 @@
     // Nível Esportivo Intenso
     define('NIVEL_ESPORTE_INTENSO', 3);    
     
-    // Código HTTP
+    // Código HTTP    
+    // Código HTTP - Status: Criado
+    define ('HTTP_OK', 200);
+    
     // Código HTTP - Status: Criado
     define ('HTTP_CRIADO', 201);
     
