@@ -14,6 +14,7 @@ require_once './entidade/Anamnese.class.php';
 require_once './entidade/Erro.class.php';
 require_once './util/MapaErro.php';
 require_once './util/JsonUtil.php';
+require_once './util/NumeroUtil.php';
 require_once './controller/PercentilController.php';
 require_once './controller/IMCController.php';
 require_once './controller/VCTController.php';
@@ -288,7 +289,7 @@ function verificarLogin() {
  * @param $anamnese
  * {
  *  "peso": [0-9].[0-9],
- *  "altura": [0-9].[0-9],
+ *  "altura": [0-9].[0-9], {cm}
  *  "nivelEsporte": 1 | 2 | 3,
  *  "entrevistado":{
  *      "nascimento": "YYYY/MM/DD",
@@ -498,7 +499,11 @@ function calcularIMC() {
  */
 function calcularPerfilAntropometrico() {
     
-    // Anamnese: Peso, altura, idade, sexo    
+    // Anamnese: Peso, altura, idade, sexo
+    
+    // Acima de 19 calcular IMC.
+    
+    // Abaixo de 19 anos verificar percentil: IMC x Idade.
 }
 
 function calcularPerfilAntropometricoAnamnese() {

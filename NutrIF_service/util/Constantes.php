@@ -51,7 +51,7 @@
     define('NIVEL_ESPORTE_MODERADO', 2);
     
     // Nível Esportivo Intenso
-    define('NIVEL_ESPORTE_INTENSO', 3);    
+    define('NIVEL_ESPORTE_INTENSO', 3); 
     
     // Código HTTP    
     // Código HTTP - Status: Criado

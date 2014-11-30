@@ -15,8 +15,13 @@ class VCTController {
         $idade = DataUtil::calcularIdadeAnos(
                 $entrevistado->getNascimento());
 
-        // Altura em cm ou m?
-        $altura = ($anamnese->getAltura());
+        // Altura em cm.
+        $alturaCm = ($anamnese->getAltura());  
+        
+        // Conversão para metro.
+        $numeroUtil = NumeroUtil::singleton();
+        $alturaMetro = $numeroUtil->formatDouble($alturaCm / FATOR_CENTIMETRO);
+        
         $peso = $anamnese->getPeso();
         $nivelEsporte = $anamnese->getNivelEsporte();
         
@@ -47,30 +52,40 @@ class VCTController {
         // Cálculo da taxa metabolica basal por idade e sexo.
         if (strtoupper($sexo) == MASCULINO) {
             if ($idade >= 10 && $idade < 18) {
-                $taxaMetabolicaBasal = (16.6 * $peso) + (77 * $altura) + 572;
+                $taxaMetabolicaBasal = (16.6 * $peso) 
+                        + (77 * $alturaMetro) + 572;
             } else if ($idade >= 18 && $idade < 30) {
-                $taxaMetabolicaBasal = (15.4 * $peso) + (27 * $altura) + 717;
+                $taxaMetabolicaBasal = (15.4 * $peso) 
+                        + (27 * $alturaMetro) + 717;
             } else if ($idade >= 30 && $idade <= 60) {
-                $taxaMetabolicaBasal = (11.3 * $peso) + (16 * $altura) + 901;
+                $taxaMetabolicaBasal = (11.3 * $peso) 
+                        + (16 * $alturaMetro) + 901;
             } else if ($idade > 60) {
-                $taxaMetabolicaBasal = (8.8 * $peso) + (1.128 * $altura) - 1071;
+                $taxaMetabolicaBasal = (8.8 * $peso) 
+                        + (1.128 * $alturaMetro) - 1071;
             }
         } else if (strtoupper($sexo) == FEMININO) {
             if ($idade >= 10 && $idade < 18) {
-                $taxaMetabolicaBasal = (7.4 * $peso) + (482 * $altura) + 217;
+                $taxaMetabolicaBasal = (7.4 * $peso) 
+                        + (482 * $alturaMetro) + 217;
             } else if ($idade >= 18 && $idade < 30) {
-                $taxaMetabolicaBasal = (13.3 * $peso) + (334 * $altura) + 35;
+                $taxaMetabolicaBasal = (13.3 * $peso) 
+                        + (334 * $alturaMetro) + 35;
             } else if ($idade >= 30 && $idade <= 60) {
-                $taxaMetabolicaBasal = (8.7 * $peso) - (255 * $altura) + 865;
+                $taxaMetabolicaBasal = (8.7 * $peso) 
+                        - (255 * $alturaMetro) + 865;
             } else if ($idade > 60) {
-                $taxaMetabolicaBasal = (9.2 * $peso) + (637 * $altura - 302);
+                $taxaMetabolicaBasal = (9.2 * $peso) 
+                        + (637 * $alturaMetro - 302);
             }
         }
 
         $vct = new Vct();
         
         // VCT = Taxa Metabolica Basal * Nivel esporte
-        $vct->setValor($taxaMetabolicaBasal * $vlNivelEsporte);
+        $valorVct = $numeroUtil->formatDouble(
+                $taxaMetabolicaBasal * $vlNivelEsporte);
+        $vct->setValor($valorVct);
         $vct->setAnamnese($anamnese);
 
         return $vct;

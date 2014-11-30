@@ -7,12 +7,14 @@
  */
 class IMCController {
     
-    public static function calculaIMC($peso, $altura) {
+    public static function calculaIMC($peso, $alturaCm) {
         // Peso, altura
         $imc = 0;
+        $numeroUtil = NumeroUtil::singleton();
+        $alturaMetro = $numeroUtil->formatDouble($alturaCm / FATOR_CENTIMETRO);
         
-        if (($peso > 0) && ($altura > 0)) {
-            $imc = (double) number_format($peso / pow($altura, 2), 1);
+        if (($peso > 0) && ($alturaMetro > 0)) {
+            $imc = $numeroUtil->formatDouble($peso / pow($alturaMetro, 2));
         }
         
         return $imc;
