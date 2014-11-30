@@ -201,8 +201,8 @@ class DbHandler {
         $usuario = NULL;
 
         $sql = "SELECT usuario.nm_login, usuario.nm_usuario, "
-                . "usuario.cd_tipousuario, "
-                . "usuario.cd_usuario, usuario.dt_nascimento, usuario.nm_sexo "
+                . " usuario.cd_tipousuario, usuario.cd_usuario,"
+                . " usuario.dt_nascimento, usuario.nm_sexo "
                 . " FROM tb_usuario AS usuario"
                 . " WHERE"
                 . " usuario.nm_login = ?"
