@@ -17,9 +17,13 @@ class Percentil {
     
     public $vlPercentil;
     
+    public $percentilMediano;
+    
     public $percentilInferior;
     
     public $percentilSuperior;
+    
+    public $anamnese;
 
     function __construct() {}
     
@@ -81,6 +85,22 @@ class Percentil {
 
     public function setIdadeMeses($idadeMeses) {
         $this->idadeMeses = $idadeMeses;
+    }
+    
+    public function getAnamnese() {
+        return $this->anamnese;
+    }
+
+    public function setAnamnese($anamnese) {
+        $this->anamnese = $anamnese;
+    }
+
+    public function getPercentilMediano() {
+        return $this->percentilMediano;
+    }
+
+    public function setPercentilMediano($percentilMediano) {
+        $this->percentilMediano = $percentilMediano;
     }
 
 }

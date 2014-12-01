@@ -9,6 +9,8 @@ class Imc {
     
     public $valor;
     
+    public $anamnese;
+    
     function __construct() {
     }
     
@@ -19,5 +21,14 @@ class Imc {
     public function setValor($valor) {
         $this->valor = $valor;
     }
+    
+    public function getAnamnese() {
+        return $this->anamnese;
+    }
+
+    public function setAnamnese($anamnese) {
+        $this->anamnese = $anamnese;
+    }
+
 }
 ?>

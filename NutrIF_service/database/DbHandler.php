@@ -489,34 +489,31 @@ class DbHandler {
         return $num_rows > 0;
     }
 
-/*    function inserirPesquisa($pesquisa){
+    function inserirPesquisa($pesquisa){
 
         $cdPesquisa = ID_NAO_RETORNADO;
         
-        $stmt = $this->conn->prepare("INSERT INTO"
-                . " tb_pesquisa(nm_pesquisa, dt_inicio, dt_fim,"
-                . " cd_instituicao, cd_nutricionista "
-                . " values(?, ?, ?, ?, ?)");
+        $stmt = $this->conn->prepare("INSERT INTO "
+                . " tb_pesquisa(nm_pesquisa, dt_inicio, dt_fim, "
+                . " cd_instituicao, cd_nutricionista) "
+                . " VALUES(?, ?, ?, ?, ?)");
 
         // Parâmetros: tipos das entradas, entradas.
         
         $dataInicio = implode("-", array_reverse(explode("/", $pesquisa->dataInicio)));
         $dataFim = implode("-", array_reverse(explode("/", $pesquisa->dataFim)));
         
-        $stmt->bind_param("sssii", $pesquisa->nome, 
-                $dataInicio, $dataFim, $pesquisa->instituicao, 
-                $pesquisa->nutricionista);
+        $stmt->bind_param("sssii", $pesquisa->nome,$dataInicio, 
+                $dataFim, $pesquisa->instituicao, $pesquisa->nutricionista);
 
         $result = $stmt->execute();
         if ($result) {
             $cdPesquisa = $stmt->insert_id;
             $stmt->close();
-        }
-    
+        }   
 
         return $cdPesquisa;
-    }
- */   
+    }  
    
 
 

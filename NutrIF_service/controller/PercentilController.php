@@ -6,6 +6,22 @@
  * @author Projeto IFPB-CG 01
  */
 class PercentilController {
+    
+    public static function calcularPercentil($imc, $sexo, $nascimento){
+        
+        $idadeMeses = DataUtil::calcularIdadeMeses($nascimento);        
+              
+        $db = new DbHandler(); 
+        
+        $percentilMediano = $db->selecionarPercentil($imc, 
+                    $sexo, $idadeMeses);
+        
+        $percentil = new Percentil();
+        $percentil->setPercentilMediano($percentilMediano);
+        
+        return $percentil;
+        
+    }
 
     public static function calcularPercentilMargens($imc, $sexo, $nascimento) {
 
