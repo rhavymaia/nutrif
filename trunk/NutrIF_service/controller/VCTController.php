@@ -5,7 +5,7 @@
  *
  * @author Projeto IFPB-CG 01
  */
-class VCTController {
+class VCTController{
 
     public static function calculaVCT($anamnese) {
 

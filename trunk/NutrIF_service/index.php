@@ -3,7 +3,7 @@
 // Entidades    
 require_once './database/DbHandler.php';
 require_once './util/Constantes.php';
-require_once './util/DataUtil.php';
+require_once './util/DataUtil.class.php';
 require_once './entidade/Server.class.php';
 require_once './entidade/Entrevistado.class.php';
 require_once './entidade/Usuario.class.php';
@@ -36,13 +36,16 @@ $slim->post('/calcularVCT', 'calcularVCT');
 $slim->post('/calcularVCTAnamnese', 'calcularVCTAnamnese');
 $slim->post('/calcularVCTAnamneses', 'calcularVCTAnamneses');
 $slim->post('/calcularIMC', 'calcularIMC');
+$slim->post('/calcularPerfilAntropometrico', 'calcularPerfilAntropometrico');
 
 /**
  * Altenticação do usuário.
  * 
  * @param \Slim\Route $route
  */
-function authenticate(\Slim\Route $route) {}
+function authenticate(\Slim\Route $route) {
+    
+}
 
 // Funções    
 /**
@@ -52,7 +55,7 @@ function authenticate(\Slim\Route $route) {}
 function statusServer() {
     $server = new Server();
     $server->online = "true";
-    
+
     // Responder a requisição. Código HTTP (cabeçalho) e Entidade (Body - JSON).
     echoRespnse(HTTP_CRIADO, $server);
 }
@@ -94,14 +97,14 @@ function cadastrarAluno() {
     $cdUsuario = $db->inserirUsuario($aluno, TP_ALUNO);
 
     if ($cdUsuario != ID_NAO_RETORNADO && $cdUsuario != USUARIO_EXISTENTE) {
-        
+
         $aluno->idUsuario = $cdUsuario;
         $idEntrevistado = $db->inserirEntrevistado($aluno);
 
         if ($idEntrevistado != ENTREVISTADO_EXISTENTE) {
             // Entrevistado cadastrado com sucesso.
             $aluno->idEntrevistado = $idEntrevistado;
-            $aluno->tpUsuario = TP_ALUNO;            
+            $aluno->tpUsuario = TP_ALUNO;
             echoRespnse(HTTP_CRIADO, $aluno);
         } else {
             // Entrevistado(a) já cadastrado(a).
@@ -157,12 +160,12 @@ function cadastrarNutricionista() {
     $cd_usuario = $db->inserirUsuario($nutricionista, TP_NUTRICIONISTA);
 
     if ($cd_usuario != ID_NAO_RETORNADO && $cd_usuario != USUARIO_EXISTENTE) {
-        
+
         $nutricionista->idUsuario = $cd_usuario;
         $id_nutricionista = $db->inserirNutricionista($nutricionista);
 
         if ($id_nutricionista != ENTREVISTADO_EXISTENTE) {
-            
+
             $nutricionista->idNutricionista = $id_nutricionista;
             $nutricionista->tpUsuario = TP_NUTRICIONISTA;
 
@@ -210,7 +213,7 @@ function cadastrarAnamnese() {
     } else {
         // Não foi possível encontrar anamnese.
         $erro = MapaErro::singleton()->getErro(9);
-        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);       
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     }
 }
 
@@ -260,25 +263,25 @@ function verificarLogin() {
 
     // Validação do dados de entrada para o login do usuário.
     $validacao = LoginValidate::validate($login, $senha);
-    
+
     if ($validacao == VALIDO) {
-        
+
         $db = new DbHandler();
         $usuario = $db->selectLogin($login, $senha);
 
         if (!empty($usuario)) {
             // Dados do usuário.
-            echoRespnse(HTTP_ACEITO, $usuario);            
+            echoRespnse(HTTP_ACEITO, $usuario);
         } else {
             // Usuário não encontrado e não autorizado.
             $erro = MapaErro::singleton()->getErro(2);
-            echoRespnse(NAO_AUTORIZADO, $erro);            
+            echoRespnse(NAO_AUTORIZADO, $erro);
         }
     } else {
-        
+
         $erro = MapaErro::singleton()->getErro($validacao);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    }    
+    }
 }
 
 /**
@@ -327,12 +330,11 @@ function calcularVCT() {
 
     // Validação dos dados: peso, altura, nível esportivo, sexo, data de
     // nascimento.
-    
-    $validacao = VCTValidate::validate($peso, $altura, $nivelEsporte, 
-            $sexo, $nascimento);
-    
+
+    $validacao = VCTValidate::validate($peso, $altura, $nivelEsporte, $sexo, $nascimento);
+
     if ($validacao == VALIDO) {
-        
+
         $anamnese = new Anamnese();
         $anamnese->setPeso($peso);
         $anamnese->setAltura($altura);
@@ -351,7 +353,7 @@ function calcularVCT() {
 
         echoRespnse(HTTP_OK, $vct);
     } else {
-        
+
         $erro = MapaErro::singleton()->getErro($validacao);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     }
@@ -384,11 +386,11 @@ function calcularVCTAnamnese() {
     $anamnese = json_decode($body);
 
     $codigo = $anamnese->codigo;
-    
+
     // Consultar a(s) anamnese(s) pelo código.
     $db = new DbHandler();
     $anamneseConsulta = $db->selectAnamnese($codigo);
-    
+
     if (!empty($anamneseConsulta)) {
         $vct = VCTController::calculaVCT($anamneseConsulta);
         $vct->setAnamnese($anamneseConsulta);
@@ -396,7 +398,7 @@ function calcularVCTAnamnese() {
         echoRespnse(HTTP_OK, $vct);
     } else {
         // Não foi possível encontrar anamnese.
-        $erro = MapaErro::singleton()->getErro(8);        
+        $erro = MapaErro::singleton()->getErro(8);
         echoRespnse(HTTP_NAO_ENCONTRADO, $erro);
     }
 }
@@ -434,7 +436,7 @@ function calcularVCTAnamneses() {
     $anamneses = $db->selectAnamnesesEntrevistado($matricula);
 
     if (sizeof($anamneses) < 0) {
-        
+
         $vcts = array();
 
         // Calcular vct para cada anamnese.    
@@ -446,12 +448,11 @@ function calcularVCTAnamneses() {
             // Construir o JSON de resposta.
             array_push($vcts, $vct);
         }
-        
+
         echoRespnse(HTTP_OK, $vcts);
-        
     } else {
         // Não foi possível encontrar anamnese.
-        $erro = MapaErro::singleton()->getErro(8);        
+        $erro = MapaErro::singleton()->getErro(8);
         echoRespnse(HTTP_NAO_ENCONTRADO, $erro);
     }
 }
@@ -478,12 +479,12 @@ function calcularIMC() {
     $altura = $entrevistado->altura;
 
     $valor = IMCController::calculaIMC($peso, $altura);
-    
+
     if ($valor > 0) {
         // Enviar o IMC com seu valor.
         $imc = new Imc();
         $imc->setValor($valor);
-        echoRespnse(HTTP_ACEITO, $imc);        
+        echoRespnse(HTTP_ACEITO, $imc);
     } else {
         // Não foi possível calcular IMC.
         $erro = MapaErro::singleton()->getErro(7);
@@ -498,12 +499,74 @@ function calcularIMC() {
  * @return type Description
  */
 function calcularPerfilAntropometrico() {
-    
-    // Anamnese: Peso, altura, idade, sexo
-    
+
+    /**
+     *  Anamnese: Peso, altura, idade, sexo
+     * Acima de 19 calcular IMC
+     * Abaixo de 19 anos verificar percentil: IMC x Idade.
+     */
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $anamneseJson = json_decode($body);
+
+    // Entrevistado
+    $nascimento = $anamneseJson->entrevistado->nascimento;
+    $sexo = strtoupper($anamneseJson->entrevistado->sexo);
+
+    // Anamnese.
+    $peso = $anamneseJson->peso;
+    $altura = $anamneseJson->altura;
+
+    // Falta validação
+
+    $anamnese = new Anamnese();
+    $anamnese->setPeso($peso);
+    $anamnese->setAltura($altura);
+
+    // Entrevistado
+    $entrevistado = new Entrevistado();
+    $entrevistado->setNascimento($nascimento);
+    $entrevistado->setSexo($sexo);
+
+    $anamnese->setEntrevistado($entrevistado);
+
+    $imc = IMCController::calculaIMC($peso, $altura);
+
+    //$data = DataUtil::formataDataBrasileiro($nascimento);
+    $idadeAnos = DataUtil::calcularIdadeAnos($nascimento);
+    $percentil = new Percentil();
+
     // Acima de 19 calcular IMC.
-    
-    // Abaixo de 19 anos verificar percentil: IMC x Idade.
+    if ($idadeAnos > 19) {
+        $imcObject = new Imc();
+        $imcObject->setValor($imc);
+        $imcObject->setAnamnese($anamnese);
+        echoRespnse(HTTP_OK, $imcObject);
+    } else {
+        $percentilMediano = PercentilController::calcularPercentil(
+                        $imc, $sexo, $nascimento);
+
+        if ($percentilMediano->getPercentilMediano() == null) {
+            // Construir o JSON de resposta.
+            $percentilMargens = PercentilController::calcularPercentilMargens(
+                            $imc, $sexo, $nascimento);
+            
+            $percentil->setPercentilInferior(
+                    $percentilMargens->getPercentilInferior());
+            $percentil->setPercentilSuperior(
+                    $percentilMargens->getPercentilSuperior());
+            //echoRespnse(HTTP_OK, array("valor","entrou margens"));
+        } else {
+            $percentil->setPercentilMediano(
+                    $percentilMediano->getPercentilMediano());
+            //echoRespnse(HTTP_OK, array("valor","entrou mediano"));
+        }
+
+        // Construir o JSON de resposta.
+        $percentil->setAnamnese($anamnese);
+        echoRespnse(HTTP_OK, $percentil);
+        
+    }
 }
 
 function calcularPerfilAntropometricoAnamnese() {
