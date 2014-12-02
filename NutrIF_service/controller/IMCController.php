@@ -9,15 +9,15 @@ class IMCController {
     
     public static function calculaIMC($peso, $alturaCm) {
         // Peso, altura
-        $imc = 0;
+        $imcValor = 0;
         $numeroUtil = NumeroUtil::singleton();
         $alturaMetro = $numeroUtil->formatDouble($alturaCm / FATOR_CENTIMETRO);
         
         if (($peso > 0) && ($alturaMetro > 0)) {
-            $imc = $numeroUtil->formatDouble($peso / pow($alturaMetro, 2));
+            $imcValor = $numeroUtil->formatDouble($peso / pow($alturaMetro, 2));
         }
         
-        return $imc;
+        return $imcValor;
     }
     
      public static function calculaPerfilAntropometrico($anamnese) {
