@@ -86,7 +86,6 @@ class VCTController{
         $valorVct = $numeroUtil->formatDouble(
                 $taxaMetabolicaBasal * $vlNivelEsporte);
         $vct->setValor($valorVct);
-        $vct->setAnamnese($anamnese);
 
         return $vct;
     }
