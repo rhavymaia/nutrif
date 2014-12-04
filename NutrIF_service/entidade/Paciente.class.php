@@ -21,53 +21,52 @@ class Paciente {
 
     public function __construct() {}
 
-    public function setMatricula($matricula) {
-        $this->matriculaatricula = $matricula;
-    }
-
-    public function getMatricula() {
-        return $this->matricula;
-    }
-    
-    public function setCodigo($codigo) {
-        $this->codigo = $codigo;
-    }
-
-    public function getCodigo() {
+    function getCodigo() {
         return $this->codigo;
     }
-    
-    public function setNome($nome) {
-        $this->nome = $nome;
+
+    function getMatricula() {
+        return $this->matricula;
     }
 
-    public function getNome() {
+    function getNome() {
         return $this->nome;
     }
 
-    public function setNivelEscolar($nivelEscolar) {
-        $this->nivelEscolar = $nivelEscolar;
+    function getNascimento() {
+        return $this->nascimento;
     }
 
-    public function getNivelEscolar() {
+    function getNivelEscolar() {
         return $this->nivelEscolar;
     }
-    
-    public function setNascimento($nascimento) {
+
+    function getDataRegistro() {
+        return $this->dataRegistro;
+    }
+
+    function setCodigo($codigo) {
+        $this->codigo = $codigo;
+    }
+
+    function setMatricula($matricula) {
+        $this->matricula = $matricula;
+    }
+
+    function setNome($nome) {
+        $this->nome = $nome;
+    }
+
+    function setNascimento($nascimento) {
         $this->nascimento = $nascimento;
     }
 
-    public function getNascimento() {
-        return $this->nascimento;
+    function setNivelEscolar($nivelEscolar) {
+        $this->nivelEscolar = $nivelEscolar;
     }
-    
-    public function setDataRegistro($dataRegistro) {
+
+    function setDataRegistro($dataRegistro) {
         $this->dataRegistro = $dataRegistro;
     }
-
-    public function getDataRegistro() {
-        return $this->dataRegistro;
-    }
 }
-
 ?>
