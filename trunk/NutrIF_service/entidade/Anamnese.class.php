@@ -25,6 +25,10 @@ class Anamnese {
     
     public $perfilAlimentar;
     
+    public $imc;
+    
+    public $vct;
+    
     public function __construct(){}
     
     public function toArray() {
