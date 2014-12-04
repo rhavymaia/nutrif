@@ -187,16 +187,21 @@ function cadastrarNutricionista() {
     }
 }
 
-/** @param $anamnese
-  {
-  "nutricionista": [1-9],
-  "entrevistado": [1-9],
-  "pesquisa": [1-9],
-  "peso": [1-9],
-  "altura": [1-9],
-  "nivelEsporte": [1-5],
-  "perfilAlimentar": [1-9]
-  }
+/** 
+ * Cadastrar Anamnese para o(a) nutricionista.
+ * 
+ * @param $anamnese
+ * {
+ *  "nutricionista": [1-9],
+ *  "entrevistado": [1-9],
+ *  "pesquisa": [1-9],
+ *  "peso": [1-9],
+ *  "altura": [1-9],
+ *  "nivelEsporte": [1-5],
+ *  "perfilAlimentar": [1-9]
+ * }
+ * 
+ * @return type Description
  */
 function cadastrarAnamnese() {
     $request = \Slim\Slim::getInstance()->request();
@@ -215,6 +220,55 @@ function cadastrarAnamnese() {
         $erro = MapaErro::singleton()->getErro(9);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     }
+}
+
+/**
+ * Anamnese realizada pelo entrevistado.
+ * 
+ * @param type $name Description
+ * @return type Description
+ */
+function realizarAutoAnamneseEntrevistado(){
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $autoAnamnese = json_decode($body);
+    
+    //TODO: Implementar a regra de negócio e persistência no banco de dados.
+    $resultadoAnamnese = array(
+        "imc" => array("valor" => 10),
+        "vct" => array("valor" => 1000)
+    );
+    
+    echoRespnse(HTTP_OK, $autoAnamnese);
+}
+
+/**
+ * Descrição
+ * @param $usario
+ * {
+ *  codigo:*[1-9]
+ * }
+ * 
+ * @return type Description
+ * {[
+ *  anamnese:{
+ *      codigo:, 
+ *      data:, 
+ *      entrevistado:, 
+ *      nutricionista:, 
+ *      pesquisa:, 
+ *      peso:, 
+ *      altura:, 
+ *      nivelEsporte:, 
+ *      perfilAlimentar:
+ *  },
+ *  anamnese:{}
+ * ]}
+ */
+function listarAnamnesesEntrevistado() {
+    $request = \Slim\Slim::getInstance()->request();
+    $body = $request->getBody();
+    $usuario = json_decode($body);
 }
 
 function cadastrarPesquisa() {
@@ -349,7 +403,6 @@ function calcularVCT() {
 
         // Construir o JSON de resposta.
         $vct = VCTController::calculaVCT($anamnese);
-        $vct->setAnamnese($anamnese);
 
         echoRespnse(HTTP_OK, $vct);
     } else {
@@ -499,7 +552,6 @@ function calcularIMC() {
  * @return type Description
  */
 function calcularPerfilAntropometrico() {
-
     /**
      *  Anamnese: Peso, altura, idade, sexo
      * Acima de 19 calcular IMC
@@ -517,8 +569,7 @@ function calcularPerfilAntropometrico() {
     $peso = $anamneseJson->peso;
     $altura = $anamneseJson->altura;
 
-    // Falta validação
-
+    //TODO: Falta validação
     $anamnese = new Anamnese();
     $anamnese->setPeso($peso);
     $anamnese->setAltura($altura);
@@ -530,27 +581,26 @@ function calcularPerfilAntropometrico() {
 
     $anamnese->setEntrevistado($entrevistado);
 
-    $imc = IMCController::calculaIMC($peso, $altura);
-
-    //$data = DataUtil::formataDataBrasileiro($nascimento);
+    $imcValor = IMCController::calculaIMC($peso, $altura);    
     $idadeAnos = DataUtil::calcularIdadeAnos($nascimento);
+    
     $percentil = new Percentil();
 
     // Acima de 19 calcular IMC.
     if ($idadeAnos > 19) {
-        $imcObject = new Imc();
-        $imcObject->setValor($imc);
-        $imcObject->setAnamnese($anamnese);
-        echoRespnse(HTTP_OK, $imcObject);
+        $imc = new Imc();
+        $imc->setValor($imcValor);
+        $imc->setAnamnese($anamnese);
+        echoRespnse(HTTP_OK, $imc);
     } else {
         $percentilMediano = PercentilController::calcularPercentil(
-                        $imc, $sexo, $nascimento);
+                        $imcValor, $sexo, $nascimento);
 
         if ($percentilMediano->getPercentilMediano() == null) {
             // Construir o JSON de resposta.
             $percentilMargens = PercentilController::calcularPercentilMargens(
-                            $imc, $sexo, $nascimento);
-            
+                            $imcValor, $sexo, $nascimento);
+
             $percentil->setPercentilInferior(
                     $percentilMargens->getPercentilInferior());
             $percentil->setPercentilSuperior(
@@ -565,7 +615,6 @@ function calcularPerfilAntropometrico() {
         // Construir o JSON de resposta.
         $percentil->setAnamnese($anamnese);
         echoRespnse(HTTP_OK, $percentil);
-        
     }
 }
 
