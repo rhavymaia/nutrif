@@ -257,7 +257,7 @@ function realizarAutoAnamneseEntrevistado(){
         "vct" => array("valor" => 1000)
     );
     
-    echoRespnse(HTTP_OK, $autoAnamnese);
+    echoRespnse(HTTP_OK, $resultadoAnamnese);
 }
 
 /**
@@ -286,9 +286,9 @@ function realizarAutoAnamneseEntrevistado(){
 function listarAnamnesesEntrevistado() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
-    $usuario = json_decode($body);
+    $usuarioJson = json_decode($body);
     
-    $cdUsuario = $usuario->codigo;
+    $cdUsuario = $usuarioJson->codigo;
     //TODO: Validação do usuário.
     //TODO: Pesquisa do usuário e suas anamneses.
     
