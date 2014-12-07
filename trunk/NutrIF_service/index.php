@@ -32,6 +32,10 @@ $slim->post('/verificarLogin', 'verificarLogin'); //implementar oAuth
 $slim->post('/cadastrarAluno', 'cadastrarAluno');
 $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
+$slim->post('/realizarAutoAnamneseEntrevistado', 
+        'realizarAutoAnamneseEntrevistado');
+$slim->post('/listarAnamnesesEntrevistado', 
+        'listarAnamnesesEntrevistado');
 $slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
 $slim->post('/calcularVCT', 'calcularVCT');
 $slim->post('/calcularVCTAnamnese', 'calcularVCTAnamnese');
@@ -283,6 +287,24 @@ function listarAnamnesesEntrevistado() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $usuario = json_decode($body);
+    
+    $cdUsuario = $usuario->codigo;
+    //TODO: Validação do usuário.
+    //TODO: Pesquisa do usuário e suas anamneses.
+    
+    $entrevistado = new Entrevistado();
+    $entrevistado->setCodigo($cdUsuario);
+    $entrevistado->setMatricula(20140101);
+    $entrevistado->setNascimento("2014-01-01");
+    $entrevistado->setSexo(MASCULINO);                
+
+    $anamnese = new Anamnese();
+    $anamnese->setPeso(60.0);
+    $anamnese->setAltura(1.70);   
+    $anamnese->setEntrevistado($entrevistado);
+                
+    $anamneses = array($anamnese);    
+    echoRespnse(HTTP_OK, $anamneses);
 }
 
 function cadastrarPesquisa() {
