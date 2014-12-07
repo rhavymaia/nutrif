@@ -63,6 +63,9 @@
     // Código HTTP - Status: Aceito
     define ('HTTP_ACEITO', 202);
     
+    // Código HTTP - Status: Não aceito
+    define ('HTTP_NAO_ACEITO', 406);
+    
     // Código HTTP - Requisição inválida
     define ('HTTP_REQUISICAO_INVALIDA', 400);
     
@@ -95,4 +98,12 @@
     define ('SEXO_INVALIDO', 16);
     
     define ('NIVEL_ESPORTIVO_INVALIDO', 17);
+    
+    define ('ID_PESQUISA_INVALIDO', 18);
+    
+    define ('ID_NUTRICIONISTA_INVALIDO', 19);
+    
+    define ('ID_ENTREVISTADO_INVALIDO', 20);
+    
+    define ('ID_PERFIL_ALIMENTAR_INVALIDO', 20);
 ?>

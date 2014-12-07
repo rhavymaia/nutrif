@@ -20,6 +20,7 @@ require_once './controller/IMCController.php';
 require_once './controller/VCTController.php';
 require_once './validate/LoginValidate.php';
 require_once './validate/VCTValidate.php';
+require_once './validate/AnamneseValidate.php';
 
 // Slim
 require '../Slim/Slim/Slim.php';
@@ -208,18 +209,31 @@ function cadastrarAnamnese() {
     $body = $request->getBody();
     $anamnese = json_decode($body);
 
-    //TODO: Validação do dados de entrada para o cadastro da anamnese.
-    // Persistir os dados no Banco.
-    $db = new DbHandler();
-    $cdAnamnese = $db->inserirAnamnese($anamnese);
+    // Validação dos dados de entrada para o cadastro da anamnese.                
+    $validacao = AnamneseValidate::validate($anamnese->nutricionista, 
+            $anamnese->entrevistado, 
+            $anamnese->pesquisa, 
+            $anamnese->peso, 
+            $anamnese->altura, 
+            $anamnese->nivelEsporte, 
+            $anamnese->perfilAlimentar);
+    
+    if ($validacao == VALIDO) {       
+        // Persistir os dados no Banco.
+        $db = new DbHandler();
+        $cdAnamnese = $db->inserirAnamnese($anamnese);
 
-    if (!empty($cdAnamnese)) {
-        echoRespnse(HTTP_CRIADO, $anamnese);
+        if (!empty($cdAnamnese)) {
+            echoRespnse(HTTP_CRIADO, $anamnese);
+        } else {
+            // Problema ao inserir a anamnese.
+            $erro = MapaErro::singleton()->getErro(9);
+            echoRespnse(HTTP_NAO_ACEITO, $erro);
+        }
     } else {
-        // Não foi possível encontrar anamnese.
-        $erro = MapaErro::singleton()->getErro(9);
+        $erro = MapaErro::singleton()->getErro($validacao);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    }
+    }    
 }
 
 /**
