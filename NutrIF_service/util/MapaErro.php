@@ -36,6 +36,10 @@ class MapaErro {
                 ALTURA_INVALIDO => "Altura inválida.",
                 NIVEL_ESPORTIVO_INVALIDO => "Nível esportivo inválido.",
                 SEXO_INVALIDO => "Sexo inválido.",
+                ID_PESQUISA_INVALIDO => "Código da Pesquisa inválida.",
+                ID_NUTRICIONISTA_INVALIDO => "Código da Nutrionista inválido.",
+                ID_ENTREVISTADO_INVALIDO => "Código do Entrevistado inválido.",
+                ID_PERFIL_ALIMENTAR_INVALIDO=>"Código Perfil Alimentar inválido."
             );
         }
 
