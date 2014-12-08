@@ -18,7 +18,10 @@
     define ('FATOR',8);
     
     //Margem de busca por valor do percentil
-    define ('MARGEM_LIMITE_PERCENTIL', 4);
+    define ('MARGEM_LIMITE_PERCENTIL', 5);
+    
+    //Margem de busca por valor do percentil
+    define ('ESCALA_IMC_PERCENTIL', 0.1);
 
     // tabela de imc de 5 aos 19 anos
     define ('IDADE_PERCENTIL_19', 228);
@@ -106,4 +109,6 @@
     define ('ID_ENTREVISTADO_INVALIDO', 20);
     
     define ('ID_PERFIL_ALIMENTAR_INVALIDO', 20);
+    
+    define ('DATA_INVALIDA', 21);
 ?>

@@ -4,23 +4,27 @@
 require_once './database/DbHandler.php';
 require_once './util/Constantes.php';
 require_once './util/DataUtil.class.php';
+require_once './util/MapaErro.php';
+require_once './util/JsonUtil.php';
+require_once './util/NumeroUtil.php';
 require_once './entidade/Server.class.php';
 require_once './entidade/Entrevistado.class.php';
 require_once './entidade/Usuario.class.php';
 require_once './entidade/Percentil.class.php';
 require_once './entidade/Vct.class.php';
 require_once './entidade/Imc.class.php';
+require_once './entidade/Curva.class.php';
 require_once './entidade/Anamnese.class.php';
 require_once './entidade/Erro.class.php';
-require_once './util/MapaErro.php';
-require_once './util/JsonUtil.php';
-require_once './util/NumeroUtil.php';
+require_once './entidade/Curva.class.php';
 require_once './controller/PercentilController.php';
 require_once './controller/IMCController.php';
 require_once './controller/VCTController.php';
 require_once './validate/LoginValidate.php';
 require_once './validate/VCTValidate.php';
 require_once './validate/AnamneseValidate.php';
+require_once './validate/PerfilAntropometricoValidate.php';
+require_once './validate/DateValidator.php';
 
 // Slim
 require '../Slim/Slim/Slim.php';
@@ -49,7 +53,9 @@ $slim->post('/calcularPerfilAntropometrico', 'calcularPerfilAntropometrico');
  * @param \Slim\Route $route
  */
 function authenticate(\Slim\Route $route) {
-    
+    $headers = apache_request_headers();
+    $response = array();
+    $app = \Slim\Slim::getInstance();
 }
 
 // Funções    
@@ -357,9 +363,12 @@ function verificarLogin() {
     if ($validacao == VALIDO) {
 
         $db = new DbHandler();
-        $usuario = $db->selectLogin($login, $senha);
-
-        if (!empty($usuario)) {
+        $autorizado = $db->checkLogin($login, $senha);
+        
+        if ($autorizado) {
+            // Recuperar usuário pelo login (e-mail).
+            $usuario = $db->getUsuarioByLogin($login);        
+        
             // Dados do usuário.
             echoRespnse(HTTP_ACEITO, $usuario);
         } else {
@@ -589,7 +598,7 @@ function calcularIMC() {
  */
 function calcularPerfilAntropometrico() {
     /**
-     *  Anamnese: Peso, altura, idade, sexo
+     * Anamnese: Peso, altura, idade, sexo
      * Acima de 19 calcular IMC
      * Abaixo de 19 anos verificar percentil: IMC x Idade.
      */
@@ -600,58 +609,64 @@ function calcularPerfilAntropometrico() {
     // Entrevistado
     $nascimento = $anamneseJson->entrevistado->nascimento;
     $sexo = strtoupper($anamneseJson->entrevistado->sexo);
-
     // Anamnese.
     $peso = $anamneseJson->peso;
     $altura = $anamneseJson->altura;
-
-    //TODO: Falta validação
-    $anamnese = new Anamnese();
-    $anamnese->setPeso($peso);
-    $anamnese->setAltura($altura);
-
-    // Entrevistado
-    $entrevistado = new Entrevistado();
-    $entrevistado->setNascimento($nascimento);
-    $entrevistado->setSexo($sexo);
-
-    $anamnese->setEntrevistado($entrevistado);
-
-    $imcValor = IMCController::calculaIMC($peso, $altura);    
-    $idadeAnos = DataUtil::calcularIdadeAnos($nascimento);
     
-    $percentil = new Percentil();
+    $validacao = PerfilAntropometricoValidate::validate($peso, $altura, 
+            $sexo, $nascimento);
+    
+    if ($validacao == VALIDO) {
+        
+        $anamnese = new Anamnese();
+        $anamnese->setPeso($peso);
+        $anamnese->setAltura($altura);
 
-    // Acima de 19 calcular IMC.
-    if ($idadeAnos > 19) {
-        $imc = new Imc();
-        $imc->setValor($imcValor);
-        $imc->setAnamnese($anamnese);
-        echoRespnse(HTTP_OK, $imc);
-    } else {
-        $percentilMediano = PercentilController::calcularPercentil(
-                        $imcValor, $sexo, $nascimento);
+        // Entrevistado
+        $entrevistado = new Entrevistado();
+        $entrevistado->setNascimento($nascimento);
+        $entrevistado->setSexo($sexo);
+        $anamnese->setEntrevistado($entrevistado);
+        
+        // Calcular IMC
+        $imcValor = IMCController::calculaIMC($peso, $altura);
+        $idadeMeses = DataUtil::calcularIdadeMeses($nascimento);
+        $idadeAnos = DataUtil::calcularIdadeAnos($nascimento);
 
-        if ($percentilMediano->getPercentilMediano() == null) {
-            // Construir o JSON de resposta.
-            $percentilMargens = PercentilController::calcularPercentilMargens(
+        $curva = new Curva();
+        // Acima de 19 calcular IMC.
+        if ($idadeMeses > IDADE_PERCENTIL_19) {
+            
+            // Cálculo do IMC para entrevistado acima de 19 anos.
+            $imc = new Imc();
+            $imc->setValor($imcValor);
+            
+            $curva->setImc($imc);
+            echoRespnse(HTTP_OK, $curva);
+            
+        } else {
+            
+            $percentilMediano = PercentilController::calcularPercentil(
                             $imcValor, $sexo, $nascimento);
 
-            $percentil->setPercentilInferior(
-                    $percentilMargens->getPercentilInferior());
-            $percentil->setPercentilSuperior(
-                    $percentilMargens->getPercentilSuperior());
-            //echoRespnse(HTTP_OK, array("valor","entrou margens"));
-        } else {
-            $percentil->setPercentilMediano(
-                    $percentilMediano->getPercentilMediano());
-            //echoRespnse(HTTP_OK, array("valor","entrou mediano"));
+            if (!empty($percentilMediano)) {
+                
+                $curva->setPercentilMediano($percentilMediano);
+                echoRespnse(HTTP_OK, $curva);
+                
+            } else {  
+                
+                $curva = PercentilController::calcularPercentilMargens(
+                                $imcValor, $sexo, $nascimento);
+                // IMC padrão.
+                $imc = new Imc();
+                $imc->setValor($imcValor);
+                $curva->setImc($imc);
+                
+                echoRespnse(HTTP_OK, $curva);
+            }
         }
-
-        // Construir o JSON de resposta.
-        $percentil->setAnamnese($anamnese);
-        echoRespnse(HTTP_OK, $percentil);
-    }
+    }    
 }
 
 function calcularPerfilAntropometricoAnamnese() {

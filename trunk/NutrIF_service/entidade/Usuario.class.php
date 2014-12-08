@@ -25,6 +25,8 @@ class Usuario {
     
     public $nome;
     
+    public $apiKey;
+    
     public function __construct() {}
         
     public function getNome() {
@@ -102,6 +104,13 @@ class Usuario {
      public function toArray() {
         return get_object_vars($this);
     }
-}
+    
+    function getApiKey() {
+        return $this->apiKey;
+    }
 
+    function setApiKey($apiKey) {
+        $this->apiKey = $apiKey;
+    }
+}
 ?>

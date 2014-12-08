@@ -14,7 +14,8 @@ class IMCController {
         $alturaMetro = $numeroUtil->formatDouble($alturaCm / FATOR_CENTIMETRO);
         
         if (($peso > 0) && ($alturaMetro > 0)) {
-            $imcValor = $numeroUtil->formatDouble($peso / pow($alturaMetro, 2));
+            $imcValor = $numeroUtil->formatDouble(
+                    $peso / pow($alturaMetro, 2), 1);
         }
         
         return $imcValor;
