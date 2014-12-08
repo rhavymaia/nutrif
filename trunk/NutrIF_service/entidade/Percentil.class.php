@@ -19,7 +19,11 @@ class Percentil {
     
     public $percentilInferior;
     
-    public $percentilSuperior;    
+    public $percentilSuperior; 
+    
+    public $sexo;
+    
+    public $idadeMeses;
 
     function __construct() {}
     
@@ -78,5 +82,23 @@ class Percentil {
     function setPercentilSuperior($percentilSuperior) {
         $this->percentilSuperior = $percentilSuperior;
     }
+    
+    public function getSexo() {
+        return $this->sexo;
+    }
+
+    public function getIdadeMeses() {
+        return $this->idadeMeses;
+    }
+
+    public function setSexo($sexo) {
+        $this->sexo = $sexo;
+    }
+
+    public function setIdadeMeses($idadeMeses) {
+        $this->idadeMeses = $idadeMeses;
+    }
+
+
 }
 ?>
