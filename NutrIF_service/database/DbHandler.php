@@ -5,6 +5,7 @@ require_once './entidade/Usuario.class.php';
 require_once './entidade/Pesquisa.class.php';
 require_once './entidade/Entrevistado.class.php';
 require_once './entidade/Anamnese.class.php';
+require_once './util/PassHash.php';
 
 /**
  * Descrição
@@ -38,18 +39,20 @@ class DbHandler {
         if (!$this->ehUsuarioExistente($usuario->login)) {
             // Caso o usuário não exista será construída o Insert na tb_usuario.
             $stmt = $this->conn->prepare("INSERT INTO tb_usuario(nm_login, "
-                    . "nm_senha, vl_authkey, nm_usuario, dt_nascimento,"
+                    . "nm_senha, nm_apikey, nm_usuario, dt_nascimento,"
                     . " nm_sexo, cd_tipousuario, fl_ativo)"
                     . " values(?, ?, ?, ?, ?, ?, " . $tipoUsuario . ", "
                     . USUARIO_ATIVO . ")");
 
             $nascimento = $data = implode("-", array_reverse(explode("/", $usuario->nascimento)));
             $sexo = strtoupper($usuario->sexo);
-            $authKey = $this->gerarAuthKey();
+            
+            $passwordHash = PassHash::hash($usuario->senha);
+            $apiKey = $this->gerarApiKey();
 
             // Parâmetros: tipos das entradas, entradas.
-            $stmt->bind_param("ssssss", $usuario->login, $usuario->senha, 
-                    $authKey, $usuario->nome, $nascimento, $sexo);
+            $stmt->bind_param("ssssss", $usuario->login, $passwordHash, 
+                    $apiKey, $usuario->nome, $nascimento, $sexo);           
 
             // Executar a consulta.
             $result = $stmt->execute();
@@ -86,7 +89,7 @@ class DbHandler {
     /**
      * Generating random Unique MD5 String for user Api key
      */
-    private function gerarAuthKey() {
+    private function gerarApiKey() {
         return md5(uniqid(rand(), true));
     }
 
@@ -152,7 +155,8 @@ class DbHandler {
         if (!$this->ehNutricionistaExistente($nutricionista->crn, $nutricionista->siape)) {
             // insert query
             $stmt = $this->conn->prepare("INSERT INTO"
-                    . " tb_nutricionista(cd_usuario, nm_crn, nm_siape, cd_instituicao)"
+                    . " tb_nutricionista(cd_usuario, nm_crn, nm_siape,"
+                    . " cd_instituicao)"
                     . " values(?, ?, ?, ?)");
 
             // Parâmetros: tipos das entradas, entradas.
@@ -196,28 +200,60 @@ class DbHandler {
      * @param type $senha
      * @return type
      */
-    public function selectLogin($login, $senha) {
+    public function checkLogin($login, $senhaPlana) {
 
+        $autorizado = FALSE;
+
+        $sql = "SELECT usuario.nm_login, usuario.nm_senha"
+                . " FROM tb_usuario AS usuario"
+                . " WHERE"
+                . " usuario.nm_login = ?"
+                . " AND usuario.fl_ativo = ". USUARIO_ATIVO;
+        
+        $stmt = $this->conn->prepare($sql);
+
+        // Parâmetros: tipos das entradas, entradas.
+        $stmt->bind_param("s", $login);
+        $resultStmt = $stmt->execute();
+        $stmt->store_result();
+        
+        if ($resultStmt && $stmt->num_rows > 0) { 
+            
+            $stmt->bind_result($login, $senhaHash);
+            $stmt->fetch();
+            
+            if (PassHash::check_password($senhaHash, $senhaPlana)) {
+                $autorizado = TRUE;
+            }
+        }
+
+        $stmt->close();
+
+        return $autorizado;
+    }
+    
+    function getUsuarioByLogin($login) {
+        
         $usuario = NULL;
 
         $sql = "SELECT usuario.nm_login, usuario.nm_usuario, "
                 . " usuario.cd_tipousuario, usuario.cd_usuario,"
-                . " usuario.dt_nascimento, usuario.nm_sexo "
+                . " usuario.dt_nascimento, usuario.nm_sexo,"
+                . " usuario.nm_apikey, usuario.fl_ativo"
                 . " FROM tb_usuario AS usuario"
                 . " WHERE"
-                . " usuario.nm_login = ?"
-                . " AND usuario.nm_senha = ?";
-
+                . " usuario.nm_login = ?";
+        
         $stmt = $this->conn->prepare($sql);
 
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("ss", $login, $senha);
+        $stmt->bind_param("s", $login);
         $resultStmt = $stmt->execute();
         $stmt->store_result();
 
         if ($resultStmt && $stmt->num_rows > 0) {
             $stmt->bind_result($login, $nome, $tipoUsuario, $codigo, 
-                    $dtNascimento, $sexo);
+                    $dtNascimento, $sexo, $apikey, $ativo);
             $stmt->fetch();
             $usuario = new Usuario();
             $usuario->setLogin($login);
@@ -226,6 +262,8 @@ class DbHandler {
             $usuario->setTipoUsuario($tipoUsuario);
             $usuario->setNascimento($dtNascimento);
             $usuario->setSexo($sexo);
+            $usuario->setApiKey($apikey);
+            $usuario->setAtivo($ativo);
         }
 
         $stmt->close();
@@ -239,7 +277,7 @@ class DbHandler {
      * @param type $sexo
      * @param type $idadeMeses
      * @return \Percentil
-     */
+     */    
     public function selecionarPercentil($imc, $sexo, $idadeMeses) {
 
         $percentil = NULL;
@@ -253,32 +291,33 @@ class DbHandler {
                 . " imc.tp_sexo = ?"
                 . " AND imc.cd_fator = " . FATOR
                 . " AND imc.vl_fator = ?"
-                . " AND imc.vl_imc_percentil = ?"
+                . " AND imc.vl_imc_percentil = ".$imc
                 . " AND imc.cd_percentil = percentil.cd_percentil";
-
+        
         $stmt = $this->conn->prepare($sql);
 
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("sid", $sexo, $idadeMeses, $imc);
+        $stmt->bind_param("si", $sexo, $idadeMeses);
         $result = $stmt->execute();
         $stmt->store_result();
         
         if ($result && $stmt->num_rows > 0) {
-
-            $stmt->bind_result($cdPercentil, $vlPercentil, $tpSexo, 
-                    $vlFatorIdade, $imcPercentil);
+            
+            $stmt->bind_result($cdPercentil, $vlPercentil, 
+                    $tpSexo, $vlFatorIdade, $imcPercentil);
             $stmt->fetch();
 
+            //Percentil
             $percentil = new Percentil();
-            $percentil->setCdPercentil($cdPercentil);
-            $percentil->setVlPercentil($vlPercentil);
+            $percentil->setCodigo($cdPercentil);
+            $percentil->setValorPercentil($vlPercentil);
             $percentil->setImc($imcPercentil);
             $percentil->setIdadeMeses($vlFatorIdade);
-            $percentil->setSexo($tpSexo);        
+            $percentil->setSexo($tpSexo);
         }
-        
+
         $stmt->close();
-       
+
         return $percentil;
     }
 
@@ -309,49 +348,6 @@ class DbHandler {
         }
 
         return $cdAnamnese;
-    }
-
-    public function selecionarPercentil2($imc, $sexo, $idadeMeses) {
-
-        $percentil = NULL;
-
-        // Consultar o Percentil na tabela tb_imc_percentil.            
-        $sql = "SELECT imc.cd_percentil, percentil.vl_percentil, imc.tp_sexo, "
-                . "imc.vl_fator, imc.vl_imc_percentil"
-                . " FROM"
-                . " tb_imc_percentil AS imc, tb_percentil AS percentil"
-                . " WHERE"
-                . " imc.tp_sexo = ?"
-                . " AND imc.cd_fator = " . FATOR
-                . " AND imc.vl_fator = ?"
-                . " AND imc.vl_imc_percentil = ?"
-                . " AND imc.cd_percentil = percentil.cd_percentil";
-
-        $stmt = $this->conn->prepare($sql);              
-
-        // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("sid", $imc, $sexo, $idadeMeses);
-        $resultStmt = $stmt->execute();
-        $stmt->store_result();
-  
-
-        if ($resultStmt && $stmt->num_rows > 0) {
-
-            $stmt->bind_result($cdPercentil, $vlPercentil, $tpSexo, 
-                    $vlFatorIdade, $imcPercentil);
-            $stmt->fetch();
-
-            $percentil = new Percentil();
-            $percentil->setCdPercentil($cdPercentil);
-            $percentil->setVlPercentil($vlPercentil);
-            $percentil->setImc($imcPercentil);
-            $percentil->setIdadeMeses($vlFatorIdade);
-            $percentil->setSexo($tpSexo);
-        }
-
-        $stmt->close();
-
-        return $percentil;
     }
 
     public function selectAnamnese($codigo) {

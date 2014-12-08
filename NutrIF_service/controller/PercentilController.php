@@ -6,58 +6,64 @@
  * @author Projeto IFPB-CG 01
  */
 class PercentilController {
-    
-    public static function calcularPercentil($imc, $sexo, $nascimento){
-        
-        $idadeMeses = DataUtil::calcularIdadeMeses($nascimento);        
-              
-        $db = new DbHandler(); 
-        
-        $percentilMediano = $db->selecionarPercentil($imc, 
-                    $sexo, $idadeMeses);
-        
-        $percentil = new Percentil();
-        $percentil->setPercentilMediano($percentilMediano);
+
+    public static function calcularPercentil($imc, $sexo, $nascimento) {
+
+        $percentil = NULL;
+
+        $idadeMeses = DataUtil::calcularIdadeMeses($nascimento);
+
+        if ($idadeMeses <= IDADE_PERCENTIL_19) {
+            $db = new DbHandler();
+            $percentil = $db->selecionarPercentil($imc, $sexo, 
+                    $idadeMeses);
+        }
         
         return $percentil;
-        
     }
 
     public static function calcularPercentilMargens($imc, $sexo, $nascimento) {
 
-        $percentilInferior = 0;
-        $percentilSuperior = 0;
+        $curva = new Curva();        
 
         // Margens dos percentis baseado no cálculo inicial.
         $margemIMCInferior = $imc - MARGEM_LIMITE_PERCENTIL;
         $margemIMCSuperior = $imc + MARGEM_LIMITE_PERCENTIL;
-
+        
         // Valores crescentes e decrescentes do IMC.
         $imcDecrescente = $imc;
         $imcCrescente = $imc;
-        
-        $idadeMeses = DataUtil::calcularIdadeMeses($nascimento);
 
-        $db = new DbHandler();        
+        $idadeMeses = DataUtil::calcularIdadeMeses($nascimento);
+        
+        $db = new DbHandler();
 
         // Verificação do percentil inferior.
-        while (!$percentilInferior && $imcDecrescente >= $margemIMCInferior) {
-            $imcDecrescente = $imcDecrescente - 0.1;
+        $percentilInferior = NULL;
+        while (empty($percentilInferior) 
+                && $imcDecrescente >= $margemIMCInferior) {
+            // Decrescer gradativamente os valores do IMC na escala.
+            $imcDecrescente = $imcDecrescente - ESCALA_IMC_PERCENTIL;
+            
             $percentilInferior = $db->selecionarPercentil($imcDecrescente, 
                     $sexo, $idadeMeses);
         }
+        
+        $curva->setPercentilInferior($percentilInferior);
 
-        // Verificação do percentil superior.
-        while (!$percentilSuperior && $imcCrescente <= $margemIMCSuperior) {
-            $imcCrescente = $imcCrescente + 0.1;
+        // Verificação do percentil superior.  
+        $percentilSuperior = NULL;        
+        while (empty($percentilSuperior) 
+                && $imcCrescente <= $margemIMCSuperior) {
+            // Crescer gradativamente os valores do IMC na escala.
+            $imcCrescente = $imcCrescente + ESCALA_IMC_PERCENTIL;
+            
             $percentilSuperior = $db->selecionarPercentil($imcCrescente, 
                     $sexo, $idadeMeses);
         }
-
-        $percentil = new Percentil();
-        $percentil->setPercentilInferior($percentilInferior);
-        $percentil->setPercentilSuperior($percentilSuperior);
-
-        return $percentil;
+        
+        $curva->setPercentilSuperior($percentilSuperior);
+        
+        return $curva;
     }
 }

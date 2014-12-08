@@ -26,7 +26,5 @@ class PassHash {
         $new_hash = crypt($password, $full_salt);
         return ($hash == $new_hash);
     }
-
 }
-
 ?>

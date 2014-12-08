@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Percentil
+ * IMC por Idade do Percentil
  *
  * @author Rhavy
  */
@@ -11,19 +11,11 @@ class Percentil {
     
     public $imc;
     
-    public $usuario;
-    
-    public $vlPercentil;
-    
-    public $percentilMediano;
-    
-    public $percentilInferior;
-    
-    public $percentilSuperior; 
-    
     public $sexo;
     
     public $idadeMeses;
+    
+    public $valorPercentil;    
 
     function __construct() {}
     
@@ -35,24 +27,16 @@ class Percentil {
         return $this->imc;
     }
 
-    function getUsuario() {
-        return $this->usuario;
+    function getSexo() {
+        return $this->sexo;
     }
 
-    function getVlPercentil() {
-        return $this->vlPercentil;
+    function getIdadeMeses() {
+        return $this->idadeMeses;
     }
 
-    function getPercentilMediano() {
-        return $this->percentilMediano;
-    }
-
-    function getPercentilInferior() {
-        return $this->percentilInferior;
-    }
-
-    function getPercentilSuperior() {
-        return $this->percentilSuperior;
+    function getValorPercentil() {
+        return $this->valorPercentil;
     }
 
     function setCodigo($codigo) {
@@ -63,42 +47,16 @@ class Percentil {
         $this->imc = $imc;
     }
 
-    function setUsuario($usuario) {
-        $this->usuario = $usuario;
-    }
-
-    function setVlPercentil($vlPercentil) {
-        $this->vlPercentil = $vlPercentil;
-    }
-
-    function setPercentilMediano($percentilMediano) {
-        $this->percentilMediano = $percentilMediano;
-    }
-
-    function setPercentilInferior($percentilInferior) {
-        $this->percentilInferior = $percentilInferior;
-    }
-
-    function setPercentilSuperior($percentilSuperior) {
-        $this->percentilSuperior = $percentilSuperior;
-    }
-    
-    public function getSexo() {
-        return $this->sexo;
-    }
-
-    public function getIdadeMeses() {
-        return $this->idadeMeses;
-    }
-
-    public function setSexo($sexo) {
+    function setSexo($sexo) {
         $this->sexo = $sexo;
     }
 
-    public function setIdadeMeses($idadeMeses) {
+    function setIdadeMeses($idadeMeses) {
         $this->idadeMeses = $idadeMeses;
     }
 
-
+    function setValorPercentil($valorPercentil) {
+        $this->valorPercentil = $valorPercentil;
+    }
 }
 ?>

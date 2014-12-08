@@ -6,13 +6,21 @@
  */
 class DateValidator {
     
+    function __construct() {}
+    
     function validate($data) {
         
+        $valido = FALSE;
         // preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $data)
-        if(eregi("^[0-9]{2}/[0-9]{2}/[0-9]{4}$", $data)){
-            return true;
+        if(preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $data)){
+            $valido = TRUE;
         }
-        return false;
         
+        if(preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", 
+                $data)){
+            $valido = TRUE;
+        }
+        
+        return $valido;        
     }
 }
