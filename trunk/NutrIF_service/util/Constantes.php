@@ -111,4 +111,36 @@
     define ('ID_PERFIL_ALIMENTAR_INVALIDO', 20);
     
     define ('DATA_INVALIDA', 21);
+    
+    // Definindo perfil do aluno: Magreza acentuada
+    define ('PERCENTIL_MAGREZA_ACENTUADA','Magreza acentuada');
+    
+    // Definindo perfil do aluno: Magreza
+    define ('PERCENTIL_MAGREZA','Magreza');
+    
+    // Definindo perfil do aluno: sobrepeso
+    define ('PERCENTIL_SOBREPESO','Sobrepeso');
+    
+    //Definindo perfil do aluno: Eutrofico 
+    define ('PERCENTIL_EUTROFIA','Eutrofia');
+    
+    //Definindo perfil do aluno: Obesidade
+    define ('PERCENTIL_OBESIDADE','Obesidade');
+    
+    //Definindo perfil do aluno: Obesidade Mórbida
+    define ('PERCENTIL_OBESIDADE_MORBIDA','Obesidade mórbida');
+    
+    define('IMC_ABAIXO_PESO','Abaixo do peso');
+    
+    define('IMC_PESO_NORMAL','Peso Normal');
+    
+    define('IMC_SOBREPESO','Sobrepeso');
+    
+    define('IMC_OBESIDADE_LEVE','Obesidade leve');
+    
+    define('IMC_OBESIDADE_MODERADA','Obesidade moderada');
+    
+    define('IMC_OBESIDADE_AVANCADA','Obesidade avançada');
+    
+   
 ?>

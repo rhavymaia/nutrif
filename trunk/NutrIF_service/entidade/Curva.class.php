@@ -15,6 +15,8 @@ class Curva {
     public $percentilInferior;
     
     public $percentilSuperior;
+    
+    public $diagnostico;    
 
     function __construct() {}
 
@@ -56,5 +58,15 @@ class Curva {
 
     function setPercentilSuperior($percentilSuperior) {
         $this->percentilSuperior = $percentilSuperior;
-    }    
+    }   
+    
+    public function getDiagnostico() {
+        return $this->diagnostico;
+    }
+
+    public function setDiagnostico($diagnostico) {
+        $this->diagnostico = $diagnostico;
+    }
+
+
 }
