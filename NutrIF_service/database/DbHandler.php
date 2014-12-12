@@ -272,6 +272,85 @@ class DbHandler {
     }
 
     /**
+     * Fetching user api key
+     * @param String $codigo user id primary key in user table
+     */
+    public function getApiKeyByUserId($codigo) {
+        
+        $stmt = $this->conn->prepare("SELECT usuario.apiKey"
+                . " FROM tb_usuario AS usuario"
+                . " WHERE usuario.cd_usuario = ?");
+        
+        $stmt->bind_param("i", $codigo);
+        $resultStmt = $stmt->execute();
+        $stmt->store_result();
+        
+        if ($resultStmt && $stmt->num_rows > 0) { 
+            
+            $stmt->bind_result($apiKey);
+            $stmt->fetch();
+            
+            $stmt->close();
+            
+            return $apiKey;
+        } else {
+            return NULL;
+        }
+    }
+    
+    /**
+     * Fetching user id by api key
+     * @param String $apiKey user api key
+     */
+    public function getUserByApiKey($apiKey) {
+        
+        $usuario = NULL;
+        
+        $stmt = $this->conn->prepare("SELECT usuario.cd_usuario"
+                . " FROM tb_usuario AS usuario"
+                . " WHERE usuario.nm_apikey = ?");
+        
+        $stmt->bind_param("s", $apiKey);
+        $resultStmt = $stmt->execute();
+        $stmt->store_result();
+        
+        if ($resultStmt && $stmt->num_rows > 0) {
+            
+            $stmt->bind_result($codigo);
+            $stmt->fetch();
+            
+            $stmt->close();
+            
+            $usuario = new Usuario();
+            $usuario->setCodigo($codigo);
+        }
+        
+        return $usuario;
+    }
+    
+    /**
+     * Validating user api key
+     * If the api key is there in db, it is a valid key
+     * @param String $apiKey user api key
+     * @return boolean
+     */
+    public function isValidApiKey($apiKey) {
+        
+        $sql = "SELECT usuario.cd_usuario"
+                . " FROM tb_usuario AS usuario"
+                . " WHERE usuario.nm_apikey = ?";
+        
+        $stmt = $this->conn->prepare($sql);
+        
+        $stmt->bind_param("s", $apiKey);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+    }
+    
+    /**
      * 
      * @param type $imc
      * @param type $sexo
