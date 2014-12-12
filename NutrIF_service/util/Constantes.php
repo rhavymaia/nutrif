@@ -112,6 +112,10 @@
     
     define ('DATA_INVALIDA', 21);
     
+    define ('APIKEY_INVALIDA', 22);
+    
+    define ('NECESSARIO_LOGIN', 23);
+    
     // Definindo perfil do aluno: Magreza acentuada
     define ('PERCENTIL_MAGREZA_ACENTUADA','Magreza acentuada');
     
@@ -141,6 +145,4 @@
     define('IMC_OBESIDADE_MODERADA','Obesidade moderada');
     
     define('IMC_OBESIDADE_AVANCADA','Obesidade avançada');
-    
-   
 ?>
