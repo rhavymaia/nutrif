@@ -40,7 +40,9 @@ class MapaErro {
                 ID_NUTRICIONISTA_INVALIDO => "Código da Nutrionista inválido.",
                 ID_ENTREVISTADO_INVALIDO => "Código do Entrevistado inválido.",
                 ID_PERFIL_ALIMENTAR_INVALIDO=>"Código Perfil Alimentar inválido.",
-                DATA_INVALIDA=>"Data inválida."
+                DATA_INVALIDA=>"Data inválida.",
+                APIKEY_INVALIDA=>"Autenticação inválida.",
+                NECESSARIO_LOGIN=>"É necessário realizar login do usuário."
             );
         }
 
