@@ -588,7 +588,69 @@ class DbHandler {
         }   
 
         return $cdPesquisa;
-    }  
+    } 
+    
+    /**
+     * 
+     * @param type $anamnese
+     * @return type
+     */
+    function inserirAutoAnamnese($anamnese) {
+
+        $cdAnamnese = ID_NAO_RETORNADO;
+
+        $stmt = $this->conn->prepare("INSERT INTO"
+                . " tb_auto_anamnese(cd_entrevistado,"
+                . " nr_peso, nr_altura, nr_nivel_esporte, tp_entrevistado)"
+                . " values(?, ?, ?, ?, ?)");
+
+        // Parâmetros: tipos das entradas, entradas.
+        $stmt->bind_param("iddii",$anamnese->entrevistado->cdEntrevistado, 
+                $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte, 
+                $anamnese->tipoEntrevistado);
+
+        $result = $stmt->execute();
+        if ($result) {
+            $cdAnamnese = $stmt->insert_id;
+            $stmt->close();
+        }
+
+        return $cdAnamnese;
+    }
+    
+   
+    
+    function selectPesquisas(){
+        
+    }
+    
+    function selectUsuarioEntrevistado($cdEntrevistado) {
+        
+        $entrevistado = null;
+              
+        $stmt = $this->conn->prepare("SELECT usuario.cd_usuario, "
+                . "usuario.dt_nascimento, usuario.nm_sexo "
+                . "FROM tb_usuario AS usuario "
+                . "WHERE usuario.cd_usuario = ?");
+        
+        $stmt->bind_param("i", $cdEntrevistado);
+        $stmt->execute();
+        $resultStmt = $stmt->store_result();
+      
+        if ($resultStmt && $stmt->num_rows > 0) {
+            
+            // Campos de retorno do usuário.
+            $stmt->bind_result($codigo, $nascimento, $sexo);
+            $stmt->fetch(); 
+            $entrevistado = new Entrevistado();
+            $entrevistado->setCodigo($codigo);
+            $entrevistado->setNascimento($nascimento);
+            $entrevistado->setSexo($sexo);                      
+        }
+
+        $stmt->close();
+        return $entrevistado;
+    }
    
 
 

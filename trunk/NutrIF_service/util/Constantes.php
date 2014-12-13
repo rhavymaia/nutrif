@@ -115,6 +115,8 @@
     define ('APIKEY_INVALIDA', 22);
     
     define ('NECESSARIO_LOGIN', 23);
+       
+    define ('TIPO_ENTREVISTADO_INVALIDO', 24);  
     
     // Definindo perfil do aluno: Magreza acentuada
     define ('PERCENTIL_MAGREZA_ACENTUADA','Magreza acentuada');

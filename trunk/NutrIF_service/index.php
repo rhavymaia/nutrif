@@ -25,6 +25,7 @@ require_once './validate/VCTValidate.php';
 require_once './validate/AnamneseValidate.php';
 require_once './validate/PerfilAntropometricoValidate.php';
 require_once './validate/DateValidator.php';
+require_once './validate/AutoAnamneseValidate.php';
 
 // Slim
 require '../Slim/Slim/Slim.php';
@@ -36,10 +37,8 @@ $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/cadastrarAluno', 'cadastrarAluno');
 $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
-$slim->post('/realizarAutoAnamneseEntrevistado', 
-        'realizarAutoAnamneseEntrevistado');
-$slim->post('/listarAnamnesesEntrevistado', 
-        'listarAnamnesesEntrevistado');
+$slim->post('/realizarAutoAnamneseEntrevistado', 'realizarAutoAnamneseEntrevistado');
+$slim->post('/listarAnamnesesEntrevistado', 'listarAnamnesesEntrevistado');
 $slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
 $slim->post('/calcularVCT', 'calcularVCT');
 $slim->post('/calcularVCTAnamnese', 'calcularVCTAnamnese');
@@ -58,15 +57,15 @@ $usuarioAutenticado = NULL;
 function authenticate(\Slim\Route $route) {
     // Getting request headers
     $headers = apache_request_headers();
-    
+
     // Verifying Authorization Header
     if (isset($headers['Authorization'])) {
-        
-        $db = new DbHandler(); 
-        
+
+        $db = new DbHandler();
+
         // get the api key
         $apiKey = $headers['Authorization'];
-        
+
         // validating api key
         if (!$db->isValidApiKey($apiKey)) {
             // api key is not present in users table
@@ -74,7 +73,7 @@ function authenticate(\Slim\Route $route) {
             echoRespnse(HTTP_CONFLITO, $erro);
         } else {
             global $usuarioAutenticado;
-            
+
             // Recuperar usuário pelo ApiKey.
             $usuario = $db->getUserByApiKey($apiKey);
             if (!empty($usuario)) {
@@ -94,8 +93,8 @@ function authenticate(\Slim\Route $route) {
  * 
  */
 function statusServer() {
-    global $usuarioAutenticado;    
-    
+    global $usuarioAutenticado;
+
     $server = new Server();
     $server->setOnline($usuarioAutenticado);
 
@@ -230,7 +229,7 @@ function cadastrarNutricionista() {
     }
 }
 
-/** 
+/**
  * Cadastrar Anamnese para o(a) nutricionista.
  * 
  * @param $anamnese
@@ -252,15 +251,9 @@ function cadastrarAnamnese() {
     $anamnese = json_decode($body);
 
     // Validação dos dados de entrada para o cadastro da anamnese.                
-    $validacao = AnamneseValidate::validate($anamnese->nutricionista, 
-            $anamnese->entrevistado, 
-            $anamnese->pesquisa, 
-            $anamnese->peso, 
-            $anamnese->altura, 
-            $anamnese->nivelEsporte, 
-            $anamnese->perfilAlimentar);
-    
-    if ($validacao == VALIDO) {       
+    $validacao = AnamneseValidate::validate($anamnese->nutricionista, $anamnese->entrevistado, $anamnese->pesquisa, $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte, $anamnese->perfilAlimentar);
+
+    if ($validacao == VALIDO) {
         // Persistir os dados no Banco.
         $db = new DbHandler();
         $cdAnamnese = $db->inserirAnamnese($anamnese);
@@ -275,27 +268,79 @@ function cadastrarAnamnese() {
     } else {
         $erro = MapaErro::singleton()->getErro($validacao);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    }    
+    }
 }
 
 /**
  * Anamnese realizada pelo entrevistado.
  * 
- * @param type $name Description
+ * @param anamnese
+ * {
+    "entrevistado": {
+        "cdEntrevistado": [1-9]
+    },
+    "peso": [1-9],
+    "altura": [1-9],
+    "nivelEsporte": [1-5],
+    "tipoEntrevistado": [1-9]  
+    }
  * @return type Description
+ * {
+    "imc": [1-9],
+    "vct": {
+        "valor": [1-9]"
+    }
+    }
+ * 
  */
-function realizarAutoAnamneseEntrevistado(){
+function realizarAutoAnamneseEntrevistado() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
-    $autoAnamnese = json_decode($body);
-    
-    //TODO: Implementar a regra de negócio e persistência no banco de dados.
-    $resultadoAnamnese = array(
-        "imc" => array("valor" => 10),
-        "vct" => array("valor" => 1000)
-    );
-    
-    echoRespnse(HTTP_OK, $resultadoAnamnese);
+    $anamnese = json_decode($body);
+
+    // Validação dos dados de entrada para realizar a anamnese.                
+    $validacao = AutoAnamneseValidate::
+            validate($anamnese->entrevistado->cdEntrevistado, 
+                    $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte,
+                    $anamnese->tipoEntrevistado);
+
+    if ($validacao == VALIDO) {
+        // Persistir os dados no Banco.
+        $db = new DbHandler();
+        $cdAnamnese = $db->inserirAutoAnamnese($anamnese);
+        $entrevistado = $db->selectUsuarioEntrevistado(
+                $anamnese->entrevistado->cdEntrevistado);
+        if (!empty($entrevistado)) {
+            $autoAnamnese = new Anamnese();
+            $autoAnamnese->setEntrevistado($entrevistado);
+            $autoAnamnese->setPeso($anamnese->peso);
+            $autoAnamnese->setAltura($anamnese->altura);
+            $autoAnamnese->setNivelEsporte($anamnese->nivelEsporte);
+            //Falta setar o tipo de entrevistado?
+
+            if (!empty($cdAnamnese)) {
+                //TODO: Implementar a regra de negócio e persistência no banco de dados.
+                $resultadoAnamnese = array(
+                    "imc" => IMCController::calculaIMC($anamnese->peso, $anamnese->altura),
+                    "vct" => VCTController::calculaVCT($autoAnamnese)
+                );
+
+                echoRespnse(HTTP_OK, $resultadoAnamnese);
+            } else {
+                // Problema ao inserir a anamnese.
+                $erro = MapaErro::singleton()->getErro(9);
+                $vct = 
+                echoRespnse(HTTP_NAO_ACEITO, $erro);
+            }
+        } else {
+            //usuário não encontrado
+           $erro = MapaErro::singleton()->getErro(2);
+           echoRespnse(HTTP_NAO_ACEITO, $erro); 
+        }
+    } else {
+        $erro = MapaErro::singleton()->getErro($validacao);
+        echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
+    }
 }
 
 /**
@@ -325,23 +370,23 @@ function listarAnamnesesEntrevistado() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $usuarioJson = json_decode($body);
-    
+
     $cdUsuario = $usuarioJson->codigo;
     //TODO: Validação do usuário.
     //TODO: Pesquisa do usuário e suas anamneses.
-    
+
     $entrevistado = new Entrevistado();
     $entrevistado->setCodigo($cdUsuario);
     $entrevistado->setMatricula(20140101);
     $entrevistado->setNascimento("2014-01-01");
-    $entrevistado->setSexo(MASCULINO);                
+    $entrevistado->setSexo(MASCULINO);
 
     $anamnese = new Anamnese();
     $anamnese->setPeso(60.0);
-    $anamnese->setAltura(1.70);   
+    $anamnese->setAltura(1.70);
     $anamnese->setEntrevistado($entrevistado);
-                
-    $anamneses = array($anamnese);    
+
+    $anamneses = array($anamnese);
     echoRespnse(HTTP_OK, $anamneses);
 }
 
@@ -396,11 +441,11 @@ function verificarLogin() {
 
         $db = new DbHandler();
         $autorizado = $db->checkLogin($login, $senha);
-        
+
         if ($autorizado) {
             // Recuperar usuário pelo login (e-mail).
-            $usuario = $db->getUsuarioByLogin($login);        
-        
+            $usuario = $db->getUsuarioByLogin($login);
+
             // Dados do usuário.
             echoRespnse(HTTP_ACEITO, $usuario);
         } else {
@@ -644,12 +689,11 @@ function calcularPerfilAntropometrico() {
     // Anamnese.
     $peso = $anamneseJson->peso;
     $altura = $anamneseJson->altura;
-    
-    $validacao = PerfilAntropometricoValidate::validate($peso, $altura, 
-            $sexo, $nascimento);
-    
+
+    $validacao = PerfilAntropometricoValidate::validate($peso, $altura, $sexo, $nascimento);
+
     if ($validacao == VALIDO) {
-        
+
         $anamnese = new Anamnese();
         $anamnese->setPeso($peso);
         $anamnese->setAltura($altura);
@@ -659,21 +703,28 @@ function calcularPerfilAntropometrico() {
         $entrevistado->setNascimento($nascimento);
         $entrevistado->setSexo($sexo);
         $anamnese->setEntrevistado($entrevistado);
-        
+
         // Calcular IMC
         $imcValor = IMCController::calculaIMC($peso, $altura);
         $idadeMeses = DataUtil::calcularIdadeMeses($nascimento);
+        $idadeAnos = DataUtil::calcularIdadeAnos($nascimento);
 
         $curva = new Curva();
+
         // Acima de 19 calcular IMC.
-        if ($idadeMeses <= IDADE_PERCENTIL_19) {
-            
+        if ($idadeMeses > IDADE_PERCENTIL_19) {
+            // Cálculo do IMC para entrevistado acima de 19 anos.
+            $imc = new Imc();
+            $imc->setValor($imcValor);
+            $curva->setImc($imc);
+        } else {
+
             $percentilMediano = PercentilController::calcularPercentil(
                             $imcValor, $sexo, $nascimento);
 
             if (!empty($percentilMediano)) {
                 $curva->setPercentilMediano($percentilMediano);
-            } else {  
+            } else {
                 $curva = PercentilController::calcularPercentilMargens(
                                 $imcValor, $sexo, $nascimento);
             }
@@ -683,12 +734,12 @@ function calcularPerfilAntropometrico() {
         $imc = new Imc();
         $imc->setValor($imcValor);
         $curva->setImc($imc);
-                
+
         $diagnostico = PercentilController::determinarDiagnosticoNutricional(
                         $curva);
         $curva->setDiagnostico($diagnostico);
-        
-                echoRespnse(HTTP_OK, $curva);
+
+        echoRespnse(HTTP_OK, $curva);
     } else {
         
     }
