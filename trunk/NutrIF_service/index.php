@@ -94,7 +94,7 @@ function authenticate(\Slim\Route $route) {
  */
 function statusServer() {
     $server = new Server();
-    $server->setOnline(true);
+    $server->setOnline("true");
 
     // Responder a requisição. Código HTTP (cabeçalho) e Entidade (Body - JSON).
     echoRespnse(HTTP_CRIADO, $server);
