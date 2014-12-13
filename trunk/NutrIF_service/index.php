@@ -31,13 +31,15 @@ require '../Slim/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 $slim = new \Slim\Slim();
-$slim->get('/statusServer', 'statusServer');
-$slim->post('/verificarLogin', 'verificarLogin'); //implementar oAuth
+$slim->get('/statusServer', 'authenticate', 'statusServer');
+$slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/cadastrarAluno', 'cadastrarAluno');
 $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
 $slim->post('/cadastrarAnamnese', 'cadastrarAnamnese');
-$slim->post('/realizarAutoAnamneseEntrevistado', 'realizarAutoAnamneseEntrevistado');
-$slim->post('/listarAnamnesesEntrevistado', 'listarAnamnesesEntrevistado');
+$slim->post('/realizarAutoAnamneseEntrevistado', 
+        'realizarAutoAnamneseEntrevistado');
+$slim->post('/listarAnamnesesEntrevistado', 
+        'listarAnamnesesEntrevistado');
 $slim->post('/cadastrarPesquisa', 'cadastrarPesquisa');
 $slim->post('/calcularVCT', 'calcularVCT');
 $slim->post('/calcularVCTAnamnese', 'calcularVCTAnamnese');
@@ -45,15 +47,45 @@ $slim->post('/calcularVCTAnamneses', 'calcularVCTAnamneses');
 $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/calcularPerfilAntropometrico', 'calcularPerfilAntropometrico');
 
+// Usuário autenticado para o cliente.
+$usuarioAutenticado = NULL;
+
 /**
  * Altenticação do usuário.
  * 
  * @param \Slim\Route $route
  */
 function authenticate(\Slim\Route $route) {
+    // Getting request headers
     $headers = apache_request_headers();
-    $response = array();
-    $app = \Slim\Slim::getInstance();
+    
+    // Verifying Authorization Header
+    if (isset($headers['Authorization'])) {
+        
+        $db = new DbHandler(); 
+        
+        // get the api key
+        $apiKey = $headers['Authorization'];
+        
+        // validating api key
+        if (!$db->isValidApiKey($apiKey)) {
+            // api key is not present in users table
+            $erro = MapaErro::singleton()->getErro(APIKEY_INVALIDA);
+            echoRespnse(HTTP_CONFLITO, $erro);
+        } else {
+            global $usuarioAutenticado;
+            
+            // Recuperar usuário pelo ApiKey.
+            $usuario = $db->getUserByApiKey($apiKey);
+            if (!empty($usuario)) {
+                $usuarioAutenticado = $usuario;
+            }
+        }
+    } else {
+        // api key is missing in header
+        $erro = MapaErro::singleton()->getErro(NECESSARIO_LOGIN);
+        echoRespnse(HTTP_CONFLITO, $erro);
+    }
 }
 
 // Funções    
@@ -62,8 +94,10 @@ function authenticate(\Slim\Route $route) {
  * 
  */
 function statusServer() {
+    global $usuarioAutenticado;    
+    
     $server = new Server();
-    $server->online = "true";
+    $server->setOnline($usuarioAutenticado);
 
     // Responder a requisição. Código HTTP (cabeçalho) e Entidade (Body - JSON).
     echoRespnse(HTTP_CRIADO, $server);
@@ -196,7 +230,7 @@ function cadastrarNutricionista() {
     }
 }
 
-/**
+/** 
  * Cadastrar Anamnese para o(a) nutricionista.
  * 
  * @param $anamnese
@@ -218,9 +252,15 @@ function cadastrarAnamnese() {
     $anamnese = json_decode($body);
 
     // Validação dos dados de entrada para o cadastro da anamnese.                
-    $validacao = AnamneseValidate::validate($anamnese->nutricionista, $anamnese->entrevistado, $anamnese->pesquisa, $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte, $anamnese->perfilAlimentar);
-
-    if ($validacao == VALIDO) {
+    $validacao = AnamneseValidate::validate($anamnese->nutricionista, 
+            $anamnese->entrevistado, 
+            $anamnese->pesquisa, 
+            $anamnese->peso, 
+            $anamnese->altura, 
+            $anamnese->nivelEsporte, 
+            $anamnese->perfilAlimentar);
+    
+    if ($validacao == VALIDO) {       
         // Persistir os dados no Banco.
         $db = new DbHandler();
         $cdAnamnese = $db->inserirAnamnese($anamnese);
@@ -235,7 +275,7 @@ function cadastrarAnamnese() {
     } else {
         $erro = MapaErro::singleton()->getErro($validacao);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
-    }
+    }    
 }
 
 /**
@@ -244,17 +284,17 @@ function cadastrarAnamnese() {
  * @param type $name Description
  * @return type Description
  */
-function realizarAutoAnamneseEntrevistado() {
+function realizarAutoAnamneseEntrevistado(){
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $autoAnamnese = json_decode($body);
-
+    
     //TODO: Implementar a regra de negócio e persistência no banco de dados.
     $resultadoAnamnese = array(
         "imc" => array("valor" => 10),
         "vct" => array("valor" => 1000)
     );
-
+    
     echoRespnse(HTTP_OK, $resultadoAnamnese);
 }
 
@@ -285,23 +325,23 @@ function listarAnamnesesEntrevistado() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $usuarioJson = json_decode($body);
-
+    
     $cdUsuario = $usuarioJson->codigo;
     //TODO: Validação do usuário.
     //TODO: Pesquisa do usuário e suas anamneses.
-
+    
     $entrevistado = new Entrevistado();
     $entrevistado->setCodigo($cdUsuario);
     $entrevistado->setMatricula(20140101);
     $entrevistado->setNascimento("2014-01-01");
-    $entrevistado->setSexo(MASCULINO);
+    $entrevistado->setSexo(MASCULINO);                
 
     $anamnese = new Anamnese();
     $anamnese->setPeso(60.0);
-    $anamnese->setAltura(1.70);
+    $anamnese->setAltura(1.70);   
     $anamnese->setEntrevistado($entrevistado);
-
-    $anamneses = array($anamnese);
+                
+    $anamneses = array($anamnese);    
     echoRespnse(HTTP_OK, $anamneses);
 }
 
@@ -356,11 +396,11 @@ function verificarLogin() {
 
         $db = new DbHandler();
         $autorizado = $db->checkLogin($login, $senha);
-
+        
         if ($autorizado) {
             // Recuperar usuário pelo login (e-mail).
-            $usuario = $db->getUsuarioByLogin($login);
-
+            $usuario = $db->getUsuarioByLogin($login);        
+        
             // Dados do usuário.
             echoRespnse(HTTP_ACEITO, $usuario);
         } else {
@@ -604,11 +644,12 @@ function calcularPerfilAntropometrico() {
     // Anamnese.
     $peso = $anamneseJson->peso;
     $altura = $anamneseJson->altura;
-
-    $validacao = PerfilAntropometricoValidate::validate($peso, $altura, $sexo, $nascimento);
-
+    
+    $validacao = PerfilAntropometricoValidate::validate($peso, $altura, 
+            $sexo, $nascimento);
+    
     if ($validacao == VALIDO) {
-
+        
         $anamnese = new Anamnese();
         $anamnese->setPeso($peso);
         $anamnese->setAltura($altura);
@@ -618,28 +659,21 @@ function calcularPerfilAntropometrico() {
         $entrevistado->setNascimento($nascimento);
         $entrevistado->setSexo($sexo);
         $anamnese->setEntrevistado($entrevistado);
-
+        
         // Calcular IMC
         $imcValor = IMCController::calculaIMC($peso, $altura);
         $idadeMeses = DataUtil::calcularIdadeMeses($nascimento);
-        $idadeAnos = DataUtil::calcularIdadeAnos($nascimento);
 
         $curva = new Curva();
-
         // Acima de 19 calcular IMC.
-        if ($idadeMeses > IDADE_PERCENTIL_19) {
-            // Cálculo do IMC para entrevistado acima de 19 anos.
-            $imc = new Imc();
-            $imc->setValor($imcValor);
-            $curva->setImc($imc);
-        } else {
-
+        if ($idadeMeses <= IDADE_PERCENTIL_19) {
+            
             $percentilMediano = PercentilController::calcularPercentil(
                             $imcValor, $sexo, $nascimento);
 
             if (!empty($percentilMediano)) {
                 $curva->setPercentilMediano($percentilMediano);
-            } else {
+            } else {  
                 $curva = PercentilController::calcularPercentilMargens(
                                 $imcValor, $sexo, $nascimento);
             }
@@ -649,12 +683,12 @@ function calcularPerfilAntropometrico() {
         $imc = new Imc();
         $imc->setValor($imcValor);
         $curva->setImc($imc);
-            
+                
         $diagnostico = PercentilController::determinarDiagnosticoNutricional(
                         $curva);
         $curva->setDiagnostico($diagnostico);
         
-        echoRespnse(HTTP_OK, $curva);
+                echoRespnse(HTTP_OK, $curva);
     } else {
         
     }
