@@ -300,7 +300,7 @@ function realizarAutoAnamneseEntrevistado() {
     $validacao = AutoAnamneseValidate::
             validate($anamnese->entrevistado->cdEntrevistado, 
                     $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte,
-                    $anamnese->tipoEntrevistado);
+                    $anamnese->entrevistado->tipoEntrevistado);
 
     if ($validacao == VALIDO) {
         // Persistir os dados no Banco.
@@ -319,6 +319,7 @@ function realizarAutoAnamneseEntrevistado() {
             if (!empty($cdAnamnese)) {
                 //TODO: Implementar a regra de negócio e persistência no banco de dados.
                 $resultadoAnamnese = array(
+                    "anamnese"=>$autoAnamnese,
                     "imc" => IMCController::calculaIMC($anamnese->peso, $anamnese->altura),
                     "vct" => VCTController::calculaVCT($autoAnamnese)
                 );
@@ -340,6 +341,7 @@ function realizarAutoAnamneseEntrevistado() {
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     }
 }
+
 
 /**
  * Descrição
@@ -505,7 +507,8 @@ function calcularVCT() {
     // Validação dos dados: peso, altura, nível esportivo, sexo, data de
     // nascimento.
 
-    $validacao = VCTValidate::validate($peso, $altura, $nivelEsporte, $sexo, $nascimento);
+    $validacao = VCTValidate::
+            validate($peso, $altura, $nivelEsporte, $sexo, $nascimento);
 
     if ($validacao == VALIDO) {
 

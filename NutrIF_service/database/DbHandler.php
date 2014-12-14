@@ -46,13 +46,12 @@ class DbHandler {
 
             $nascimento = $data = implode("-", array_reverse(explode("/", $usuario->nascimento)));
             $sexo = strtoupper($usuario->sexo);
-            
+
             $passwordHash = PassHash::hash($usuario->senha);
             $apiKey = $this->gerarApiKey();
 
             // Parâmetros: tipos das entradas, entradas.
-            $stmt->bind_param("ssssss", $usuario->login, $passwordHash, 
-                    $apiKey, $usuario->nome, $nascimento, $sexo);           
+            $stmt->bind_param("ssssss", $usuario->login, $passwordHash, $apiKey, $usuario->nome, $nascimento, $sexo);
 
             // Executar a consulta.
             $result = $stmt->execute();
@@ -160,8 +159,7 @@ class DbHandler {
                     . " values(?, ?, ?, ?)");
 
             // Parâmetros: tipos das entradas, entradas.
-            $stmt->bind_param("iiii", $nutricionista->idUsuario, $nutricionista->crn, 
-                    $nutricionista->siape, $nutricionista->instituicao);
+            $stmt->bind_param("iiii", $nutricionista->idUsuario, $nutricionista->crn, $nutricionista->siape, $nutricionista->instituicao);
 
             $result = $stmt->execute();
             if ($result) {
@@ -208,20 +206,20 @@ class DbHandler {
                 . " FROM tb_usuario AS usuario"
                 . " WHERE"
                 . " usuario.nm_login = ?"
-                . " AND usuario.fl_ativo = ". USUARIO_ATIVO;
-        
+                . " AND usuario.fl_ativo = " . USUARIO_ATIVO;
+
         $stmt = $this->conn->prepare($sql);
 
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("s", $login);
         $resultStmt = $stmt->execute();
         $stmt->store_result();
-        
-        if ($resultStmt && $stmt->num_rows > 0) { 
-            
+
+        if ($resultStmt && $stmt->num_rows > 0) {
+
             $stmt->bind_result($login, $senhaHash);
             $stmt->fetch();
-            
+
             if (PassHash::check_password($senhaHash, $senhaPlana)) {
                 $autorizado = TRUE;
             }
@@ -231,9 +229,9 @@ class DbHandler {
 
         return $autorizado;
     }
-    
+
     function getUsuarioByLogin($login) {
-        
+
         $usuario = NULL;
 
         $sql = "SELECT usuario.nm_login, usuario.nm_usuario, "
@@ -243,7 +241,7 @@ class DbHandler {
                 . " FROM tb_usuario AS usuario"
                 . " WHERE"
                 . " usuario.nm_login = ?";
-        
+
         $stmt = $this->conn->prepare($sql);
 
         // Parâmetros: tipos das entradas, entradas.
@@ -252,8 +250,7 @@ class DbHandler {
         $stmt->store_result();
 
         if ($resultStmt && $stmt->num_rows > 0) {
-            $stmt->bind_result($login, $nome, $tipoUsuario, $codigo, 
-                    $dtNascimento, $sexo, $apikey, $ativo);
+            $stmt->bind_result($login, $nome, $tipoUsuario, $codigo, $dtNascimento, $sexo, $apikey, $ativo);
             $stmt->fetch();
             $usuario = new Usuario();
             $usuario->setLogin($login);
@@ -276,58 +273,58 @@ class DbHandler {
      * @param String $codigo user id primary key in user table
      */
     public function getApiKeyByUserId($codigo) {
-        
+
         $stmt = $this->conn->prepare("SELECT usuario.apiKey"
                 . " FROM tb_usuario AS usuario"
                 . " WHERE usuario.cd_usuario = ?");
-        
+
         $stmt->bind_param("i", $codigo);
         $resultStmt = $stmt->execute();
         $stmt->store_result();
-        
-        if ($resultStmt && $stmt->num_rows > 0) { 
-            
+
+        if ($resultStmt && $stmt->num_rows > 0) {
+
             $stmt->bind_result($apiKey);
             $stmt->fetch();
-            
+
             $stmt->close();
-            
+
             return $apiKey;
         } else {
             return NULL;
         }
     }
-    
+
     /**
      * Fetching user id by api key
      * @param String $apiKey user api key
      */
     public function getUserByApiKey($apiKey) {
-        
+
         $usuario = NULL;
-        
+
         $stmt = $this->conn->prepare("SELECT usuario.cd_usuario"
                 . " FROM tb_usuario AS usuario"
                 . " WHERE usuario.nm_apikey = ?");
-        
+
         $stmt->bind_param("s", $apiKey);
         $resultStmt = $stmt->execute();
         $stmt->store_result();
-        
+
         if ($resultStmt && $stmt->num_rows > 0) {
-            
+
             $stmt->bind_result($codigo);
             $stmt->fetch();
-            
+
             $stmt->close();
-            
+
             $usuario = new Usuario();
             $usuario->setCodigo($codigo);
         }
-        
+
         return $usuario;
     }
-    
+
     /**
      * Validating user api key
      * If the api key is there in db, it is a valid key
@@ -335,13 +332,13 @@ class DbHandler {
      * @return boolean
      */
     public function isValidApiKey($apiKey) {
-        
+
         $sql = "SELECT usuario.cd_usuario"
                 . " FROM tb_usuario AS usuario"
                 . " WHERE usuario.nm_apikey = ?";
-        
+
         $stmt = $this->conn->prepare($sql);
-        
+
         $stmt->bind_param("s", $apiKey);
         $stmt->execute();
         $stmt->store_result();
@@ -349,14 +346,14 @@ class DbHandler {
         $stmt->close();
         return $num_rows > 0;
     }
-    
+
     /**
      * 
      * @param type $imc
      * @param type $sexo
      * @param type $idadeMeses
      * @return \Percentil
-     */    
+     */
     public function selecionarPercentil($imc, $sexo, $idadeMeses) {
 
         $percentil = NULL;
@@ -370,20 +367,19 @@ class DbHandler {
                 . " imc.tp_sexo = ?"
                 . " AND imc.cd_fator = " . FATOR
                 . " AND imc.vl_fator = ?"
-                . " AND imc.vl_imc_percentil = ".$imc
+                . " AND imc.vl_imc_percentil = " . $imc
                 . " AND imc.cd_percentil = percentil.cd_percentil";
-        
+
         $stmt = $this->conn->prepare($sql);
 
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("si", $sexo, $idadeMeses);
         $result = $stmt->execute();
         $stmt->store_result();
-        
+
         if ($result && $stmt->num_rows > 0) {
-            
-            $stmt->bind_result($cdPercentil, $vlPercentil, 
-                    $tpSexo, $vlFatorIdade, $imcPercentil);
+
+            $stmt->bind_result($cdPercentil, $vlPercentil, $tpSexo, $vlFatorIdade, $imcPercentil);
             $stmt->fetch();
 
             //Percentil
@@ -415,10 +411,7 @@ class DbHandler {
                 . " values(?, ?, ?, ?, ?, ?, ?)");
 
         // Parâmetros: tipos das entradas, entradas.
-        $stmt->bind_param("iiiiddi", $anamnese->nutricionista, 
-                $anamnese->entrevistado, $anamnese->pesquisa, 
-                $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte, 
-                $anamnese->perfilAlimentar);
+        $stmt->bind_param("iiiiddi", $anamnese->nutricionista, $anamnese->entrevistado, $anamnese->pesquisa, $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte, $anamnese->perfilAlimentar);
 
         $result = $stmt->execute();
         if ($result) {
@@ -434,12 +427,12 @@ class DbHandler {
         $anamnese = NULL;
 
         $sql = "SELECT a.cd_anamnese, e.cd_entrevistado, e.nr_matricula,"
-            ." u.nm_usuario, u.dt_nascimento, u.nm_sexo, a.nr_peso, a.nr_altura,"
-            ." a.nr_nivel_esporte"
-            ." FROM tb_entrevistado AS e, tb_usuario AS u, tb_anamnese AS a"
-            ." WHERE e.cd_usuario = u.cd_usuario"
-            ." AND e.cd_entrevistado = a.cd_entrevistado"
-            ." AND a.cd_anamnese = ?";
+                . " u.nm_usuario, u.dt_nascimento, u.nm_sexo, a.nr_peso, a.nr_altura,"
+                . " a.nr_nivel_esporte"
+                . " FROM tb_entrevistado AS e, tb_usuario AS u, tb_anamnese AS a"
+                . " WHERE e.cd_usuario = u.cd_usuario"
+                . " AND e.cd_entrevistado = a.cd_entrevistado"
+                . " AND a.cd_anamnese = ?";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -449,70 +442,69 @@ class DbHandler {
         $stmt->store_result();
 
         if ($resultStmt && $stmt->num_rows > 0) {
-            
+
             // Campos de retorno da anamnese.
-            $stmt->bind_result($codigoAnamnese, $codigoEntrevistado, $matricula, 
-                    $nome, $nascimento, $sexo, $peso, $altura, $nivelEsporte);
+            $stmt->bind_result($codigoAnamnese, $codigoEntrevistado, $matricula, $nome, $nascimento, $sexo, $peso, $altura, $nivelEsporte);
             $stmt->fetch();
-            
+
             $entrevistado = new Entrevistado();
             $entrevistado->setCodigo($codigoEntrevistado);
             $entrevistado->setNome($nome);
             $entrevistado->setMatricula($matricula);
             $entrevistado->setNascimento($nascimento);
-            $entrevistado->setSexo($sexo);                
+            $entrevistado->setSexo($sexo);
 
             $anamnese = new Anamnese();
             $anamnese->setCodigo($codigoAnamnese);
             $anamnese->setPeso($peso);
-            $anamnese->setAltura($altura);   
+            $anamnese->setAltura($altura);
             $anamnese->setNivelEsporte($nivelEsporte);
-            $anamnese->setEntrevistado($entrevistado);           
+            $anamnese->setEntrevistado($entrevistado);
         }
 
         $stmt->close();
 
         return $anamnese;
     }
-    
+
     /**
      * Descrição
      * @param type $matricula
      * @return array
      */
     public function selectAnamnesesEntrevistado($matricula) {
-        
+
         $anamneses = array();
 
         // Montar consulta.
         $sql = "SELECT e.cd_entrevistado, e.nr_matricula, u.dt_nascimento,"
-            . " u.nm_sexo, a.nr_peso, a.nr_altura, a.nr_nivel_esporte"
-            ." FROM tb_entrevistado AS e, tb_usuario AS u, tb_anamnese AS a"
-            ." WHERE e.cd_usuario = u.cd_usuario"
-            ." AND e.cd_entrevistado = a.cd_entrevistado"
-            ." AND e.nr_matricula = ".$matricula;
+                . " u.nm_sexo, a.nr_peso, a.nr_altura, a.nr_nivel_esporte"
+                . " FROM tb_entrevistado AS e, tb_usuario AS u, tb_anamnese AS a"
+                . " WHERE e.cd_usuario = u.cd_usuario"
+                . " AND e.cd_entrevistado = a.cd_entrevistado"
+                . " AND e.nr_matricula = " . $matricula;
 
         $result = $this->conn->query($sql);
-           
+
         if ($result) {
-            while ($row = $result->fetch_assoc()) {       
-                
+            while ($row = $result->fetch_assoc()) {
+
                 $entrevistado = new Entrevistado();
                 $entrevistado->setCodigo($row["cd_entrevistado"]);
                 $entrevistado->setMatricula($row["nr_matricula"]);
                 $entrevistado->setNascimento($row["dt_nascimento"]);
-                $entrevistado->setSexo($row["nm_sexo"]);                
+                $entrevistado->setSexo($row["nm_sexo"]);
 
                 $anamnese = new Anamnese();
                 $anamnese->setPeso($row["nr_peso"]);
-                $anamnese->setAltura($row["nr_altura"]);   
+                $anamnese->setAltura($row["nr_altura"]);
                 $anamnese->setEntrevistado($entrevistado);
-                
+
                 array_push($anamneses, $anamnese);
-            }  
+            }
         }
-        
-        return $anamneses;        
+
+        return $anamneses;
     }
 
     /**
@@ -524,11 +516,11 @@ class DbHandler {
 
         $dadosAntropometricos = NULL;
         // Montar consulta.
-        $sql = "SELECT nr_peso, nr_altura, nr_nivel_esporte ".
-                "FROM tb_anamnese ".
+        $sql = "SELECT nr_peso, nr_altura, nr_nivel_esporte " .
+                "FROM tb_anamnese " .
                 "WHERE nr_matricula = ?";
 
-         $stmt = $this->conn->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("i", $matricula);
         $resultStmt = $stmt->execute();
@@ -542,20 +534,20 @@ class DbHandler {
             $dadosAntropometricos = new Anamnese();
             $dadosAntropometricos->setPeso($peso);
             $dadosAntropometricos->setAltura($altura);
-            $dadosAntropometricos->setNivelEsporte($nivelEsporte);        
+            $dadosAntropometricos->setNivelEsporte($nivelEsporte);
         }
 
         $stmt->close();
 
         return $dadosAntropometricos;
     }
-    
+
     private function ehPesquisaExistente($cdPesquisa) {
 
         $stmt = $this->conn->prepare("SELECT cd_pesquisa "
                 . "FROM tb_pesquisa "
                 . "WHERE cd_pesquisa = ?");
-        
+
         $stmt->bind_param("i", $cdPesquisa);
         $stmt->execute();
         $stmt->store_result();
@@ -564,38 +556,37 @@ class DbHandler {
         return $num_rows > 0;
     }
 
-    function inserirPesquisa($pesquisa){
+    function inserirPesquisa($pesquisa) {
 
         $cdPesquisa = ID_NAO_RETORNADO;
-        
+
         $stmt = $this->conn->prepare("INSERT INTO "
                 . " tb_pesquisa(nm_pesquisa, dt_inicio, dt_fim, "
                 . " cd_instituicao, cd_nutricionista) "
                 . " VALUES(?, ?, ?, ?, ?)");
 
         // Parâmetros: tipos das entradas, entradas.
-        
+
         $dataInicio = implode("-", array_reverse(explode("/", $pesquisa->dataInicio)));
         $dataFim = implode("-", array_reverse(explode("/", $pesquisa->dataFim)));
-        
-        $stmt->bind_param("sssii", $pesquisa->nome,$dataInicio, 
-                $dataFim, $pesquisa->instituicao, $pesquisa->nutricionista);
+
+        $stmt->bind_param("sssii", $pesquisa->nome, $dataInicio, $dataFim, $pesquisa->instituicao, $pesquisa->nutricionista);
 
         $result = $stmt->execute();
         if ($result) {
             $cdPesquisa = $stmt->insert_id;
             $stmt->close();
-        }   
+        }
 
         return $cdPesquisa;
-    } 
-    
+    }
+
     /**
      * 
      * @param type $anamnese
      * @return type
      */
-    function inserirAutoAnamnese($anamnese) {
+function inserirAutoAnamnese($anamnese) {
 
         $cdAnamnese = ID_NAO_RETORNADO;
 
@@ -607,7 +598,7 @@ class DbHandler {
         // Parâmetros: tipos das entradas, entradas.
         $stmt->bind_param("iddii",$anamnese->entrevistado->cdEntrevistado, 
                 $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte, 
-                $anamnese->tipoEntrevistado);
+                $anamnese->entrevistado->tipoEntrevistado);
 
         $result = $stmt->execute();
         if ($result) {
@@ -617,19 +608,17 @@ class DbHandler {
 
         return $cdAnamnese;
     }
-    
-   
-    
-    function selectPesquisas(){
+
+    function selectPesquisas() {
         
     }
-    
-    function selectUsuarioEntrevistado($cdEntrevistado) {
+
+   function selectUsuarioEntrevistado($cdEntrevistado) {
         
         $entrevistado = null;
               
         $stmt = $this->conn->prepare("SELECT usuario.cd_usuario, "
-                . "usuario.dt_nascimento, usuario.nm_sexo "
+                . "usuario.dt_nascimento, usuario.nm_sexo, usuario.cd_tipousuario "
                 . "FROM tb_usuario AS usuario "
                 . "WHERE usuario.cd_usuario = ?");
         
@@ -640,12 +629,13 @@ class DbHandler {
         if ($resultStmt && $stmt->num_rows > 0) {
             
             // Campos de retorno do usuário.
-            $stmt->bind_result($codigo, $nascimento, $sexo);
+            $stmt->bind_result($codigo, $nascimento, $sexo, $tipoUsuario);
             $stmt->fetch(); 
             $entrevistado = new Entrevistado();
             $entrevistado->setCodigo($codigo);
             $entrevistado->setNascimento($nascimento);
-            $entrevistado->setSexo($sexo);                      
+            $entrevistado->setSexo($sexo);       
+            $entrevistado->setTipoUsuario($tipoUsuario);
         }
 
         $stmt->close();
