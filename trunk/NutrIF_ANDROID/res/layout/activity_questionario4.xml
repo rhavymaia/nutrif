@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background2">
+   
+	   <TextView
+        android:id="@+id/textView100"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans"
+        android:gravity="center"
+        android:text="Qual a quantidade, em média, que você consome por dia dos alimentos listados abaixo?"
+        android:textColor="#2E8B57"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+	   
+ 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:text="Arroz, milho e outros cereais (inclusive os matinais); mandioca/macaxeira/aipim, cará ou inhame; macarrão e outras massas; batata-inglesa, batata-doce, batata-baroa ou mandioquinha:"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+         <EditText
+            android:id="@+id/quest4op1"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberSigned" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="colheres de sopa"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+     
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:text="Pães:"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+        
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+         <EditText
+            android:id="@+id/quest4op2"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberSigned" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="unidades/fatias"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+   
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:text="Bolos sem cobertura e/ou recheio:"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+         <EditText
+            android:id="@+id/quest4op3"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberSigned" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fatias"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:text="Biscoito ou bolacha sem recheio:"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+         <EditText
+            android:id="@+id/quest4op4"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:inputType="numberSigned" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="unidades"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    
+<Button
+        android:id="@+id/bContinuar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Continuar" 
+        android:layout_gravity="center"
+        android:background="#00CD66"
+        />
+</LinearLayout>
+</ScrollView>

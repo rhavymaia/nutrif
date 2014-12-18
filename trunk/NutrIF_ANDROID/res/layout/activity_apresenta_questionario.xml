@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center"
+    android:background="@drawable/background2">
+    
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"
+        android:text="Como está sua alimentação?"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:textColor="#2E8B57" 
+        android:textAlignment="gravity"/>
+
+    <TextView
+        android:id="@+id/conteudo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="- Se você achar que mais de uma resposta está certa, escolha a que você mais costuma fazer quando come."
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:typeface="sans" 
+        android:gravity="center"/>
+    
+ <TextView
+        android:id="@+id/conteudo1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="- Lembre-se: responda o que você realmente come, e não o que gostaria ou acha que seria melhor."
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:typeface="sans" 
+        android:gravity="center"/>
+ <TextView
+        android:id="@+id/conteudo2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="- Se você tiver alguma dificuldade para responder, peça ajuda a alguém próximo da família, amigo ou vizinho."
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:typeface="sans" 
+        android:gravity="center"/>
+    <Button
+        android:id="@+id/bComecar"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Começar!" 
+        android:background="#00CD66"/>
+
+</LinearLayout>

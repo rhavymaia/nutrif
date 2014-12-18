@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background2">
+   
+	   <TextView
+        android:id="@+id/textView100"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans"
+        android:gravity="center"
+        android:text="Qual tipo de gordura é mais usado na sua casa para cozinhar os alimentos?"
+        android:textColor="#2E8B57"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+<RadioGroup
+    android:id="@+id/radioGroup100"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <RadioButton
+        android:id="@+id/quest12op1"
+        android:layout_marginBottom="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Banha animal ou manteiga" />
+
+    <RadioButton
+        android:id="@+id/quest12op2"
+        android:layout_marginBottom="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Óleo vegetal como: soja, girassol, milho, algodão ou canola" />
+
+   <RadioButton
+        android:id="@+id/quest12op3"
+        android:layout_marginBottom="30dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Margarina ou gordura vegetal " />
+   
+   
+</RadioGroup>
+</LinearLayout>
+<Button
+        android:id="@+id/bContinuar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Continuar" 
+        android:layout_gravity="center"
+        android:background="#00CD66"
+        />
+</LinearLayout>
+</ScrollView>

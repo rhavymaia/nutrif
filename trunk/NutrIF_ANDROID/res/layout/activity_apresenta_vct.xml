@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center"
+    android:background="@drawable/background2">
+    
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Cálculo do VCT"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:textColor="#2E8B57" 
+        android:textAlignment="gravity"/>
+
+    <TextView
+        android:id="@+id/conteudo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="O Valor Calórico Total(VCT) é uma medida utilizada para estabelecer as necessidades nutricionais diárias de um indivíduo."
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:typeface="sans" 
+        android:gravity="center"/>"
+
+    <Button
+        android:id="@+id/bCalcularVCT"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Calcular" 
+        android:background="#00CD66"/>
+
+</LinearLayout>

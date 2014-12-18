@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background2">
+   
+	   <TextView
+        android:id="@+id/textView100"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans"
+        android:gravity="center"
+        android:text="Qual é, em média, a quantidade que você come dos seguintes alimentos: feijão de qualquer tipo ou cor, lentilha, ervilha, grão-de-bico, soja, fava, sementes ou castanhas?"
+        android:textColor="#2E8B57"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+<RadioGroup
+    android:id="@+id/radioGroup100"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <RadioButton
+        android:id="@+id/quest3op1"
+        android:layout_marginBottom="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Não consumo" />
+
+    <RadioButton
+        android:id="@+id/quest3op2"
+        android:layout_marginBottom="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="2 ou mais colheres de sopa por dia " />
+
+   <RadioButton
+        android:id="@+id/quest3op3"
+        android:layout_marginBottom="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Consumo menos de 5 vezes por semana " />
+   
+     <RadioButton
+        android:id="@+id/quest3op4"
+        android:layout_marginBottom="30dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="1 colher de sopa ou menos por dia " />
+   
+</RadioGroup>
+</LinearLayout>
+<Button
+        android:id="@+id/bContinuar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Continuar" 
+        android:layout_gravity="center"
+        android:background="#00CD66"
+        />
+</LinearLayout>
