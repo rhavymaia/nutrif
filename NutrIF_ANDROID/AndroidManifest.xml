@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.edu.ifpb.ifnutri"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name="br.edu.ifpb.ifnutri.entidade.GlobalState"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.TelaDeSplash"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.TelaPrincipal"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.CapturarDadosIMC"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.CapturarDadosVCT"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.CadastrarEntrevistadoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.CalcularIMCActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.CalcularVCTActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.IMCActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.LoginAlunoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.ResultadoVCTActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.ResultadoAutoAnamneseActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.NovaAnamneseActivity"
+            android:label="@string/app_name" >
+        </activity>    
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.CapturarDadosIMCOffline"
+            android:label="@string/app_name" >
+        </activity> 
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.ExibirIMCOffline"
+            android:label="@string/app_name" >
+        </activity> 
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.ApresentaQuestionarioActivity"
+            android:label="@string/app_name" >
+        </activity> 
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario1Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario2Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario3Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario4Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario5Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario6Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario7Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario8Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario9Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario10Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario11Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario12Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario13Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario14Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario15Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario16Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario17Activity"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="br.edu.ifpb.ifnutri.activity.Questionario18Activity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.ifnutri.activity.ResultadoQuestionarioActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
+    </application>
+
+</manifest>

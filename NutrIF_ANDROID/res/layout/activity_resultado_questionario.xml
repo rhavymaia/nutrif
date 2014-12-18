@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/background2">
+    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="sans"
+        android:text="RESULTADO:"
+        android:textColor="#2E8B57"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:gravity="center"
+    android:layout_gravity="center">
+    <TextView
+        android:id="@+id/valorpontuacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="sans"
+        android:text="bla"
+        android:textColor="#008B45"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+     <TextView
+        android:id="@+id/pontos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_gravity="center"
+        android:fontFamily="sans"
+        android:text="PONTOS"
+        android:textColor="#008B45"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</LinearLayout>
+    <TextView
+        android:id="@+id/mensagem"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:fontFamily="sans"
+        android:text="bla"
+        android:textColor="#006400"
+        android:textSize="20sp"
+        android:textAlignment="gravity"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp" 
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/bvoltar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voltar para o menu" 
+        android:layout_gravity="center"
+        android:background="#00CD66"/>
+</LinearLayout>

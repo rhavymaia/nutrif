@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center"
+    android:background="@drawable/background">
+    
+    <!--
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </ListView>
+    
+         <Button
+        android:id="@+id/bCalcularIMC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="85dp"
+        android:text="Calcular IMC" />
+    <Button
+        android:id="@+id/bSair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/bSair"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:text="Sair" />
+    <Button
+        android:id="@+id/bCalcularPercentil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/bStart2"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:text="Calcular Percentil" />
+    <Button
+        android:id="@+id/bQuestionario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/bStart2"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:text="Questionário" />
+    -->
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/logo" />
+
+    <Button
+        android:id="@+id/bCalcularIMC"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:text="Verificar IMC" 
+        android:background="#00CD66"/>
+    
+    <Button
+        android:id="@+id/bCalcularVCT"
+         android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="2dp"
+        android:text="Calcular VCT" 
+        android:background="#00CD66"/>
+
+    <Button
+        android:id="@+id/bQuestionario"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="2dp"
+        android:text="Questionário" 
+        android:background="#00CD66"/>
+    
+     <Button
+        android:id="@+id/bAlterarDados"
+         android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="2dp"
+        android:text="Alterar Dados" 
+        android:background="#00CD66"/>
+     
+     
+
+    <Button
+        android:id="@+id/bSair"
+         android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="1dp"
+        android:text="Sair" 
+        android:background="#00CD66"
+        android:onClick="selfDestruct"/>
+
+</LinearLayout>

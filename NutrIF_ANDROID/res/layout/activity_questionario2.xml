@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background2">
+   
+	   <TextView
+        android:id="@+id/textView100"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans"
+        android:gravity="center"
+        android:text="Qual é, em média, a quantidade de legumes e verduras que você come por dia?"
+        android:textColor="#2E8B57"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+<RadioGroup
+    android:id="@+id/radioGroup100"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <RadioButton
+        android:id="@+id/quest2op1"
+        android:layout_marginBottom="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Não como legumes, nem verduras todos os dias" />
+
+    <RadioButton
+        android:id="@+id/quest2op2"
+        android:layout_marginBottom="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="3 ou menos colheres de sopa" />
+
+   <RadioButton
+        android:id="@+id/quest2op3"
+        android:layout_marginBottom="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="4 a 5 colheres de sopa" />
+   
+   <RadioButton
+        android:id="@+id/quest2op4"
+        android:layout_marginBottom="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="6 a 7 colheres de sopa" />
+   
+     <RadioButton
+        android:id="@+id/quest2op5"
+        android:layout_marginBottom="30dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="8 ou mais colheres de sopa" />
+   
+</RadioGroup>
+</LinearLayout>
+<Button
+        android:id="@+id/bContinuar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Continuar" 
+        android:layout_gravity="center"
+        android:background="#00CD66"
+        />
+</LinearLayout>

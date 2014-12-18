@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background2">
+   
+	   <TextView
+        android:id="@+id/textView100"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans"
+        android:gravity="center"
+        android:text="Pense na sua rotina semanal: quais as refeições você costuma fazer habitualmente no dia?"
+        android:textColor="#2E8B57"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+ 
+
+    <CheckBox
+        android:id="@+id/quest14op1"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Café da manhã" />
+
+    <CheckBox
+        android:id="@+id/quest14op2"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lanche da manhã" />
+    
+	 <CheckBox
+        android:id="@+id/quest14op3"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Almoço" />
+
+    <CheckBox
+        android:id="@+id/quest14op4"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lanche ou café da tarde" />
+    
+    <CheckBox
+        android:id="@+id/quest14op5"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jantar ou café da noite" />
+    
+    <CheckBox
+        android:id="@+id/quest14op6"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lanche antes de dormir" />
+    
+<Button
+        android:id="@+id/bContinuar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Continuar" 
+        android:layout_gravity="center"
+        android:background="#00CD66"
+        />
+</LinearLayout>
