@@ -1,0 +1,2 @@
+O sistema auxília ao nutricionista a analisar o perfil alimentar dos comensais para uma Unidade de Alimentação e Nutrição (UAN).
+Será possível aplicar eletrônicamente o Guia Alimentar para a População Brasileira e traçar os gastos calóricos para cada indivíduo.
