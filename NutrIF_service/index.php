@@ -32,7 +32,7 @@ require '../Slim/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 $slim = new \Slim\Slim();
-$slim->get('/statusServer', 'statusServer');
+$slim->get('/statusServer', 'authenticate', 'statusServer');
 $slim->post('/verificarLogin', 'verificarLogin');
 $slim->post('/cadastrarAluno', 'cadastrarAluno');
 $slim->post('/cadastrarNutricionista', 'cadastrarNutricionista');
@@ -46,11 +46,11 @@ $slim->post('/calcularVCTAnamneses', 'calcularVCTAnamneses');
 $slim->post('/calcularIMC', 'calcularIMC');
 $slim->post('/calcularPerfilAntropometrico', 'calcularPerfilAntropometrico');
 
-// Usu·rio autenticado para o cliente.
+// Usu√°rio autenticado para o cliente.
 $usuarioAutenticado = NULL;
 
 /**
- * AltenticaÁ„o do usu·rio.
+ * Altentica√ß√£o do usu√°rio.
  * 
  * @param \Slim\Route $route
  */
@@ -74,7 +74,7 @@ function authenticate(\Slim\Route $route) {
         } else {
             global $usuarioAutenticado;
 
-            // Recuperar usu·rio pelo ApiKey.
+            // Recuperar usu√°rio pelo ApiKey.
             $usuario = $db->getUserByApiKey($apiKey);
             if (!empty($usuario)) {
                 $usuarioAutenticado = $usuario;
@@ -87,7 +87,7 @@ function authenticate(\Slim\Route $route) {
     }
 }
 
-// FunÁıes    
+// Fun√ß√µes    
 /**
  * Verificar status do servidor.
  * 
@@ -96,7 +96,7 @@ function statusServer() {
     $server = new Server();
     $server->setOnline("true");
 
-    // Responder a requisiÁ„o. CÛdigo HTTP (cabeÁalho) e Entidade (Body - JSON).
+    // Responder a requisi√ß√£o. C√≥digo HTTP (cabe√ßalho) e Entidade (Body - JSON).
     echoRespnse(HTTP_CRIADO, $server);
 }
 
@@ -131,7 +131,7 @@ function cadastrarAluno() {
     $body = $request->getBody();
     $aluno = json_decode($body);
 
-    //TODO: ValidaÁ„o do dados de entrada para o cadastro do entrevistado.  
+    //TODO: Valida√ß√£o do dados de entrada para o cadastro do entrevistado.  
     // Persistir os dados na tabela tb_usuario.
     $db = new DbHandler();
     $cdUsuario = $db->inserirUsuario($aluno, TP_ALUNO);
@@ -147,12 +147,12 @@ function cadastrarAluno() {
             $aluno->tpUsuario = TP_ALUNO;
             echoRespnse(HTTP_CRIADO, $aluno);
         } else {
-            // Entrevistado(a) j· cadastrado(a).
+            // Entrevistado(a) j√° cadastrado(a).
             $erro = MapaErro::singleton()->getErro(5);
             echoRespnse(HTTP_CONFLITO, $erro);
         }
     } else if ($cdUsuario == USUARIO_EXISTENTE) {
-        // Usu·rio j· cadastrado.
+        // Usu√°rio j√° cadastrado.
         $erro = MapaErro::singleton()->getErro(4);
         echoRespnse(HTTP_CONFLITO, $erro);
     } else {
@@ -187,14 +187,14 @@ function cadastrarAluno() {
  *      codigo: [1-9],
  *      mensagem: "Erro"
  *  } 
- * @author Larissa FÈlix larissafelix.felix@gmail.com
+ * @author Larissa F√©lix larissafelix.felix@gmail.com
  */
 function cadastrarNutricionista() {
     $request = \Slim\Slim::getInstance()->request();
     $body = $request->getBody();
     $nutricionista = json_decode($body);
 
-    //TODO: ValidaÁ„o do dados de entrada para o cadastro do entrevistado.
+    //TODO: Valida√ß√£o do dados de entrada para o cadastro do entrevistado.
     // Persistir os dados no Banco.
     $db = new DbHandler();
     $cd_usuario = $db->inserirUsuario($nutricionista, TP_NUTRICIONISTA);
@@ -212,12 +212,12 @@ function cadastrarNutricionista() {
             //Resposta com sucesso
             echoRespnse(HTTP_CRIADO, $nutricionista);
         } else {
-            // Nutricionista j· cadastrado(a).
+            // Nutricionista j√° cadastrado(a).
             $erro = MapaErro::singleton()->getErro(6);
             echoRespnse(HTTP_CONFLITO, $erro);
         }
     } else if ($cd_usuario == USUARIO_EXISTENTE) {
-        // Usu·rio j· cadastrado.
+        // Usu√°rio j√° cadastrado.
         $erro = MapaErro::singleton()->getErro(4);
         echoRespnse(HTTP_CONFLITO, $erro);
     } else {
@@ -248,7 +248,7 @@ function cadastrarAnamnese() {
     $body = $request->getBody();
     $anamnese = json_decode($body);
 
-    // ValidaÁ„o dos dados de entrada para o cadastro da anamnese.                
+    // Valida√ß√£o dos dados de entrada para o cadastro da anamnese.                
     $validacao = AnamneseValidate::validate($anamnese->nutricionista, $anamnese->entrevistado, $anamnese->pesquisa, $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte, $anamnese->perfilAlimentar);
 
     if ($validacao == VALIDO) {
@@ -296,7 +296,7 @@ function realizarAutoAnamneseEntrevistado() {
     $body = $request->getBody();
     $anamnese = json_decode($body);
 
-    // ValidaÁ„o dos dados de entrada para realizar a anamnese.                
+    // Valida√ß√£o dos dados de entrada para realizar a anamnese.                
     $validacao = AutoAnamneseValidate::
             validate($anamnese->entrevistado->cdEntrevistado, 
                     $anamnese->peso, $anamnese->altura, $anamnese->nivelEsporte,
@@ -317,7 +317,7 @@ function realizarAutoAnamneseEntrevistado() {
             //Falta setar o tipo de entrevistado?
 
             if (!empty($cdAnamnese)) {
-                //TODO: Implementar a regra de negÛcio e persistÍncia no banco de dados.
+                //TODO: Implementar a regra de neg√≥cio e persist√™ncia no banco de dados.
                 $resultadoAnamnese = array(
                     "anamnese"=>$autoAnamnese,
                     "imc" => IMCController::calculaIMC($anamnese->peso, $anamnese->altura),
@@ -332,7 +332,7 @@ function realizarAutoAnamneseEntrevistado() {
                 echoRespnse(HTTP_NAO_ACEITO, $erro);
             }
         } else {
-            //usu·rio n„o encontrado
+            //usu√°rio n√£o encontrado
            $erro = MapaErro::singleton()->getErro(2);
            echoRespnse(HTTP_NAO_ACEITO, $erro); 
         }
@@ -344,7 +344,7 @@ function realizarAutoAnamneseEntrevistado() {
 
 
 /**
- * DescriÁ„o
+ * Descri√ß√£o
  * @param $usario
  * {
  *  codigo:*[1-9]
@@ -372,8 +372,8 @@ function listarAnamnesesEntrevistado() {
     $usuarioJson = json_decode($body);
 
     $cdUsuario = $usuarioJson->codigo;
-    //TODO: ValidaÁ„o do usu·rio.
-    //TODO: Pesquisa do usu·rio e suas anamneses.
+    //TODO: Valida√ß√£o do usu√°rio.
+    //TODO: Pesquisa do usu√°rio e suas anamneses.
 
     $entrevistado = new Entrevistado();
     $entrevistado->setCodigo($cdUsuario);
@@ -395,7 +395,7 @@ function cadastrarPesquisa() {
     $body = $request->getBody();
     $pesquisa = json_decode($body);
 
-    //TODO: ValidaÁ„o do dados de entrada para o cadastro da pesquisa.
+    //TODO: Valida√ß√£o do dados de entrada para o cadastro da pesquisa.
     // Persistir os dados no Banco.
     $db = new DbHandler();
     $cdPesquisa = $db->inserirPesquisa($pesquisa);
@@ -409,7 +409,7 @@ function cadastrarPesquisa() {
 }
 
 /**
- * DescriÁ„o
+ * Descri√ß√£o
  * @param $usuario
  *  {
  *      'login':'valor',
@@ -420,7 +420,7 @@ function cadastrarPesquisa() {
  *  {
  *      codigo: 21,
  *      login: "user4@local.com",
- *      nome:"Jo„o Silva",
+ *      nome:"Jo√£o Silva",
  *      tipoUsuario: "1",
  *      ativo: TRUE | FALSE,
  *  }
@@ -434,7 +434,7 @@ function verificarLogin() {
     $login = $usuarioJson->login;
     $senha = $usuarioJson->senha;
 
-    // ValidaÁ„o do dados de entrada para o login do usu·rio.
+    // Valida√ß√£o do dados de entrada para o login do usu√°rio.
     $validacao = LoginValidate::validate($login, $senha);
 
     if ($validacao == VALIDO) {
@@ -443,13 +443,13 @@ function verificarLogin() {
         $autorizado = $db->checkLogin($login, $senha);
 
         if ($autorizado) {
-            // Recuperar usu·rio pelo login (e-mail).
+            // Recuperar usu√°rio pelo login (e-mail).
             $usuario = $db->getUsuarioByLogin($login);
 
-            // Dados do usu·rio.
+            // Dados do usu√°rio.
             echoRespnse(HTTP_ACEITO, $usuario);
         } else {
-            // Usu·rio n„o encontrado e n„o autorizado.
+            // Usu√°rio n√£o encontrado e n√£o autorizado.
             $erro = MapaErro::singleton()->getErro(2);
             echoRespnse(NAO_AUTORIZADO, $erro);
         }
@@ -462,7 +462,7 @@ function verificarLogin() {
 
 /**
  * 
- * Calcular os Valores CalÛricos Totais baseado no peso, altura, nÌvel esportivo
+ * Calcular os Valores Cal√≥ricos Totais baseado no peso, altura, n√≠vel esportivo
  * e data de nascimento do entrevistado.
  * 
  * @param $anamnese
@@ -504,7 +504,7 @@ function calcularVCT() {
     $altura = $anamneseJson->altura;
     $nivelEsporte = $anamneseJson->nivelEsporte;
 
-    // ValidaÁ„o dos dados: peso, altura, nÌvel esportivo, sexo, data de
+    // Valida√ß√£o dos dados: peso, altura, n√≠vel esportivo, sexo, data de
     // nascimento.
 
     $validacao = VCTValidate::
@@ -536,7 +536,7 @@ function calcularVCT() {
 }
 
 /**
- * Analisar o Valor calÛrico total (VCT) de uma anamnese;
+ * Analisar o Valor cal√≥rico total (VCT) de uma anamnese;
  * 
  * @param $anamnese 
  *  {
@@ -563,7 +563,7 @@ function calcularVCTAnamnese() {
 
     $codigo = $anamnese->codigo;
 
-    // Consultar a(s) anamnese(s) pelo cÛdigo.
+    // Consultar a(s) anamnese(s) pelo c√≥digo.
     $db = new DbHandler();
     $anamneseConsulta = $db->selectAnamnese($codigo);
 
@@ -573,14 +573,14 @@ function calcularVCTAnamnese() {
 
         echoRespnse(HTTP_OK, $vct);
     } else {
-        // N„o foi possÌvel encontrar anamnese.
+        // N√£o foi poss√≠vel encontrar anamnese.
         $erro = MapaErro::singleton()->getErro(8);
         echoRespnse(HTTP_NAO_ENCONTRADO, $erro);
     }
 }
 
 /**
- * Analisar o Valor calÛrico total (VCT) das anamneses de um usu·rio (entrevistado);
+ * Analisar o Valor cal√≥rico total (VCT) das anamneses de um usu√°rio (entrevistado);
  * 
  * @param $aluno 
  *  {
@@ -627,14 +627,14 @@ function calcularVCTAnamneses() {
 
         echoRespnse(HTTP_OK, $vcts);
     } else {
-        // N„o foi possÌvel encontrar anamnese.
+        // N√£o foi poss√≠vel encontrar anamnese.
         $erro = MapaErro::singleton()->getErro(8);
         echoRespnse(HTTP_NAO_ENCONTRADO, $erro);
     }
 }
 
 /**
- * DescriÁ„o
+ * Descri√ß√£o
  * @param $entrevistado
  * {
  *  "peso" : *[1-9].*[1-9],
@@ -662,7 +662,7 @@ function calcularIMC() {
         $imc->setValor($valor);
         echoRespnse(HTTP_ACEITO, $imc);
     } else {
-        // N„o foi possÌvel calcular IMC.
+        // N√£o foi poss√≠vel calcular IMC.
         $erro = MapaErro::singleton()->getErro(7);
         echoRespnse(HTTP_REQUISICAO_INVALIDA, $erro);
     }
@@ -714,7 +714,7 @@ function calcularPerfilAntropometrico() {
 
         // Acima de 19 calcular IMC.
         if ($idadeMeses > IDADE_PERCENTIL_19) {
-            // C·lculo do IMC para entrevistado acima de 19 anos.
+            // C√°lculo do IMC para entrevistado acima de 19 anos.
             $imc = new Imc();
             $imc->setValor($imcValor);
             $curva->setImc($imc);
@@ -731,7 +731,7 @@ function calcularPerfilAntropometrico() {
             }
         }
 
-        // IMC padr„o.
+        // IMC padr√£o.
         $imc = new Imc();
         $imc->setValor($imcValor);
         $curva->setImc($imc);
@@ -756,7 +756,7 @@ function echoRespnse($status_code, $response) {
     $slim->status($status_code);
     // setting response content type to json
     $slim->response()->header('Content-Type', 'application/json;charset=utf-8');
-    // Chamada ao mÈtodo est·tico para convers„o de caracter UTF-8.
+    // Chamada ao m√©todo est√°tico para convers√£o de caracter UTF-8.
     // Tranforma o array ou objeto em JSON.
     echo json_encode(JsonUtil::objectToArray($response));
     //echo json_encode($response, JSON_HEX_QUOT | JSON_HEX_TAG);    
